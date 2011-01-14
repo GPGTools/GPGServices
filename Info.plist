@@ -28,8 +28,11 @@
 	<array>
 		<dict>
 			<key>NSKeyEquivalent</key>
-			<string>*</string>
-			<key>NSMenuItem</key>
+			<dict>
+			    <key>default</key>
+			    <string>V</string>
+		    </dict>
+		    <key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
 				<string>GPG/Verify</string>
@@ -37,7 +40,7 @@
 			<key>NSMessage</key>
 			<string>verify</string>
 			<key>NSPortName</key>
-			<string>${EXECUTABLE_NAME}</string>
+			<string>GPGServices</string>
 			<key>NSReturnTypes</key>
 			<array/>
 			<key>NSSendTypes</key>
@@ -49,7 +52,10 @@
 		</dict>
 		<dict>
 			<key>NSKeyEquivalent</key>
-			<string>*</string>
+			<dict>
+			    <key>default</key>
+    			<string>S</string>
+			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -58,7 +64,7 @@
 			<key>NSMessage</key>
 			<string>sign</string>
 			<key>NSPortName</key>
-			<string>${EXECUTABLE_NAME}</string>
+			<string>GPGServices</string>
 			<key>NSReturnTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -73,7 +79,10 @@
 		</dict>
 		<dict>
 			<key>NSKeyEquivalent</key>
-			<string>*</string>
+			<dict>
+			    <key>default</key>
+    			<string>K</string>
+    		</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -82,7 +91,7 @@
 			<key>NSMessage</key>
 			<string>myKey</string>
 			<key>NSPortName</key>
-			<string>${EXECUTABLE_NAME}</string>
+			<string>GPGServices</string>
 			<key>NSReturnTypes</key>
 			<array>
 				<string>NSHTMLPboardType</string>
@@ -93,7 +102,10 @@
 		</dict>
 		<dict>
 			<key>NSKeyEquivalent</key>
-			<string>*</string>
+			<dict>
+			    <key>default</key>
+    			<string>F</string>
+    		</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -102,7 +114,7 @@
 			<key>NSMessage</key>
 			<string>myFingerprint</string>
 			<key>NSPortName</key>
-			<string>${EXECUTABLE_NAME}</string>
+			<string>GPGServices</string>
 			<key>NSReturnTypes</key>
 			<array>
 				<string>NSHTMLPboardType</string>
@@ -113,7 +125,10 @@
 		</dict>
 		<dict>
 			<key>NSKeyEquivalent</key>
-			<string>*</string>
+			<dict>
+			    <key>default</key>
+    			<string>I</string>
+    		</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -122,7 +137,7 @@
 			<key>NSMessage</key>
 			<string>importKey</string>
 			<key>NSPortName</key>
-			<string>${EXECUTABLE_NAME}</string>
+			<string>GPGServices</string>
 			<key>NSReturnTypes</key>
 			<array/>
 			<key>NSSendTypes</key>
