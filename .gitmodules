@@ -1,0 +1,3 @@
+[submodule "Dependencies/MacGPGME"]
+	path = Dependencies/MacGPGME
+	url = git://github.com/GPGMail/macgpgme.git
