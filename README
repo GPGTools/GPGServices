@@ -1,3 +1,10 @@
 Port of the GPGServices to Snow Leopard.
 See http://www.far-blue.co.uk/projects/gpgservices.html for details.
 
+To compile and test (takes some time since MacGPGME gets compiled too):
+
+git clone --recursive git@github.com:GPGTools/GPGServices.git
+cd GPGServices
+make
+# now logout and login again
+# then have a look at System Preferences > Keyboard > Keyboard Shortcuts > Services > Text > Import Key ..."
