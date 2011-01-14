@@ -1,0 +1,7 @@
+GPGServices Installer
+
+An installer for an OS X Text Services Menu to handle GPG messages from all text-enabled applications.
+
+IMPORTANT: You have to logout and login again after the installation and enable the menu at System Preferences > Keyboard > Keyboard Shortcuts > Services > Text > ...
+
+For further details have a look at http://gpgtools.org.
