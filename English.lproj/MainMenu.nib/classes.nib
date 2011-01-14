@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {closeModalWindow = id; }; 
+            CLASS = GPGServices; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                messageBodyText = NSTextField; 
+                messageHeadingText = NSTextField; 
+                messageWindow = NSWindow; 
+                passphraseText = NSSecureTextField; 
+                passphraseWindow = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
