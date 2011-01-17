@@ -54,7 +54,6 @@
 	NSString *keyID=[myOptions optionValueForName:@"default-key"];
 	[myOptions release];
 
-    [self displayMessageWindowWithTitleText:@"Default key not set." bodyText:@"No default key is specified in the GPG Preferences."];
 	if(keyID==nil)
 	{
 		[self displayMessageWindowWithTitleText:@"Default key not set." bodyText:@"No default key is specified in the GPG Preferences."];
