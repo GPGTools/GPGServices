@@ -35,7 +35,7 @@
 		    <key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>GPG/Verify</string>
+				<string>OpenPGP: Verify</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>verify</string>
@@ -59,7 +59,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>GPG/Sign</string>
+				<string>OpenPGP: Sign</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>sign</string>
@@ -86,7 +86,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>GPG/My Key</string>
+				<string>OpenPGP: Insert my key</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>myKey</string>
@@ -109,7 +109,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>GPG/My Fingerprint</string>
+				<string>OpenPGP: Insert my fingerprint</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>myFingerprint</string>
@@ -132,7 +132,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>GPG/Import Key</string>
+				<string>OpenPGP: Import key</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>importKey</string>
