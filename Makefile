@@ -9,8 +9,8 @@ install:
 	@mkdir -p ~/Library/Services >> build.log 2>&1
 	@rm -rf ~/Library/Services/GPGServices.service >> build.log 2>&1
 	@cp -r build/Release/GPGServices.service ~/Library/Services >> build.log 2>&1
-	@echo "  * Please logout now..."
-	@echo "Then go to 'Preferences>Keyboard>Shortcuts>Services>Text>..."
+	@./Installer/ServicesRestart 
+	@echo "Go to 'Preferences>Keyboard>Shortcuts>Services>Text>..."
 
 clean-gpgme:
 	rm -rf Dependencies/MacGPGME/build
