@@ -67,7 +67,7 @@
 		myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
 		if(myKey==nil)
 		{
-			[self displayMessageWindowWithTitleText:@"Exporting key failed." bodyText:@"Could not retrieve key from keychain"];
+			[self displayMessageWindowWithTitleText:@"Found no fingerprint." bodyText:@"Could not retrieve your key from keychain (maybe you've not set a default key in ~/.gnupg/gpg.conf)"];
 			[aContext release];
 			return nil;
 		}
@@ -108,7 +108,7 @@
 		myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
 		if(myKey==nil)
 		{
-			[self displayMessageWindowWithTitleText:@"Exporting key failed." bodyText:@"Could not retrieve key from keychain"];
+			[self displayMessageWindowWithTitleText:@"Found no key." bodyText:@"Could not retrieve your key from keychain (maybe you've not set a default key in ~/.gnupg/gpg.conf)"];
 			[aContext release];
 			return nil;
 		}
