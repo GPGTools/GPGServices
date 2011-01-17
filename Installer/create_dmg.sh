@@ -29,6 +29,8 @@ ditto --rsrc ../build/GPGServices.mpkg gpgtools_diskimage/Install\ GPGServices.m
 ditto --rsrc Uninstall_GPGServices.app gpgtools_diskimage/Uninstall\ GPGServices.app
 cp gpgtoolsdmg.icns gpgtools_diskimage/.VolumeIcon.icns
 cp dmg_background.png gpgtools_diskimage/.background/dmg_background.png
+./setfileicon trash.icns gpgtools_diskimage/Uninstall\ GPGServices.app
+./setfileicon installer.icns gpgtools_diskimage/Install\ GPGServices.mpkg
 
 # get the name of the dvice to detatch it
 dmg_device=` hdiutil info | grep "gpgtools_diskimage" | awk '{print $1}' `
