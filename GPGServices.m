@@ -27,20 +27,20 @@
 	GPGData *inputData;
 	NSDictionary *importedKeys;
 	GPGContext *aContext = [[GPGContext alloc] init];
-		
+
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-	
+
 	NS_DURING
-		importedKeys=[aContext importKeyData:inputData];		
+		importedKeys=[aContext importKeyData:inputData];
 	NS_HANDLER
 		[self displayMessageWindowWithTitleText:@"Import failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
 		[inputData release];
 		[aContext release];
 		return;
 	NS_ENDHANDLER
-		
-	if(([[importedKeys valueForKey:@"importedKeyCount"] intValue]+[[importedKeys valueForKey:@"importedSecretKeyCount"] intValue]+[[importedKeys valueForKey:@"newRevocationCount"] intValue])>0)
-		[self displayMessageWindowWithTitleText:@"Import successful." bodyText:[NSString stringWithFormat:@"%i key(s), %i secret key(s), %i revocation(s) ",[[importedKeys valueForKey:@"importedKeyCount"] intValue],[[importedKeys valueForKey:@"importedSecretKeyCount"] intValue],[[importedKeys valueForKey:@"newRevocationCount"] intValue]]];
+
+	//if(([[importedKeys valueForKey:@"importedKeyCount"] intValue]+[[importedKeys valueForKey:@"importedSecretKeyCount"] intValue]+[[importedKeys valueForKey:@"newRevocationCount"] intValue])>0)
+	[self displayMessageWindowWithTitleText:@"Import result:" bodyText:[NSString stringWithFormat:@"%i key(s), %i secret key(s), %i revocation(s) ",[[importedKeys valueForKey:@"importedKeyCount"] intValue],[[importedKeys valueForKey:@"importedSecretKeyCount"] intValue],[[importedKeys valueForKey:@"newRevocationCount"] intValue]]];
 	[inputData release];
 	[aContext release];
 }
@@ -54,14 +54,15 @@
 	NSString *keyID=[myOptions optionValueForName:@"default-key"];
 	[myOptions release];
 
+    [self displayMessageWindowWithTitleText:@"Default key not set." bodyText:@"No default key is specified in the GPG Preferences."];
 	if(keyID==nil)
 	{
 		[self displayMessageWindowWithTitleText:@"Default key not set." bodyText:@"No default key is specified in the GPG Preferences."];
 		return nil;
 	}
-	
+
 	GPGContext *aContext = [[GPGContext alloc] init];
-	
+
 	NS_DURING
 		myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
 		if(myKey==nil)
@@ -69,16 +70,16 @@
 			[self displayMessageWindowWithTitleText:@"Exporting key failed." bodyText:@"Could not retrieve key from keychain"];
 			[aContext release];
 			return nil;
-		}		
+		}
 	NS_HANDLER
 		result=nil;
 		[self displayMessageWindowWithTitleText:@"Retrieving fingerprint failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
-		[aContext release];	
+		[aContext release];
 		return nil;
 	NS_ENDHANDLER
-		
+
 	result=[[myKey formattedFingerprint] copy];
-	[aContext release];	
+	[aContext release];
 	return [result autorelease];
 }
 
@@ -102,7 +103,7 @@
 	GPGContext *aContext = [[GPGContext alloc] init];
 	[aContext setUsesArmor:YES];
 	[aContext setUsesTextMode:YES];
-	
+
 	NS_DURING
 		myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
 		if(myKey==nil)
@@ -121,11 +122,11 @@
 	NS_HANDLER
 		result=nil;
 		[self displayMessageWindowWithTitleText:@"Exporting key failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
-		[aContext release];	
+		[aContext release];
 		return nil;
 	NS_ENDHANDLER
-	
-	[aContext release];	
+
+	[aContext release];
 	result=[[NSString alloc] initWithData:keyData encoding:NSUTF8StringEncoding];
 	return [result autorelease];
 }
@@ -134,13 +135,13 @@
 {
 	GPGData *inputData, *outputData;
 	GPGContext *aContext = [[GPGContext alloc] init];
-	
+
 	[aContext setPassphraseDelegate:self];
-	
+
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-	
+
 	NS_DURING
-		outputData=[aContext signedData:inputData signatureMode:GPGSignatureModeClear];		
+		outputData=[aContext signedData:inputData signatureMode:GPGSignatureModeClear];
 	NS_HANDLER
 		outputData = nil;
 		switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
@@ -165,7 +166,7 @@
 	NS_ENDHANDLER
 	[inputData release];
 	[aContext release];
-	
+
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
 }
 
@@ -177,9 +178,9 @@
 	GPGSignature *sig;
 	NSString *userID, *validity;
 	GPGContext *aContext = [[GPGContext alloc] init];
-			
+
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-	
+
 	NS_DURING
 		sigs=[aContext verifySignedData:inputData originalData:nil];
 	NS_HANDLER
@@ -192,8 +193,8 @@
 		[aContext release];
 		return;
 	NS_ENDHANDLER
-	
-	
+
+
 		if([sigs count]>0)
 		{
 			sig=[sigs objectAtIndex:0];
@@ -222,14 +223,14 @@
 	NSString *pboardString;
 	NSString *newString=nil;
 	NSString *type;
-	
+
 	[self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
-	
+
 	if(mode!=MyKeyService && mode!=MyFingerprintService)
 	{
 		type = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSHTMLPboardType, NSStringPboardType, NSRTFPboardType, nil]];
-		
+
 		if([type isEqualToString:NSHTMLPboardType])
 		{
 			if(!(pboardString = [pboard stringForType:NSHTMLPboardType]))
@@ -264,7 +265,7 @@
 			return;
 		}
 	}
-	
+
 	switch(mode)
 	{
 		case SignService:
@@ -282,9 +283,9 @@
 		case ImportKeyService:
 			[self importKey:pboardString];
 			break;
-			
+
 	}
-	
+
 	if(newString!=nil)
 	{
 		[pboard declareTypes:[NSArray arrayWithObjects:NSStringPboardType,NSHTMLPboardType,nil] owner:nil];
