@@ -130,6 +130,40 @@
 	return [result autorelease];
 }
 
+-(NSString *)encryptTextString:(NSString *)inputString
+{
+	GPGData *inputData, *outputData;
+	GPGContext *aContext = [[GPGContext alloc] init];
+	NSMutableArray *recipients = [[NSMutableArray alloc] init];
+	BOOL trustsAllKeys = TRUE;
+
+	//todo: just ask the user for recipients and whether we should sign the text
+	[self displayMessageWindowWithTitleText:@"Not implemented" bodyText:@"Please implement this funcionality if you're an developer."];
+
+	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+	NS_DURING
+		outputData=[aContext encryptedData:(GPGData *)inputData withKeys:recipients trustAllKeys:trustsAllKeys];
+	NS_HANDLER
+		outputData = nil;
+		switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
+		{
+			case GPGErrorNoData:
+				[self displayMessageWindowWithTitleText:@"Encryption failed." bodyText:@"No encryptable text was found within the selection."];
+				break;
+			case GPGErrorCancelled:
+				break;
+			default:
+				[self displayMessageWindowWithTitleText:@"Encryption failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
+		}
+		[inputData release];
+		[aContext release];
+		return nil;
+	NS_ENDHANDLER
+	[inputData release];
+
+	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
+}
+
 -(NSString *)signTextString:(NSString *)inputString
 {
 	GPGData *inputData, *outputData;
@@ -270,6 +304,9 @@
 		case SignService:
 			newString=[self signTextString:pboardString];
 			break;
+	    case EncryptService:
+	        newString=[self encryptTextString:pboardString];
+			break;
 		case VerifyService:
 			[self verifyTextString:pboardString];
 			break;
@@ -282,7 +319,6 @@
 		case ImportKeyService:
 			[self importKey:pboardString];
 			break;
-
 	}
 
 	if(newString!=nil)
@@ -299,6 +335,9 @@
 	[NSApp hide:self];
 	[self goneIn60Seconds];
 }
+
+-(void)encrypt:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
+{[self dealWithPasteboard:pboard userData:userData mode:EncryptService error:error];}
 
 -(void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {[self dealWithPasteboard:pboard userData:userData mode:SignService error:error];}
