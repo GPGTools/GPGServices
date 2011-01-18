@@ -138,11 +138,12 @@
 	BOOL trustsAllKeys = TRUE;
 
 	//todo: just ask the user for recipients and whether we should sign the text
-	[self displayMessageWindowWithTitleText:@"Not implemented" bodyText:@"Please implement this funcionality if you're an developer."];
+	[self displayMessageWindowWithTitleText:@"Encryption not implemented" bodyText:@"Please implement this funcionality if you're an developer."];
 
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+	
 	NS_DURING
-		outputData=[aContext encryptedData:(GPGData *)inputData withKeys:recipients trustAllKeys:trustsAllKeys];
+		outputData=[aContext encryptedData:inputData withKeys:recipients trustAllKeys:trustsAllKeys];
 	NS_HANDLER
 		outputData = nil;
 		switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
@@ -163,6 +164,40 @@
 
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
 }
+
+-(NSString *)decryptTextString:(NSString *)inputString
+{
+	GPGData *inputData, *outputData;
+	GPGContext *aContext = [[GPGContext alloc] init];
+	
+	[aContext setPassphraseDelegate:self];
+	
+	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	NS_DURING
+		outputData=[aContext decryptedData:inputData];
+	NS_HANDLER
+		outputData = nil;
+		switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
+		{
+			case GPGErrorNoData:
+				[self displayMessageWindowWithTitleText:@"Decryption failed." bodyText:@"No decryptable text was found within the selection."];
+				break;
+			case GPGErrorCancelled:
+				break;
+			default:
+				[self displayMessageWindowWithTitleText:@"Decryption failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
+		}
+		[inputData release];
+		[aContext release];
+		return nil;
+	NS_ENDHANDLER
+	[inputData release];
+	[aContext release];
+
+	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
+}
+
 
 -(NSString *)signTextString:(NSString *)inputString
 {
@@ -307,6 +342,9 @@
 	    case EncryptService:
 	        newString=[self encryptTextString:pboardString];
 			break;
+	    case DecryptService:
+	        newString=[self decryptTextString:pboardString];
+			break;
 		case VerifyService:
 			[self verifyTextString:pboardString];
 			break;
@@ -336,11 +374,14 @@
 	[self goneIn60Seconds];
 }
 
+-(void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
+{[self dealWithPasteboard:pboard userData:userData mode:SignService error:error];}
+
 -(void)encrypt:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {[self dealWithPasteboard:pboard userData:userData mode:EncryptService error:error];}
 
--(void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
-{[self dealWithPasteboard:pboard userData:userData mode:SignService error:error];}
+-(void)decrypt:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
+{[self dealWithPasteboard:pboard userData:userData mode:DecryptService error:error];}
 
 -(void)verify:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {[self dealWithPasteboard:pboard userData:userData mode:VerifyService error:error];}

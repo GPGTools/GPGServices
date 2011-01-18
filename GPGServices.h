@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <MacGPGME/MacGPGME.h>
 
-typedef enum {SignService, EncryptService, VerifyService, MyKeyService, MyFingerprintService, ImportKeyService} ServiceModeEnum;
+typedef enum {SignService, EncryptService, DecryptService, VerifyService, MyKeyService, MyFingerprintService, ImportKeyService} ServiceModeEnum;
 
 @interface GPGServices : NSObject
 {
@@ -28,6 +28,7 @@ typedef enum {SignService, EncryptService, VerifyService, MyKeyService, MyFinger
 -(NSString *)myKey;
 -(NSString *)signTextString:(NSString *)inputString;
 -(NSString *)encryptTextString:(NSString *)inputString;
+-(NSString *)decryptTextString:(NSString *)inputString;
 -(void)verifyTextString:(NSString *)inputString;
 
 
@@ -35,6 +36,7 @@ typedef enum {SignService, EncryptService, VerifyService, MyKeyService, MyFinger
 -(void)exitServiceRequest;
 -(void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)encrypt:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
+-(void)decrypt:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)verify:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)myKey:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)myFingerprint:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
