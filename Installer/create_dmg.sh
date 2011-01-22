@@ -15,9 +15,13 @@ else
 	exit 1
 fi
 
+version=$(date "+%Y%m%d")
+version="1.3"
+dmg="../build/GPGServices-$version.dmg"
+
 # remove files from earlier execution
-rm ../build/GPGServices-$(date "+%Y%m%d").dmg
-#rm build/GPGServices-$(date "+%Y%m%d").dmg.zip
+rm "$dmg"
+rm "$dmg.sig"
 
 tar xfvj template.dmg.tar.bz2
 
@@ -37,9 +41,9 @@ dmg_device=` hdiutil info | grep "gpgtools_diskimage" | awk '{print $1}' `
 
 hdiutil detach $dmg_device -quiet -force
 
-hdiutil convert "template.dmg" -quiet -format UDZO -imagekey zlib-level=9 -o "../build/GPGServices-$(date "+%Y%m%d").dmg"
-
-#zip -j ../build/GPGServices-$(date "+%Y%m%d").dmg.zip ../build/GPGServices-$(date "+%Y%m%d").dmg
+hdiutil convert "template.dmg" -quiet -format UDZO -imagekey zlib-level=9 -o "$dmg"
 
 # remove the extracted template
 rm template.dmg
+
+gpg2 --detach-sign -u 76D78F0500D026C4 "$dmg"
