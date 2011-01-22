@@ -443,7 +443,7 @@
 				<key>POSTINSTALL_PATH</key>
 				<dict>
 					<key>PATH</key>
-					<string>/Data/Temp/GPGServices/Installer/ServicesRestart</string>
+					<string>/Data/Temp/GPGServices/Installer/postflight.sh</string>
 					<key>PATH_TYPE</key>
 					<integer>0</integer>
 				</dict>
@@ -467,7 +467,7 @@
 				<key>RELOCATABLE</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.2b</string>
+				<string>1.3</string>
 			</dict>
 			<key>UUID</key>
 			<string>5BCCF690-7295-423B-89B3-5BAC72D8B16A</string>
