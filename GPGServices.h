@@ -14,6 +14,7 @@ typedef enum {SignService, EncryptService, DecryptService, VerifyService, MyKeyS
 @interface GPGServices : NSObject
 {
 	IBOutlet NSWindow *messageWindow;
+	IBOutlet NSWindow *recipientWindow;
 	IBOutlet NSTextField *messageHeadingText;
 	IBOutlet NSTextField *messageBodyText;
 	
