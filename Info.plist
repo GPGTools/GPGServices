@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
@@ -7,6 +7,8 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
+	<string>icon.png</string>
+	<key>CFBundleDisplayName</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
 	<string>org.gpgtools.gpgservices</string>
@@ -19,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>ccsv</string>
 	<key>CFBundleVersion</key>
-	<string>1.2b</string>
+	<string>1.3</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -29,10 +31,10 @@
 		<dict>
 			<key>NSKeyEquivalent</key>
 			<dict>
-			    <key>default</key>
-			    <string>V</string>
-		    </dict>
-		    <key>NSMenuItem</key>
+				<key>default</key>
+				<string>V</string>
+			</dict>
+			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
 				<string>OpenPGP: Verify</string>
@@ -53,8 +55,8 @@
 		<dict>
 			<key>NSKeyEquivalent</key>
 			<dict>
-			    <key>default</key>
-    			<string>S</string>
+				<key>default</key>
+				<string>S</string>
 			</dict>
 			<key>NSMenuItem</key>
 			<dict>
@@ -80,8 +82,8 @@
 		<dict>
 			<key>NSKeyEquivalent</key>
 			<dict>
-			    <key>default</key>
-    			<string>E</string>
+				<key>default</key>
+				<string>E</string>
 			</dict>
 			<key>NSMenuItem</key>
 			<dict>
@@ -107,8 +109,8 @@
 		<dict>
 			<key>NSKeyEquivalent</key>
 			<dict>
-			    <key>default</key>
-    			<string>D</string>
+				<key>default</key>
+				<string>D</string>
 			</dict>
 			<key>NSMenuItem</key>
 			<dict>
@@ -134,9 +136,9 @@
 		<dict>
 			<key>NSKeyEquivalent</key>
 			<dict>
-			    <key>default</key>
-    			<string>K</string>
-    		</dict>
+				<key>default</key>
+				<string>K</string>
+			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -157,9 +159,9 @@
 		<dict>
 			<key>NSKeyEquivalent</key>
 			<dict>
-			    <key>default</key>
-    			<string>F</string>
-    		</dict>
+				<key>default</key>
+				<string>F</string>
+			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -180,9 +182,9 @@
 		<dict>
 			<key>NSKeyEquivalent</key>
 			<dict>
-			    <key>default</key>
-    			<string>I</string>
-    		</dict>
+				<key>default</key>
+				<string>I</string>
+			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
