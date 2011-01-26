@@ -1,16 +1,21 @@
-all: install
+all: compile
 
-install:
-	@echo "Installation (have a look at build.log for details)";
+compile:
+	@echo "(have a look at build.log for details)";
 	@echo "" > build.log
 	@echo "  * Building...(can take some minutes)";
 	@xcodebuild -project GPGServices.xcodeproj -target GPGServices -configuration Release build >> build.log 2>&1
+
+install: compile
 	@echo "  * Installing...";
 	@mkdir -p ~/Library/Services >> build.log 2>&1
 	@rm -rf ~/Library/Services/GPGServices.service >> build.log 2>&1
 	@cp -r build/Release/GPGServices.service ~/Library/Services >> build.log 2>&1
-	@./Installer/ServicesRestart 
+	@./Installer/ServicesRestart
 	@echo "Go to 'Preferences>Keyboard>Shortcuts>Services>Text>..."
+
+dmg: compile
+	@./Installer/create_dmg.sh
 
 clean-gpgme:
 	rm -rf Dependencies/MacGPGME/build
