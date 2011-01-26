@@ -43,7 +43,10 @@ hdiutil detach $dmg_device -quiet -force
 
 hdiutil convert "template.dmg" -quiet -format UDZO -imagekey zlib-level=9 -o "$dmg"
 
+open "$dmg"
+
 # remove the extracted template
 rm template.dmg
 
 gpg2 --detach-sign -u 76D78F0500D026C4 "$dmg"
+

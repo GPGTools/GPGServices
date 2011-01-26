@@ -33,7 +33,7 @@
 	NS_DURING
 		importedKeys=[aContext importKeyData:inputData];
 	NS_HANDLER
-		[self displayMessageWindowWithTitleText:@"Import failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
+		[self displayMessageWindowWithTitleText:@"Import result:" bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
 		[inputData release];
 		[aContext release];
 		return;
@@ -143,7 +143,7 @@
 	//[recipientWindow close];
 
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-	
+
 	NS_DURING
 		outputData=[aContext encryptedData:inputData withKeys:recipients trustAllKeys:trustsAllKeys];
 	NS_HANDLER
@@ -171,11 +171,11 @@
 {
 	GPGData *inputData, *outputData;
 	GPGContext *aContext = [[GPGContext alloc] init];
-	
+
 	[aContext setPassphraseDelegate:self];
-	
+
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-	
+
 	NS_DURING
 		outputData=[aContext decryptedData:inputData];
 	NS_HANDLER
