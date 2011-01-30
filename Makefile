@@ -15,7 +15,7 @@ install: compile
 	@echo "Go to 'Preferences>Keyboard>Shortcuts>Services>Text>..."
 
 dmg: compile
-	@./Installer/create_dmg.sh
+	@./Dependencies/GPGTools_Core/scripts/create_dmg.sh
 
 clean-gpgme:
 	rm -rf Dependencies/MacGPGME/build

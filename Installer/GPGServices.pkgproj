@@ -290,7 +290,7 @@
 											<key>TYPE</key>
 											<integer>3</integer>
 											<key>UID</key>
-											<integer>501</integer>
+											<integer>0</integer>
 										</dict>
 									</array>
 									<key>GID</key>
@@ -501,7 +501,7 @@
 				<key>BACKGROUND_PATH</key>
 				<dict>
 					<key>PATH</key>
-					<string>installer_background.png</string>
+					<string>background_installer.png</string>
 					<key>PATH_TYPE</key>
 					<integer>1</integer>
 				</dict>
@@ -620,7 +620,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>package-introduction-en.txt</string>
+							<string>INSTALLER.txt</string>
 							<key>PATH_TYPE</key>
 							<integer>1</integer>
 						</dict>
@@ -707,7 +707,7 @@
 						<key>IC_REQUIREMENT_SCRIPT_PATH</key>
 						<dict>
 							<key>PATH</key>
-							<string>check_for_gpg.sh</string>
+							<string>Dependencies/GPGTools_Core/scripts/check_for_gpg.sh</string>
 							<key>PATH_TYPE</key>
 							<integer>1</integer>
 						</dict>
