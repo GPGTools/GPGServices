@@ -141,7 +141,7 @@
 	
 	[aContext setUsesArmor:YES];
 	
-	[recipients addObjectsFromArray:[[aContext keyEnumeratorForSearchPattern:pattern secretKeysOnly:NO] allObjects]];
+	[recipients addObjectsFromArray:[[aContext keyEnumeratorForSearchPattern:testPattern secretKeysOnly:NO] allObjects]];
 	
 	
 	//for(GPGKey* k in recipients)
