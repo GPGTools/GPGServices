@@ -135,10 +135,21 @@
 	GPGData *inputData, *outputData;
 	GPGContext *aContext = [[GPGContext alloc] init];
 	NSMutableArray *recipients = [[NSMutableArray alloc] init];
-	BOOL trustsAllKeys = TRUE;
+	BOOL trustsAllKeys = NO;
+	
+	NSString* testPattern = @"moritz";
+	
+	[aContext setUsesArmor:YES];
+	
+	[recipients addObjectsFromArray:[[aContext keyEnumeratorForSearchPattern:pattern secretKeysOnly:NO] allObjects]];
+	
+	
+	//for(GPGKey* k in recipients)
+	//	NSLog(@"%@", [k email]);
+	//NSLog(@"recipients: %@", recipients);
 
 	//todo: just ask the user for recipients and whether we should sign the text
-	[self displayMessageWindowWithTitleText:@"Encryption not implemented" bodyText:@"Please implement this funcionality if you're an developer."];
+	//[self displayMessageWindowWithTitleText:@"BLABLABLA Encryption not implemented" bodyText:@"Please implement this funcionality if you're an developer."];
 	//[NSApp runModalForWindow:recipientWindow];
 	//[recipientWindow close];
 
@@ -154,15 +165,21 @@
 				[self displayMessageWindowWithTitleText:@"Encryption failed." bodyText:@"No encryptable text was found within the selection."];
 				break;
 			case GPGErrorCancelled:
+				[self displayMessageWindowWithTitleText:@"Encryption cancelled." bodyText:@"Encryption was cancelled."];
 				break;
 			default:
 				[self displayMessageWindowWithTitleText:@"Encryption failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
+				for(GPGKey* key in [[aContext operationResults] objectForKey:@"keyErrors"])
+					NSLog(@"key: %@, error: %@", [key email], GPGErrorDescription([[[aContext operationResults] objectForKey:key] intValue]));
 		}
 		[inputData release];
 		[aContext release];
 		return nil;
 	NS_ENDHANDLER
+	
 	[inputData release];
+	[recipients release];
+	[aContext release];
 
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
 }
