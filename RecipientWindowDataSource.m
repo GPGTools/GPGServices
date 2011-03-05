@@ -11,6 +11,13 @@
 
 @implementation RecipientWindowDataSource
 
+@synthesize sign;
+
+@dynamic selectedKeys;
+- (NSArray*)selectedKeys {
+	return [keysMatchingSearch objectsAtIndexes:indexSet];
+}
+
 - (void)awakeFromNib {
 	gpgContext = [[GPGContext alloc] init];
 	
@@ -108,6 +115,18 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	}
 	
 	[tableView reloadData];
+}
+
+#pragma mark -
+#pragma mark Delegate
+
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
+	NSLog(@"tableViewSelectionDidChange");
+	
+	[self willChangeValueForKey:@"selectedKeys"];
+	[indexSet release];
+	indexSet = [[tableView selectedRowIndexes] retain];
+	[self didChangeValueForKey:@"selectedKeys"];
 }
 
 @end

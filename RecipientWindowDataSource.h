@@ -17,7 +17,12 @@
 	NSArray* availableKeys;
 	NSArray* keysMatchingSearch;
 	
-	NSString* searchPattern;
+	NSIndexSet* indexSet;
+	
+	BOOL sign;
 }
+
+@property(readonly) NSArray* selectedKeys;
+@property(assign) BOOL sign;
 
 @end

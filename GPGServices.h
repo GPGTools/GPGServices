@@ -11,6 +11,8 @@
 
 typedef enum {SignService, EncryptService, DecryptService, VerifyService, MyKeyService, MyFingerprintService, ImportKeyService} ServiceModeEnum;
 
+@class RecipientWindowDataSource;
+
 @interface GPGServices : NSObject
 {
 	IBOutlet NSWindow *messageWindow;
@@ -20,6 +22,8 @@ typedef enum {SignService, EncryptService, DecryptService, VerifyService, MyKeyS
 	
 	IBOutlet NSWindow *passphraseWindow;
 	IBOutlet NSSecureTextField *passphraseText;
+	
+	IBOutlet RecipientWindowDataSource* recipientWindowController;
 	
 	NSTimer *currentTerminateTimer;
 }

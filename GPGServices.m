@@ -8,6 +8,8 @@
 
 #import "GPGServices.h"
 
+#import "RecipientWindowDataSource.h"
+
 @implementation GPGServices
 
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -134,37 +136,25 @@
 {
 	GPGData *inputData, *outputData;
 	GPGContext *aContext = [[GPGContext alloc] init];
-	NSMutableArray *recipients = [[NSMutableArray alloc] init];
 	BOOL trustsAllKeys = NO;
-	BOOL sign = NO;
-	
-	NSString* testPattern = @"moritz";
-	
+
 	[aContext setUsesArmor:YES];
 	
-	[recipients addObjectsFromArray:[[aContext keyEnumeratorForSearchPattern:testPattern secretKeysOnly:NO] allObjects]];
-	
-	
-	//for(GPGKey* k in recipients)
-	//	NSLog(@"%@", [k email]);
-	//NSLog(@"recipients: %@", recipients);
-
-	//todo: just ask the user for recipients and whether we should sign the text
-	//[self displayMessageWindowWithTitleText:@"BLABLABLA Encryption not implemented" bodyText:@"Please implement this funcionality if you're an developer."];
-	
-	
-	[NSApp runModalForWindow:recipientWindow];
-	//[recipientWindow close];
-
-	
-	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-
-	NS_DURING
-	if(sign)
-		outputData=[aContext encryptedSignedData:inputData withKeys:recipients trustAllKeys:trustsAllKeys];
-	else
-		outputData=[aContext encryptedData:inputData withKeys:recipients trustAllKeys:trustsAllKeys];
-	NS_HANDLER
+	int ret = [NSApp runModalForWindow:recipientWindow];
+	if(ret != 0) {
+		[self displayMessageWindowWithTitleText:@"Encryption cancelled." bodyText:@"Encryption was cancelled."];
+	} else {
+		inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+		
+		BOOL sign = recipientWindowController.sign;
+		NSArray* recipients = recipientWindowController.selectedKeys;
+		
+		NS_DURING
+		if(sign)
+			outputData=[aContext encryptedSignedData:inputData withKeys:recipients trustAllKeys:trustsAllKeys];
+		else
+			outputData=[aContext encryptedData:inputData withKeys:recipients trustAllKeys:trustsAllKeys];
+		NS_HANDLER
 		outputData = nil;
 		switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
 		{
@@ -172,7 +162,6 @@
 				[self displayMessageWindowWithTitleText:@"Encryption failed." bodyText:@"No encryptable text was found within the selection."];
 				break;
 			case GPGErrorCancelled:
-				[self displayMessageWindowWithTitleText:@"Encryption cancelled." bodyText:@"Encryption was cancelled."];
 				break;
 			default:
 				[self displayMessageWindowWithTitleText:@"Encryption failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
@@ -181,11 +170,12 @@
 		}
 		[inputData release];
 		[aContext release];
+		[recipients release];
+		
 		return nil;
-	NS_ENDHANDLER
+		NS_ENDHANDLER
+	}
 	
-	[inputData release];
-	[recipients release];
 	[aContext release];
 
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
@@ -448,8 +438,10 @@
 }
 
 
--(IBAction)closeModalWindow:(id)sender
-{[NSApp stopModalWithCode:[sender tag]];}
+-(IBAction)closeModalWindow:(id)sender{
+	[NSApp stopModalWithCode:[sender tag]];
+	[recipientWindow close];
+}
 
 
 
