@@ -8,7 +8,7 @@
 
 #import "GPGServices.h"
 
-#import "RecipientWindowDataSource.h"
+#import "RecipientWindowController.h"
 
 @implementation GPGServices
 
@@ -140,14 +140,16 @@
 
 	[aContext setUsesArmor:YES];
 	
-	int ret = [NSApp runModalForWindow:recipientWindow];
+	RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
+	
+	int ret = [rcp runModal];
 	if(ret != 0) {
 		[self displayMessageWindowWithTitleText:@"Encryption cancelled." bodyText:@"Encryption was cancelled."];
 	} else {
 		inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 		
-		BOOL sign = recipientWindowController.sign;
-		NSArray* recipients = recipientWindowController.selectedKeys;
+		BOOL sign = rcp.sign;
+		NSArray* recipients = rcp.selectedKeys;
 		
 		NS_DURING
 		if(sign)

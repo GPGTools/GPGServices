@@ -15,7 +15,8 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		8ECAFAD31322A54700654F03 /* RecipientWindowDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECAFAD21322A54700654F03 /* RecipientWindowDataSource.m */; };
+		8ECAFAD31322A54700654F03 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECAFAD21322A54700654F03 /* RecipientWindowController.m */; };
+		8ECAFC651322C25600654F03 /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ECAFC641322C25600654F03 /* RecipientWindow.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,8 +79,9 @@
 		4B1908C00A4CBF0B00052798 /* GPGServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPGServices.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* GPGServices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8ECAFAD11322A54700654F03 /* RecipientWindowDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipientWindowDataSource.h; sourceTree = "<group>"; };
-		8ECAFAD21322A54700654F03 /* RecipientWindowDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipientWindowDataSource.m; sourceTree = "<group>"; };
+		8ECAFAD11322A54700654F03 /* RecipientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipientWindowController.h; sourceTree = "<group>"; };
+		8ECAFAD21322A54700654F03 /* RecipientWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipientWindowController.m; sourceTree = "<group>"; };
+		8ECAFC621322C25200654F03 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +102,8 @@
 			children = (
 				4B1908BF0A4CBF0B00052798 /* GPGServices.h */,
 				4B1908C00A4CBF0B00052798 /* GPGServices.m */,
-				8ECAFAD11322A54700654F03 /* RecipientWindowDataSource.h */,
-				8ECAFAD21322A54700654F03 /* RecipientWindowDataSource.m */,
+				8ECAFAD11322A54700654F03 /* RecipientWindowController.h */,
+				8ECAFAD21322A54700654F03 /* RecipientWindowController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -180,6 +182,7 @@
 				2260756C12EBA0B50026DBEA /* Icon.icns */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+				8ECAFC641322C25600654F03 /* RecipientWindow.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				2260756D12EBA0B50026DBEA /* Icon.icns in Resources */,
+				8ECAFC651322C25600654F03 /* RecipientWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +294,7 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */,
-				8ECAFAD31322A54700654F03 /* RecipientWindowDataSource.m in Sources */,
+				8ECAFAD31322A54700654F03 /* RecipientWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +323,14 @@
 				29B97319FDCFA39411CA2CEA /* English */,
 			);
 			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+		8ECAFC641322C25600654F03 /* RecipientWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8ECAFC621322C25200654F03 /* English */,
+			);
+			name = RecipientWindow.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <MacGPGME/MacGPGME.h>
 
-@interface RecipientWindowDataSource : NSObject <NSTableViewDelegate, NSTableViewDataSource, NSWindowDelegate> {
+@interface RecipientWindowController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource, NSWindowDelegate> {
 	IBOutlet NSTableView* tableView;
 	
 	GPGContext* gpgContext;
@@ -24,5 +24,9 @@
 
 @property(readonly) NSArray* selectedKeys;
 @property(assign) BOOL sign;
+
+- (NSInteger)runModal;
+- (IBAction)okClicked:(id)sender;
+- (IBAction)cancelClicked:(id)sender;
 
 @end

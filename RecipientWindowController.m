@@ -6,19 +6,25 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "RecipientWindowDataSource.h"
+#import "RecipientWindowController.h"
 
 
-@implementation RecipientWindowDataSource
+@implementation RecipientWindowController
 
 @synthesize sign;
 
 @dynamic selectedKeys;
 - (NSArray*)selectedKeys {
-	return [keysMatchingSearch objectsAtIndexes:indexSet];
+	if(indexSet == nil || 
+	   indexSet.count == 0)
+		return nil;
+	else
+		return [keysMatchingSearch objectsAtIndexes:indexSet];
 }
 
-- (void)awakeFromNib {
+- (id)init {
+	self = [super initWithWindowNibName:@"RecipientWindow"];
+	
 	gpgContext = [[GPGContext alloc] init];
 	
 	availableKeys = [[[gpgContext keyEnumeratorForSearchPattern:@"" secretKeysOnly:NO] allObjects] retain];
@@ -27,6 +33,8 @@
 	//NSLog(@"availableKeys: %@", availableKeys);
 	
 	[tableView reloadData];
+	
+	return self;
 }
 
 - (void)dealloc {
@@ -114,6 +122,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		keysMatchingSearch = [newFilteredArray retain];
 	}
 	
+	[tableView deselectAll:self];
+	
 	[tableView reloadData];
 }
 
@@ -123,10 +133,30 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
 	NSLog(@"tableViewSelectionDidChange");
 	
+	NSIndexSet* set = [tableView selectedRowIndexes];
+	
 	[self willChangeValueForKey:@"selectedKeys"];
 	[indexSet release];
-	indexSet = [[tableView selectedRowIndexes] retain];
+	indexSet = (set.count == 0) ? nil : [set retain];
 	[self didChangeValueForKey:@"selectedKeys"];
+}
+
+#pragma mark -
+#pragma mark Actions
+
+- (NSInteger)runModal {
+	[self showWindow:self];
+	NSInteger ret = [NSApp runModalForWindow:self.window];
+	[self.window close];
+	return ret;
+}
+
+- (IBAction)okClicked:(id)sender {
+	[NSApp stopModalWithCode:0];
+}
+
+- (IBAction)cancelClicked:(id)sender {
+	[NSApp stopModalWithCode:1];
 }
 
 @end
