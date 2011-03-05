@@ -15,6 +15,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		8ECAFAD31322A54700654F03 /* RecipientWindowDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECAFAD21322A54700654F03 /* RecipientWindowDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +77,9 @@
 		4B1908BF0A4CBF0B00052798 /* GPGServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPGServices.h; sourceTree = "<group>"; };
 		4B1908C00A4CBF0B00052798 /* GPGServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPGServices.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* GPGServices.service */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.service; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* GPGServices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ECAFAD11322A54700654F03 /* RecipientWindowDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipientWindowDataSource.h; sourceTree = "<group>"; };
+		8ECAFAD21322A54700654F03 /* RecipientWindowDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipientWindowDataSource.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,8 @@
 			children = (
 				4B1908BF0A4CBF0B00052798 /* GPGServices.h */,
 				4B1908C00A4CBF0B00052798 /* GPGServices.m */,
+				8ECAFAD11322A54700654F03 /* RecipientWindowDataSource.h */,
+				8ECAFAD21322A54700654F03 /* RecipientWindowDataSource.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -123,7 +128,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* GPGServices.service */,
+				8D1107320486CEB800E47090 /* GPGServices.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -208,7 +213,7 @@
 			name = GPGServices;
 			productInstallPath = "$(HOME)/Applications";
 			productName = GPGServices;
-			productReference = 8D1107320486CEB800E47090 /* GPGServices.service */;
+			productReference = 8D1107320486CEB800E47090 /* GPGServices.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -285,6 +290,7 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */,
+				8ECAFAD31322A54700654F03 /* RecipientWindowDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

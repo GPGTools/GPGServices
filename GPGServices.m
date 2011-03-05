@@ -151,9 +151,12 @@
 
 	//todo: just ask the user for recipients and whether we should sign the text
 	//[self displayMessageWindowWithTitleText:@"BLABLABLA Encryption not implemented" bodyText:@"Please implement this funcionality if you're an developer."];
-	//[NSApp runModalForWindow:recipientWindow];
+	
+	
+	[NSApp runModalForWindow:recipientWindow];
 	//[recipientWindow close];
 
+	
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 
 	NS_DURING
