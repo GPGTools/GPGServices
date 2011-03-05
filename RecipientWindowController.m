@@ -30,11 +30,15 @@
 	availableKeys = [[[gpgContext keyEnumeratorForSearchPattern:@"" secretKeysOnly:NO] allObjects] retain];
 	keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
 	
-	//NSLog(@"availableKeys: %@", availableKeys);
-	
-	[tableView reloadData];
-	
 	return self;
+}
+
+- (void)windowDidLoad {
+	[super windowDidLoad];
+	
+	[tableView setDoubleAction:@selector(doubleClickAction:)];
+	[tableView setTarget:self];
+	[tableView reloadData];
 }
 
 - (void)dealloc {
@@ -136,6 +140,15 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	[indexSet release];
 	indexSet = (set.count == 0) ? nil : [set retain];
 	[self didChangeValueForKey:@"selectedKeys"];
+}
+
+- (void)doubleClickAction:(id)sender {
+	if([sender clickedRow] != -1 && 
+	   [sender clickedRow] < keysMatchingSearch.count) {
+		[tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[sender clickedRow]]
+			   byExtendingSelection:NO];
+		[self okClicked:sender];
+	}
 }
 
 #pragma mark -
