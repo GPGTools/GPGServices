@@ -88,7 +88,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Encrypt (not implemented)</string>
+				<string>OpenPGP: Encrypt</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>encrypt</string>
@@ -115,7 +115,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Decryt</string>
+				<string>OpenPGP: Decrypt</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>decrypt</string>
