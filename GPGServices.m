@@ -136,6 +136,7 @@
 	GPGContext *aContext = [[GPGContext alloc] init];
 	NSMutableArray *recipients = [[NSMutableArray alloc] init];
 	BOOL trustsAllKeys = NO;
+	BOOL sign = NO;
 	
 	NSString* testPattern = @"moritz";
 	
@@ -156,6 +157,9 @@
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 
 	NS_DURING
+	if(sign)
+		outputData=[aContext encryptedSignedData:inputData withKeys:recipients trustAllKeys:trustsAllKeys];
+	else
 		outputData=[aContext encryptedData:inputData withKeys:recipients trustAllKeys:trustsAllKeys];
 	NS_HANDLER
 		outputData = nil;
