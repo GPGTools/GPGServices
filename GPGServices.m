@@ -145,6 +145,8 @@
 	int ret = [rcp runModal];
 	if(ret != 0) {
 		[self displayMessageWindowWithTitleText:@"Encryption cancelled." bodyText:@"Encryption was cancelled."];
+		[aContext release];
+		return nil;
 	} else {
 		inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 		
