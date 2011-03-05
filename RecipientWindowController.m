@@ -87,7 +87,21 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 			return @"sec";
 		else if([key publicKey] == key)
 			return @"pub";
-	} 
+	} else if([iden isEqualToString:@"ownerTrust"]) {
+		switch([key ownerTrust]) {
+			case GPGValidityUndefined:
+				return @"Undefined";
+			case GPGValidityMarginal:
+				return @"Marginal";
+			case GPGValidityFull:
+				return @"Full";
+			case GPGValidityUltimate:
+				return @"Ultimate";
+			default:
+				return @"Undefined";
+		}
+	}
+
 	
 	
 	return @"";

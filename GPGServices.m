@@ -136,7 +136,7 @@
 {
 	GPGData *inputData, *outputData;
 	GPGContext *aContext = [[GPGContext alloc] init];
-	BOOL trustsAllKeys = NO;
+	BOOL trustsAllKeys = YES;
 
 	[aContext setUsesArmor:YES];
 	
