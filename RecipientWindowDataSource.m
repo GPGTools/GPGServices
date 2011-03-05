@@ -108,7 +108,6 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	}
 	
 	[tableView reloadData];
-	
 }
 
 @end
