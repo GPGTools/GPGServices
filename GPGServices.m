@@ -169,8 +169,6 @@
 				break;
 			default:
 				[self displayMessageWindowWithTitleText:@"Encryption failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
-				for(GPGKey* key in [[aContext operationResults] objectForKey:@"keyErrors"])
-					NSLog(@"key: %@, error: %@", [key email], GPGErrorDescription([[[aContext operationResults] objectForKey:key] intValue]));
 		}
 		[inputData release];
 		[aContext release];

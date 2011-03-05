@@ -123,7 +123,6 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	}
 	
 	[tableView deselectAll:self];
-	
 	[tableView reloadData];
 }
 
@@ -131,8 +130,6 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 #pragma mark Delegate
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
-	NSLog(@"tableViewSelectionDidChange");
-	
 	NSIndexSet* set = [tableView selectedRowIndexes];
 	
 	[self willChangeValueForKey:@"selectedKeys"];
