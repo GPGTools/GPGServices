@@ -11,6 +11,7 @@
 
 @interface RecipientWindowController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource, NSWindowDelegate> {
 	IBOutlet NSTableView* tableView;
+	IBOutlet NSSearchField* searchField;
 	
 	GPGContext* gpgContext;
 	

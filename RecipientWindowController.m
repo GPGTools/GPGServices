@@ -183,4 +183,12 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	[NSApp stopModalWithCode:1];
 }
 
+- (void)keyDown:(NSEvent *)theEvent {	
+	if([theEvent modifierFlags] & NSCommandKeyMask &&
+	   [[theEvent characters] isEqualToString:@"f"])
+		[self.window makeFirstResponder:searchField];
+	else
+		[super keyDown:theEvent];
+}
+
 @end
