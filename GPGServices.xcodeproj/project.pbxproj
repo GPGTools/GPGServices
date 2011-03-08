@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2260756D12EBA0B50026DBEA /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2260756C12EBA0B50026DBEA /* Icon.icns */; };
+		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
 		4B1906F80A4CBD6C00052798 /* MacGPGME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1906F70A4CBD6C00052798 /* MacGPGME.framework */; };
 		4B1907010A4CBDAF00052798 /* MacGPGME.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B1906F70A4CBD6C00052798 /* MacGPGME.framework */; };
 		4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1908C00A4CBF0B00052798 /* GPGServices.m */; };
@@ -67,6 +68,8 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		2260756C12EBA0B50026DBEA /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.icns; sourceTree = "<group>"; };
 		22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MacGPGME.xcodeproj; path = Dependencies/MacGPGME/MacGPGME.xcodeproj; sourceTree = "<group>"; };
+		22D6D9C913267E0C00622189 /* RecipientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipientWindowController.h; sourceTree = "<group>"; };
+		22D6D9CA13267E0C00622189 /* RecipientWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipientWindowController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -76,7 +79,7 @@
 		4B1908BF0A4CBF0B00052798 /* GPGServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPGServices.h; sourceTree = "<group>"; };
 		4B1908C00A4CBF0B00052798 /* GPGServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPGServices.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* GPGServices.service */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.service; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* GPGServices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +98,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				22D6D9C913267E0C00622189 /* RecipientWindowController.h */,
+				22D6D9CA13267E0C00622189 /* RecipientWindowController.m */,
 				4B1908BF0A4CBF0B00052798 /* GPGServices.h */,
 				4B1908C00A4CBF0B00052798 /* GPGServices.m */,
 			);
@@ -123,7 +128,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* GPGServices.service */,
+				8D1107320486CEB800E47090 /* GPGServices.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -208,7 +213,7 @@
 			name = GPGServices;
 			productInstallPath = "$(HOME)/Applications";
 			productName = GPGServices;
-			productReference = 8D1107320486CEB800E47090 /* GPGServices.service */;
+			productReference = 8D1107320486CEB800E47090 /* GPGServices.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -285,6 +290,7 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */,
+				22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
