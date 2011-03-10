@@ -80,7 +80,7 @@
 		4B1908BF0A4CBF0B00052798 /* GPGServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPGServices.h; sourceTree = "<group>"; };
 		4B1908C00A4CBF0B00052798 /* GPGServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPGServices.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* GPGServices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* GPGServices.service */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.service; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipientWindow.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,7 +130,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* GPGServices.app */,
+				8D1107320486CEB800E47090 /* GPGServices.service */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -216,7 +216,7 @@
 			name = GPGServices;
 			productInstallPath = "$(HOME)/Applications";
 			productName = GPGServices;
-			productReference = 8D1107320486CEB800E47090 /* GPGServices.app */;
+			productReference = 8D1107320486CEB800E47090 /* GPGServices.service */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -343,7 +343,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = GPGServices;
-				WRAPPER_EXTENSION = app;
+				WRAPPER_EXTENSION = service;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
