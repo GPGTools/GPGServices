@@ -16,6 +16,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		8E4A7B131328CA7C007953BE /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		4B1908C00A4CBF0B00052798 /* GPGServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPGServices.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* GPGServices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipientWindow.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				2260756C12EBA0B50026DBEA /* Icon.icns */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
@@ -278,6 +281,7 @@
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				2260756D12EBA0B50026DBEA /* Icon.icns in Resources */,
+				8E4A7B131328CA7C007953BE /* RecipientWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

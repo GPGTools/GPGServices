@@ -7,7 +7,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>GPGServices</string>
 	<key>CFBundleExecutable</key>
-	<string>GPGServices.service</string>
+	<string>GPGServices</string>
 	<key>CFBundleIconFile</key>
 	<string>Icon.icns</string>
 	<key>CFBundleIdentifier</key>
