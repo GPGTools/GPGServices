@@ -467,7 +467,7 @@
 				<key>RELOCATABLE</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.4</string>
+				<string>1.5beta1</string>
 			</dict>
 			<key>UUID</key>
 			<string>5BCCF690-7295-423B-89B3-5BAC72D8B16A</string>
@@ -707,7 +707,7 @@
 						<key>IC_REQUIREMENT_SCRIPT_PATH</key>
 						<dict>
 							<key>PATH</key>
-							<string>Dependencies/GPGTools_Core/scripts/check_for_gpg.sh</string>
+							<string>../Dependencies/GPGTools_Core/scripts/check_for_gpg.sh</string>
 							<key>PATH_TYPE</key>
 							<integer>1</integer>
 						</dict>
@@ -749,7 +749,7 @@
 			<key>ADVANCED_OPTIONS</key>
 			<dict/>
 			<key>BUILD_FORMAT</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>BUILD_PATH</key>
 			<dict>
 				<key>PATH</key>
