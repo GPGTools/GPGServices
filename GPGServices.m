@@ -47,6 +47,16 @@
 	[aContext release];
 }
 
+
+-(NSSet*)myKeys {
+    GPGContext* context = [[GPGContext alloc] init];
+    NSSet* keySet = [NSSet setWithArray:[[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects]];
+    [context release];
+    
+    return keySet;
+}
+
+
 -(NSString *)myFingerprint
 {
 	NSString *result=nil;
@@ -83,8 +93,6 @@
 	[aContext release];
 	return [result autorelease];
 }
-
-
 
 
 -(NSString *)myKey
@@ -221,7 +229,7 @@
 {
 	GPGData *inputData, *outputData;
 	GPGContext *aContext = [[GPGContext alloc] init];
-
+    
 	[aContext setPassphraseDelegate:self];
 
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
