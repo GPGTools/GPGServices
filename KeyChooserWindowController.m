@@ -15,9 +15,6 @@
 
 - (id)init {
     self = [super initWithWindowNibName:@"PrivateKeyChooserWindow"];
- 
-    NSLog(@"private keys: %@", [self getPrivateKeys]);
-    NSLog(@"default key: %@", [self getDefaultKey]);
     
     self.availableKeys = [self getPrivateKeys];
     self.chosenKey = [self getDefaultKey];
