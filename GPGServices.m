@@ -255,23 +255,28 @@
 
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 
-    GPGKey* chosenKey = nil;
+    GPGKey* chosenKey = [self myPrivateKey];
     
     NSSet* availableKeys = [self myKeys];
-    if(availableKeys.count > 1) {
+    if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
-        [wc runModal];
-        
-        chosenKey = wc.chosenKey;
+        if([wc runModal] == 0) 
+            chosenKey = wc.chosenKey;
+        else
+            chosenKey = nil;
         
         [wc release];
-    } else {
-        chosenKey = [self myPrivateKey];
     }
     
-    [aContext clearSignerKeys];
-    [aContext addSignerKey:chosenKey];
-    
+    if(chosenKey != nil) {
+        [aContext clearSignerKeys];
+        [aContext addSignerKey:chosenKey];
+    } else {
+        [inputData release];
+        [aContext release];
+        
+        return nil;
+    }
     
 	NS_DURING
 		outputData=[aContext signedData:inputData signatureMode:GPGSignatureModeClear];

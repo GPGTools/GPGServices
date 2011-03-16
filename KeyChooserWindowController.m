@@ -62,6 +62,13 @@
     [NSApp stopModalWithCode:1];
 }
 
+- (void)windowWillClose:(NSNotification *)notification {
+    if(notification.object == self.window && 
+       [NSApp modalWindow] == self.window) {
+        [NSApp stopModalWithCode:1];
+    }
+}
+
 - (NSInteger)runModal {
     [self.window center];
     [self.window display];
