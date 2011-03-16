@@ -37,10 +37,11 @@
     
     [popupButton removeAllItems];
     for(GPGKey* key in self.availableKeys) {
-        NSString* description = [key description];
-        NSLog(@"description: %@", description);
+        NSMutableString* description = [NSMutableString string];
+        [description appendFormat:@"%@ - %@ (%@) <%@>",
+         [key shortKeyID], [key name], [key comment], [key email]];
         [popupButton addItemWithTitle:description];
-    }
+    } 
     
     NSUInteger idx = [self.availableKeys indexOfObject:self.chosenKey];
     [popupButton selectItemAtIndex:idx];
