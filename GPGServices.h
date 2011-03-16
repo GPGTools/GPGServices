@@ -27,6 +27,7 @@ typedef enum {SignService, EncryptService, DecryptService, VerifyService, MyKeyS
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 -(void)importKey:(NSString *)inputString;
 -(NSSet*)myKeys;
+-(GPGKey*)myPrivateKey;
 -(NSString *)myKey;
 -(NSString *)signTextString:(NSString *)inputString;
 -(NSString *)encryptTextString:(NSString *)inputString;

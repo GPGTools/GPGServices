@@ -9,6 +9,7 @@
 #import "GPGServices.h"
 
 #import "RecipientWindowController.h"
+#import "KeyChooserWindowController.h"
 
 @implementation GPGServices
 
@@ -56,6 +57,26 @@
     return keySet;
 }
 
+- (GPGKey*)myPrivateKey {
+    GPGOptions *myOptions=[[GPGOptions alloc] init];
+	NSString *keyID=[myOptions optionValueForName:@"default-key"];
+	[myOptions release];
+	if(keyID == nil)
+        return nil;
+    
+	GPGContext *aContext = [[GPGContext alloc] init];
+    
+	NS_DURING
+    GPGKey* defaultKey=[aContext keyFromFingerprint:keyID secretKey:YES];
+    [aContext release];
+    return defaultKey;
+    NS_HANDLER
+    [aContext release];
+    return nil;
+	NS_ENDHANDLER
+    
+    return nil;
+}
 
 -(NSString *)myFingerprint
 {
@@ -234,6 +255,24 @@
 
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 
+    GPGKey* chosenKey = nil;
+    
+    NSSet* availableKeys = [self myKeys];
+    if(availableKeys.count > 1) {
+        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
+        [wc runModal];
+        
+        chosenKey = wc.chosenKey;
+        
+        [wc release];
+    } else {
+        chosenKey = [self myPrivateKey];
+    }
+    
+    [aContext clearSignerKeys];
+    [aContext addSignerKey:chosenKey];
+    
+    
 	NS_DURING
 		outputData=[aContext signedData:inputData signatureMode:GPGSignatureModeClear];
 	NS_HANDLER
