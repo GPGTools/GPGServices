@@ -170,8 +170,8 @@
 	[aContext setUsesArmor:YES];
 	
 	RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
-	
 	int ret = [rcp runModal];
+    [rcp release];
 	if(ret != 0) {
 		[self displayMessageWindowWithTitleText:@"Encryption cancelled." bodyText:@"Encryption was cancelled."];
 		[aContext release];
@@ -180,13 +180,35 @@
 		inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 		
 		BOOL sign = rcp.sign;
-		NSArray* recipients = rcp.selectedKeys;
-		
+        
+        NSArray* recipients = rcp.selectedKeys;
+        //Guard for crashes by filtering all valid recipients
+		NSArray* validRecipients = [recipients filteredArrayUsingPredicate:
+                                    [NSPredicate predicateWithBlock:
+                                     ^BOOL(id evaluatedObject, NSDictionary *bindings) {
+                                         GPGKey* k = (GPGKey*)evaluatedObject;
+                                         
+                                         return !([k isKeyInvalid]  || 
+                                                  [k isKeyRevoked]  ||
+                                                  [k hasKeyExpired] ||
+                                                  [k isKeyDisabled]);
+                                     }]];
+
+        if(validRecipients.count == 0) {
+            [self displayMessageWindowWithTitleText:@"Encryption failed." 
+                                           bodyText:@"No valid recipients found"];
+
+            [inputData release];
+            [aContext release];
+            
+            return nil;
+        }
+        
 		NS_DURING
 		if(sign)
-			outputData=[aContext encryptedSignedData:inputData withKeys:recipients trustAllKeys:trustsAllKeys];
+			outputData=[aContext encryptedSignedData:inputData withKeys:validRecipients trustAllKeys:trustsAllKeys];
 		else
-			outputData=[aContext encryptedData:inputData withKeys:recipients trustAllKeys:trustsAllKeys];
+			outputData=[aContext encryptedData:inputData withKeys:validRecipients trustAllKeys:trustsAllKeys];
 		NS_HANDLER
 		outputData = nil;
 		switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
@@ -201,7 +223,6 @@
 		}
 		[inputData release];
 		[aContext release];
-		[recipients release];
 		
 		return nil;
 		NS_ENDHANDLER

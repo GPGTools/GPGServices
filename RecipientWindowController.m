@@ -27,7 +27,18 @@
 	
 	gpgContext = [[GPGContext alloc] init];
 	
-	availableKeys = [[[gpgContext keyEnumeratorForSearchPattern:@"" secretKeysOnly:NO] allObjects] retain];
+    NSPredicate* pred = [NSPredicate predicateWithBlock:
+                         ^BOOL(id evaluatedObject, NSDictionary *bindings) {
+                             GPGKey* k = (GPGKey*)evaluatedObject;
+                             
+                             return !([k isKeyInvalid] || 
+                                      [k isKeyRevoked] ||
+                                      [k hasKeyExpired] ||
+                                      [k isKeyDisabled]);
+                         }];
+	availableKeys = [[[[gpgContext keyEnumeratorForSearchPattern:@"" 
+                                                 secretKeysOnly:NO] 
+                      allObjects] filteredArrayUsingPredicate:pred] retain];
 	keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
 	
 	return self;
@@ -42,6 +53,10 @@
 }
 
 - (void)dealloc {
+    tableView.delegate = nil;
+    tableView.dataSource = nil;
+    searchField.delegate = nil;
+    
 	[gpgContext release];
 	[availableKeys release];
 	[keysMatchingSearch release];
