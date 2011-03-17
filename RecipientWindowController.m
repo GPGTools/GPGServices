@@ -24,21 +24,20 @@
 
 - (id)init {
 	self = [super initWithWindowNibName:@"RecipientWindow"];
-	
+    
 	gpgContext = [[GPGContext alloc] init];
+    encryptPredicate = [[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [(GPGKey*)evaluatedObject canEncrypt];
+    }] retain];
+    encryptSignPredicate = [[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return ([(GPGKey*)evaluatedObject canEncrypt] && 
+                [(GPGKey*)evaluatedObject canSign]);
+    }] retain];
 	
-    NSPredicate* pred = [NSPredicate predicateWithBlock:
-                         ^BOOL(id evaluatedObject, NSDictionary *bindings) {
-                             GPGKey* k = (GPGKey*)evaluatedObject;
-                             
-                             return !([k isKeyInvalid] || 
-                                      [k isKeyRevoked] ||
-                                      [k hasKeyExpired] ||
-                                      [k isKeyDisabled]);
-                         }];
 	availableKeys = [[[[gpgContext keyEnumeratorForSearchPattern:@"" 
                                                  secretKeysOnly:NO] 
-                      allObjects] filteredArrayUsingPredicate:pred] retain];
+                      allObjects] 
+                      filteredArrayUsingPredicate:[self validationPredicate]] retain];
 	keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
 	
 	return self;
@@ -61,6 +60,9 @@
 	[availableKeys release];
 	[keysMatchingSearch release];
 	
+    [encryptPredicate release];
+    [encryptSignPredicate release];
+    
 	[super dealloc];
 }
 
@@ -130,8 +132,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	 */
 }
 
-- (void)controlTextDidChange:(NSNotification *)aNotification {
-	NSString* searchString = [[aNotification.object stringValue] lowercaseString];
+- (void)displayItemsMatchingString:(NSString*)searchString {
 	if(searchString == nil ||
 	   [searchString isEqualToString:@""]) {
 		[keysMatchingSearch release];		
@@ -159,6 +160,11 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	[tableView reloadData];
 }
 
+- (void)controlTextDidChange:(NSNotification *)aNotification {
+	NSString* searchString = [[aNotification.object stringValue] lowercaseString];
+    [self displayItemsMatchingString:searchString];
+}
+
 #pragma mark -
 #pragma mark Delegate
 
@@ -178,6 +184,15 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 			   byExtendingSelection:NO];
 		[self okClicked:sender];
 	}
+}
+
+#pragma mark Helpers
+
+- (NSPredicate*)validationPredicate {
+    if(sign)
+        return encryptSignPredicate;
+    else
+        return encryptPredicate;
 }
 
 #pragma mark -
@@ -204,6 +219,17 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		[self.window makeFirstResponder:searchField];
 	else
 		[super keyDown:theEvent];
+}
+
+- (IBAction)signClicked:(NSButton*)sender {
+    self.sign = sender.isEnabled;
+    
+    availableKeys = [[[[gpgContext keyEnumeratorForSearchPattern:@"" 
+                                                  secretKeysOnly:NO] 
+                       allObjects] 
+                      filteredArrayUsingPredicate:[self validationPredicate]] retain];
+
+    [self displayItemsMatchingString:[searchField stringValue]];
 }
 
 @end

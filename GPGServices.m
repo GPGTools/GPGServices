@@ -180,19 +180,7 @@
 		inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 		
 		BOOL sign = rcp.sign;
-        
-        NSArray* recipients = rcp.selectedKeys;
-        //Guard for crashes by filtering all valid recipients
-		NSArray* validRecipients = [recipients filteredArrayUsingPredicate:
-                                    [NSPredicate predicateWithBlock:
-                                     ^BOOL(id evaluatedObject, NSDictionary *bindings) {
-                                         GPGKey* k = (GPGKey*)evaluatedObject;
-                                         
-                                         return !([k isKeyInvalid]  || 
-                                                  [k isKeyRevoked]  ||
-                                                  [k hasKeyExpired] ||
-                                                  [k isKeyDisabled]);
-                                     }]];
+        NSArray* validRecipients = rcp.selectedKeys;
 
         if(validRecipients.count == 0) {
             [self displayMessageWindowWithTitleText:@"Encryption failed." 

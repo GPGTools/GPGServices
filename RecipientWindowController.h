@@ -17,6 +17,9 @@
 	
 	NSArray* availableKeys;
 	NSArray* keysMatchingSearch;
+    
+    NSPredicate* encryptPredicate;
+    NSPredicate* encryptSignPredicate;
 	
 	NSIndexSet* indexSet;
 	
@@ -26,8 +29,11 @@
 @property(readonly) NSArray* selectedKeys;
 @property(assign) BOOL sign;
 
+- (NSPredicate*)validationPredicate;
+- (void)displayItemsMatchingString:(NSString*)s;
 - (NSInteger)runModal;
 - (IBAction)okClicked:(id)sender;
 - (IBAction)cancelClicked:(id)sender;
+- (IBAction)signClicked:(NSButton*)sender;
 
 @end
