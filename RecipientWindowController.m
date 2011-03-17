@@ -34,7 +34,7 @@
                 [(GPGKey*)evaluatedObject canSign]);
     }] retain];
 	
-	availableKeys = [[[[gpgContext keyEnumeratorForSearchPattern:@"" 
+	availableKeys = [[[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
                                                  secretKeysOnly:NO] 
                       allObjects] 
                       filteredArrayUsingPredicate:[self validationPredicate]] retain];
@@ -224,7 +224,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (IBAction)signClicked:(NSButton*)sender {
     self.sign = sender.isEnabled;
     
-    availableKeys = [[[[gpgContext keyEnumeratorForSearchPattern:@"" 
+    availableKeys = [[[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
                                                   secretKeysOnly:NO] 
                        allObjects] 
                       filteredArrayUsingPredicate:[self validationPredicate]] retain];
