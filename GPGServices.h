@@ -35,6 +35,8 @@ typedef enum {
 
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 -(void)importKey:(NSString *)inputString;
+- (NSURL*)getFilenameForSavingWithExtensions:(NSString*)ext;
+
 -(NSSet*)myKeys;
 -(GPGKey*)myPrivateKey;
 -(NSString *)myKey;

@@ -16,7 +16,7 @@
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	[NSApp setServicesProvider:self];
-//	NSUpdateDynamicServices();
+    //	NSUpdateDynamicServices();
 	currentTerminateTimer=nil;
 }
 
@@ -30,22 +30,34 @@
 	GPGData *inputData;
 	NSDictionary *importedKeys;
 	GPGContext *aContext = [[GPGContext alloc] init];
-
+    
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-
+    
 	NS_DURING
-		importedKeys=[aContext importKeyData:inputData];
+    importedKeys=[aContext importKeyData:inputData];
 	NS_HANDLER
-		[self displayMessageWindowWithTitleText:@"Import result:" bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
-		[inputData release];
-		[aContext release];
-		return;
+    [self displayMessageWindowWithTitleText:@"Import result:" bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
+    [inputData release];
+    [aContext release];
+    return;
 	NS_ENDHANDLER
-
+    
 	//if(([[importedKeys valueForKey:@"importedKeyCount"] intValue]+[[importedKeys valueForKey:@"importedSecretKeyCount"] intValue]+[[importedKeys valueForKey:@"newRevocationCount"] intValue])>0)
 	[self displayMessageWindowWithTitleText:@"Import result:" bodyText:[NSString stringWithFormat:@"%i key(s), %i secret key(s), %i revocation(s) ",[[importedKeys valueForKey:@"importedKeyCount"] intValue],[[importedKeys valueForKey:@"importedSecretKeyCount"] intValue],[[importedKeys valueForKey:@"newRevocationCount"] intValue]]];
 	[inputData release];
 	[aContext release];
+}
+
+
+//Todo: Somehow set the extension to ext
+- (NSURL*)getFilenameForSavingWithExtensions:(NSString*)ext {
+    NSSavePanel* savePanel = [NSSavePanel savePanel];
+    savePanel.title = @"Choose Destination";
+    
+    if([savePanel runModal] == NSFileHandlingPanelOKButton)
+        return savePanel.URL;
+    else
+        return nil;
 }
 
 
@@ -82,34 +94,34 @@
 {
 	NSString *result=nil;
 	GPGKey *myKey;
-
+    
 	GPGOptions *myOptions=[[GPGOptions alloc] init];
 	NSString *keyID=[myOptions optionValueForName:@"default-key"];
 	[myOptions release];
-
+    
 	if(keyID==nil)
 	{
 		[self displayMessageWindowWithTitleText:@"Default key not set." bodyText:@"No default key is specified in the GPG Preferences."];
 		return nil;
 	}
-
+    
 	GPGContext *aContext = [[GPGContext alloc] init];
-
+    
 	NS_DURING
-		myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
-		if(myKey==nil)
-		{
-			[self displayMessageWindowWithTitleText:@"Found no fingerprint." bodyText:@"Could not retrieve your key from keychain (maybe you've not set a default key in ~/.gnupg/gpg.conf)"];
-			[aContext release];
-			return nil;
-		}
+    myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
+    if(myKey==nil)
+    {
+        [self displayMessageWindowWithTitleText:@"Found no fingerprint." bodyText:@"Could not retrieve your key from keychain (maybe you've not set a default key in ~/.gnupg/gpg.conf)"];
+        [aContext release];
+        return nil;
+    }
 	NS_HANDLER
-		result=nil;
-		[self displayMessageWindowWithTitleText:@"Retrieving fingerprint failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
-		[aContext release];
-		return nil;
+    result=nil;
+    [self displayMessageWindowWithTitleText:@"Retrieving fingerprint failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
+    [aContext release];
+    return nil;
 	NS_ENDHANDLER
-
+    
 	result=[[myKey formattedFingerprint] copy];
 	[aContext release];
 	return [result autorelease];
@@ -129,33 +141,33 @@
 		[self displayMessageWindowWithTitleText:@"Default key not set." bodyText:@"No default key is specified in the GPG Preferences."];
 		return nil;
 	}
-
+    
 	GPGContext *aContext = [[GPGContext alloc] init];
 	[aContext setUsesArmor:YES];
 	[aContext setUsesTextMode:YES];
-
+    
 	NS_DURING
-		myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
-		if(myKey==nil)
-		{
-			[self displayMessageWindowWithTitleText:@"Found no key." bodyText:@"Could not retrieve your key from keychain (maybe you've not set a default key in ~/.gnupg/gpg.conf)"];
-			[aContext release];
-			return nil;
-		}
-		keyData=[[aContext exportedKeys:[NSArray arrayWithObject:myKey]] data];
-		if(keyData==nil)
-		{
-			[self displayMessageWindowWithTitleText:@"Exporting key failed." bodyText:@"Could not export key"];
-			[aContext release];
-			return nil;
-		}
+    myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
+    if(myKey==nil)
+    {
+        [self displayMessageWindowWithTitleText:@"Found no key." bodyText:@"Could not retrieve your key from keychain (maybe you've not set a default key in ~/.gnupg/gpg.conf)"];
+        [aContext release];
+        return nil;
+    }
+    keyData=[[aContext exportedKeys:[NSArray arrayWithObject:myKey]] data];
+    if(keyData==nil)
+    {
+        [self displayMessageWindowWithTitleText:@"Exporting key failed." bodyText:@"Could not export key"];
+        [aContext release];
+        return nil;
+    }
 	NS_HANDLER
-		result=nil;
-		[self displayMessageWindowWithTitleText:@"Exporting key failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
-		[aContext release];
-		return nil;
+    result=nil;
+    [self displayMessageWindowWithTitleText:@"Exporting key failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
+    [aContext release];
+    return nil;
 	NS_ENDHANDLER
-
+    
 	[aContext release];
 	result=[[NSString alloc] initWithData:keyData encoding:NSUTF8StringEncoding];
 	return [result autorelease];
@@ -166,7 +178,7 @@
 	GPGData *inputData, *outputData;
 	GPGContext *aContext = [[GPGContext alloc] init];
 	BOOL trustsAllKeys = YES;
-
+    
 	[aContext setUsesArmor:YES];
 	
 	RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
@@ -181,11 +193,11 @@
 		
 		BOOL sign = rcp.sign;
         NSArray* validRecipients = rcp.selectedKeys;
-
+        
         if(validRecipients.count == 0) {
             [self displayMessageWindowWithTitleText:@"Encryption failed." 
                                            bodyText:@"No valid recipients found"];
-
+            
             [inputData release];
             [aContext release];
             
@@ -217,7 +229,7 @@
 	}
 	
 	[aContext release];
-
+    
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
 }
 
@@ -225,32 +237,32 @@
 {
 	GPGData *inputData, *outputData;
 	GPGContext *aContext = [[GPGContext alloc] init];
-
+    
 	[aContext setPassphraseDelegate:self];
-
+    
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-
+    
 	NS_DURING
-		outputData=[aContext decryptedData:inputData];
+    outputData=[aContext decryptedData:inputData];
 	NS_HANDLER
-		outputData = nil;
-		switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
-		{
-			case GPGErrorNoData:
-				[self displayMessageWindowWithTitleText:@"Decryption failed." bodyText:@"No decryptable text was found within the selection."];
-				break;
-			case GPGErrorCancelled:
-				break;
-			default:
-				[self displayMessageWindowWithTitleText:@"Decryption failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
-		}
-		[inputData release];
-		[aContext release];
-		return nil;
+    outputData = nil;
+    switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
+    {
+        case GPGErrorNoData:
+            [self displayMessageWindowWithTitleText:@"Decryption failed." bodyText:@"No decryptable text was found within the selection."];
+            break;
+        case GPGErrorCancelled:
+            break;
+        default:
+            [self displayMessageWindowWithTitleText:@"Decryption failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
+    }
+    [inputData release];
+    [aContext release];
+    return nil;
 	NS_ENDHANDLER
 	[inputData release];
 	[aContext release];
-
+    
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
 }
 
@@ -261,9 +273,9 @@
 	GPGContext *aContext = [[GPGContext alloc] init];
     
 	[aContext setPassphraseDelegate:self];
-
+    
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-
+    
     GPGKey* chosenKey = [self myPrivateKey];
     
     NSSet* availableKeys = [self myKeys];
@@ -288,32 +300,32 @@
     }
     
 	NS_DURING
-		outputData=[aContext signedData:inputData signatureMode:GPGSignatureModeClear];
+    outputData=[aContext signedData:inputData signatureMode:GPGSignatureModeClear];
 	NS_HANDLER
-		outputData = nil;
-		switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
-		{
-			case GPGErrorNoData:
-				[self displayMessageWindowWithTitleText:@"Signing failed." bodyText:@"No signable text was found within the selection."];
-				break;
-			case GPGErrorBadPassphrase:
-				[self displayMessageWindowWithTitleText:@"Signing failed." bodyText:@"The passphrase is incorrect."];
-				break;
-			case GPGErrorUnusableSecretKey:
-				[self displayMessageWindowWithTitleText:@"Signing failed." bodyText:@"The default secret key is unusable."];
-				break;
-			case GPGErrorCancelled:
-				break;
-			default:
-				[self displayMessageWindowWithTitleText:@"Signing failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
-		}
-		[inputData release];
-		[aContext release];
-		return nil;
+    outputData = nil;
+    switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
+    {
+        case GPGErrorNoData:
+            [self displayMessageWindowWithTitleText:@"Signing failed." bodyText:@"No signable text was found within the selection."];
+            break;
+        case GPGErrorBadPassphrase:
+            [self displayMessageWindowWithTitleText:@"Signing failed." bodyText:@"The passphrase is incorrect."];
+            break;
+        case GPGErrorUnusableSecretKey:
+            [self displayMessageWindowWithTitleText:@"Signing failed." bodyText:@"The default secret key is unusable."];
+            break;
+        case GPGErrorCancelled:
+            break;
+        default:
+            [self displayMessageWindowWithTitleText:@"Signing failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
+    }
+    [inputData release];
+    [aContext release];
+    return nil;
 	NS_ENDHANDLER
 	[inputData release];
 	[aContext release];
-
+    
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
 }
 
@@ -325,43 +337,100 @@
 	GPGSignature *sig;
 	NSString *userID, *validity;
 	GPGContext *aContext = [[GPGContext alloc] init];
-
+    
 	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-
+    
 	NS_DURING
-		sigs=[aContext verifySignedData:inputData originalData:nil];
+    sigs=[aContext verifySignedData:inputData originalData:nil];
 	NS_HANDLER
-		sigs=nil;
-		if(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])==GPGErrorNoData)
-			[self displayMessageWindowWithTitleText:@"Verification failed." bodyText:@"No verifiable text was found within the selection"];
-		else
-			[self displayMessageWindowWithTitleText:@"Verification failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
-		[inputData release];
-		[aContext release];
-		return;
+    sigs=nil;
+    if(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])==GPGErrorNoData)
+        [self displayMessageWindowWithTitleText:@"Verification failed." bodyText:@"No verifiable text was found within the selection"];
+    else
+        [self displayMessageWindowWithTitleText:@"Verification failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
+    [inputData release];
+    [aContext release];
+    return;
 	NS_ENDHANDLER
-
-
-		if([sigs count]>0)
-		{
-			sig=[sigs objectAtIndex:0];
-			if(GPGErrorCodeFromError([sig status])==GPGErrorNoError)
-			{
-				userID=[[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
-				validity=[sig validityDescription];
-				[self displayMessageWindowWithTitleText:@"Verification successful." bodyText:[NSString stringWithFormat:@"Good signature (%@ trust):\n\"%@\"",validity,userID]];
-			}
-			else
-				[self displayMessageWindowWithTitleText:@"Verification FAILED." bodyText:GPGErrorDescription([sig status])];
-		}
-		else
-			[self displayMessageWindowWithTitleText:@"Verification error." bodyText:@"Unable to verify due to an internal error"];
+    
+    
+    if([sigs count]>0)
+    {
+        sig=[sigs objectAtIndex:0];
+        if(GPGErrorCodeFromError([sig status])==GPGErrorNoError)
+        {
+            userID=[[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
+            validity=[sig validityDescription];
+            [self displayMessageWindowWithTitleText:@"Verification successful." bodyText:[NSString stringWithFormat:@"Good signature (%@ trust):\n\"%@\"",validity,userID]];
+        }
+        else
+            [self displayMessageWindowWithTitleText:@"Verification FAILED." bodyText:GPGErrorDescription([sig status])];
+    }
+    else
+        [self displayMessageWindowWithTitleText:@"Verification error." bodyText:@"Unable to verify due to an internal error"];
 	[inputData release];
 	[aContext release];
 }
 
 - (void)encryptFiles:(NSArray*)files {
+    BOOL trustAllKeys = YES;
+    
     NSLog(@"encrypting files: %@...", [files componentsJoinedByString:@","]);
+    
+    if(files.count == 0)
+        return;
+    else if(files.count > 1) 
+        [self displayMessageWindowWithTitleText:@"Encryption error"
+                                       bodyText:@"Only one file at a time please."];
+    
+    RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
+	int ret = [rcp runModal];
+    [rcp release];
+	if(ret != 0) {
+		[self displayMessageWindowWithTitleText:@"Encryption cancelled." bodyText:@"Encryption was cancelled."];
+		return;
+	} else {
+    	BOOL sign = rcp.sign;
+        NSArray* validRecipients = rcp.selectedKeys;
+        
+        NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+        for(NSString* file in files) {
+            BOOL isDirectory = YES;
+            [fmgr fileExistsAtPath:file isDirectory:&isDirectory];
+            if(isDirectory == YES) {
+                [self displayMessageWindowWithTitleText:@"File is a directory"
+                                               bodyText:@"Encryption of directories isn't supported"];
+                return;
+            }
+            
+            NSURL* destination = [self getFilenameForSavingWithExtensions:@".gpg"];
+            
+            /*
+             NSError* error = nil;
+             NSData* data = [NSData dataWithContentsOfFile:file
+             options:NSDataReadingMapped 
+             error:&error];
+             if(error)
+             [self displayMessageWindowWithTitleText:@"Error while reading contents of file"
+             bodyText:[error description]];
+             */
+            
+            GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
+            GPGData* gpgData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+            GPGData* encrypted = nil;
+            
+            if(sign == NO)
+                encrypted = [ctx encryptedData:gpgData 
+                                      withKeys:validRecipients
+                                  trustAllKeys:trustAllKeys];
+            else
+                encrypted = [ctx encryptedSignedData:gpgData
+                                            withKeys:validRecipients
+                                        trustAllKeys:trustAllKeys];
+            
+            [encrypted.data writeToURL:destination atomically:YES];
+        }
+    }
 }
 
 //
@@ -373,10 +442,10 @@
 	NSString *pboardString;
 	NSString *newString=nil;
 	NSString *type;
-
+    
 	[self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
-
+    
 	if(mode!=MyKeyService && mode!=MyFingerprintService)
 	{
 		type = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
@@ -385,7 +454,7 @@
                                                NSRTFPboardType, 
                                                NSFilenamesPboardType,
                                                nil]];
-
+        
 		if([type isEqualToString:NSHTMLPboardType])
 		{
 			if(!(pboardString = [pboard stringForType:NSHTMLPboardType]))
@@ -420,7 +489,7 @@
 			return;
 		}
 	}
-
+    
 	switch(mode)
 	{
 		case SignService:
@@ -447,7 +516,7 @@
         default:
             break;
 	}
-
+    
 	if(newString!=nil)
 	{
 		[pboard declareTypes:[NSArray arrayWithObjects:NSStringPboardType,NSHTMLPboardType,nil] owner:nil];
@@ -485,6 +554,8 @@
 {[self dealWithPasteboard:pboard userData:userData mode:ImportKeyService error:error];}
 
 -(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    
     NSData *data = [pboard dataForType:NSFilenamesPboardType];
     NSArray *filenames = [NSPropertyListSerialization
                           propertyListFromData:data
@@ -494,6 +565,8 @@
     NSLog(@"error while getting files form pboard: %@", *error);
     if(!*error)
         [self encryptFiles:filenames];
+    
+    [pool release];
 }
 
 //
