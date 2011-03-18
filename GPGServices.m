@@ -440,9 +440,9 @@
 
 	if(newString!=nil)
 	{
-		[pboard declareTypes:[NSArray arrayWithObjects:NSStringPboardType,NSHTMLPboardType,nil] owner:nil];
+		[pboard declareTypes:[NSArray arrayWithObjects:NSStringPboardType,NSRTFPboardType,nil] owner:nil];
 		[pboard setString:newString forType:NSStringPboardType];
-		[pboard setString:[NSString stringWithFormat:@"<pre>%@</pre>",newString] forType:NSHTMLPboardType];
+   		[pboard setString:newString forType:NSRTFPboardType];
 	}
 	[self exitServiceRequest];
 }
