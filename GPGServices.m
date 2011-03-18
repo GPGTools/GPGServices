@@ -361,7 +361,7 @@
 }
 
 - (void)encryptFiles:(NSArray*)files {
-    NSLog(@"encrypting files: %@...", files);
+    NSLog(@"encrypting files: %@...", [files componentsJoinedByString:@","]);
 }
 
 //
@@ -485,11 +485,15 @@
 {[self dealWithPasteboard:pboard userData:userData mode:ImportKeyService error:error];}
 
 -(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
-    NSArray* files = [NSArray array];
-    
-    //Todo: Get all files from request
-    
-    [self encryptFiles:files];
+    NSData *data = [pboard dataForType:NSFilenamesPboardType];
+    NSArray *filenames = [NSPropertyListSerialization
+                          propertyListFromData:data
+                          mutabilityOption:kCFPropertyListImmutable
+                          format:nil
+                          errorDescription:error];
+    NSLog(@"error while getting files form pboard: %@", *error);
+    if(!*error)
+        [self encryptFiles:filenames];
 }
 
 //
