@@ -403,6 +403,17 @@
                 return;
             }
             
+            NSError* error = nil;
+            NSNumber* fileSize = [[fmgr attributesOfItemAtPath:file error:&error] valueForKey:NSFileSize];
+            double megabytes = [fileSize doubleValue] / 1048576;
+            
+            NSLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
+                                                                    numberStyle:NSNumberFormatterDecimalStyle]);
+            if(megabytes > 10) {
+                [self displayMessageWindowWithTitleText:@"Large File"
+                                               bodyText:@"Encryption will take a long time. Press ok to continue"];
+            }
+            
             NSURL* destination = [self getFilenameForSavingWithExtensions:@".gpg"];
             if(destination == nil)
                 return;
