@@ -11,13 +11,13 @@
 
 @interface KeyChooserWindowController : NSWindowController {
     NSArray* availableKeys;
-    GPGKey* chosenKey;
+    GPGKey* selectedKey;
     
     IBOutlet NSPopUpButton* popupButton;
 }
 
 @property(retain) NSArray* availableKeys;
-@property(retain) GPGKey* chosenKey;
+@property(retain) GPGKey* selectedKey;
 
 - (NSInteger)runModal; //Returns 0 on success
 

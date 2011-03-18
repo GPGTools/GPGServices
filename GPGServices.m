@@ -270,7 +270,7 @@
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         if([wc runModal] == 0) 
-            chosenKey = wc.chosenKey;
+            chosenKey = wc.selectedKey;
         else
             chosenKey = nil;
         

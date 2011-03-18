@@ -11,20 +11,20 @@
 
 @implementation KeyChooserWindowController
 
-@synthesize availableKeys, chosenKey;
+@synthesize availableKeys, selectedKey;
 
 - (id)init {
     self = [super initWithWindowNibName:@"PrivateKeyChooserWindow"];
     
     self.availableKeys = [self getPrivateKeys];
-    self.chosenKey = [self getDefaultKey];
+    self.selectedKey = [self getDefaultKey];
     
     return self;
 }
 
 - (void)dealloc {
     self.availableKeys = nil;
-    self.chosenKey = nil;
+    self.selectedKey = nil;
     
     [super dealloc];
 }
@@ -40,22 +40,22 @@
         [popupButton addItemWithTitle:description];
     } 
     
-    NSUInteger idx = [self.availableKeys indexOfObject:self.chosenKey];
+    NSUInteger idx = [self.availableKeys indexOfObject:self.selectedKey];
     [popupButton selectItemAtIndex:idx];
 }
 
 - (IBAction)chooseButtonClicked:(id)sender {
     NSUInteger idx = popupButton.indexOfSelectedItem;
     if(idx >= self.availableKeys.count)
-        self.chosenKey = nil;
+        self.selectedKey = nil;
     else
-        self.chosenKey = [self.availableKeys objectAtIndex:idx];
+        self.selectedKey = [self.availableKeys objectAtIndex:idx];
     
     [NSApp stopModalWithCode:0];
 }
 
 - (IBAction)cancelButtonClicked:(id)sender {
-    self.chosenKey = nil;
+    self.selectedKey = nil;
     
     [NSApp stopModalWithCode:1];
 }
