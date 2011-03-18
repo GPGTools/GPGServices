@@ -404,6 +404,8 @@
             }
             
             NSURL* destination = [self getFilenameForSavingWithExtensions:@".gpg"];
+            if(destination == nil)
+                return;
             
             /*
              NSError* error = nil;
