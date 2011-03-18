@@ -557,14 +557,19 @@
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     
     NSData *data = [pboard dataForType:NSFilenamesPboardType];
+    
+    NSString* fileErrorStr = nil;
     NSArray *filenames = [NSPropertyListSerialization
                           propertyListFromData:data
                           mutabilityOption:kCFPropertyListImmutable
                           format:nil
-                          errorDescription:error];
-    NSLog(@"error while getting files form pboard: %@", *error);
-    if(!*error)
+                          errorDescription:&fileErrorStr];
+    if(fileErrorStr) {
+        NSLog(@"error while getting files form pboard: %@", fileErrorStr);
+        *error = fileErrorStr;
+    } else {
         [self encryptFiles:filenames];
+    }
     
     [pool release];
 }
