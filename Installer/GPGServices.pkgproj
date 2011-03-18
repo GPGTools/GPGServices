@@ -448,7 +448,12 @@
 					<integer>0</integer>
 				</dict>
 				<key>PREINSTALL_PATH</key>
-				<dict/>
+				<dict>
+					<key>PATH</key>
+					<string>/Data/Temp/GPGServices/Installer/preflight.sh</string>
+					<key>PATH_TYPE</key>
+					<integer>0</integer>
+				</dict>
 				<key>RESOURCES</key>
 				<array/>
 			</dict>
@@ -467,7 +472,7 @@
 				<key>RELOCATABLE</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.5beta1</string>
+				<string>1.5beta2</string>
 			</dict>
 			<key>UUID</key>
 			<string>5BCCF690-7295-423B-89B3-5BAC72D8B16A</string>
