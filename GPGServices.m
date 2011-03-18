@@ -360,6 +360,9 @@
 	[aContext release];
 }
 
+- (void)encryptFiles:(NSArray*)files {
+    NSLog(@"encrypting files: %@...", files);
+}
 
 //
 //Services handling routines
@@ -376,7 +379,12 @@
 
 	if(mode!=MyKeyService && mode!=MyFingerprintService)
 	{
-		type = [pboard availableTypeFromArray:[NSArray arrayWithObjects:NSHTMLPboardType, NSStringPboardType, NSRTFPboardType, nil]];
+		type = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
+                                               NSHTMLPboardType, 
+                                               NSStringPboardType, 
+                                               NSRTFPboardType, 
+                                               NSFilenamesPboardType,
+                                               nil]];
 
 		if([type isEqualToString:NSHTMLPboardType])
 		{
@@ -436,6 +444,8 @@
 		case ImportKeyService:
 			[self importKey:pboardString];
 			break;
+        default:
+            break;
 	}
 
 	if(newString!=nil)
@@ -473,6 +483,14 @@
 
 -(void)importKey:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {[self dealWithPasteboard:pboard userData:userData mode:ImportKeyService error:error];}
+
+-(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
+    NSArray* files = [NSArray array];
+    
+    //Todo: Get all files from request
+    
+    [self encryptFiles:files];
+}
 
 //
 //Gui routines

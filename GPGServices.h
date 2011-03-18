@@ -9,7 +9,16 @@
 #import <Cocoa/Cocoa.h>
 #import <MacGPGME/MacGPGME.h>
 
-typedef enum {SignService, EncryptService, DecryptService, VerifyService, MyKeyService, MyFingerprintService, ImportKeyService} ServiceModeEnum;
+typedef enum {
+    SignService, 
+    EncryptService, 
+    DecryptService, 
+    VerifyService, 
+    MyKeyService, 
+    MyFingerprintService, 
+    ImportKeyService,
+    EncryptFileService
+} ServiceModeEnum;
 
 @interface GPGServices : NSObject
 {
@@ -33,7 +42,7 @@ typedef enum {SignService, EncryptService, DecryptService, VerifyService, MyKeyS
 -(NSString *)encryptTextString:(NSString *)inputString;
 -(NSString *)decryptTextString:(NSString *)inputString;
 -(void)verifyTextString:(NSString *)inputString;
-
+- (void)encryptFiles:(NSArray*)files;
 
 -(void)dealWithPasteboard:(NSPasteboard *)pboard userData:(NSString *)userData mode:(ServiceModeEnum)mode error:(NSString **)error;
 -(void)exitServiceRequest;
@@ -44,7 +53,7 @@ typedef enum {SignService, EncryptService, DecryptService, VerifyService, MyKeyS
 -(void)myKey:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)myFingerprint:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)importKey:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
-
+-(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 
 -(void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body;
 -(NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again;
