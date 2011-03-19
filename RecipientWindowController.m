@@ -133,6 +133,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (void)displayItemsMatchingString:(NSString*)searchString {
+    NSArray* oldSelectedKeys = self.selectedKeys;
+    
 	if(searchString == nil ||
 	   [searchString isEqualToString:@""]) {
 		[keysMatchingSearch release];		
@@ -155,9 +157,14 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		[keysMatchingSearch release];
 		keysMatchingSearch = [newFilteredArray retain];
 	}
-	
-	[tableView deselectAll:self];
-	[tableView reloadData];
+    
+    NSSet* oldKeySet = [NSSet setWithArray:oldSelectedKeys];
+    NSIndexSet* idxsOfSelectedKeys = [keysMatchingSearch indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        return [oldKeySet containsObject:obj];
+    }];
+
+    [tableView reloadData];
+    [tableView selectRowIndexes:idxsOfSelectedKeys byExtendingSelection:NO];
 }
 
 - (void)controlTextDidChange:(NSNotification *)aNotification {
