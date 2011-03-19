@@ -18,6 +18,8 @@
 	[NSApp setServicesProvider:self];
     //	NSUpdateDynamicServices();
 	currentTerminateTimer=nil;
+    
+    [GrowlApplicationBridge setGrowlDelegate:self];
 }
 
 
@@ -428,6 +430,16 @@
              bodyText:[error description]];
              */
             
+            if(megabytes > 10) {
+                [GrowlApplicationBridge notifyWithTitle:@"Encrypting..."
+                                            description:[file lastPathComponent]
+                                       notificationName:@"EncryptionStarted"
+                                               iconData:[NSData data]
+                                               priority:0
+                                               isSticky:NO
+                                           clickContext:file];
+            }
+            
             GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
             GPGData* gpgData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
             GPGData* encrypted = nil;
@@ -442,6 +454,14 @@
                                         trustAllKeys:trustAllKeys];
             
             [encrypted.data writeToURL:destination atomically:YES];
+            
+            [GrowlApplicationBridge notifyWithTitle:@"Encryption finished"
+                                        description:[destination lastPathComponent]
+                                   notificationName:@"EncryptionSucceeded"
+                                           iconData:[NSData data]
+                                           priority:0
+                                           isSticky:NO
+                                       clickContext:destination];
         }
     }
 }

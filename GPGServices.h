@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <MacGPGME/MacGPGME.h>
+#import <Growl/Growl.h>
 
 typedef enum {
     SignService, 
@@ -19,7 +20,7 @@ typedef enum {
     ImportKeyService,
 } ServiceModeEnum;
 
-@interface GPGServices : NSObject
+@interface GPGServices : NSObject <GrowlApplicationBridgeDelegate>
 {
 	IBOutlet NSWindow *messageWindow;
 	IBOutlet NSWindow *recipientWindow;

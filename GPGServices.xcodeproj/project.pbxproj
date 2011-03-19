@@ -17,8 +17,11 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		8E4A7B131328CA7C007953BE /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */; };
+		8E7341A31334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */; };
+		8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 		8E8837C413311E3E0044EFFF /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
+		8EF7A61D1334C05300FD8C5B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +63,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				4B1907010A4CBDAF00052798 /* MacGPGME.framework in CopyFiles */,
+				8EF7A61D1334C05300FD8C5B /* Growl.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +88,8 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* GPGServices.service */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.service; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipientWindow.xib; sourceTree = "<group>"; };
+		8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
+		8E7341A21334BC1C003CBCEB /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 		8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
 		8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserWindowController.h; sourceTree = "<group>"; };
 		8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserWindowController.m; sourceTree = "<group>"; };
@@ -96,6 +102,7 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				4B1906F80A4CBD6C00052798 /* MacGPGME.framework in Frameworks */,
+				8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +125,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8E7341A21334BC1C003CBCEB /* Growl.framework */,
 				4B1906F70A4CBD6C00052798 /* MacGPGME.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
@@ -185,6 +193,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */,
 				8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				2260756C12EBA0B50026DBEA /* Icon.icns */,
@@ -291,6 +300,7 @@
 				2260756D12EBA0B50026DBEA /* Icon.icns in Resources */,
 				8E4A7B131328CA7C007953BE /* RecipientWindow.xib in Resources */,
 				8E8837C413311E3E0044EFFF /* PrivateKeyChooserWindow.xib in Resources */,
+				8E7341A31334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,7 +355,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(SRCROOT)/Dependencies/MacGPGME/build/Release",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -366,7 +378,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(SRCROOT)/Dependencies/MacGPGME/build/Release",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
