@@ -17,7 +17,6 @@ typedef enum {
     MyKeyService, 
     MyFingerprintService, 
     ImportKeyService,
-    EncryptFileService
 } ServiceModeEnum;
 
 @interface GPGServices : NSObject
