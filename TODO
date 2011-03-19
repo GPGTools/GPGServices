@@ -1,0 +1,5 @@
+TODO (change versions automatically):
+ * Info.plist
+ * Installer/INSTALLER.txt
+ * Installer/GPGServices.pkgproj
+ * Makefile.config

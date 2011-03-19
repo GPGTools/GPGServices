@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>ccsv</string>
 	<key>CFBundleVersion</key>
-	<string>1.5beta1</string>
+	<string>1.5beta2</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -56,7 +56,7 @@
 			<key>NSKeyEquivalent</key>
 			<dict>
 				<key>default</key>
-				<string>S</string>
+				<string>R</string>
 			</dict>
 			<key>NSMenuItem</key>
 			<dict>
