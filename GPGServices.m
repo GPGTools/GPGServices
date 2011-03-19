@@ -29,11 +29,9 @@
 
 -(void)importKey:(NSString *)inputString
 {
-	GPGData *inputData;
-	NSDictionary *importedKeys;
+	NSDictionary *importedKeys = nil;
 	GPGContext *aContext = [[GPGContext alloc] init];
-    
-	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+	GPGData* inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
     
 	NS_DURING
     importedKeys=[aContext importKeyData:inputData];
@@ -94,9 +92,6 @@
 
 -(NSString *)myFingerprint
 {
-	NSString *result=nil;
-	GPGKey *myKey;
-    
 	GPGOptions *myOptions=[[GPGOptions alloc] init];
 	NSString *keyID=[myOptions optionValueForName:@"default-key"];
 	[myOptions release];
@@ -108,7 +103,8 @@
 	}
     
 	GPGContext *aContext = [[GPGContext alloc] init];
-    
+
+	GPGKey *myKey = nil;
 	NS_DURING
     myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
     if(myKey==nil)
@@ -118,26 +114,23 @@
         return nil;
     }
 	NS_HANDLER
-    result=nil;
     [self displayMessageWindowWithTitleText:@"Retrieving fingerprint failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
     [aContext release];
     return nil;
 	NS_ENDHANDLER
     
-	result=[[myKey formattedFingerprint] copy];
 	[aContext release];
-	return [result autorelease];
+	return [[[myKey formattedFingerprint] copy] autorelease];
 }
 
 
 -(NSString *)myKey
 {
-	NSString *result=nil;
-	GPGKey *myKey;
-	NSData *keyData;
+	NSData *keyData = nil;
 	GPGOptions *myOptions=[[GPGOptions alloc] init];
 	NSString *keyID=[myOptions optionValueForName:@"default-key"];
 	[myOptions release];
+    
 	if(keyID==nil)
 	{
 		[self displayMessageWindowWithTitleText:@"Default key not set." bodyText:@"No default key is specified in the GPG Preferences."];
@@ -149,7 +142,7 @@
 	[aContext setUsesTextMode:YES];
     
 	NS_DURING
-    myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
+    GPGKey* myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
     if(myKey==nil)
     {
         [self displayMessageWindowWithTitleText:@"Found no key." bodyText:@"Could not retrieve your key from keychain (maybe you've not set a default key in ~/.gnupg/gpg.conf)"];
@@ -164,25 +157,24 @@
         return nil;
     }
 	NS_HANDLER
-    result=nil;
     [self displayMessageWindowWithTitleText:@"Exporting key failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
     [aContext release];
     return nil;
 	NS_ENDHANDLER
     
 	[aContext release];
-	result=[[NSString alloc] initWithData:keyData encoding:NSUTF8StringEncoding];
-	return [result autorelease];
+	return [[[NSString alloc] initWithData:keyData 
+                                  encoding:NSUTF8StringEncoding] autorelease];
 }
 
 -(NSString *)encryptTextString:(NSString *)inputString
 {
-	GPGData *inputData, *outputData;
-	GPGContext *aContext = [[GPGContext alloc] init];
-	BOOL trustsAllKeys = YES;
+    GPGContext *aContext = [[GPGContext alloc] init];
+    [aContext setUsesArmor:YES];
     
-	[aContext setUsesArmor:YES];
-	
+	BOOL trustsAllKeys = YES;
+    GPGData *outputData = nil;
+    
 	RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
 	int ret = [rcp runModal];
     [rcp release];
@@ -191,7 +183,7 @@
 		[aContext release];
 		return nil;
 	} else {
-		inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+		GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 		
 		BOOL sign = rcp.sign;
         NSArray* validRecipients = rcp.selectedKeys;
@@ -237,12 +229,12 @@
 
 -(NSString *)decryptTextString:(NSString *)inputString
 {
-	GPGData *inputData, *outputData;
+    GPGData *outputData = nil;
 	GPGContext *aContext = [[GPGContext alloc] init];
     
 	[aContext setPassphraseDelegate:self];
     
-	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+	GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
     
 	NS_DURING
     outputData=[aContext decryptedData:inputData];
@@ -271,13 +263,10 @@
 
 -(NSString *)signTextString:(NSString *)inputString
 {
-	GPGData *inputData, *outputData;
 	GPGContext *aContext = [[GPGContext alloc] init];
-    
 	[aContext setPassphraseDelegate:self];
     
-	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-    
+	GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
     GPGKey* chosenKey = [self myPrivateKey];
     
     NSSet* availableKeys = [self myKeys];
@@ -301,6 +290,7 @@
         return nil;
     }
     
+    GPGData *outputData = nil;
 	NS_DURING
     outputData=[aContext signedData:inputData signatureMode:GPGSignatureModeClear];
 	NS_HANDLER
@@ -334,14 +324,11 @@
 
 -(void)verifyTextString:(NSString *)inputString
 {
-	GPGData *inputData;
-	NSArray *sigs;
-	GPGSignature *sig;
-	NSString *userID, *validity;
 	GPGContext *aContext = [[GPGContext alloc] init];
     
-	inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+	GPGData* inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
     
+    NSArray *sigs = nil;
 	NS_DURING
     sigs=[aContext verifySignedData:inputData originalData:nil];
 	NS_HANDLER
@@ -358,11 +345,11 @@
     
     if([sigs count]>0)
     {
-        sig=[sigs objectAtIndex:0];
+        GPGSignature* sig=[sigs objectAtIndex:0];
         if(GPGErrorCodeFromError([sig status])==GPGErrorNoError)
         {
-            userID=[[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
-            validity=[sig validityDescription];
+            NSString* userID=[[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
+            NSString* validity=[sig validityDescription];
             [self displayMessageWindowWithTitleText:@"Verification successful." bodyText:[NSString stringWithFormat:@"Good signature (%@ trust):\n\"%@\"",validity,userID]];
         }
         else
@@ -472,21 +459,18 @@
 
 -(void)dealWithPasteboard:(NSPasteboard *)pboard userData:(NSString *)userData mode:(ServiceModeEnum)mode error:(NSString **)error
 {
-	NSString *pboardString;
-	NSString *newString=nil;
-	NSString *type;
-    
 	[self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
     
+    NSString *pboardString = nil;
 	if(mode!=MyKeyService && mode!=MyFingerprintService)
 	{
-		type = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
-                                               NSHTMLPboardType, 
-                                               NSStringPboardType, 
-                                               NSRTFPboardType, 
-                                               NSFilenamesPboardType,
-                                               nil]];
+		NSString* type = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
+                                                         NSHTMLPboardType, 
+                                                         NSStringPboardType, 
+                                                         NSRTFPboardType,
+                                                         NSFilenamesPboardType, 
+                                                         nil]];
         
 		if([type isEqualToString:NSHTMLPboardType])
 		{
@@ -523,6 +507,7 @@
 		}
 	}
     
+    NSString *newString=nil;
 	switch(mode)
 	{
 		case SignService:
@@ -621,11 +606,9 @@
 
 -(NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again
 {
-	NSString *passphrase;
-	int flag;
 	[passphraseText setStringValue:@""];
-	flag=[NSApp runModalForWindow:passphraseWindow];
-	passphrase=[[[passphraseText stringValue] copy] autorelease];
+	int flag=[NSApp runModalForWindow:passphraseWindow];
+	NSString *passphrase=[[[passphraseText stringValue] copy] autorelease];
 	[passphraseWindow close];
 	if(flag)
 		return passphrase;

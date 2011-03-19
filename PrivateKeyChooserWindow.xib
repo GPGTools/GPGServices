@@ -49,7 +49,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 240}, {480, 100}}</string>
 				<int key="NSWTFlags">544735232</int>
-				<string key="NSWindowTitle">Select Private-Key</string>
+				<string key="NSWindowTitle">Select Private-Key - GPGServices</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<object class="NSView" key="NSWindowView" id="1006">
@@ -63,6 +63,7 @@
 							<string key="NSFrame">{{302, 12}, {164, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="977507724">
 								<int key="NSCellFlags">67239424</int>
@@ -110,6 +111,7 @@
 							<string key="NSFrame">{{17, 56}, {446, 26}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="398892952"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSPopUpButtonCell" key="NSCell" id="1058455001">
 								<int key="NSCellFlags">-2076049856</int>
@@ -181,7 +183,7 @@
 					<string key="NSFrame">{{7, 11}, {480, 100}}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView"/>
+					<reference key="NSNextKeyView" ref="507214626"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMaxSize">{1e+13, 1e+13}</string>
@@ -229,6 +231,30 @@
 						<reference key="destination" ref="507214626"/>
 					</object>
 					<int key="connectionID">28</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">initialFirstResponder</string>
+						<reference key="source" ref="1005"/>
+						<reference key="destination" ref="507214626"/>
+					</object>
+					<int key="connectionID">31</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="507214626"/>
+						<reference key="destination" ref="398892952"/>
+					</object>
+					<int key="connectionID">33</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="51248815"/>
+						<reference key="destination" ref="507214626"/>
+					</object>
+					<int key="connectionID">35</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -295,21 +321,6 @@
 						<reference key="parent" ref="51248815"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">5</int>
-						<reference key="object" ref="398892952"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="47053369"/>
-						</object>
-						<reference key="parent" ref="1006"/>
-						<string key="objectName">cancelButton</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">6</int>
-						<reference key="object" ref="47053369"/>
-						<reference key="parent" ref="398892952"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">22</int>
 						<reference key="object" ref="507214626"/>
 						<object class="NSMutableArray" key="children">
@@ -339,8 +350,8 @@
 						<reference key="parent" ref="1058455001"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">25</int>
-						<reference key="object" ref="535081210"/>
+						<int key="objectID">27</int>
+						<reference key="object" ref="535801187"/>
 						<reference key="parent" ref="382886868"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -349,9 +360,24 @@
 						<reference key="parent" ref="382886868"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">27</int>
-						<reference key="object" ref="535801187"/>
+						<int key="objectID">25</int>
+						<reference key="object" ref="535081210"/>
 						<reference key="parent" ref="382886868"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">5</int>
+						<reference key="object" ref="398892952"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="47053369"/>
+						</object>
+						<reference key="parent" ref="1006"/>
+						<string key="objectName">cancelButton</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">6</int>
+						<reference key="object" ref="47053369"/>
+						<reference key="parent" ref="398892952"/>
 					</object>
 				</object>
 			</object>
@@ -406,7 +432,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">28</int>
+			<int key="maxID">50</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
