@@ -51,7 +51,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{515, 167}, {667, 227}}</string>
 				<int key="NSWTFlags">1081606144</int>
-				<string key="NSWindowTitle">GPGServices</string>
+				<string key="NSWindowTitle">Choose Recipients - GPGServices</string>
 				<object class="NSMutableString" key="NSWindowClass">
 					<characters key="NS.bytes">NSWindow</characters>
 				</object>
@@ -70,6 +70,7 @@
 							<string key="NSFrame">{{571, 12}, {82, 32}}</string>
 							<reference key="NSSuperview" ref="889398207"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="161748282">
 								<int key="NSCellFlags">67239424</int>
@@ -131,7 +132,7 @@
 											<string key="NSFrameSize">{947, 118}</string>
 											<reference key="NSSuperview" ref="373712892"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="503892656"/>
+											<reference key="NSNextKeyView" ref="380753030"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="616634914">
 												<reference key="NSNextResponder" ref="503892656"/>
@@ -615,7 +616,7 @@
 							<string key="NSFrame">{{20, 60}, {627, 151}}</string>
 							<reference key="NSSuperview" ref="889398207"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="373712892"/>
+							<reference key="NSNextKeyView" ref="503892656"/>
 							<int key="NSsFlags">690</int>
 							<reference key="NSVScroller" ref="380753030"/>
 							<reference key="NSHScroller" ref="383118491"/>
