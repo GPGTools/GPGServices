@@ -49,10 +49,17 @@
 }
 
 
-//Todo: Somehow set the extension to ext
-- (NSURL*)getFilenameForSavingWithExtensions:(NSString*)ext {
+- (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path 
+                         withSuggestedExtension:(NSString*)ext {    
     NSSavePanel* savePanel = [NSSavePanel savePanel];
     savePanel.title = @"Choose Destination";
+    savePanel.directory = [path stringByDeletingLastPathComponent];
+    
+    if(ext == nil)
+        ext = @".gpg";
+    [savePanel setNameFieldStringValue:[[[path lastPathComponent] 
+                                         stringByDeletingPathExtension]
+                                        stringByAppendingString:ext]];
     
     if([savePanel runModal] == NSFileHandlingPanelOKButton)
         return savePanel.URL;
@@ -403,7 +410,8 @@
                                                bodyText:@"Encryption will take a long time. Press ok to continue"];
             }
             
-            NSURL* destination = [self getFilenameForSavingWithExtensions:@".gpg"];
+            NSURL* destination = [self getFilenameForSavingWithSuggestedPath:file
+                                                      withSuggestedExtension:@".gpg"];
             if(destination == nil)
                 return;
             
