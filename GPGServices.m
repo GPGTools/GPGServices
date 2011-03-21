@@ -435,8 +435,15 @@
             NSLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
                                                                     numberStyle:NSNumberFormatterDecimalStyle]);
             if(megabytes > 10) {
-                [self displayMessageWindowWithTitleText:@"Large File"
-                                               bodyText:@"Encryption will take a long time. Press ok to continue"];
+                int ret = [[NSAlert alertWithMessageText:@"Large File"
+                                          defaultButton:@"Continue"
+                                        alternateButton:@"Cancel"
+                                            otherButton:nil
+                               informativeTextWithFormat:@"Encryption will take a long time.\nPress 'Cancel' to abort."] 
+                           runModal];
+                
+                if(ret == NSAlertAlternateReturn)
+                    return;
             }
             
             NSURL* destination = [self getFilenameForSavingWithSuggestedPath:file
