@@ -9,16 +9,22 @@
 #import <Cocoa/Cocoa.h>
 #import "MacGPGME/MacGPGME.h"
 
+typedef BOOL(^KeyValidatorT)(GPGKey* key);
+
 @interface KeyChooserWindowController : NSWindowController {
     NSArray* availableKeys;
     GPGKey* selectedKey;
+    
+    KeyValidatorT keyValidator;
     
     IBOutlet NSPopUpButton* popupButton;
 }
 
 @property(retain) NSArray* availableKeys;
 @property(retain) GPGKey* selectedKey;
+@property(retain) KeyValidatorT keyValidator;
 
+- (void)prepareData;
 - (NSInteger)runModal; //Returns 0 on success
 
 - (NSArray*)getPrivateKeys;

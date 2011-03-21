@@ -11,13 +11,10 @@
 
 @implementation KeyChooserWindowController
 
-@synthesize availableKeys, selectedKey;
+@synthesize availableKeys, selectedKey, keyValidator;
 
 - (id)init {
     self = [super initWithWindowNibName:@"PrivateKeyChooserWindow"];
-    
-    self.availableKeys = [self getPrivateKeys];
-    self.selectedKey = [self getDefaultKey];
     
     return self;
 }
@@ -25,12 +22,14 @@
 - (void)dealloc {
     self.availableKeys = nil;
     self.selectedKey = nil;
+    self.keyValidator = nil;
     
     [super dealloc];
 }
 
-- (void)windowDidLoad {
-    [super windowDidLoad];
+- (void)prepareData {    
+    self.availableKeys = [self getPrivateKeys];
+    self.selectedKey = [self getDefaultKey];
     
     [popupButton removeAllItems];
     for(GPGKey* key in self.availableKeys) {
@@ -42,6 +41,7 @@
     
     NSUInteger idx = [self.availableKeys indexOfObject:self.selectedKey];
     [popupButton selectItemAtIndex:idx];
+
 }
 
 - (IBAction)chooseButtonClicked:(id)sender {
@@ -68,6 +68,8 @@
 }
 
 - (NSInteger)runModal {
+    [self prepareData];
+    
     [self.window center];
     [self.window display];
     return [NSApp runModalForWindow:self.window];
@@ -81,7 +83,14 @@
     NSArray* keys = [[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects];
     [context release];
     
-    return keys;
+    if(self.keyValidator) 
+        return [keys filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+            if([evaluatedObject isKindOfClass:[GPGKey class]])
+                return self.keyValidator((GPGKey*)evaluatedObject);
+            return NO;
+        }]];
+    else
+        return keys;
 }
 
 - (GPGKey*)getDefaultKey {
