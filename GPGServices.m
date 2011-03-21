@@ -57,8 +57,7 @@
     
     if(ext == nil)
         ext = @".gpg";
-    [savePanel setNameFieldStringValue:[[[path lastPathComponent] 
-                                         stringByDeletingPathExtension]
+    [savePanel setNameFieldStringValue:[[path lastPathComponent] 
                                         stringByAppendingString:ext]];
     
     if([savePanel runModal] == NSFileHandlingPanelOKButton)
