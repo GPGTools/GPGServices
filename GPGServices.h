@@ -38,7 +38,7 @@ typedef enum {
 - (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path
                          withSuggestedExtension:(NSString*)ext;
 
--(NSSet*)myKeys;
+-(NSSet*)myPrivateKeys;
 -(GPGKey*)myPrivateKey;
 -(NSString *)myKey;
 -(NSString *)signTextString:(NSString *)inputString;

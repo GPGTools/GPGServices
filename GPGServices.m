@@ -67,7 +67,7 @@
 }
 
 
--(NSSet*)myKeys {
+-(NSSet*)myPrivateKeys {
     GPGContext* context = [[GPGContext alloc] init];
     NSSet* keySet = [NSSet setWithArray:[[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects]];
     [context release];
@@ -89,86 +89,74 @@
     [aContext release];
     return defaultKey;
     NS_HANDLER
-    [aContext release];
-    return nil;
 	NS_ENDHANDLER
     
+    [aContext release];
     return nil;
 }
 
 -(NSString *)myFingerprint
 {
-	GPGOptions *myOptions=[[GPGOptions alloc] init];
-	NSString *keyID=[myOptions optionValueForName:@"default-key"];
-	[myOptions release];
+    GPGKey* chosenKey = [self myPrivateKey];
     
-	if(keyID==nil)
-	{
-		[self displayMessageWindowWithTitleText:@"Default key not set." bodyText:@"No default key is specified in the GPG Preferences."];
-		return nil;
-	}
-    
-	GPGContext *aContext = [[GPGContext alloc] init];
-
-	GPGKey *myKey = nil;
-	NS_DURING
-    myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
-    if(myKey==nil)
-    {
-        [self displayMessageWindowWithTitleText:@"Found no fingerprint." bodyText:@"Could not retrieve your key from keychain (maybe you've not set a default key in ~/.gnupg/gpg.conf)"];
-        [aContext release];
-        return nil;
+    NSSet* availableKeys = [self myPrivateKeys];
+    if(chosenKey == nil || availableKeys.count > 1) {
+        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
+        if([wc runModal] == 0) 
+            chosenKey = wc.selectedKey;
+        else
+            chosenKey = nil;
+        
+        [wc release];
     }
-	NS_HANDLER
-    [self displayMessageWindowWithTitleText:@"Retrieving fingerprint failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
-    [aContext release];
-    return nil;
-	NS_ENDHANDLER
     
-	[aContext release];
-	return [[[myKey formattedFingerprint] copy] autorelease];
+    if(chosenKey != nil)
+        return [[[chosenKey formattedFingerprint] copy] autorelease];
+    else
+        return nil;
 }
 
 
--(NSString *)myKey
-{
-	NSData *keyData = nil;
-	GPGOptions *myOptions=[[GPGOptions alloc] init];
-	NSString *keyID=[myOptions optionValueForName:@"default-key"];
-	[myOptions release];
+-(NSString *)myKey {
+    GPGKey* selectedPrivateKey = [self myPrivateKey];
     
-	if(keyID==nil)
-	{
-		[self displayMessageWindowWithTitleText:@"Default key not set." bodyText:@"No default key is specified in the GPG Preferences."];
-		return nil;
-	}
-    
-	GPGContext *aContext = [[GPGContext alloc] init];
-	[aContext setUsesArmor:YES];
-	[aContext setUsesTextMode:YES];
-    
-	NS_DURING
-    GPGKey* myKey=[aContext keyFromFingerprint:keyID secretKey:NO];
-    if(myKey==nil)
-    {
-        [self displayMessageWindowWithTitleText:@"Found no key." bodyText:@"Could not retrieve your key from keychain (maybe you've not set a default key in ~/.gnupg/gpg.conf)"];
-        [aContext release];
-        return nil;
+    NSSet* availableKeys = [self myPrivateKeys];
+    if(selectedPrivateKey == nil || availableKeys.count > 1) {
+        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
+        if([wc runModal] == 0) 
+            selectedPrivateKey = wc.selectedKey;
+        else
+            selectedPrivateKey = nil;
+        
+        [wc release];
     }
-    keyData=[[aContext exportedKeys:[NSArray arrayWithObject:myKey]] data];
-    if(keyData==nil)
-    {
-        [self displayMessageWindowWithTitleText:@"Exporting key failed." bodyText:@"Could not export key"];
-        [aContext release];
+    
+    if(selectedPrivateKey == nil)
+        return nil;
+    
+    GPGContext* ctx = [[GPGContext alloc] init];
+    [ctx setUsesArmor:YES];
+    [ctx setUsesTextMode:YES];
+    
+    NSData* keyData = nil;
+    NS_DURING
+    keyData = [[ctx exportedKeys:[NSArray arrayWithObject:selectedPrivateKey]] data];
+    
+    if(keyData == nil) {
+        [self displayMessageWindowWithTitleText:@"Exporting key failed." 
+                                       bodyText:@"Could not export key"];
+        [ctx release];
         return nil;
     }
 	NS_HANDLER
-    [self displayMessageWindowWithTitleText:@"Exporting key failed." bodyText:[NSString stringWithFormat:@"%@",GPGErrorDescription([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])]];
-    [aContext release];
+    GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
+    [self displayMessageWindowWithTitleText:@"Exporting key failed." 
+                                   bodyText:[NSString stringWithFormat:@"%@", GPGErrorDescription(error)]];
+    [ctx release];
     return nil;
 	NS_ENDHANDLER
     
-	[aContext release];
+	[ctx release];
 	return [[[NSString alloc] initWithData:keyData 
                                   encoding:NSUTF8StringEncoding] autorelease];
 }
@@ -275,7 +263,7 @@
 	GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
     GPGKey* chosenKey = [self myPrivateKey];
     
-    NSSet* availableKeys = [self myKeys];
+    NSSet* availableKeys = [self myPrivateKeys];
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         if([wc runModal] == 0) 
