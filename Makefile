@@ -8,8 +8,8 @@ compile:
 
 install: compile
 	@echo "  * Installing...";
-	@killall GPGServices
-	@killall -9 GPGServices
+	@- killall GPGServices 2>/dev/null 2>\&1 || echo
+	@- killall -9 GPGServices 2>/dev/null 2>\&1 || echo
 	@mkdir -p ~/Library/Services >> build.log 2>&1
 	@rm -rf ~/Library/Services/GPGServices.service >> build.log 2>&1
 	@cp -r build/Release/GPGServices.service ~/Library/Services >> build.log 2>&1
