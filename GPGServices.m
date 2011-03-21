@@ -412,8 +412,7 @@
 	int ret = [rcp runModal];
     [rcp release];
 	if(ret != 0) {
-        [self displayMessageWindowWithTitleText:@"Encryption cancelled."
-                                       bodyText:@"Encryption was cancelled."];
+        //User pressed 'cancel'
 		return;
 	} else {
     	BOOL sign = rcp.sign;
