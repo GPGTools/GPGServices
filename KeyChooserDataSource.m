@@ -13,6 +13,7 @@
 @synthesize availableKeys, selectedIndex, keyDescriptions, keyValidator;
 @dynamic selectedKey;
 
+//Todo support key-value-binding for this
 - (GPGKey*)selectedKey {
     if(self.selectedIndex < self.availableKeys.count)
         return [self.availableKeys objectAtIndex:self.selectedIndex];

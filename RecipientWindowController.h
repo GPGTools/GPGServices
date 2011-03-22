@@ -30,6 +30,7 @@
 }
 
 @property(readonly) NSArray* selectedKeys;
+@property(readonly) GPGKey* selectedPrivateKey;
 @property(assign) BOOL sign;
 
 - (NSPredicate*)validationPredicate;

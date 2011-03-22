@@ -22,6 +22,11 @@
 		return [keysMatchingSearch objectsAtIndexes:indexSet];
 }
 
+@dynamic selectedPrivateKey;
+- (GPGKey*)selectedPrivateKey {
+    return privateKeyDataSource.selectedKey;
+}
+
 - (id)init {
 	self = [super initWithWindowNibName:@"RecipientWindow"];
     

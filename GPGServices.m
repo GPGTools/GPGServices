@@ -195,6 +195,15 @@
 		
 		BOOL sign = rcp.sign;
         NSArray* validRecipients = rcp.selectedKeys;
+        GPGKey* privateKey = rcp.selectedPrivateKey;
+        
+        if(privateKey == nil) {
+            [self displayMessageWindowWithTitleText:@"Encryption failed." 
+                                           bodyText:@"No usable private key found"];
+            [inputData release];
+            [aContext release];
+            return nil;
+        }
         
         if(validRecipients.count == 0) {
             [self displayMessageWindowWithTitleText:@"Encryption failed."
@@ -202,14 +211,14 @@
 
             [inputData release];
             [aContext release];
-            
             return nil;
         }
         
 		NS_DURING
-		if(sign)
-			outputData=[aContext encryptedSignedData:inputData withKeys:validRecipients trustAllKeys:trustsAllKeys];
-		else
+		if(sign) {
+            [aContext addSignerKey:privateKey];
+            outputData=[aContext encryptedSignedData:inputData withKeys:validRecipients trustAllKeys:trustsAllKeys];
+        } else
 			outputData=[aContext encryptedData:inputData withKeys:validRecipients trustAllKeys:trustsAllKeys];
 		NS_HANDLER
 		outputData = nil;
