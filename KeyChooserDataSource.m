@@ -10,10 +10,23 @@
 
 @implementation KeyChooserDataSource
 
-@synthesize availableKeys, selectedKey, keyDescriptions, keyValidator;
+@synthesize availableKeys, selectedIndex, keyDescriptions, keyValidator;
+@dynamic selectedKey;
 
-- (id)init
-{
+- (GPGKey*)selectedKey {
+    if(self.selectedIndex > self.availableKeys.count)
+        return [self.availableKeys objectAtIndex:self.selectedIndex];
+    else
+        return nil;
+}
+
+- (void)setSelectedKey:(GPGKey *)selKey {
+    [selectedKey release];
+    selectedKey = [selKey retain];
+    self.selectedIndex = [self.availableKeys indexOfObject:selKey];
+}
+
+- (id)init {
     self = [super init];
  
     [self addObserver:self 
@@ -27,6 +40,8 @@
     
     self.availableKeys = [self getPrivateKeys];
     self.selectedKey = [self getDefaultKey];
+    
+    [self updateDescriptions];
     
     return self;
 }

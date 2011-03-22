@@ -16,6 +16,7 @@ typedef BOOL(^KeyValidatorT)(GPGKey* key);
 @private
     NSArray* availableKeys;
     GPGKey* selectedKey;
+    NSUInteger selectedIndex;
     NSArray* keyDescriptions;
     
     KeyValidatorT keyValidator;
@@ -23,6 +24,7 @@ typedef BOOL(^KeyValidatorT)(GPGKey* key);
 
 @property(retain) NSArray* availableKeys;
 @property(retain) GPGKey* selectedKey;
+@property(assign) NSUInteger selectedIndex;
 @property(retain) NSArray* keyDescriptions;
 @property(retain) KeyValidatorT keyValidator;
 
