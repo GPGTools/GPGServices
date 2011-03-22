@@ -9,9 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import <MacGPGME/MacGPGME.h>
 
+#import "KeyChooserDataSource.h"
+
 @interface RecipientWindowController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource, NSWindowDelegate> {
 	IBOutlet NSTableView* tableView;
 	IBOutlet NSSearchField* searchField;
+    IBOutlet KeyChooserDataSource* privateKeyDataSource;
 	
 	GPGContext* gpgContext;
 	
