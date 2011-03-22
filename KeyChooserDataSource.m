@@ -14,7 +14,7 @@
 @dynamic selectedKey;
 
 - (GPGKey*)selectedKey {
-    if(self.selectedIndex > self.availableKeys.count)
+    if(self.selectedIndex < self.availableKeys.count)
         return [self.availableKeys objectAtIndex:self.selectedIndex];
     else
         return nil;

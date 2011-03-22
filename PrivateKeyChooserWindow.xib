@@ -16,7 +16,6 @@
 			<string>NSMenu</string>
 			<string>NSWindowTemplate</string>
 			<string>NSMenuItem</string>
-			<string>NSArrayController</string>
 			<string>NSPopUpButton</string>
 			<string>NSButtonCell</string>
 			<string>NSPopUpButtonCell</string>
@@ -190,20 +189,11 @@
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMaxSize">{1e+13, 1e+13}</string>
 			</object>
-			<object class="NSUserDefaultsController" id="1000536067">
+			<object class="NSUserDefaultsController" id="203106118">
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
-			<object class="NSCustomObject" id="438914160">
+			<object class="NSCustomObject" id="400646188">
 				<string key="NSClassName">KeyChooserDataSource</string>
-			</object>
-			<object class="NSArrayController" id="1008228465">
-				<bool key="NSEditable">YES</bool>
-				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-				<bool key="NSAvoidsEmptySelection">YES</bool>
-				<bool key="NSPreservesSelection">YES</bool>
-				<bool key="NSSelectsInsertedObjects">YES</bool>
-				<bool key="NSFilterRestrictsInsertion">YES</bool>
-				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -274,26 +264,10 @@
 					<int key="connectionID">35</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentArray: self.availableKeys</string>
-						<reference key="source" ref="1008228465"/>
-						<reference key="destination" ref="438914160"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1008228465"/>
-							<reference key="NSDestination" ref="438914160"/>
-							<string key="NSLabel">contentArray: self.availableKeys</string>
-							<string key="NSBinding">contentArray</string>
-							<string key="NSKeyPath">self.availableKeys</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">108</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="438914160"/>
+						<reference key="destination" ref="400646188"/>
 					</object>
 					<int key="connectionID">112</int>
 				</object>
@@ -301,10 +275,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">contentValues: self.keyDescriptions</string>
 						<reference key="source" ref="507214626"/>
-						<reference key="destination" ref="438914160"/>
+						<reference key="destination" ref="400646188"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="507214626"/>
-							<reference key="NSDestination" ref="438914160"/>
+							<reference key="NSDestination" ref="400646188"/>
 							<string key="NSLabel">contentValues: self.keyDescriptions</string>
 							<string key="NSBinding">contentValues</string>
 							<string key="NSKeyPath">self.keyDescriptions</string>
@@ -317,10 +291,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">selectedIndex: self.selectedIndex</string>
 						<reference key="source" ref="507214626"/>
-						<reference key="destination" ref="438914160"/>
+						<reference key="destination" ref="400646188"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="507214626"/>
-							<reference key="NSDestination" ref="438914160"/>
+							<reference key="NSDestination" ref="400646188"/>
 							<string key="NSLabel">selectedIndex: self.selectedIndex</string>
 							<string key="NSBinding">selectedIndex</string>
 							<string key="NSKeyPath">self.selectedIndex</string>
@@ -454,17 +428,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">51</int>
-						<reference key="object" ref="1000536067"/>
+						<reference key="object" ref="203106118"/>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">53</int>
-						<reference key="object" ref="438914160"/>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">78</int>
-						<reference key="object" ref="1008228465"/>
+						<reference key="object" ref="400646188"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</object>
@@ -489,7 +458,6 @@
 					<string>5.IBPluginDependency</string>
 					<string>53.IBPluginDependency</string>
 					<string>6.IBPluginDependency</string>
-					<string>78.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -501,7 +469,6 @@
 					<integer value="1"/>
 					<string>{196, 240}</string>
 					<string>{{357, 418}, {480, 270}}</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
