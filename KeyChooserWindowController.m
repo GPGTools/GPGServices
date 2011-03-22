@@ -11,52 +11,30 @@
 
 @implementation KeyChooserWindowController
 
-@synthesize availableKeys, selectedKey, keyValidator;
+@dynamic selectedKey;
+- (void)setSelectedKey:(GPGKey *)selectedKey {
+    dataSource.selectedKey = selectedKey;
+}
+
+- (GPGKey*)selectedKey {
+    return dataSource.selectedKey;
+}
 
 - (id)init {
     self = [super initWithWindowNibName:@"PrivateKeyChooserWindow"];
-    
+        
     return self;
 }
 
-- (void)dealloc {
-    self.availableKeys = nil;
-    self.selectedKey = nil;
-    self.keyValidator = nil;
-    
+- (void)dealloc {    
     [super dealloc];
 }
 
-- (void)prepareData {    
-    self.availableKeys = [self getPrivateKeys];
-    self.selectedKey = [self getDefaultKey];
-    
-    [popupButton removeAllItems];
-    for(GPGKey* key in self.availableKeys) {
-        NSMutableString* description = [NSMutableString string];
-        [description appendFormat:@"%@ - %@ (%@) <%@>",
-         [key shortKeyID], [key name], [key comment], [key email]];
-        [popupButton addItemWithTitle:description];
-    } 
-    
-    NSUInteger idx = [self.availableKeys indexOfObject:self.selectedKey];
-    [popupButton selectItemAtIndex:idx];
-
-}
-
 - (IBAction)chooseButtonClicked:(id)sender {
-    NSUInteger idx = popupButton.indexOfSelectedItem;
-    if(idx >= self.availableKeys.count)
-        self.selectedKey = nil;
-    else
-        self.selectedKey = [self.availableKeys objectAtIndex:idx];
-    
     [NSApp stopModalWithCode:0];
 }
 
 - (IBAction)cancelButtonClicked:(id)sender {
-    self.selectedKey = nil;
-    
     [NSApp stopModalWithCode:1];
 }
 
@@ -68,51 +46,9 @@
 }
 
 - (NSInteger)runModal {
-    [self prepareData];
-    
     [self.window center];
     [self.window display];
     return [NSApp runModalForWindow:self.window];
 }
-
-#pragma mark -
-#pragma mark GPG Helpers
-
-- (NSArray*)getPrivateKeys {
-    GPGContext* context = [[GPGContext alloc] init];
-    NSArray* keys = [[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects];
-    [context release];
-    
-    if(self.keyValidator) 
-        return [keys filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            if([evaluatedObject isKindOfClass:[GPGKey class]])
-                return self.keyValidator((GPGKey*)evaluatedObject);
-            return NO;
-        }]];
-    else
-        return keys;
-}
-
-- (GPGKey*)getDefaultKey {
-    GPGOptions *myOptions=[[GPGOptions alloc] init];
-	NSString *keyID=[myOptions optionValueForName:@"default-key"];
-	[myOptions release];
-	if(keyID == nil)
-        return nil;
-    
-	GPGContext *aContext = [[GPGContext alloc] init];
-    
-	NS_DURING
-    GPGKey* defaultKey=[aContext keyFromFingerprint:keyID secretKey:YES];
-    [aContext release];
-    return defaultKey;
-    NS_HANDLER
-    [aContext release];
-    return nil;
-	NS_ENDHANDLER
-    
-    return nil;
-}
-
 
 @end

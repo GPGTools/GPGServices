@@ -21,6 +21,7 @@
 		8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 		8E8837C413311E3E0044EFFF /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
+		8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */; };
 		8EF7A61D1334C05300FD8C5B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +94,8 @@
 		8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
 		8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserWindowController.h; sourceTree = "<group>"; };
 		8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserWindowController.m; sourceTree = "<group>"; };
+		8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserDataSource.h; sourceTree = "<group>"; };
+		8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserDataSource.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +117,8 @@
 			children = (
 				4B1908BF0A4CBF0B00052798 /* GPGServices.h */,
 				4B1908C00A4CBF0B00052798 /* GPGServices.m */,
+				8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */,
+				8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */,
 				8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */,
 				8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */,
 				22D6D9C913267E0C00622189 /* RecipientWindowController.h */,
@@ -315,6 +320,7 @@
 				4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */,
 				22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */,
 				8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */,
+				8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
