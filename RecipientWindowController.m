@@ -7,7 +7,7 @@
 //
 
 #import "RecipientWindowController.h"
-
+#import "GPGServices.h"
 
 @implementation RecipientWindowController
 
@@ -32,15 +32,18 @@
     
 	gpgContext = [[GPGContext alloc] init];
     encryptPredicate = [[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [(GPGKey*)evaluatedObject canEncrypt];
+        return [GPGServices canSignValidator]((GPGKey*)evaluatedObject);
     }] retain];
     encryptSignPredicate = [[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return ([(GPGKey*)evaluatedObject canEncrypt] && 
-                [(GPGKey*)evaluatedObject canSign]);
+        GPGKey* k = (GPGKey*)evaluatedObject;
+        
+        return ([GPGServices canSignValidator](k) && 
+                [GPGServices canEncryptValidator](k));
+        
     }] retain];
 	
 	availableKeys = [[[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
-                                                 secretKeysOnly:NO] 
+                                                   secretKeysOnly:NO] 
                       allObjects] 
                       filteredArrayUsingPredicate:[self validationPredicate]] retain];
 	keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
@@ -54,6 +57,8 @@
 - (void)windowDidLoad {
 	[super windowDidLoad];
 	
+    privateKeyDataSource.keyValidator = [GPGServices canSignValidator];
+    
 	[tableView setDoubleAction:@selector(doubleClickAction:)];
 	[tableView setTarget:self];
 	[tableView reloadData];
@@ -127,17 +132,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		}
 	}
 
-	
-	
 	return @"";
-	
-	/*
-	 SEL selector = NSSelectorFromString(iden);
-	 if([key respondsToSelector:selector])
-	 return [key performSelector:selector];
-	 else
-	 return @"";
-	 */
 }
 
 - (void)displayItemsMatchingString:(NSString*)searchString {

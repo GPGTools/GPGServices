@@ -7,6 +7,7 @@
 //
 
 #import "KeyChooserDataSource.h"
+#import "GPGServices.h"
 
 @implementation KeyChooserDataSource
 
@@ -96,24 +97,7 @@
 }
 
 - (NSArray*)getPrivateKeys {
-    GPGContext* context = [[GPGContext alloc] init];
-
-    NSMutableArray* keys = [NSMutableArray array];
-
-    @try {
-        for(GPGKey* k in [[context keyEnumeratorForSearchPatterns:[NSArray array]
-                                                   secretKeysOnly:YES] allObjects]) {
-            // BUG in gpg <= 1.2.x: secret keys have no capabilities when listed in batch!
-            // That's why we refresh key.
-            // Also from GPGMail
-            [keys addObject:[context refreshKey:k]];
-        }
-    } @catch(NSException* ex) {
-        NSLog(@"Exception in getPrivateKeys: %@", ex);
-    }
-
-    [context release];
-    
+    NSArray* keys = [[GPGServices myPrivateKeys] allObjects];
     
     if(self.keyValidator) 
         return [keys filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
@@ -126,24 +110,11 @@
 }
 
 - (GPGKey*)getDefaultKey {
-    GPGOptions *myOptions=[[GPGOptions alloc] init];
-	NSString *keyID=[myOptions optionValueForName:@"default-key"];
-	[myOptions release];
-	if(keyID == nil)
-        return nil;
+    GPGKey* key = [GPGServices myPrivateKey];
     
-	GPGContext *aContext = [[GPGContext alloc] init];
-    
-	@try {
-        GPGKey* defaultKey=[aContext keyFromFingerprint:keyID secretKey:YES];
-        [aContext release];
-        return defaultKey;
-    } @catch (NSException* except) {
-        NSLog(@"GPGException: %@", except);
-        [aContext release];
-    }
-    
-    if(self.availableKeys.count > 0)
+    if(key != nil)
+        return key;
+    else if(self.availableKeys.count > 0)
         return [self.availableKeys objectAtIndex:0];
     else
         return nil;

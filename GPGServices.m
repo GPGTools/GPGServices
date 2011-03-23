@@ -57,7 +57,7 @@
 	[aContext release];
 }
 
--(NSSet*)myPrivateKeys {
++ (NSSet*)myPrivateKeys {
     GPGContext* context = [[GPGContext alloc] init];
     
     NSMutableSet* keySet = [NSMutableSet set];
@@ -70,7 +70,7 @@
     return keySet;
 }
 
-- (GPGKey*)myPrivateKey {
++ (GPGKey*)myPrivateKey {
     GPGOptions *myOptions=[[GPGOptions alloc] init];
 	NSString *keyID=[myOptions optionValueForName:@"default-key"];
 	[myOptions release];
@@ -93,6 +93,28 @@
 
 #pragma mark -
 #pragma mark Validators
+
++ (KeyValidatorT)canEncryptValidator {
+    id block = ^(GPGKey* key) {
+        // A subkey can be expired, without the key being, thus making key useless because it has
+        // no other subkey...
+        // We don't care about ownerTrust, validity
+        
+        for (GPGSubkey *aSubkey in [key subkeys]) {
+            if ([aSubkey canEncrypt] && 
+                ![aSubkey hasKeyExpired] && 
+                ![aSubkey isKeyRevoked] &&
+                ![aSubkey isKeyInvalid] &&
+                ![aSubkey isKeyDisabled]) {
+                return YES;
+            }
+        }
+        return NO;
+    };
+    
+    return [[block copy] autorelease];
+}
+
 
 + (KeyValidatorT)canSignValidator {
     // Copied from GPGMail's GPGMailBundle.m
@@ -134,9 +156,9 @@
 
 -(NSString *)myFingerprint
 {
-    GPGKey* chosenKey = [self myPrivateKey];
+    GPGKey* chosenKey = [GPGServices myPrivateKey];
     
-    NSSet* availableKeys = [self myPrivateKeys];
+    NSSet* availableKeys = [GPGServices myPrivateKeys];
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         if([wc runModal] == 0) 
@@ -155,9 +177,9 @@
 
 
 -(NSString *)myKey {
-    GPGKey* selectedPrivateKey = [self myPrivateKey];
+    GPGKey* selectedPrivateKey = [GPGServices myPrivateKey];
     
-    NSSet* availableKeys = [self myPrivateKeys];
+    NSSet* availableKeys = [GPGServices myPrivateKeys];
     if(selectedPrivateKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         if([wc runModal] == 0) 
@@ -327,9 +349,9 @@
 	[aContext setPassphraseDelegate:self];
     
 	GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-    GPGKey* chosenKey = [self myPrivateKey];
+    GPGKey* chosenKey = [GPGServices myPrivateKey];
     
-    NSSet* availableKeys = [[self myPrivateKeys] filteredSetUsingPredicate:
+    NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
                             [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         return [GPGServices canSignValidator]((GPGKey*)evaluatedObject);
     }]];

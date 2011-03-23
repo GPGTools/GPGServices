@@ -42,13 +42,14 @@ typedef enum {
 #pragma mark GPG-Helper
 
 -(void)importKey:(NSString *)inputString;
--(NSSet*)myPrivateKeys;
--(GPGKey*)myPrivateKey;
++ (NSSet*)myPrivateKeys;
++ (GPGKey*)myPrivateKey;
 
 #pragma mark -
 #pragma mark Validators
 
 + (KeyValidatorT)canSignValidator;
++ (KeyValidatorT)canEncryptValidator;
 
 #pragma mark -
 #pragma mark Text Stuff
