@@ -30,6 +30,11 @@
     [super dealloc];
 }
 
+- (void)windowDidLoad {
+    dataSource.keyValidator = [dataSource canSignValidator];
+    NSLog(@"dataSource: %@", dataSource);
+}
+
 - (IBAction)chooseButtonClicked:(id)sender {
     [NSApp stopModalWithCode:0];
 }

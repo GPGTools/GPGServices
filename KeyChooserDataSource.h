@@ -32,4 +32,10 @@ typedef BOOL(^KeyValidatorT)(GPGKey* key);
 - (NSArray*)getPrivateKeys;
 - (GPGKey*)getDefaultKey;
 
+
+#pragma mark -
+#pragma mark Validators
+
+- (KeyValidatorT)canSignValidator;
+
 @end

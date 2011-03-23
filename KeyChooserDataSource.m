@@ -10,10 +10,8 @@
 
 @implementation KeyChooserDataSource
 
-@synthesize availableKeys, selectedIndex, keyDescriptions, keyValidator;
-@dynamic selectedKey;
+@synthesize availableKeys, selectedIndex, keyDescriptions;
 
-//Todo support key-value-binding for this
 - (GPGKey*)selectedKey {
     if(self.selectedIndex < self.availableKeys.count)
         return [self.availableKeys objectAtIndex:self.selectedIndex];
@@ -22,9 +20,23 @@
 }
 
 - (void)setSelectedKey:(GPGKey *)selKey {
+    [self willChangeValueForKey:@"selectedKey"];
     [selectedKey release];
     selectedKey = [selKey retain];
+    [self didChangeValueForKey:@"selectedKey"];
+    
     self.selectedIndex = [self.availableKeys indexOfObject:selKey];
+}
+
+- (void)setKeyValidator:(KeyValidatorT)kv {
+    [self willChangeValueForKey:@"keyValidator"];
+    [keyValidator release];
+    keyValidator = [kv retain];
+    [self didChangeValueForKey:@"keyValidator"];
+}
+
+- (KeyValidatorT)keyValidator {
+    return keyValidator;
 }
 
 - (id)init {
@@ -61,8 +73,14 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath 
                       ofObject:(id)object
                         change:(NSDictionary *)change
-                       context:(void *)context {
+                       context:(void *)context {    
+
+    if([keyPath isEqualToString:@"keyValidator"])
+        self.availableKeys = [self getPrivateKeys];
+    
     [self updateDescriptions];
+    
+    NSLog(@"availableKeys: %@", self.availableKeys);
 }
 
 - (void)updateDescriptions {
@@ -78,7 +96,15 @@
 
 - (NSArray*)getPrivateKeys {
     GPGContext* context = [[GPGContext alloc] init];
-    NSArray* keys = [[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects];
+    
+    NSMutableArray* keys = [NSMutableArray array];
+    for(GPGKey* k in [[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects]) {
+        // BUG in gpg <= 1.2.x: secret keys have no capabilities when listed in batch!
+        // That's why we refresh key.
+        // Also from GPGMail
+        [keys addObject:[context refreshKey:k]];
+    }
+    
     [context release];
     
     if(self.keyValidator) 
@@ -110,6 +136,30 @@
 	NS_ENDHANDLER
     
     return nil;
+}
+
+
+#pragma mark -
+#pragma mark Validators
+
+- (KeyValidatorT)canSignValidator {
+	// A subkey can be expired, without the key being, thus making key useless because it has
+	// no other subkey...
+	// We don't care about ownerTrust, validity
+    // Copied from GPGMail's GPGMailBundle.m
+    KeyValidatorT block =  ^(GPGKey* key) {
+        for (GPGSubkey *aSubkey in [key subkeys]) {
+            if ([aSubkey canSign] && 
+                ![aSubkey hasKeyExpired] && 
+                ![aSubkey isKeyRevoked] && 
+                ![aSubkey isKeyInvalid] && 
+                ![aSubkey isKeyDisabled])
+                return YES;
+        }
+        return NO;
+    };
+    
+    return [[block copy] autorelease];
 }
 
 @end
