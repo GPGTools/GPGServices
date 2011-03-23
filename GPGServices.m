@@ -483,8 +483,12 @@
             }
         }
         else {
-            [self displayMessageWindowWithTitleText:@"Verification error."
-                                           bodyText:@"Unable to verify due to an internal error"];
+            //Looks like sigs.count == 0 when we have encrypted text but no signature
+            //[self displayMessageWindowWithTitleText:@"Verification error."
+            //                               bodyText:@"Unable to verify due to an internal error"];
+            
+            [self displayMessageWindowWithTitleText:@"Verification failed." 
+                                           bodyText:@"No signatures found within the selection."];
         }
         
 	} @catch(NSException* localException) {
