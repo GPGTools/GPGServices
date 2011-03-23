@@ -489,8 +489,12 @@
                     return;
             }
             
-            NSURL* destination = [self getFilenameForSavingWithSuggestedPath:file
-                                                      withSuggestedExtension:@".gpg"];
+            //NSURL* destination = [self getFilenameForSavingWithSuggestedPath:file
+            //                                          withSuggestedExtension:@".gpg"];
+            
+            NSURL* destination = [[NSURL fileURLWithPath:file] URLByAppendingPathExtension:@"gpg"];
+            NSLog(@"destination: %@", destination);
+            
             if(destination == nil)
                 return;
             
@@ -506,17 +510,9 @@
             
             GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
             GPGData* gpgData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
-            GPGData* encrypted = nil;
-            
-            if(sign == NO) {
-                encrypted = [ctx encryptedData:gpgData 
-                                      withKeys:validRecipients
-                                  trustAllKeys:trustAllKeys];
-            } else {
-                encrypted = [ctx encryptedSignedData:gpgData
-                                            withKeys:validRecipients
-                                        trustAllKeys:trustAllKeys];
-            }
+            GPGData* encrypted = [ctx encryptedData:gpgData 
+                                           withKeys:validRecipients
+                                       trustAllKeys:trustAllKeys];
             
             [encrypted.data writeToURL:destination atomically:YES];
             
