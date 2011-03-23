@@ -40,6 +40,5 @@
 - (NSInteger)runModal;
 - (IBAction)okClicked:(id)sender;
 - (IBAction)cancelClicked:(id)sender;
-- (IBAction)signClicked:(NSButton*)sender;
 
 @end

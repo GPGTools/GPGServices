@@ -459,11 +459,35 @@
 	GPGContext *aContext = [[GPGContext alloc] init];
 	GPGData* inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
     
-    NSArray *sigs = nil;
 	@try {
-        sigs = [aContext verifySignedData:inputData originalData:nil];
+        NSArray* sigs = [aContext verifySignedData:inputData originalData:nil];
+        
+        if([sigs count]>0)
+        {
+            GPGSignature* sig=[sigs objectAtIndex:0];
+            if(GPGErrorCodeFromError([sig status])==GPGErrorNoError)
+            {
+                NSString* userID = [[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
+                NSString* validity = [sig validityDescription];
+                
+                [[NSAlert alertWithMessageText:@"Verification successful."
+                                 defaultButton:@"Ok"
+                               alternateButton:nil
+                                   otherButton:nil
+                     informativeTextWithFormat:@"Good signature (%@ trust):\n\"%@\"",validity,userID]
+                 runModal];
+            }
+            else {
+                [self displayMessageWindowWithTitleText:@"Verification FAILED."
+                                               bodyText:GPGErrorDescription([sig status])];
+            }
+        }
+        else {
+            [self displayMessageWindowWithTitleText:@"Verification error."
+                                           bodyText:@"Unable to verify due to an internal error"];
+        }
+        
 	} @catch(NSException* localException) {
-        sigs = nil;
         if(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])==GPGErrorNoData)
             [self displayMessageWindowWithTitleText:@"Verification failed." 
                                            bodyText:@"No verifiable text was found within the selection"];
@@ -477,31 +501,6 @@
         [inputData release];
         [aContext release];
     }
-    
-    
-    if([sigs count]>0)
-    {
-        GPGSignature* sig=[sigs objectAtIndex:0];
-        if(GPGErrorCodeFromError([sig status])==GPGErrorNoError)
-        {
-            NSString* userID = [[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
-            NSString* validity = [sig validityDescription];
-            
-            [[NSAlert alertWithMessageText:@"Verification successful."
-                             defaultButton:@"Ok"
-                           alternateButton:nil
-                               otherButton:nil
-                 informativeTextWithFormat:@"Good signature (%@ trust):\n\"%@\"",validity,userID]
-             runModal];
-        }
-        else {
-            [self displayMessageWindowWithTitleText:@"Verification FAILED."
-                                           bodyText:GPGErrorDescription([sig status])];
-        }
-    }
-    else
-        [self displayMessageWindowWithTitleText:@"Verification error."
-                                       bodyText:@"Unable to verify due to an internal error"];
 }
 
 #pragma mark -

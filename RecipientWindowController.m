@@ -11,9 +11,8 @@
 
 @implementation RecipientWindowController
 
-@synthesize sign, encryptForOwnKeyToo;
+@synthesize encryptForOwnKeyToo;
 
-@dynamic selectedKeys;
 - (NSArray*)selectedKeys {
 	if(indexSet == nil || 
 	   indexSet.count == 0)
@@ -22,9 +21,23 @@
 		return [keysMatchingSearch objectsAtIndexes:indexSet];
 }
 
-@dynamic selectedPrivateKey;
 - (GPGKey*)selectedPrivateKey {
     return privateKeyDataSource.selectedKey;
+}
+
+- (void)setSign:(BOOL)s {
+    sign = s;
+    
+    availableKeys = [[[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
+                                                   secretKeysOnly:NO] 
+                       allObjects] 
+                      filteredArrayUsingPredicate:[self validationPredicate]] retain];
+    
+    [self displayItemsMatchingString:[searchField stringValue]];
+}
+
+- (BOOL)sign {
+    return sign;
 }
 
 - (id)init {
@@ -229,17 +242,6 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		[self.window makeFirstResponder:searchField];
 	else
 		[super keyDown:theEvent];
-}
-
-- (IBAction)signClicked:(NSButton*)sender {
-    self.sign = sender.isEnabled;
-
-    availableKeys = [[[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
-                                                  secretKeysOnly:NO] 
-                       allObjects] 
-                      filteredArrayUsingPredicate:[self validationPredicate]] retain];
-
-    [self displayItemsMatchingString:[searchField stringValue]];
 }
 
 @end
