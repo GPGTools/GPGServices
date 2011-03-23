@@ -30,11 +30,6 @@
     [super dealloc];
 }
 
-- (void)windowDidLoad {
-    dataSource.keyValidator = [GPGServices canSignValidator];
-    NSLog(@"dataSource: %@", dataSource);
-}
-
 - (IBAction)chooseButtonClicked:(id)sender {
     [NSApp stopModalWithCode:0];
 }
@@ -54,6 +49,10 @@
     [self.window center];
     [self.window display];
     return [NSApp runModalForWindow:self.window];
+}
+
+- (void)setKeyValidator:(KeyValidatorT)validator {
+    dataSource.keyValidator = validator;
 }
 
 @end

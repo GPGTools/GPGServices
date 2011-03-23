@@ -355,6 +355,8 @@
                             
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
+        [wc setKeyValidator:[GPGServices canSignValidator]];
+             
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
         else
