@@ -50,6 +50,7 @@ typedef enum {
 
 + (KeyValidatorT)canSignValidator;
 + (KeyValidatorT)canEncryptValidator;
++ (KeyValidatorT)isActiveValidator;
 
 #pragma mark -
 #pragma mark Text Stuff

@@ -151,17 +151,51 @@
     return [[block copy] autorelease];
 }
 
++ (KeyValidatorT)isActiveValidator {
+    // Copied from GPGMail's GPGMailBundle.m
+    KeyValidatorT block =  ^(GPGKey* key) {
+
+        // Secret keys are never marked as revoked! Use public key
+        key = [key publicKey];
+        
+        // If primary key itself can sign, that's OK (unlike what gpgme documentation says!)
+        if (![key hasKeyExpired] && 
+            ![key isKeyRevoked] && 
+            ![key isKeyInvalid] && 
+            ![key isKeyDisabled]) {
+            return YES;
+        }
+        
+        for (GPGSubkey *aSubkey in [key subkeys]) {
+            if (![aSubkey hasKeyExpired] && 
+                ![aSubkey isKeyRevoked] && 
+                ![aSubkey isKeyInvalid] && 
+                ![aSubkey isKeyDisabled]) {
+                return YES;
+            }
+        }
+        return NO;
+    };
+    
+    return [[block copy] autorelease];
+}
+
 
 #pragma mark -
 #pragma mark Text Stuff
 
--(NSString *)myFingerprint
-{
+-(NSString *)myFingerprint {
     GPGKey* chosenKey = [GPGServices myPrivateKey];
     
-    NSSet* availableKeys = [GPGServices myPrivateKeys];
+    NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
+                            [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [GPGServices isActiveValidator]((GPGKey*)evaluatedObject);
+    }]];
+    
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
+        [wc setKeyValidator:[GPGServices isActiveValidator]];
+        
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
         else
@@ -180,9 +214,15 @@
 -(NSString *)myKey {
     GPGKey* selectedPrivateKey = [GPGServices myPrivateKey];
     
-    NSSet* availableKeys = [GPGServices myPrivateKeys];
+    NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
+                            [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [GPGServices isActiveValidator]((GPGKey*)evaluatedObject);
+    }]];
+    
     if(selectedPrivateKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
+        [wc setKeyValidator:[GPGServices isActiveValidator]];
+        
         if([wc runModal] == 0) 
             selectedPrivateKey = wc.selectedKey;
         else
