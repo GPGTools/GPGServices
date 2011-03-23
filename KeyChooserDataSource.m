@@ -53,6 +53,9 @@
     
     self.availableKeys = [self getPrivateKeys];
     self.selectedKey = [self getDefaultKey];
+        
+    if(self.selectedIndex == NSNotFound)
+        self.selectedIndex = 0;
     
     [self updateDescriptions];
     
@@ -74,13 +77,11 @@
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {    
-
+    
     if([keyPath isEqualToString:@"keyValidator"])
         self.availableKeys = [self getPrivateKeys];
     
     [self updateDescriptions];
-    
-    NSLog(@"availableKeys: %@", self.availableKeys);
 }
 
 - (void)updateDescriptions {
@@ -96,16 +97,25 @@
 
 - (NSArray*)getPrivateKeys {
     GPGContext* context = [[GPGContext alloc] init];
-    
+
     NSMutableArray* keys = [NSMutableArray array];
-    for(GPGKey* k in [[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects]) {
-        // BUG in gpg <= 1.2.x: secret keys have no capabilities when listed in batch!
-        // That's why we refresh key.
-        // Also from GPGMail
-        [keys addObject:[context refreshKey:k]];
+
+    @try {
+        for(GPGKey* k in [[context keyEnumeratorForSearchPatterns:[NSArray array]
+                                                   secretKeysOnly:YES] allObjects]) {
+            // BUG in gpg <= 1.2.x: secret keys have no capabilities when listed in batch!
+            // That's why we refresh key.
+            // Also from GPGMail
+            [keys addObject:[context refreshKey:k]];
+        }
+    } @catch(NSException* ex) {
+        NSLog(@"Exception in getPrivateKeys: %@", ex);
     }
-    
+
     [context release];
+
+    NSLog(@"getPrivateKeys: %@", self.keyValidator);
+    
     
     if(self.keyValidator) 
         return [keys filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
@@ -126,35 +136,54 @@
     
 	GPGContext *aContext = [[GPGContext alloc] init];
     
-	NS_DURING
-    GPGKey* defaultKey=[aContext keyFromFingerprint:keyID secretKey:YES];
-    [aContext release];
-    return defaultKey;
-    NS_HANDLER
-    [aContext release];
-    return nil;
-	NS_ENDHANDLER
+	@try {
+        GPGKey* defaultKey=[aContext keyFromFingerprint:keyID secretKey:YES];
+        [aContext release];
+        return defaultKey;
+    } @catch (NSException* except) {
+        NSLog(@"GPGException: %@", except);
+        [aContext release];
+    }
     
-    return nil;
+    if(self.availableKeys.count > 0)
+        return [self.availableKeys objectAtIndex:0];
+    else
+        return nil;
 }
 
 
 #pragma mark -
 #pragma mark Validators
 
-- (KeyValidatorT)canSignValidator {
-	// A subkey can be expired, without the key being, thus making key useless because it has
-	// no other subkey...
-	// We don't care about ownerTrust, validity
++ (KeyValidatorT)canSignValidator {
     // Copied from GPGMail's GPGMailBundle.m
     KeyValidatorT block =  ^(GPGKey* key) {
+        // A subkey can be expired, without the key being, thus making key useless because it has
+        // no other subkey...
+        // We don't care about ownerTrust, validity, subkeys
+        
+        // Secret keys are never marked as revoked! Use public key
+        key = [key publicKey];
+        
+        NSLog(@"key: %@", [key dictionaryRepresentation]);
+        
+        // If primary key itself can sign, that's OK (unlike what gpgme documentation says!)
+        if ([key canSign] && 
+            ![key hasKeyExpired] && 
+            ![key isKeyRevoked] && 
+            ![key isKeyInvalid] && 
+            ![key isKeyDisabled]) {
+            return YES;
+        }
+        
         for (GPGSubkey *aSubkey in [key subkeys]) {
             if ([aSubkey canSign] && 
                 ![aSubkey hasKeyExpired] && 
                 ![aSubkey isKeyRevoked] && 
                 ![aSubkey isKeyInvalid] && 
-                ![aSubkey isKeyDisabled])
+                ![aSubkey isKeyDisabled]) {
                 return YES;
+            }
         }
         return NO;
     };

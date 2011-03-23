@@ -36,6 +36,6 @@ typedef BOOL(^KeyValidatorT)(GPGKey* key);
 #pragma mark -
 #pragma mark Validators
 
-- (KeyValidatorT)canSignValidator;
++ (KeyValidatorT)canSignValidator;
 
 @end

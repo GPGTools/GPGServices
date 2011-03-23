@@ -31,7 +31,7 @@
 }
 
 - (void)windowDidLoad {
-    dataSource.keyValidator = [dataSource canSignValidator];
+    dataSource.keyValidator = [KeyChooserDataSource canSignValidator];
     NSLog(@"dataSource: %@", dataSource);
 }
 
