@@ -408,8 +408,6 @@
     for(GPGKey* k in keys)
         [signContext addSignerKey:k];
     
-    //There is some problem with encrypting the contents of `encrypted`
-    //Fix is creating another GPGData object with the contents of the written file
     GPGData* dataToSign = [[[GPGData alloc] initWithContentsOfFile:[file path]] autorelease];
     GPGData* signData = [signContext signedData:dataToSign signatureMode:GPGSignatureModeDetach];
     
@@ -459,7 +457,14 @@
         NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
         for(NSString* file in files) {
             BOOL isDirectory = YES;
-            [fmgr fileExistsAtPath:file isDirectory:&isDirectory];
+            BOOL fileExists = [fmgr fileExistsAtPath:file isDirectory:&isDirectory];
+            
+            if(fileExists == NO) {
+                [self displayMessageWindowWithTitleText:@"File doesn't exist"
+                                               bodyText:@"Please try again"];
+                return;
+            }
+            
             if(isDirectory == YES) {
                 [self displayMessageWindowWithTitleText:@"File is a directory"
                                                bodyText:@"Encryption of directories isn't supported"];
