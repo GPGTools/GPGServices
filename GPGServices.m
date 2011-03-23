@@ -656,22 +656,12 @@
 	if(mode!=MyKeyService && mode!=MyFingerprintService)
 	{
 		NSString* type = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
-                                                         NSHTMLPboardType, 
                                                          NSStringPboardType, 
                                                          NSRTFPboardType,
                                                          NSFilenamesPboardType, 
                                                          nil]];
         
-		if([type isEqualToString:NSHTMLPboardType])
-		{
-			if(!(pboardString = [pboard stringForType:NSHTMLPboardType]))
-			{
-				*error=[NSString stringWithFormat:@"Error: Could not perform GPG operation. Pasteboard could not supply HTML string."];
-				[self exitServiceRequest];
-				return;
-			}
-		}
-		else if([type isEqualToString:NSStringPboardType])
+        if([type isEqualToString:NSStringPboardType])
 		{
 			if(!(pboardString = [pboard stringForType:NSStringPboardType]))
 			{
@@ -727,9 +717,9 @@
     
 	if(newString!=nil)
 	{
-		[pboard declareTypes:[NSArray arrayWithObjects:NSStringPboardType,NSHTMLPboardType,nil] owner:nil];
+		[pboard declareTypes:[NSArray arrayWithObjects:NSStringPboardType,NSRTFPboardType,nil] owner:nil];
 		[pboard setString:newString forType:NSStringPboardType];
-		[pboard setString:[NSString stringWithFormat:@"<pre>%@</pre>",newString] forType:NSHTMLPboardType];
+   		[pboard setString:newString forType:NSRTFPboardType];
 	}
 	[self exitServiceRequest];
 }
