@@ -59,7 +59,12 @@
 
 -(NSSet*)myPrivateKeys {
     GPGContext* context = [[GPGContext alloc] init];
-    NSSet* keySet = [NSSet setWithArray:[[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects]];
+    
+    NSMutableSet* keySet = [NSMutableSet set];
+    for(GPGKey* k in [NSSet setWithArray:[[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects]]) {
+        [keySet addObject:[context refreshKey:k]];
+    }
+    
     [context release];
     
     return keySet;
