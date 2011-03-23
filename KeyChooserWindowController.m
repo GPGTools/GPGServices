@@ -7,7 +7,7 @@
 //
 
 #import "KeyChooserWindowController.h"
-
+#import "GPGServices.h"
 
 @implementation KeyChooserWindowController
 
@@ -31,7 +31,7 @@
 }
 
 - (void)windowDidLoad {
-    dataSource.keyValidator = [KeyChooserDataSource canSignValidator];
+    dataSource.keyValidator = [GPGServices canSignValidator];
     NSLog(@"dataSource: %@", dataSource);
 }
 

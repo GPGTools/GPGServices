@@ -150,41 +150,4 @@
 }
 
 
-#pragma mark -
-#pragma mark Validators
-
-+ (KeyValidatorT)canSignValidator {
-    // Copied from GPGMail's GPGMailBundle.m
-    KeyValidatorT block =  ^(GPGKey* key) {
-        // A subkey can be expired, without the key being, thus making key useless because it has
-        // no other subkey...
-        // We don't care about ownerTrust, validity, subkeys
-        
-        // Secret keys are never marked as revoked! Use public key
-        key = [key publicKey];
-        
-        // If primary key itself can sign, that's OK (unlike what gpgme documentation says!)
-        if ([key canSign] && 
-            ![key hasKeyExpired] && 
-            ![key isKeyRevoked] && 
-            ![key isKeyInvalid] && 
-            ![key isKeyDisabled]) {
-            return YES;
-        }
-        
-        for (GPGSubkey *aSubkey in [key subkeys]) {
-            if ([aSubkey canSign] && 
-                ![aSubkey hasKeyExpired] && 
-                ![aSubkey isKeyRevoked] && 
-                ![aSubkey isKeyInvalid] && 
-                ![aSubkey isKeyDisabled]) {
-                return YES;
-            }
-        }
-        return NO;
-    };
-    
-    return [[block copy] autorelease];
-}
-
 @end

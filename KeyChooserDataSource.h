@@ -10,7 +10,7 @@
 
 #import "MacGPGME/MacGPGME.h"
 
-typedef BOOL(^KeyValidatorT)(GPGKey* key);
+#import "GPGServices.h"
 
 @interface KeyChooserDataSource : NSObject {
 @private
@@ -31,11 +31,5 @@ typedef BOOL(^KeyValidatorT)(GPGKey* key);
 - (void)updateDescriptions;
 - (NSArray*)getPrivateKeys;
 - (GPGKey*)getDefaultKey;
-
-
-#pragma mark -
-#pragma mark Validators
-
-+ (KeyValidatorT)canSignValidator;
 
 @end

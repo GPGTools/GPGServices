@@ -10,6 +10,8 @@
 #import <MacGPGME/MacGPGME.h>
 #import <Growl/Growl.h>
 
+typedef BOOL(^KeyValidatorT)(GPGKey* key);
+
 typedef enum {
     SignService, 
     EncryptService, 
@@ -43,6 +45,10 @@ typedef enum {
 -(NSSet*)myPrivateKeys;
 -(GPGKey*)myPrivateKey;
 
+#pragma mark -
+#pragma mark Validators
+
++ (KeyValidatorT)canSignValidator;
 
 #pragma mark -
 #pragma mark Text Stuff
