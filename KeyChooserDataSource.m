@@ -113,8 +113,6 @@
     }
 
     [context release];
-
-    NSLog(@"getPrivateKeys: %@", self.keyValidator);
     
     
     if(self.keyValidator) 
@@ -164,8 +162,6 @@
         
         // Secret keys are never marked as revoked! Use public key
         key = [key publicKey];
-        
-        NSLog(@"key: %@", [key dictionaryRepresentation]);
         
         // If primary key itself can sign, that's OK (unlike what gpgme documentation says!)
         if ([key canSign] && 
