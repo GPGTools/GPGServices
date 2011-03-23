@@ -400,6 +400,32 @@
 #pragma mark -
 #pragma mark File Stuff
 
+- (void)signFile:(NSURL*)file withKeys:(NSArray*)keys {
+    NS_DURING
+    //Generate .sig file
+    GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
+    [signContext setUsesArmor:YES];
+    for(GPGKey* k in keys)
+        [signContext addSignerKey:k];
+    
+    //There is some problem with encrypting the contents of `encrypted`
+    //Fix is creating another GPGData object with the contents of the written file
+    GPGData* dataToSign = [[[GPGData alloc] initWithContentsOfFile:[file path]] autorelease];
+    GPGData* signData = [signContext signedData:dataToSign signatureMode:GPGSignatureModeDetach];
+    
+    NSURL* sigURL = [file URLByAppendingPathExtension:@"sig"];
+    [[signData data] writeToURL:sigURL atomically:YES];
+    NS_HANDLER
+    [GrowlApplicationBridge notifyWithTitle:@"Signing failed"
+                                description:[file lastPathComponent]
+                           notificationName:@"SigningFileFailed"
+                                   iconData:[NSData data]
+                                   priority:0
+                                   isSticky:NO
+                               clickContext:file];
+    NS_ENDHANDLER
+}
+
 - (void)encryptFiles:(NSArray*)files {
     BOOL trustAllKeys = YES;
     
@@ -489,30 +515,8 @@
             
             [encrypted.data writeToURL:destination atomically:YES];
             
-            if(sign == YES && privateKey != nil) {
-                NS_DURING
-                //Generate .sig file
-                GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
-                [signContext setUsesArmor:YES];
-                [signContext addSignerKey:privateKey];
-                
-                //There is some problem with encrypting the contents of `encrypted`
-                //Fix is creating another GPGData object with the contents of the written file
-                GPGData* dataToSign = [[GPGData alloc] initWithContentsOfFile:[destination path]];
-                GPGData* signData = [[signContext signedData:dataToSign signatureMode:GPGSignatureModeDetach] autorelease];
-                
-                NSURL* sigURL = [destination URLByAppendingPathExtension:@"sig"];
-                [[signData data] writeToURL:sigURL atomically:YES];
-                NS_HANDLER
-                [GrowlApplicationBridge notifyWithTitle:@"Signing failed"
-                                            description:[destination lastPathComponent]
-                                       notificationName:@"SigningFileFailed"
-                                               iconData:[NSData data]
-                                               priority:0
-                                               isSticky:NO
-                                           clickContext:destination];
-                NS_ENDHANDLER
-            }
+            if(sign == YES && privateKey != nil)
+                [self signFile:destination withKeys:[NSArray arrayWithObject:privateKey]];
             
             [GrowlApplicationBridge notifyWithTitle:@"Encryption finished"
                                         description:[destination lastPathComponent]
