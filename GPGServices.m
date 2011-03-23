@@ -23,9 +23,8 @@
 }
 
 
-//
-// Actual GPG Routines
-//
+#pragma mark -
+#pragma mark GPG-Helper
 
 -(void)importKey:(NSString *)inputString
 {
@@ -58,25 +57,6 @@
 	[aContext release];
 }
 
-
-- (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path 
-                         withSuggestedExtension:(NSString*)ext {    
-    NSSavePanel* savePanel = [NSSavePanel savePanel];
-    savePanel.title = @"Choose Destination";
-    savePanel.directory = [path stringByDeletingLastPathComponent];
-    
-    if(ext == nil)
-        ext = @".gpg";
-    [savePanel setNameFieldStringValue:[[path lastPathComponent] 
-                                        stringByAppendingString:ext]];
-    
-    if([savePanel runModal] == NSFileHandlingPanelOKButton)
-        return savePanel.URL;
-    else
-        return nil;
-}
-
-
 -(NSSet*)myPrivateKeys {
     GPGContext* context = [[GPGContext alloc] init];
     NSSet* keySet = [NSSet setWithArray:[[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects]];
@@ -104,6 +84,9 @@
     [aContext release];
     return nil;
 }
+
+#pragma mark -
+#pragma mark Text Stuff
 
 -(NSString *)myFingerprint
 {
@@ -406,6 +389,9 @@
 	[aContext release];
 }
 
+#pragma mark -
+#pragma mark File Stuff
+
 - (void)encryptFiles:(NSArray*)files {
     BOOL trustAllKeys = YES;
     
@@ -506,12 +492,14 @@
     }
 }
 
-//
-//Services handling routines
-//
 
--(void)dealWithPasteboard:(NSPasteboard *)pboard userData:(NSString *)userData mode:(ServiceModeEnum)mode error:(NSString **)error
-{
+#pragma mark -
+#pragma mark Service handling routines
+
+-(void)dealWithPasteboard:(NSPasteboard *)pboard
+                 userData:(NSString *)userData
+                     mode:(ServiceModeEnum)mode
+                    error:(NSString **)error {
 	[self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
     
@@ -645,9 +633,27 @@
     [pool release];
 }
 
-//
-//Gui routines
-//
+
+#pragma mark -
+#pragma mark UI Helpher
+
+- (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path 
+                         withSuggestedExtension:(NSString*)ext {    
+    NSSavePanel* savePanel = [NSSavePanel savePanel];
+    savePanel.title = @"Choose Destination";
+    savePanel.directory = [path stringByDeletingLastPathComponent];
+    
+    if(ext == nil)
+        ext = @".gpg";
+    [savePanel setNameFieldStringValue:[[path lastPathComponent] 
+                                        stringByAppendingString:ext]];
+    
+    if([savePanel runModal] == NSFileHandlingPanelOKButton)
+        return savePanel.URL;
+    else
+        return nil;
+}
+
 
 -(void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body
 {

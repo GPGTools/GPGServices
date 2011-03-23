@@ -34,20 +34,40 @@ typedef enum {
 }
 
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification;
--(void)importKey:(NSString *)inputString;
-- (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path
-                         withSuggestedExtension:(NSString*)ext;
 
+
+#pragma mark -
+#pragma mark GPG-Helper
+
+-(void)importKey:(NSString *)inputString;
 -(NSSet*)myPrivateKeys;
 -(GPGKey*)myPrivateKey;
+
+
+#pragma mark -
+#pragma mark Text Stuff
+
+-(NSString *)myFingerprint;
 -(NSString *)myKey;
 -(NSString *)signTextString:(NSString *)inputString;
 -(NSString *)encryptTextString:(NSString *)inputString;
 -(NSString *)decryptTextString:(NSString *)inputString;
 -(void)verifyTextString:(NSString *)inputString;
+
+
+#pragma mark -
+#pragma mark File Stuff
+
 - (void)encryptFiles:(NSArray*)files;
 
--(void)dealWithPasteboard:(NSPasteboard *)pboard userData:(NSString *)userData mode:(ServiceModeEnum)mode error:(NSString **)error;
+
+#pragma mark -
+#pragma mark Service handling routines
+
+-(void)dealWithPasteboard:(NSPasteboard *)pboard
+                 userData:(NSString *)userData 
+                     mode:(ServiceModeEnum)mode
+                    error:(NSString **)error;
 -(void)exitServiceRequest;
 -(void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)encrypt:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
@@ -58,10 +78,15 @@ typedef enum {
 -(void)importKey:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 
+
+#pragma mark -
+#pragma mark UI Helpher
+
 -(void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body;
 -(NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again;
-
 -(IBAction)closeModalWindow:(id)sender;
+- (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path
+                         withSuggestedExtension:(NSString*)ext;
 
 -(void)cancelTerminateTimer;
 -(void)goneIn60Seconds;
