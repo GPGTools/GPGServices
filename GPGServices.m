@@ -285,7 +285,11 @@
 	GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
     GPGKey* chosenKey = [self myPrivateKey];
     
-    NSSet* availableKeys = [self myPrivateKeys];
+    NSSet* availableKeys = [[self myPrivateKeys] filteredSetUsingPredicate:
+                            [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [KeyChooserDataSource canSignValidator]((GPGKey*)evaluatedObject);
+    }]];
+                            
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         if([wc runModal] == 0) 
@@ -294,6 +298,8 @@
             chosenKey = nil;
         
         [wc release];
+    } else if(availableKeys.count == 1) {
+        chosenKey = [availableKeys anyObject];
     }
     
     if(chosenKey != nil) {
