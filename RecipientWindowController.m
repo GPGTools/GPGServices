@@ -11,7 +11,7 @@
 
 @implementation RecipientWindowController
 
-@synthesize sign;
+@synthesize sign, encryptForOwnKeyToo;
 
 @dynamic selectedKeys;
 - (NSArray*)selectedKeys {
@@ -45,6 +45,9 @@
                       filteredArrayUsingPredicate:[self validationPredicate]] retain];
 	keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
 	
+    self.sign = NO;
+    self.encryptForOwnKeyToo = YES;
+    
 	return self;
 }
 
@@ -235,7 +238,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 
 - (IBAction)signClicked:(NSButton*)sender {
     self.sign = sender.isEnabled;
-    
+
     availableKeys = [[[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
                                                   secretKeysOnly:NO] 
                        allObjects] 

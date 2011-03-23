@@ -27,11 +27,13 @@
 	NSIndexSet* indexSet;
 	
 	BOOL sign;
+    BOOL encryptForOwnKeyToo;
 }
 
 @property(readonly) NSArray* selectedKeys;
 @property(readonly) GPGKey* selectedPrivateKey;
 @property(assign) BOOL sign;
+@property(assign) BOOL encryptForOwnKeyToo;
 
 - (NSPredicate*)validationPredicate;
 - (void)displayItemsMatchingString:(NSString*)s;

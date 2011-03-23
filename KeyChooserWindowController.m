@@ -22,7 +22,7 @@
 
 - (id)init {
     self = [super initWithWindowNibName:@"PrivateKeyChooserWindow"];
-        
+    
     return self;
 }
 

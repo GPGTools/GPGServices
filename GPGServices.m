@@ -179,7 +179,15 @@
 		BOOL sign = rcp.sign;
         NSArray* validRecipients = rcp.selectedKeys;
         GPGKey* privateKey = rcp.selectedPrivateKey;
-        
+
+        if(rcp.encryptForOwnKeyToo && privateKey) {
+            validRecipients = [[[NSSet setWithArray:validRecipients] 
+                                setByAddingObject:[privateKey publicKey]] 
+                               allObjects];
+        } else {
+            validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
+        }
+            
         if(privateKey == nil) {
             [self displayMessageWindowWithTitleText:@"Encryption failed." 
                                            bodyText:@"No usable private key found"];
