@@ -420,6 +420,15 @@
 	} else {
     	BOOL sign = rcp.sign;
         NSArray* validRecipients = rcp.selectedKeys;
+        GPGKey* privateKey = rcp.selectedPrivateKey;
+        
+        if(rcp.encryptForOwnKeyToo && privateKey) {
+            validRecipients = [[[NSSet setWithArray:validRecipients] 
+                                setByAddingObject:[privateKey publicKey]] 
+                               allObjects];
+        } else {
+            validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
+        }
         
         NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
         for(NSString* file in files) {
@@ -454,16 +463,6 @@
             if(destination == nil)
                 return;
             
-            /*
-             NSError* error = nil;
-             NSData* data = [NSData dataWithContentsOfFile:file
-             options:NSDataReadingMapped 
-             error:&error];
-             if(error)
-             [self displayMessageWindowWithTitleText:@"Error while reading contents of file"
-             bodyText:[error description]];
-             */
-            
             if(megabytes > 10) {
                 [GrowlApplicationBridge notifyWithTitle:@"Encrypting..."
                                             description:[file lastPathComponent]
@@ -478,16 +477,32 @@
             GPGData* gpgData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
             GPGData* encrypted = nil;
             
-            if(sign == NO)
+            if(sign == NO) {
                 encrypted = [ctx encryptedData:gpgData 
                                       withKeys:validRecipients
                                   trustAllKeys:trustAllKeys];
-            else
+            } else {
                 encrypted = [ctx encryptedSignedData:gpgData
                                             withKeys:validRecipients
                                         trustAllKeys:trustAllKeys];
+            }
             
             [encrypted.data writeToURL:destination atomically:YES];
+            
+            if(sign == YES && privateKey != nil) {
+                //Generate .sig file
+                GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
+                [signContext setUsesArmor:YES];
+                [signContext addSignerKey:privateKey];
+                
+                //There is some problem with encrypting the contents of `encrypted`
+                //Fix is creating another GPGData object with the contents of the written file
+                GPGData* dataToSign = [[GPGData alloc] initWithContentsOfFile:[destination path]];
+                GPGData* signData = [[signContext signedData:dataToSign signatureMode:GPGSignatureModeDetach] autorelease];
+                
+                NSURL* sigURL = [destination URLByAppendingPathExtension:@"sig"];
+                [[signData data] writeToURL:sigURL atomically:YES];
+            }
             
             [GrowlApplicationBridge notifyWithTitle:@"Encryption finished"
                                         description:[destination lastPathComponent]
