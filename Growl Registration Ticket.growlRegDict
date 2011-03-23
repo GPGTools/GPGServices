@@ -8,11 +8,13 @@
 	<array>
 		<string>EncryptionStarted</string>
 		<string>EncryptionSucceeded</string>
+        <string>SigningFileFailed</string>
 	</array>
 	<key>DefaultNotifications</key>
 	<array>
 		<string>EncryptionStarted</string>
 		<string>EncryptionSucceeded</string>
-	</array>
+        <string>SigningFileFailed</string>
+	</array>    
 </dict>
 </plist>

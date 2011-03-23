@@ -490,6 +490,7 @@
             [encrypted.data writeToURL:destination atomically:YES];
             
             if(sign == YES && privateKey != nil) {
+                NS_DURING
                 //Generate .sig file
                 GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
                 [signContext setUsesArmor:YES];
@@ -502,6 +503,15 @@
                 
                 NSURL* sigURL = [destination URLByAppendingPathExtension:@"sig"];
                 [[signData data] writeToURL:sigURL atomically:YES];
+                NS_HANDLER
+                [GrowlApplicationBridge notifyWithTitle:@"Signing failed"
+                                            description:[destination lastPathComponent]
+                                       notificationName:@"SigningFileFailed"
+                                               iconData:[NSData data]
+                                               priority:0
+                                               isSticky:NO
+                                           clickContext:destination];
+                NS_ENDHANDLER
             }
             
             [GrowlApplicationBridge notifyWithTitle:@"Encryption finished"
