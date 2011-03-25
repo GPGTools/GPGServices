@@ -24,10 +24,7 @@ typedef enum {
 
 @interface GPGServices : NSObject <GrowlApplicationBridgeDelegate>
 {
-	IBOutlet NSWindow *messageWindow;
 	IBOutlet NSWindow *recipientWindow;
-	IBOutlet NSTextField *messageHeadingText;
-	IBOutlet NSTextField *messageBodyText;
 	
 	IBOutlet NSWindow *passphraseWindow;
 	IBOutlet NSSecureTextField *passphraseText;

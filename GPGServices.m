@@ -794,15 +794,7 @@
 }
 
 
--(void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body
-{
-    /*
-	[messageHeadingText setStringValue:title];
-	[messageBodyText setStringValue:body];
-	[NSApp runModalForWindow:messageWindow];
-	[messageWindow close];
-     */
-    
+-(void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body {
     [[NSAlert alertWithMessageText:title
                     defaultButton:@"Ok"
                   alternateButton:nil
@@ -825,10 +817,7 @@
 
 -(IBAction)closeModalWindow:(id)sender{
 	[NSApp stopModalWithCode:[sender tag]];
-	[recipientWindow close];
 }
-
-
 
 //
 //Timer based application termination
