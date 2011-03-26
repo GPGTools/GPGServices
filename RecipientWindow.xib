@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
 		<string key="IBDocument.SystemVersion">10J869</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1305</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1306</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1305</string>
+			<string key="NS.object.0">1306</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -135,7 +135,7 @@
 										<object class="NSTableView" id="1027869562">
 											<reference key="NSNextResponder" ref="373712892"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrameSize">{947, 113}</string>
+											<string key="NSFrameSize">{1181, 113}</string>
 											<reference key="NSSuperview" ref="373712892"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="380753030"/>
@@ -143,7 +143,7 @@
 											<object class="NSTableHeaderView" key="NSHeaderView" id="616634914">
 												<reference key="NSNextResponder" ref="503892656"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrameSize">{947, 17}</string>
+												<string key="NSFrameSize">{1181, 17}</string>
 												<reference key="NSSuperview" ref="503892656"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="880498251"/>
@@ -521,7 +521,7 @@
 												</object>
 												<object class="NSTableColumn" id="961933995">
 													<string key="NSIdentifier">comment</string>
-													<double key="NSWidth">10</double>
+													<double key="NSWidth">244</double>
 													<double key="NSMinWidth">10</double>
 													<double key="NSMaxWidth">1000</double>
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -599,7 +599,7 @@
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="1057667522"/>
 									<string key="NSAction">_doScroller:</string>
-									<double key="NSPercent">0.68426610348468853</double>
+									<double key="NSPercent">0.54868755292125315</double>
 								</object>
 								<object class="NSClipView" id="503892656">
 									<reference key="NSNextResponder" ref="1057667522"/>
@@ -1742,13 +1742,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cancelClicked:</string>
 							<string>okClicked:</string>
-							<string>signClicked:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>id</string>
-							<string>NSButton</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -1757,7 +1755,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cancelClicked:</string>
 							<string>okClicked:</string>
-							<string>signClicked:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1768,10 +1765,6 @@
 							<object class="IBActionInfo">
 								<string key="name">okClicked:</string>
 								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">signClicked:</string>
-								<string key="candidateClassName">NSButton</string>
 							</object>
 						</object>
 					</object>
