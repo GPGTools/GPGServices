@@ -240,6 +240,10 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 #pragma mark -
 #pragma mark Actions
 
+- (void)windowWillClose:(NSNotification *)notification {
+    [NSApp stopModalWithCode:1];
+}
+
 - (NSInteger)runModal {
 	[self showWindow:self];
 	NSInteger ret = [NSApp runModalForWindow:self.window];
