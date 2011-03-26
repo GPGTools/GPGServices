@@ -247,6 +247,11 @@
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+														<string key="NSKey">name</string>
+														<bool key="NSAscending">YES</bool>
+														<string key="NSSelector">localizedCaseInsensitiveCompare:</string>
+													</object>
 												</object>
 												<object class="NSTableColumn" id="705112813">
 													<string key="NSIdentifier">email</string>
@@ -273,6 +278,11 @@
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+														<string key="NSKey">email</string>
+														<bool key="NSAscending">YES</bool>
+														<string key="NSSelector">localizedCaseInsensitiveCompare:</string>
+													</object>
 												</object>
 												<object class="NSTableColumn" id="1071185200">
 													<string key="NSIdentifier">ownerTrust</string>
@@ -299,6 +309,11 @@
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+														<string key="NSKey">ownerTrust</string>
+														<bool key="NSAscending">YES</bool>
+														<string key="NSSelector">compare:</string>
+													</object>
 												</object>
 												<object class="NSTableColumn" id="1007808256">
 													<string key="NSIdentifier">creationDate</string>
@@ -342,9 +357,14 @@
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+														<string key="NSKey">creationDate</string>
+														<bool key="NSAscending">YES</bool>
+														<string key="NSSelector">compare:</string>
+													</object>
 												</object>
 												<object class="NSTableColumn" id="768338024">
-													<string key="NSIdentifier">expires</string>
+													<string key="NSIdentifier">expirationDate</string>
 													<double key="NSWidth">79</double>
 													<double key="NSMinWidth">10</double>
 													<double key="NSMaxWidth">3.4028234663852886e+38</double>
@@ -385,6 +405,11 @@
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+														<string key="NSKey">expirationDate</string>
+														<bool key="NSAscending">YES</bool>
+														<string key="NSSelector">compare:</string>
+													</object>
 												</object>
 												<object class="NSTableColumn" id="479140475">
 													<string key="NSIdentifier">length</string>
@@ -411,6 +436,11 @@
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+														<string key="NSKey">length</string>
+														<bool key="NSAscending">YES</bool>
+														<string key="NSSelector">compare:</string>
+													</object>
 												</object>
 												<object class="NSTableColumn" id="1023882559">
 													<string key="NSIdentifier">algorithm</string>
@@ -437,6 +467,11 @@
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+														<string key="NSKey">algorithm</string>
+														<bool key="NSAscending">YES</bool>
+														<string key="NSSelector">localizedCaseInsensitiveCompare:</string>
+													</object>
 												</object>
 												<object class="NSTableColumn" id="45373446">
 													<string key="NSIdentifier">shortKeyID</string>
@@ -466,6 +501,11 @@
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+														<string key="NSKey">shortKeyID</string>
+														<bool key="NSAscending">YES</bool>
+														<string key="NSSelector">localizedCaseInsensitiveCompare:</string>
+													</object>
 												</object>
 												<object class="NSTableColumn" id="934770653">
 													<string key="NSIdentifier">keyID</string>
@@ -492,6 +532,11 @@
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+														<string key="NSKey">keyID</string>
+														<bool key="NSAscending">YES</bool>
+														<string key="NSSelector">localizedCaseInsensitiveCompare:</string>
+													</object>
 												</object>
 												<object class="NSTableColumn" id="412868625">
 													<string key="NSIdentifier">fingerprint</string>
@@ -518,6 +563,11 @@
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+														<string key="NSKey">fingerprint</string>
+														<bool key="NSAscending">YES</bool>
+														<string key="NSSelector">localizedCaseInsensitiveCompare:</string>
+													</object>
 												</object>
 												<object class="NSTableColumn" id="961933995">
 													<string key="NSIdentifier">comment</string>
@@ -544,6 +594,11 @@
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+														<string key="NSKey">comment</string>
+														<bool key="NSAscending">YES</bool>
+														<string key="NSSelector">localizedCaseInsensitiveCompare:</string>
+													</object>
 												</object>
 											</object>
 											<double key="NSIntercellSpacingWidth">3</double>
@@ -559,7 +614,7 @@
 												</object>
 											</object>
 											<double key="NSRowHeight">17</double>
-											<int key="NSTvFlags">-631242752</int>
+											<int key="NSTvFlags">-622854144</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
 											<int key="NSColumnAutoresizingStyle">4</int>
@@ -570,6 +625,7 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{1, 17}, {648, 113}}</string>
+									<string key="NSBounds">{{533, 0}, {648, 113}}</string>
 									<reference key="NSSuperview" ref="1057667522"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1027869562"/>
@@ -599,6 +655,7 @@
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="1057667522"/>
 									<string key="NSAction">_doScroller:</string>
+									<double key="NSCurValue">1</double>
 									<double key="NSPercent">0.54868755292125315</double>
 								</object>
 								<object class="NSClipView" id="503892656">
@@ -609,6 +666,7 @@
 										<reference ref="616634914"/>
 									</object>
 									<string key="NSFrame">{{1, 0}, {648, 17}}</string>
+									<string key="NSBounds">{{533, 0}, {648, 17}}</string>
 									<reference key="NSSuperview" ref="1057667522"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="616634914"/>
@@ -1170,7 +1228,6 @@
 						<reference key="object" ref="889398207"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="1057667522"/>
 							<reference ref="383858027"/>
 							<reference ref="786905892"/>
 							<reference ref="1183693"/>
@@ -1179,6 +1236,7 @@
 							<reference ref="318770745"/>
 							<reference ref="907311194"/>
 							<reference ref="61361730"/>
+							<reference ref="1057667522"/>
 						</object>
 						<reference key="parent" ref="741225058"/>
 					</object>

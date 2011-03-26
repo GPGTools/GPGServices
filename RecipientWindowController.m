@@ -28,6 +28,7 @@
 - (void)setSign:(BOOL)s {
     sign = s;
     
+    [availableKeys release];
     availableKeys = [[[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
                                                    secretKeysOnly:NO] 
                        allObjects] 
@@ -74,6 +75,10 @@
     
 	[tableView setDoubleAction:@selector(doubleClickAction:)];
 	[tableView setTarget:self];
+    NSSortDescriptor* sd = [NSSortDescriptor sortDescriptorWithKey:@"name"
+                                                         ascending:YES
+                                                          selector:@selector(localizedCaseInsensitiveCompare:)];
+    [tableView setSortDescriptors:[NSArray arrayWithObject:sd]];
 	[tableView reloadData];
 }
 
@@ -123,7 +128,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		return [key shortKeyID];
 	else if([iden isEqualToString:@"email"])
 		return [key email];
-	else if([iden isEqualToString:@"expires"])
+	else if([iden isEqualToString:@"expirationDate"])
 		return [key expirationDate];
 	else if([iden isEqualToString:@"type"]) {
 		if([key secretKey] == key)
@@ -208,6 +213,14 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		[self okClicked:sender];
 	}
 }
+
+- (void)tableView:(NSTableView *)aTableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
+    NSArray* tmp = [availableKeys sortedArrayUsingDescriptors:[tableView sortDescriptors]];
+    [availableKeys release];
+    availableKeys = [tmp retain];
+    [self displayItemsMatchingString:[searchField stringValue]];
+}
+
 
 #pragma mark Helpers
 
