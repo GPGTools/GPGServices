@@ -203,6 +203,13 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 #pragma mark -
 #pragma mark Delegate
 
+- (void)tableView:(NSTableView *)aTableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
+    NSArray* tmp = [availableKeys sortedArrayUsingDescriptors:[tableView sortDescriptors]];
+    [availableKeys release];
+    availableKeys = [tmp retain];
+    [self displayItemsMatchingString:[searchField stringValue]]; 
+}
+
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
 	NSIndexSet* set = [tableView selectedRowIndexes];
 	
@@ -220,14 +227,6 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		[self okClicked:sender];
 	}
 }
-
-- (void)tableView:(NSTableView *)aTableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
-    NSArray* tmp = [availableKeys sortedArrayUsingDescriptors:[tableView sortDescriptors]];
-    [availableKeys release];
-    availableKeys = [tmp retain];
-    [self displayItemsMatchingString:[searchField stringValue]];
-}
-
 
 #pragma mark Helpers
 
