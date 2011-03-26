@@ -136,19 +136,26 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		else if([key publicKey] == key)
 			return @"pub";
 	} else if([iden isEqualToString:@"ownerTrust"]) {
-		switch([key ownerTrust]) {
-			case GPGValidityUndefined:
-				return @"Undefined";
-			case GPGValidityMarginal:
-				return @"Marginal";
-			case GPGValidityFull:
-				return @"Full";
-			case GPGValidityUltimate:
-				return @"Ultimate";
-			default:
-				return @"Undefined";
-		}
+        return [key ownerTrustDescription];
+	} else if([iden isEqualToString:@"ownerTrustIndicator"]) {
+        int i = 0;
+        switch([key ownerTrust]) {
+            case GPGValidityUnknown:
+            case GPGValidityUndefined:
+                i = 0; break;
+            case GPGValidityNever:
+                i = 1; break;
+            case GPGValidityMarginal: 
+                i = 2; break;
+            case GPGValidityFull:
+            case GPGValidityUltimate:
+                i = 3; break;
+        }
+        
+		return [NSNumber numberWithInt:i];
 	}
+
+    
 
 	return @"";
 }
