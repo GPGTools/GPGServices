@@ -667,7 +667,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ZipKit_Prefix.pch;
 				INFOPLIST_FILE = "ZipKitFW-Info.plist";
-				INSTALL_PATH = "@rpath//Frameworks";
+				INSTALL_PATH = "@loader_path/../Frameworks";
 				PRODUCT_NAME = ZipKit;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -686,7 +686,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ZipKit_Prefix.pch;
 				INFOPLIST_FILE = "ZipKitFW-Info.plist";
-				INSTALL_PATH = "@rpath//Frameworks";
+				INSTALL_PATH = "@loader_path/../Frameworks";
 				PRODUCT_NAME = ZipKit;
 				WRAPPER_EXTENSION = framework;
 			};
