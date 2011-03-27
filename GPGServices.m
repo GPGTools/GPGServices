@@ -11,6 +11,9 @@
 #import "RecipientWindowController.h"
 #import "KeyChooserWindowController.h"
 
+#import "ZipOperation.h"
+#import "ZipKit/ZKArchive.h"
+
 @implementation GPGServices
 
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -542,9 +545,6 @@
     
     if(files.count == 0)
         return;
-    else if(files.count > 1) 
-        [self displayMessageWindowWithTitleText:@"Verification error."
-                                       bodyText:@"Only one file at a time please."];
 
     RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
 	int ret = [rcp runModal];
@@ -564,80 +564,93 @@
         } else {
             validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
         }
+
+        GPGData* gpgData = nil;
+        double megabytes = 0;
+        NSURL* destination = nil;
         
         NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
-        for(NSString* file in files) {
+        
+        if(files.count == 1) {
+            NSString* file = [files objectAtIndex:0];
             BOOL isDirectory = YES;
-            BOOL fileExists = [fmgr fileExistsAtPath:file isDirectory:&isDirectory];
+            BOOL exists = [fmgr fileExistsAtPath:file isDirectory:&isDirectory];
             
-            if(fileExists == NO) {
+            if(exists && isDirectory) {
+                ZipOperation* operation = [[ZipOperation alloc] init];
+                operation.filePath = file;
+                operation.delegate = self;
+                [operation start];
+
+                NSString* filename = [NSString stringWithFormat:@"%@.zip.gpg", [file lastPathComponent]];
+                NSString* tmp = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
+                megabytes = [operation.zipData length] / 1048576.0;
+                destination = [NSURL fileURLWithPath:[ZKArchive uniquify:tmp]];
+                gpgData = [[[GPGData alloc] initWithData:operation.zipData] autorelease];
+                
+                [operation release];
+            } else if(exists) {
+                NSError* error = nil;
+                NSNumber* fileSize = [[fmgr attributesOfItemAtPath:file error:&error] valueForKey:NSFileSize];
+                megabytes = [fileSize doubleValue] / 1048576;
+                NSString* tmp = [ZKArchive uniquify:[file stringByAppendingString:@".gpg"]];
+                destination = [NSURL fileURLWithPath:tmp];
+                gpgData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+            } else {    
                 [self displayMessageWindowWithTitleText:@"File doesn't exist"
                                                bodyText:@"Please try again"];
                 return;
             }
+        } else if(files.count > 1) {
+            ZipOperation* operation = [[ZipOperation alloc] init];
+            operation.files = files;
+            operation.delegate = self;
+            [operation start];
             
-            if(isDirectory == YES) {
-                [self displayMessageWindowWithTitleText:@"File is a directory"
-                                               bodyText:@"Encryption of directories isn't supported"];
-                return;
-            }
             
-            NSError* error = nil;
-            NSNumber* fileSize = [[fmgr attributesOfItemAtPath:file error:&error] valueForKey:NSFileSize];
-            double megabytes = [fileSize doubleValue] / 1048576;
+            megabytes = [operation.zipData length] / 1048576.0;
+            NSString* tmp = [[[files objectAtIndex:0] stringByDeletingLastPathComponent] 
+                             stringByAppendingPathComponent:@"Archive.zip.gpg"];
+            destination = [NSURL fileURLWithPath:[ZKArchive uniquify:tmp]];
+            gpgData = [[[GPGData alloc] initWithData:operation.zipData] autorelease];
             
-            NSLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
-                                                                    numberStyle:NSNumberFormatterDecimalStyle]);
-            if(megabytes > 10) {
-                int ret = [[NSAlert alertWithMessageText:@"Large File"
-                                          defaultButton:@"Continue"
-                                        alternateButton:@"Cancel"
-                                            otherButton:nil
-                               informativeTextWithFormat:@"Encryption will take a long time.\nPress 'Cancel' to abort."] 
-                           runModal];
-                
-                if(ret == NSAlertAlternateReturn)
-                    return;
-            }
-            
-            //NSURL* destination = [self getFilenameForSavingWithSuggestedPath:file
-            //                                          withSuggestedExtension:@".gpg"];
-            
-            NSURL* destination = [[NSURL fileURLWithPath:file] URLByAppendingPathExtension:@"gpg"];
-            NSLog(@"destination: %@", destination);
-            
-            if(destination == nil)
-                return;
-            
-            if(megabytes > 10) {
-                [GrowlApplicationBridge notifyWithTitle:@"Encrypting..."
-                                            description:[file lastPathComponent]
-                                       notificationName:@"EncryptionStarted"
-                                               iconData:[NSData data]
-                                               priority:0
-                                               isSticky:NO
-                                           clickContext:file];
-            }
-            
-            GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
-            GPGData* gpgData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
-            GPGData* encrypted = [ctx encryptedData:gpgData 
-                                           withKeys:validRecipients
-                                       trustAllKeys:trustAllKeys];
-            
-            [encrypted.data writeToURL:destination atomically:YES];
-            
-            if(sign == YES && privateKey != nil)
-                [self signFile:destination withKeys:[NSArray arrayWithObject:privateKey]];
-            
-            [GrowlApplicationBridge notifyWithTitle:@"Encryption finished"
-                                        description:[destination lastPathComponent]
-                                   notificationName:@"EncryptionSucceeded"
-                                           iconData:[NSData data]
-                                           priority:0
-                                           isSticky:NO
-                                       clickContext:destination];
+            [operation release];
         }
+        
+        NSLog(@"destination: %@", destination);
+        NSLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
+                                                                  numberStyle:NSNumberFormatterDecimalStyle]);        
+        NSLog(@"gpgData.length: %lld", [gpgData length]);
+        
+        if(megabytes > 10) {
+            int ret = [[NSAlert alertWithMessageText:@"Large File"
+                                       defaultButton:@"Continue"
+                                     alternateButton:@"Cancel"
+                                         otherButton:nil
+                           informativeTextWithFormat:@"Encryption will take a long time.\nPress 'Cancel' to abort."] 
+                       runModal];
+            
+            if(ret == NSAlertAlternateReturn)
+                return;
+        }
+
+        GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
+        GPGData* encrypted = [ctx encryptedData:gpgData 
+                                       withKeys:validRecipients
+                                   trustAllKeys:trustAllKeys];
+        
+        [encrypted.data writeToURL:destination atomically:YES];
+        
+        if(sign == YES && privateKey != nil)
+            [self signFile:destination withKeys:[NSArray arrayWithObject:privateKey]];
+        
+        [GrowlApplicationBridge notifyWithTitle:@"Encryption finished"
+                                    description:[destination lastPathComponent]
+                               notificationName:@"EncryptionSucceeded"
+                                       iconData:[NSData data]
+                                       priority:0
+                                       isSticky:NO
+                                   clickContext:destination];
     }
 }
 
