@@ -21,8 +21,9 @@
 		8E8837C413311E3E0044EFFF /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
 		8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */; };
-		8EDC4083133F654C00D0A101 /* ZipKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8EDC4082133F654C00D0A101 /* ZipKit.framework */; };
 		8EDC4086133F686400D0A101 /* MacGPGME.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8EDC4085133F686400D0A101 /* MacGPGME.framework */; };
+		8EDC40DF133F69EB00D0A101 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC40DE133F69EB00D0A101 /* ZipKit.framework */; };
+		8EDC40E3133F69FE00D0A101 /* ZipKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8EDC40E2133F69FE00D0A101 /* ZipKit.framework */; };
 		8EF7A61D1334C05300FD8C5B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 /* End PBXBuildFile section */
 
@@ -76,7 +77,7 @@
 			remoteGlobalIDString = CB9B9CEE109F6769003E3F8B;
 			remoteInfo = touchzipkit;
 		};
-		8EDC4080133F651700D0A101 /* PBXContainerItemProxy */ = {
+		8EDC40E0133F69F700D0A101 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
 			proxyType = 1;
@@ -94,7 +95,7 @@
 			files = (
 				8EDC4086133F686400D0A101 /* MacGPGME.framework in CopyFiles */,
 				8EF7A61D1334C05300FD8C5B /* Growl.framework in CopyFiles */,
-				8EDC4083133F654C00D0A101 /* ZipKit.framework in CopyFiles */,
+				8EDC40E3133F69FE00D0A101 /* ZipKit.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +130,9 @@
 		8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZipKit.xcodeproj; path = Dependencies/zipkit/ZipKit.xcodeproj; sourceTree = "<group>"; };
 		8EDC4082133F654C00D0A101 /* ZipKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = ZipKit.framework; path = /Users/moritz/Development/GPGServices/Dependencies/zipkit/build/Debug/ZipKit.framework; sourceTree = "<absolute>"; };
 		8EDC4085133F686400D0A101 /* MacGPGME.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MacGPGME.framework; path = /Users/moritz/Development/GPGServices/Dependencies/MacGPGME/build/Debug/MacGPGME.framework; sourceTree = "<absolute>"; };
+		8EDC40DC133F69DB00D0A101 /* ZipKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = ZipKit.framework; path = /Users/moritz/Development/GPGServices/Dependencies/zipkit/build/Debug/ZipKit.framework; sourceTree = "<absolute>"; };
+		8EDC40DE133F69EB00D0A101 /* ZipKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = ZipKit.framework; path = /Users/moritz/Development/GPGServices/Dependencies/zipkit/build/Debug/ZipKit.framework; sourceTree = "<absolute>"; };
+		8EDC40E2133F69FE00D0A101 /* ZipKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = ZipKit.framework; path = /Users/moritz/Development/GPGServices/Dependencies/zipkit/build/Debug/ZipKit.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EDC40DF133F69EB00D0A101 /* ZipKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				4B1906F80A4CBD6C00052798 /* MacGPGME.framework in Frameworks */,
 				8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */,
@@ -210,8 +215,11 @@
 		29B97314FDCFA39411CA2CEA /* GPGServices */ = {
 			isa = PBXGroup;
 			children = (
+				8EDC40DE133F69EB00D0A101 /* ZipKit.framework */,
 				8EDC4085133F686400D0A101 /* MacGPGME.framework */,
+				8EDC40E2133F69FE00D0A101 /* ZipKit.framework */,
 				22CA686C12DFD8B400ED919C /* Dependencies */,
+				8EDC40DC133F69DB00D0A101 /* ZipKit.framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				8EDC4082133F654C00D0A101 /* ZipKit.framework */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -279,7 +287,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				8EDC4081133F651700D0A101 /* PBXTargetDependency */,
+				8EDC40E1133F69F700D0A101 /* PBXTargetDependency */,
 				22CA699412DFD9A800ED919C /* PBXTargetDependency */,
 			);
 			name = GPGServices;
@@ -404,10 +412,10 @@
 			name = MacGPGME;
 			targetProxy = 22CA699312DFD9A800ED919C /* PBXContainerItemProxy */;
 		};
-		8EDC4081133F651700D0A101 /* PBXTargetDependency */ = {
+		8EDC40E1133F69F700D0A101 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ZipKit;
-			targetProxy = 8EDC4080133F651700D0A101 /* PBXContainerItemProxy */;
+			targetProxy = 8EDC40E0133F69F700D0A101 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -439,8 +447,10 @@
 					"$(SRCROOT)/Dependencies/MacGPGME/build/Debug",
 					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/Debug\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -462,8 +472,10 @@
 					"$(SRCROOT)/Dependencies/MacGPGME/build/Release",
 					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/Debug\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
