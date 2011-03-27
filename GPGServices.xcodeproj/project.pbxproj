@@ -24,6 +24,7 @@
 		8EDC40F0133F6B1000D0A101 /* MacGPGME.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8EDC40EE133F6AFB00D0A101 /* MacGPGME.framework */; };
 		8EDC40F2133F6B3000D0A101 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC40F1133F6B3000D0A101 /* ZipKit.framework */; };
 		8EDC40F5133F6B4300D0A101 /* ZipKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8EDC40F1133F6B3000D0A101 /* ZipKit.framework */; };
+		8EDC40F8133F6C5500D0A101 /* DirZipOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDC40F7133F6C5500D0A101 /* DirZipOperation.m */; };
 		8EF7A61D1334C05300FD8C5B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 /* End PBXBuildFile section */
 
@@ -129,6 +130,8 @@
 		8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZipKit.xcodeproj; path = Dependencies/zipkit/ZipKit.xcodeproj; sourceTree = "<group>"; };
 		8EDC40EE133F6AFB00D0A101 /* MacGPGME.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MacGPGME.framework; path = /Users/moritz/Development/GPGServices/Dependencies/MacGPGME/build/Debug/MacGPGME.framework; sourceTree = "<absolute>"; };
 		8EDC40F1133F6B3000D0A101 /* ZipKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = ZipKit.framework; path = /Users/moritz/Development/GPGServices/Dependencies/zipkit/build/Debug/ZipKit.framework; sourceTree = "<absolute>"; };
+		8EDC40F6133F6C5500D0A101 /* DirZipOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirZipOperation.h; sourceTree = "<group>"; };
+		8EDC40F7133F6C5500D0A101 /* DirZipOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirZipOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +160,8 @@
 				8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */,
 				22D6D9C913267E0C00622189 /* RecipientWindowController.h */,
 				22D6D9CA13267E0C00622189 /* RecipientWindowController.m */,
+				8EDC40F6133F6C5500D0A101 /* DirZipOperation.h */,
+				8EDC40F7133F6C5500D0A101 /* DirZipOperation.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -393,6 +398,7 @@
 				22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */,
 				8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */,
 				8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */,
+				8EDC40F8133F6C5500D0A101 /* DirZipOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
