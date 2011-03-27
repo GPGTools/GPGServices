@@ -1,4 +1,5 @@
-GPGServices 1.5
+GPGServices
+Version: 1.6a1
 
 An installer for an OS X Text Services Menu to handle GPG messages from all text-enabled applications.
 
