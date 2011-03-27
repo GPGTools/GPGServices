@@ -10,7 +10,6 @@
 		2260756D12EBA0B50026DBEA /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2260756C12EBA0B50026DBEA /* Icon.icns */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
 		4B1906F80A4CBD6C00052798 /* MacGPGME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1906F70A4CBD6C00052798 /* MacGPGME.framework */; };
-		4B1907010A4CBDAF00052798 /* MacGPGME.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B1906F70A4CBD6C00052798 /* MacGPGME.framework */; };
 		4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1908C00A4CBF0B00052798 /* GPGServices.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -22,6 +21,8 @@
 		8E8837C413311E3E0044EFFF /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
 		8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */; };
+		8EDC4083133F654C00D0A101 /* ZipKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8EDC4082133F654C00D0A101 /* ZipKit.framework */; };
+		8EDC4086133F686400D0A101 /* MacGPGME.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8EDC4085133F686400D0A101 /* MacGPGME.framework */; };
 		8EF7A61D1334C05300FD8C5B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,34 @@
 			remoteGlobalIDString = 554B558F069F0111005E1C92;
 			remoteInfo = MacGPGME;
 		};
+		8EDC4076133F650800D0A101 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = ZipKit;
+		};
+		8EDC4078133F650800D0A101 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CB9B9CB6109F665C003E3F8B;
+			remoteInfo = zipkit;
+		};
+		8EDC407A133F650800D0A101 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CB9B9CEE109F6769003E3F8B;
+			remoteInfo = touchzipkit;
+		};
+		8EDC4080133F651700D0A101 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = ZipKit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,8 +92,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4B1907010A4CBDAF00052798 /* MacGPGME.framework in CopyFiles */,
+				8EDC4086133F686400D0A101 /* MacGPGME.framework in CopyFiles */,
 				8EF7A61D1334C05300FD8C5B /* Growl.framework in CopyFiles */,
+				8EDC4083133F654C00D0A101 /* ZipKit.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +126,9 @@
 		8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserWindowController.m; sourceTree = "<group>"; };
 		8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserDataSource.h; sourceTree = "<group>"; };
 		8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserDataSource.m; sourceTree = "<group>"; };
+		8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZipKit.xcodeproj; path = Dependencies/zipkit/ZipKit.xcodeproj; sourceTree = "<group>"; };
+		8EDC4082133F654C00D0A101 /* ZipKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = ZipKit.framework; path = /Users/moritz/Development/GPGServices/Dependencies/zipkit/build/Debug/ZipKit.framework; sourceTree = "<absolute>"; };
+		8EDC4085133F686400D0A101 /* MacGPGME.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MacGPGME.framework; path = /Users/moritz/Development/GPGServices/Dependencies/MacGPGME/build/Debug/MacGPGME.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */,
+				8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
@@ -176,8 +210,10 @@
 		29B97314FDCFA39411CA2CEA /* GPGServices */ = {
 			isa = PBXGroup;
 			children = (
+				8EDC4085133F686400D0A101 /* MacGPGME.framework */,
 				22CA686C12DFD8B400ED919C /* Dependencies */,
 				080E96DDFE201D6D7F000001 /* Classes */,
+				8EDC4082133F654C00D0A101 /* ZipKit.framework */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -218,6 +254,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8EDC405C133F650800D0A101 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8EDC4077133F650800D0A101 /* ZipKit.framework */,
+				8EDC4079133F650800D0A101 /* libzipkit.a */,
+				8EDC407B133F650800D0A101 /* libtouchzipkit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -233,6 +279,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8EDC4081133F651700D0A101 /* PBXTargetDependency */,
 				22CA699412DFD9A800ED919C /* PBXTargetDependency */,
 			);
 			name = GPGServices;
@@ -263,6 +310,10 @@
 					ProductGroup = 22CA687012DFD8D300ED919C /* Products */;
 					ProjectRef = 22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */;
 				},
+				{
+					ProductGroup = 8EDC405C133F650800D0A101 /* Products */;
+					ProjectRef = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -291,6 +342,27 @@
 			fileType = wrapper.cfbundle;
 			path = MacGPGMETesting.octest;
 			remoteRef = 22CA687E12DFD8D300ED919C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8EDC4077133F650800D0A101 /* ZipKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ZipKit.framework;
+			remoteRef = 8EDC4076133F650800D0A101 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8EDC4079133F650800D0A101 /* libzipkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libzipkit.a;
+			remoteRef = 8EDC4078133F650800D0A101 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8EDC407B133F650800D0A101 /* libtouchzipkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libtouchzipkit.a;
+			remoteRef = 8EDC407A133F650800D0A101 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -332,6 +404,11 @@
 			name = MacGPGME;
 			targetProxy = 22CA699312DFD9A800ED919C /* PBXContainerItemProxy */;
 		};
+		8EDC4081133F651700D0A101 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ZipKit;
+			targetProxy = 8EDC4080133F651700D0A101 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -359,8 +436,8 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/Dependencies/MacGPGME/build/Debug",
 					"$(FRAMEWORK_SEARCH_PATHS)",
-					"$(SRCROOT)/Dependencies/MacGPGME/build/Release",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
@@ -382,8 +459,8 @@
 			buildSettings = {
 				ARCHS = i386;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(SRCROOT)/Dependencies/MacGPGME/build/Release",
+					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
