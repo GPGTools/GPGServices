@@ -197,7 +197,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Encrypt file</string>
+				<string>OpenPGP: Encrypt</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>encryptFile</string>
