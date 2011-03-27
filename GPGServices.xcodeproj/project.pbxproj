@@ -128,9 +128,9 @@
 		8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserDataSource.h; sourceTree = "<group>"; };
 		8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserDataSource.m; sourceTree = "<group>"; };
 		8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZipKit.xcodeproj; path = Dependencies/zipkit/ZipKit.xcodeproj; sourceTree = "<group>"; };
-		8EDC40EE133F6AFB00D0A101 /* MacGPGME.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MacGPGME.framework; path = /Users/moritz/Development/GPGServices/Dependencies/MacGPGME/build/Debug/MacGPGME.framework; sourceTree = "<absolute>"; };
-		8EDC40F1133F6B3000D0A101 /* ZipKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = ZipKit.framework; path = /Users/moritz/Development/GPGServices/Dependencies/zipkit/build/Debug/ZipKit.framework; sourceTree = "<absolute>"; };
-		8EDC40F6133F6C5500D0A101 /* ZipOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ZipOperation.h; sourceTree = "<group>"; };
+		8EDC40EE133F6AFB00D0A101 /* MacGPGME.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MacGPGME.framework; path = Dependencies/MacGPGME/build/Debug/MacGPGME.framework; sourceTree = "<absolute>"; };
+		8EDC40F1133F6B3000D0A101 /* ZipKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = ZipKit.framework; path = Dependencies/zipkit/build/Debug/ZipKit.framework; sourceTree = "<absolute>"; };
+		8EDC40F6133F6C5500D0A101 /* ZipOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipOperation.h; sourceTree = "<group>"; };
 		8EDC40F7133F6C5500D0A101 /* ZipOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
