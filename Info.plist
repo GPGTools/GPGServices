@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>ccsv</string>
 	<key>CFBundleVersion</key>
-	<string>1.5</string>
+	<string>1.6a1</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -197,7 +197,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Encrypt file</string>
+				<string>OpenPGP: Encrypt</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>encryptFile</string>
