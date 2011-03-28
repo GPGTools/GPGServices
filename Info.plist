@@ -214,6 +214,69 @@
 				<string>NSFilenamesPboardType</string>
 			</array>
 		</dict>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>OpenPGP: Decrypt (not implemented yet)</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>decryptFile</string>
+			<key>NSPortName</key>
+			<string>GPGServices</string>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSTextContent</key>
+				<string>FilePath</string>
+			</dict>
+			<key>NSSendTypes</key>
+			<array>
+				<string>public.plain-text</string>
+				<string>NSFilenamesPboardType</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>OpenPGP: Validate (not implemented yet)</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>validateFile</string>
+			<key>NSPortName</key>
+			<string>GPGServices</string>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSTextContent</key>
+				<string>FilePath</string>
+			</dict>
+			<key>NSSendTypes</key>
+			<array>
+				<string>public.plain-text</string>
+				<string>NSFilenamesPboardType</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>OpenPGP: Import (not implemented yet)</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>importFile</string>
+			<key>NSPortName</key>
+			<string>GPGServices</string>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSTextContent</key>
+				<string>FilePath</string>
+			</dict>
+			<key>NSSendTypes</key>
+			<array>
+				<string>public.plain-text</string>
+				<string>NSFilenamesPboardType</string>
+			</array>
+		</dict>
 	</array>
 	<key>NSUIElement</key>
 	<string>1</string>
