@@ -513,7 +513,18 @@
 #pragma mark -
 #pragma mark File Stuff
 
-- (void)signFile:(NSURL*)file withKeys:(NSArray*)keys {
+- (NSString*)normalizedAndUniquifiedPathFromPath:(NSString*)path {
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    if([fmgr isWritableFileAtPath:[path stringByDeletingLastPathComponent]]) {
+        return [ZKArchive uniquify:path];
+    } else {
+        NSString* desktop = [NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,
+                                                                 NSUserDomainMask, YES) objectAtIndex:0];
+        return [ZKArchive uniquify:[desktop stringByAppendingPathComponent:[path lastPathComponent]]];
+    }
+}
+
+- (void)signFile:(NSString*)file withKeys:(NSArray*)keys {
     @try {
         //Generate .sig file
         GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
@@ -521,11 +532,11 @@
         for(GPGKey* k in keys)
             [signContext addSignerKey:k];
         
-        GPGData* dataToSign = [[[GPGData alloc] initWithContentsOfFile:[file path]] autorelease];
+        GPGData* dataToSign = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
         GPGData* signData = [signContext signedData:dataToSign signatureMode:GPGSignatureModeDetach];
         
-        NSURL* sigURL = [file URLByAppendingPathExtension:@"sig"];
-        [[signData data] writeToURL:sigURL atomically:YES];
+        NSString* sigFile = [file stringByAppendingPathExtension:@"sig"];
+        [[signData data] writeToFile:sigFile atomically:YES];
     } @catch (NSException* e) {
         [GrowlApplicationBridge notifyWithTitle:@"Signing failed"
                                     description:[file lastPathComponent]
@@ -541,7 +552,7 @@
 - (void)encryptFiles:(NSArray*)files {
     BOOL trustAllKeys = YES;
     
-    NSLog(@"encrypting files: %@...", [files componentsJoinedByString:@","]);
+    NSLog(@"encrypting file(s): %@...", [files componentsJoinedByString:@","]);
     
     if(files.count == 0)
         return;
@@ -567,7 +578,7 @@
 
         GPGData* gpgData = nil;
         double megabytes = 0;
-        NSURL* destination = nil;
+        NSString* destination = nil;
         
         NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
         
@@ -583,9 +594,8 @@
                 [operation start];
 
                 NSString* filename = [NSString stringWithFormat:@"%@.zip.gpg", [file lastPathComponent]];
-                NSString* tmp = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
                 megabytes = [operation.zipData length] / 1048576.0;
-                destination = [NSURL fileURLWithPath:[ZKArchive uniquify:tmp]];
+                destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
                 gpgData = [[[GPGData alloc] initWithData:operation.zipData] autorelease];
                 
                 [operation release];
@@ -593,8 +603,7 @@
                 NSError* error = nil;
                 NSNumber* fileSize = [[fmgr attributesOfItemAtPath:file error:&error] valueForKey:NSFileSize];
                 megabytes = [fileSize doubleValue] / 1048576;
-                NSString* tmp = [ZKArchive uniquify:[file stringByAppendingString:@".gpg"]];
-                destination = [NSURL fileURLWithPath:tmp];
+                destination = [file stringByAppendingString:@".gpg"];
                 gpgData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
             } else {    
                 [self displayMessageWindowWithTitleText:@"File doesn't exist"
@@ -609,13 +618,15 @@
             
             
             megabytes = [operation.zipData length] / 1048576.0;
-            NSString* tmp = [[[files objectAtIndex:0] stringByDeletingLastPathComponent] 
-                             stringByAppendingPathComponent:@"Archive.zip.gpg"];
-            destination = [NSURL fileURLWithPath:[ZKArchive uniquify:tmp]];
+            destination = [[[files objectAtIndex:0] stringByDeletingLastPathComponent] 
+                           stringByAppendingPathComponent:@"Archive.zip.gpg"];
             gpgData = [[[GPGData alloc] initWithData:operation.zipData] autorelease];
             
             [operation release];
         }
+        
+        //Check if directory is writable and append i+1 if file already exists at destination
+        destination = [self normalizedAndUniquifiedPathFromPath:destination];
         
         NSLog(@"destination: %@", destination);
         NSLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
@@ -639,7 +650,7 @@
                                        withKeys:validRecipients
                                    trustAllKeys:trustAllKeys];
         
-        [encrypted.data writeToURL:destination atomically:YES];
+        [encrypted.data writeToFile:destination atomically:YES];
         
         if(sign == YES && privateKey != nil)
             [self signFile:destination withKeys:[NSArray arrayWithObject:privateKey]];
