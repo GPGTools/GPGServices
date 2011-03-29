@@ -29,11 +29,12 @@
     sign = s;
     
     [availableKeys release];
-    availableKeys = [[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
-                                                   secretKeysOnly:NO] 
-                       allObjects] 
-                      filteredArrayUsingPredicate:[self validationPredicate]];
-    availableKeys = [[availableKeys sortedArrayUsingDescriptors:[tableView sortDescriptors]] retain];
+    
+    availableKeys = [[[[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
+                                                    secretKeysOnly:NO] allObjects] 
+                       filteredArrayUsingPredicate:[self validationPredicate]] 
+                      sortedArrayUsingDescriptors:[tableView sortDescriptors]]
+                     retain];
     
     [self displayItemsMatchingString:[searchField stringValue]];
 }

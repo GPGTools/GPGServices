@@ -93,7 +93,7 @@
 
     }
     
-    self.keyDescriptions = [NSArray arrayWithArray:arr];
+    self.keyDescriptions = arr;
 }
 
 - (NSArray*)getPrivateKeys {
