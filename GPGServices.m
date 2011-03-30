@@ -524,7 +524,7 @@
     }
 }
 
-- (void)signFile:(NSString*)file withKeys:(NSArray*)keys {
+- (void)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys {
     @try {
         //Generate .sig file
         GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
@@ -547,6 +547,20 @@
                                    clickContext:file];
         
     }
+}
+
+- (GPGData*)signedGPGDataForGPGData:(GPGData*)dataToSign withKeys:(NSArray*)keys {
+    @try {
+        GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
+        for(GPGKey* k in keys)
+            [signContext addSignerKey:k];
+        
+        return [signContext signedData:dataToSign signatureMode:GPGSignatureModeNormal];
+    } @catch (NSException* e) {
+        NSLog(@"error in signedGPGDataForGPGData: %@", [e description]);
+    }
+    
+    return nil;
 }
 
 - (void)encryptFiles:(NSArray*)files {
@@ -650,18 +664,29 @@
                                        withKeys:validRecipients
                                    trustAllKeys:trustAllKeys];
         
-        [encrypted.data writeToFile:destination atomically:YES];
-        
         if(sign == YES && privateKey != nil)
-            [self signFile:destination withKeys:[NSArray arrayWithObject:privateKey]];
-        
-        [GrowlApplicationBridge notifyWithTitle:@"Encryption finished"
-                                    description:[destination lastPathComponent]
-                               notificationName:@"EncryptionSucceeded"
-                                       iconData:[NSData data]
-                                       priority:0
-                                       isSticky:NO
-                                   clickContext:destination];
+            encrypted = [self signedGPGDataForGPGData:encrypted 
+                                       withKeys:[NSArray arrayWithObject:privateKey]];
+         
+        if(encrypted == nil) {
+            [GrowlApplicationBridge notifyWithTitle:@"Signing failed"
+                                        description:destination
+                                   notificationName:@"SigningFileFailed"
+                                           iconData:[NSData data]
+                                           priority:0
+                                           isSticky:NO
+                                       clickContext:destination];
+        } else {
+            [encrypted.data writeToFile:destination atomically:YES];
+            
+            [GrowlApplicationBridge notifyWithTitle:@"Encryption finished"
+                                        description:[destination lastPathComponent]
+                                   notificationName:@"EncryptionSucceeded"
+                                           iconData:[NSData data]
+                                           priority:0
+                                           isSticky:NO
+                                       clickContext:destination];
+        }
     }
 }
 
