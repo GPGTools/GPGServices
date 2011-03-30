@@ -9,12 +9,16 @@
 		<string>EncryptionStarted</string>
 		<string>EncryptionSucceeded</string>
         <string>SigningFileFailed</string>
+        <string>FileToSignIsDirectory</string>
+        <string>SigningSucceeded</string>
 	</array>
 	<key>DefaultNotifications</key>
 	<array>
 		<string>EncryptionStarted</string>
 		<string>EncryptionSucceeded</string>
         <string>SigningFileFailed</string>
+        <string>FileToSignIsDirectory</string>
+        <string>SigningSucceeded</string>
 	</array>    
 </dict>
 </plist>

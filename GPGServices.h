@@ -65,6 +65,7 @@ typedef enum {
 
 - (NSString*)normalizedAndUniquifiedPathFromPath:(NSString*)path;
 - (void)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys;
+- (void)signFiles:(NSArray*)files;
 - (GPGData*)signedGPGDataForGPGData:(GPGData*)dataToSign withKeys:(NSArray*)keys;
 - (void)encryptFiles:(NSArray*)files;
 
@@ -84,6 +85,7 @@ typedef enum {
 -(void)myKey:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)myFingerprint:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)importKey:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
+-(void)signFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 
 

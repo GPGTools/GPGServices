@@ -549,6 +549,63 @@
     }
 }
 
+- (void)signFiles:(NSArray*)files {     
+    GPGKey* chosenKey = [GPGServices myPrivateKey];
+    
+    NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
+                            [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [GPGServices canSignValidator]((GPGKey*)evaluatedObject);
+    }]];
+    
+    if(chosenKey == nil || availableKeys.count > 1) {
+        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
+        [wc setKeyValidator:[GPGServices canSignValidator]];
+        
+        if([wc runModal] == 0) 
+            chosenKey = wc.selectedKey;
+        else
+            chosenKey = nil;
+        
+        [wc release];
+    } else if(availableKeys.count == 1) {
+        chosenKey = [availableKeys anyObject];
+    }
+    
+    //For now, don't sign directories
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    files = [files filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id file, NSDictionary *bindings) {
+        BOOL isDir = YES;
+        BOOL exists = [fmgr fileExistsAtPath:(NSString*)file isDirectory:&isDir];
+        
+        if(isDir) {
+            [GrowlApplicationBridge notifyWithTitle:@"Can't sign file"
+                                        description:[NSString stringWithFormat:@"%@ is a directory.", [file lastPathComponent]]
+                                   notificationName:@"FileToSignIsDirectory"
+                                           iconData:[NSData data]
+                                           priority:0
+                                           isSticky:NO
+                                       clickContext:file];
+        }
+        
+        return exists && !isDir;
+    }]];
+    
+    if(files.count == 0)
+        return;
+    
+    if(chosenKey != nil)
+        for(NSString* file in files) 
+            [self detachedSignFile:file withKeys:[NSArray arrayWithObject:chosenKey]];
+    
+    [GrowlApplicationBridge notifyWithTitle:@"Signing finished"
+                                description:[NSString stringWithFormat:@"Finished signing %i file(s)", files.count]
+                           notificationName:@"SigningSucceeded"
+                                   iconData:[NSData data]
+                                   priority:0
+                                   isSticky:NO
+                               clickContext:files];
+}
+
 - (GPGData*)signedGPGDataForGPGData:(GPGData*)dataToSign withKeys:(NSArray*)keys {
     @try {
         GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
@@ -799,6 +856,27 @@
 
 -(void)importKey:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {[self dealWithPasteboard:pboard userData:userData mode:ImportKeyService error:error];}
+
+-(void)signFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    
+    NSData *data = [pboard dataForType:NSFilenamesPboardType];
+    
+    NSString* fileErrorStr = nil;
+    NSArray *filenames = [NSPropertyListSerialization
+                          propertyListFromData:data
+                          mutabilityOption:kCFPropertyListImmutable
+                          format:nil
+                          errorDescription:&fileErrorStr];
+    if(fileErrorStr) {
+        NSLog(@"error while getting files form pboard: %@", fileErrorStr);
+        *error = fileErrorStr;
+    } else {
+        [self signFiles:filenames];
+    }
+    
+    [pool release];
+}
 
 -(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
