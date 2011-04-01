@@ -72,11 +72,12 @@
     
 	[tableView setDoubleAction:@selector(doubleClickAction:)];
 	[tableView setTarget:self];
+    
     NSSortDescriptor* sd = [NSSortDescriptor sortDescriptorWithKey:@"name"
                                                          ascending:YES
                                                           selector:@selector(localizedCaseInsensitiveCompare:)];
     [tableView setSortDescriptors:[NSArray arrayWithObject:sd]];
-	[tableView reloadData];
+    [self tableView:tableView sortDescriptorsDidChange:nil];
 }
 
 - (void)dealloc {
@@ -137,6 +138,24 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	} else if([iden isEqualToString:@"ownerTrustIndicator"]) {
         int i = 0;
         switch([key ownerTrust]) {
+            case GPGValidityUnknown:
+            case GPGValidityUndefined:
+                i = 0; break;
+            case GPGValidityNever:
+                i = 1; break;
+            case GPGValidityMarginal: 
+                i = 2; break;
+            case GPGValidityFull:
+            case GPGValidityUltimate:
+                i = 3; break;
+        }
+        
+		return [NSNumber numberWithInt:i];
+	} else if([iden isEqualToString:@"validity"]) {
+        return [key ownerTrustDescription];
+	} else if([iden isEqualToString:@"validityIndicator"]) {
+        int i = 0;
+        switch([key validity]) {
             case GPGValidityUnknown:
             case GPGValidityUndefined:
                 i = 0; break;
