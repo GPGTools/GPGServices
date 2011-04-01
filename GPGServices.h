@@ -68,6 +68,7 @@ typedef enum {
 - (void)signFiles:(NSArray*)files;
 - (GPGData*)signedGPGDataForGPGData:(GPGData*)dataToSign withKeys:(NSArray*)keys;
 - (void)encryptFiles:(NSArray*)files;
+- (void)decryptFiles:(NSArray*)files; 
 
 
 #pragma mark -
@@ -87,7 +88,7 @@ typedef enum {
 -(void)importKey:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)signFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
-
+-(void)decryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 
 #pragma mark -
 #pragma mark UI Helpher

@@ -748,6 +748,55 @@
 }
 
 
+- (void)decryptFiles:(NSArray*)files {
+	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
+
+    //For now, don't sign directories
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    if(files.count == 0)
+        return;
+    
+    [aContext setPassphraseDelegate:self];
+    
+    for(NSString* file in files) {
+        BOOL isDirectory = NO;
+        @try {
+            if([fmgr fileExistsAtPath:file isDirectory:&isDirectory] &&
+               isDirectory == NO) {
+                NSLog(@"file: %@", file);
+                
+                GPGData* inputData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+                NSLog(@"inputData.size: %lld", [inputData length]);
+                
+                GPGData* outputData = [aContext decryptedData:inputData];
+            
+                NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
+                NSLog(@"writing decrypted data to file: %@", outputFile);
+                
+                NSError* error = nil;
+                [outputData.data writeToFile:outputFile options:NSDataWritingAtomic error:&error];
+                
+                if(error != nil) 
+                    NSLog(@"error!: %@", error);
+            }
+        } @catch (NSException* localException) {
+            switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])) {
+                case GPGErrorNoData:
+                    [self displayMessageWindowWithTitleText:@"Decryption failed."
+                                                   bodyText:@"No decryptable data was found."];
+                    break;
+                case GPGErrorCancelled:
+                    break;
+                default: {
+                    GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
+                    [self displayMessageWindowWithTitleText:@"Decryption failed." 
+                                                   bodyText:GPGErrorDescription(error)];
+                }
+            }
+        } 
+    }
+}
+
 #pragma mark -
 #pragma mark Service handling routines
 
@@ -898,6 +947,28 @@
     
     [pool release];
 }
+
+-(void)decryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    
+    NSData *data = [pboard dataForType:NSFilenamesPboardType];
+    
+    NSString* fileErrorStr = nil;
+    NSArray *filenames = [NSPropertyListSerialization
+                          propertyListFromData:data
+                          mutabilityOption:kCFPropertyListImmutable
+                          format:nil
+                          errorDescription:&fileErrorStr];
+    if(fileErrorStr) {
+        NSLog(@"error while getting files form pboard: %@", fileErrorStr);
+        *error = fileErrorStr;
+    } else {
+        [self decryptFiles:filenames];
+    }
+    
+    [pool release];
+}
+
 
 
 #pragma mark -
