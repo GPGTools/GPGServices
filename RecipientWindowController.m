@@ -154,7 +154,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         
 		return [NSNumber numberWithInt:i];
 	} else if([iden isEqualToString:@"validity"]) {
-        return [key ownerTrustDescription];
+        return [key validityDescription];
 	} else if([iden isEqualToString:@"validityIndicator"]) {
         int i = 0;
         switch([key validity]) {
