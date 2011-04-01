@@ -11,15 +11,7 @@
 
 @implementation RecipientWindowController
 
-@synthesize encryptForOwnKeyToo;
-
-- (NSArray*)selectedKeys {
-	if(indexSet == nil || 
-	   indexSet.count == 0)
-		return nil;
-	else
-		return [keysMatchingSearch objectsAtIndexes:indexSet];
-}
+@synthesize encryptForOwnKeyToo, okEnabled, selectedKeys;
 
 - (GPGKey*)selectedPrivateKey {
     return privateKeyDataSource.selectedKey;
@@ -63,9 +55,12 @@
                       allObjects] 
                       filteredArrayUsingPredicate:[self validationPredicate]] retain];
 	keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
+    
+    selectedKeys = [[NSMutableArray alloc] init];
 	
     self.sign = NO;
     self.encryptForOwnKeyToo = YES;
+    self.okEnabled = NO;
     
 	return self;
 }
@@ -155,16 +150,32 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         }
         
 		return [NSNumber numberWithInt:i];
-	}
-
-    
+	} else if([iden isEqualToString:@"useKey"]) {
+        GPGKey* k = [keysMatchingSearch objectAtIndex:row];
+        return [NSNumber numberWithBool:[self.selectedKeys containsObject:k]];
+    }
 
 	return @"";
 }
 
-- (void)displayItemsMatchingString:(NSString*)searchString {
-    NSArray* oldSelectedKeys = self.selectedKeys;
-    
+- (void)tableView:(NSTableView *)tableView
+   setObjectValue:(id)value
+   forTableColumn:(NSTableColumn *)column
+              row:(NSInteger)row {
+    if(row < keysMatchingSearch.count) {
+        GPGKey* k = [keysMatchingSearch objectAtIndex:row];
+        if([self.selectedKeys containsObject:k])
+            [self.selectedKeys removeObject:k];
+        else
+            [self.selectedKeys addObject:[keysMatchingSearch objectAtIndex:row]];
+     
+        self.okEnabled = (self.selectedKeys.count > 0);
+        
+        [tableView reloadData];
+    }
+}
+
+- (void)displayItemsMatchingString:(NSString*)searchString {    
 	if(searchString == nil ||
 	   [searchString isEqualToString:@""]) {
 		[keysMatchingSearch release];		
@@ -187,14 +198,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		[keysMatchingSearch release];
 		keysMatchingSearch = [newFilteredArray retain];
 	}
-    
-    NSSet* oldKeySet = [NSSet setWithArray:oldSelectedKeys];
-    NSIndexSet* idxsOfSelectedKeys = [keysMatchingSearch indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-        return [oldKeySet containsObject:obj];
-    }];
 
     [tableView reloadData];
-    [tableView selectRowIndexes:idxsOfSelectedKeys byExtendingSelection:NO];
 }
 
 - (void)controlTextDidChange:(NSNotification *)aNotification {
@@ -212,21 +217,11 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     [self displayItemsMatchingString:[searchField stringValue]]; 
 }
 
-- (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
-	NSIndexSet* set = [tableView selectedRowIndexes];
-	
-	[self willChangeValueForKey:@"selectedKeys"];
-	[indexSet release];
-	indexSet = (set.count == 0) ? nil : [set retain];
-	[self didChangeValueForKey:@"selectedKeys"];
-}
-
 - (void)doubleClickAction:(id)sender {
 	if([sender clickedRow] != -1 && 
 	   [sender clickedRow] < keysMatchingSearch.count) {
-		[tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[sender clickedRow]]
-			   byExtendingSelection:NO];
-		[self okClicked:sender];
+        [self.selectedKeys addObject:[keysMatchingSearch objectAtIndex:[sender clickedRow]]];
+        [self okClicked:sender];
 	}
 }
 

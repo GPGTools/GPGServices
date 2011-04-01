@@ -24,16 +24,19 @@
     NSPredicate* encryptPredicate;
     NSPredicate* encryptSignPredicate;
 	
-	NSIndexSet* indexSet;
+    NSMutableArray* selectedKeys;
 	
 	BOOL sign;
     BOOL encryptForOwnKeyToo;
+    
+    BOOL okEnabled;
 }
 
-@property(readonly) NSArray* selectedKeys;
+@property(readonly) NSMutableArray* selectedKeys;
 @property(readonly) GPGKey* selectedPrivateKey;
 @property(assign) BOOL sign;
 @property(assign) BOOL encryptForOwnKeyToo;
+@property(assign) BOOL okEnabled;
 
 - (NSPredicate*)validationPredicate;
 - (void)displayItemsMatchingString:(NSString*)s;
