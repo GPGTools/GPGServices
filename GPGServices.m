@@ -717,14 +717,17 @@
         }
 
         GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
-        GPGData* encrypted = [ctx encryptedData:gpgData 
-                                       withKeys:validRecipients
-                                   trustAllKeys:trustAllKeys];
+
+        GPGData* encrypted = nil;
+        if(sign == YES && privateKey != nil) 
+            encrypted = [ctx encryptedSignedData:gpgData
+                                        withKeys:validRecipients 
+                                    trustAllKeys:trustAllKeys];
+        else
+            encrypted = [ctx encryptedData:gpgData 
+                                  withKeys:validRecipients
+                              trustAllKeys:trustAllKeys];
         
-        if(sign == YES && privateKey != nil)
-            encrypted = [self signedGPGDataForGPGData:encrypted 
-                                       withKeys:[NSArray arrayWithObject:privateKey]];
-         
         if(encrypted == nil) {
             [GrowlApplicationBridge notifyWithTitle:@"Signing failed"
                                         description:destination
