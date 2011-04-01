@@ -882,6 +882,47 @@
 	[self exitServiceRequest];
 }
 
+-(void)dealWithFilesPasteboard:(NSPasteboard *)pboard
+                      userData:(NSString *)userData
+                          mode:(FileServiceModeEnum)mode
+                         error:(NSString **)error {
+    [self cancelTerminateTimer];
+	[NSApp activateIgnoringOtherApps:YES];
+    
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    
+    NSData *data = [pboard dataForType:NSFilenamesPboardType];
+    
+    NSString* fileErrorStr = nil;
+    NSArray *filenames = [NSPropertyListSerialization
+                          propertyListFromData:data
+                          mutabilityOption:kCFPropertyListImmutable
+                          format:nil
+                          errorDescription:&fileErrorStr];
+    if(fileErrorStr) {
+        NSLog(@"error while getting files form pboard: %@", fileErrorStr);
+        *error = fileErrorStr;
+    } else {
+        switch(mode) {
+            case SignFileService:
+                [self signFiles:filenames];
+                break;
+            case EncryptFileService:
+                [self encryptFiles:filenames];
+                break;
+            case DecryptFileService:
+                [self decryptFiles:filenames];
+                break;
+            default:
+                break;
+        }
+    }
+    
+    [pool release];
+    
+    [self exitServiceRequest];
+}
+
 -(void)exitServiceRequest
 {
 	[NSApp hide:self];
@@ -909,69 +950,14 @@
 -(void)importKey:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {[self dealWithPasteboard:pboard userData:userData mode:ImportKeyService error:error];}
 
--(void)signFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    
-    NSData *data = [pboard dataForType:NSFilenamesPboardType];
-    
-    NSString* fileErrorStr = nil;
-    NSArray *filenames = [NSPropertyListSerialization
-                          propertyListFromData:data
-                          mutabilityOption:kCFPropertyListImmutable
-                          format:nil
-                          errorDescription:&fileErrorStr];
-    if(fileErrorStr) {
-        NSLog(@"error while getting files form pboard: %@", fileErrorStr);
-        *error = fileErrorStr;
-    } else {
-        [self signFiles:filenames];
-    }
-    
-    [pool release];
-}
+-(void)signFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error 
+{[self dealWithFilesPasteboard:pboard userData:userData mode:SignFileService error:error];}
 
--(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    
-    NSData *data = [pboard dataForType:NSFilenamesPboardType];
-    
-    NSString* fileErrorStr = nil;
-    NSArray *filenames = [NSPropertyListSerialization
-                          propertyListFromData:data
-                          mutabilityOption:kCFPropertyListImmutable
-                          format:nil
-                          errorDescription:&fileErrorStr];
-    if(fileErrorStr) {
-        NSLog(@"error while getting files form pboard: %@", fileErrorStr);
-        *error = fileErrorStr;
-    } else {
-        [self encryptFiles:filenames];
-    }
-    
-    [pool release];
-}
+-(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
+{[self dealWithFilesPasteboard:pboard userData:userData mode:EncryptService error:error];}
 
--(void)decryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    
-    NSData *data = [pboard dataForType:NSFilenamesPboardType];
-    
-    NSString* fileErrorStr = nil;
-    NSArray *filenames = [NSPropertyListSerialization
-                          propertyListFromData:data
-                          mutabilityOption:kCFPropertyListImmutable
-                          format:nil
-                          errorDescription:&fileErrorStr];
-    if(fileErrorStr) {
-        NSLog(@"error while getting files form pboard: %@", fileErrorStr);
-        *error = fileErrorStr;
-    } else {
-        [self decryptFiles:filenames];
-    }
-    
-    [pool release];
-}
-
+-(void)decryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error 
+{[self dealWithFilesPasteboard:pboard userData:userData mode:DecryptFileService error:error];}
 
 
 #pragma mark -

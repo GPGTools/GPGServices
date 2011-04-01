@@ -22,6 +22,12 @@ typedef enum {
     ImportKeyService,
 } ServiceModeEnum;
 
+typedef enum {
+    SignFileService, 
+    EncryptFileService, 
+    DecryptFileService, 
+} FileServiceModeEnum;
+
 @interface GPGServices : NSObject <GrowlApplicationBridgeDelegate>
 {
 	IBOutlet NSWindow *recipientWindow;
@@ -78,6 +84,11 @@ typedef enum {
                  userData:(NSString *)userData 
                      mode:(ServiceModeEnum)mode
                     error:(NSString **)error;
+-(void)dealWithFilesPasteboard:(NSPasteboard *)pboard
+                      userData:(NSString *)userData
+                          mode:(FileServiceModeEnum)mode
+                         error:(NSString **)error;
+
 -(void)exitServiceRequest;
 -(void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)encrypt:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
