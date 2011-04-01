@@ -77,7 +77,6 @@
 							<string key="NSFrame">{{594, 12}, {82, 32}}</string>
 							<reference key="NSSuperview" ref="889398207"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="161748282">
 								<int key="NSCellFlags">67239424</int>
@@ -139,7 +138,7 @@
 											<string key="NSFrameSize">{1272, 113}</string>
 											<reference key="NSSuperview" ref="373712892"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="380753030"/>
+											<reference key="NSNextKeyView" ref="503892656"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="616634914">
 												<reference key="NSNextResponder" ref="503892656"/>
@@ -256,8 +255,6 @@
 														<int key="NSPeriodicDelay">200</int>
 														<int key="NSPeriodicInterval">25</int>
 													</object>
-													<int key="NSResizingMask">3</int>
-													<bool key="NSIsResizeable">YES</bool>
 													<bool key="NSIsEditable">YES</bool>
 													<reference key="NSTableView" ref="1027869562"/>
 												</object>
@@ -686,7 +683,7 @@
 												</object>
 											</object>
 											<double key="NSRowHeight">17</double>
-											<int key="NSTvFlags">-606076928</int>
+											<int key="NSTvFlags">-740294656</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
 											<string key="NSAutosaveName">recipientTable</string>
@@ -749,7 +746,7 @@
 							<string key="NSFrame">{{20, 124}, {650, 146}}</string>
 							<reference key="NSSuperview" ref="889398207"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="503892656"/>
+							<reference key="NSNextKeyView" ref="373712892"/>
 							<int key="NSsFlags">690</int>
 							<reference key="NSVScroller" ref="380753030"/>
 							<reference key="NSHScroller" ref="383118491"/>
