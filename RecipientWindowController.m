@@ -78,6 +78,8 @@
                                                           selector:@selector(localizedCaseInsensitiveCompare:)];
     [tableView setSortDescriptors:[NSArray arrayWithObject:sd]];
     [self tableView:tableView sortDescriptorsDidChange:nil];
+    
+    [self generateContextMenuForTable:tableView];
 }
 
 - (void)dealloc {
@@ -242,6 +244,33 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         [self.selectedKeys addObject:[keysMatchingSearch objectAtIndex:[sender clickedRow]]];
         [self okClicked:sender];
 	}
+}
+
+
+//Next two methods borrowed from GPGKeychain
+- (void)generateContextMenuForTable:(NSTableView *)table {
+	NSMenuItem *menuItem;
+	NSString *title;
+	NSMenu *contextMenu = [[[NSMenu alloc] initWithTitle:@""] autorelease];
+	[[tableView headerView] setMenu:contextMenu];
+	
+	NSArray *columns = [tableView tableColumns];
+	for (NSTableColumn *column in columns) {
+        if([[column identifier] isEqualToString:@"useKey"] == NO) {
+            title = [[column headerCell] title];
+            if (![title isEqualToString:@""]) {
+                menuItem = [contextMenu addItemWithTitle:title action:@selector(selectHeaderVisibility:) keyEquivalent:@""];
+                [menuItem setTarget:self];
+                [menuItem setRepresentedObject:column];
+                [menuItem setState:[column isHidden] ? NSOffState : NSOnState];
+            }
+		}
+	}
+}
+
+- (IBAction)selectHeaderVisibility:(NSMenuItem *)sender {
+	[[sender representedObject] setHidden:sender.state];
+	sender.state = !sender.state;
 }
 
 #pragma mark Helpers

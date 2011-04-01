@@ -44,4 +44,7 @@
 - (IBAction)okClicked:(id)sender;
 - (IBAction)cancelClicked:(id)sender;
 
+- (void)generateContextMenuForTable:(NSTableView *)table;
+- (IBAction)selectHeaderVisibility:(NSMenuItem *)sender;
+
 @end
