@@ -6,6 +6,8 @@
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
 	<string>GPGServices</string>
+	<key>CFBundleDocumentTypes</key>
+	<array/>
 	<key>CFBundleExecutable</key>
 	<string>GPGServices</string>
 	<key>CFBundleIconFile</key>
@@ -20,6 +22,8 @@
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>ccsv</string>
+	<key>CFBundleURLTypes</key>
+	<array/>
 	<key>CFBundleVersion</key>
 	<string>1.6a1</string>
 	<key>NSMainNibFile</key>
@@ -239,7 +243,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Decrypt (not implemented yet)</string>
+				<string>OpenPGP: Decrypt</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>decryptFile</string>
@@ -301,5 +305,9 @@
 	</array>
 	<key>NSUIElement</key>
 	<string>1</string>
+	<key>UTExportedTypeDeclarations</key>
+	<array/>
+	<key>UTImportedTypeDeclarations</key>
+	<array/>
 </dict>
 </plist>
