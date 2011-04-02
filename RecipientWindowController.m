@@ -80,6 +80,10 @@
     [self tableView:tableView sortDescriptorsDidChange:nil];
     
     [self generateContextMenuForTable:tableView];
+    
+    NSUInteger idx = [tableView columnWithIdentifier:@"useKey"];
+    if(idx != NSNotFound)
+        [tableView moveColumn:idx toColumn:0];
 }
 
 - (void)dealloc {
@@ -271,6 +275,17 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (IBAction)selectHeaderVisibility:(NSMenuItem *)sender {
 	[[sender representedObject] setHidden:sender.state];
 	sender.state = !sender.state;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView shouldReorderColumn:(NSInteger)columnIndex toColumn:(NSInteger)newColumnIndex {
+    NSTableColumn* col = [[tableView tableColumns] objectAtIndex:columnIndex];
+    
+    if([[col identifier] isEqualToString:@"useKey"])
+        return NO;
+    else if(newColumnIndex == 0)
+        return NO;
+    else
+        return YES;
 }
 
 #pragma mark Helpers
