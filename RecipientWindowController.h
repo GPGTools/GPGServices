@@ -12,7 +12,7 @@
 #import "KeyChooserDataSource.h"
 
 @interface RecipientWindowController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource, NSWindowDelegate> {
-	IBOutlet NSTableView* tableView;
+	IBOutlet NSTableView* keyTableView;
 	IBOutlet NSSearchField* searchField;
     IBOutlet KeyChooserDataSource* privateKeyDataSource;
 	

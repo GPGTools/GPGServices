@@ -25,7 +25,7 @@
     availableKeys = [[[[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
                                                     secretKeysOnly:NO] allObjects] 
                        filteredArrayUsingPredicate:[self validationPredicate]] 
-                      sortedArrayUsingDescriptors:[tableView sortDescriptors]]
+                      sortedArrayUsingDescriptors:[keyTableView sortDescriptors]]
                      retain];
     
     [self displayItemsMatchingString:[searchField stringValue]];
@@ -70,25 +70,25 @@
 	
     privateKeyDataSource.keyValidator = [GPGServices canSignValidator];
     
-	[tableView setDoubleAction:@selector(doubleClickAction:)];
-	[tableView setTarget:self];
+	[keyTableView setDoubleAction:@selector(doubleClickAction:)];
+	[keyTableView setTarget:self];
     
     NSSortDescriptor* sd = [NSSortDescriptor sortDescriptorWithKey:@"name"
                                                          ascending:YES
                                                           selector:@selector(localizedCaseInsensitiveCompare:)];
-    [tableView setSortDescriptors:[NSArray arrayWithObject:sd]];
-    [self tableView:tableView sortDescriptorsDidChange:nil];
+    [keyTableView setSortDescriptors:[NSArray arrayWithObject:sd]];
+    [self tableView:keyTableView sortDescriptorsDidChange:nil];
     
-    [self generateContextMenuForTable:tableView];
+    [self generateContextMenuForTable:keyTableView];
     
-    NSUInteger idx = [tableView columnWithIdentifier:@"useKey"];
+    NSUInteger idx = [keyTableView columnWithIdentifier:@"useKey"];
     if(idx != NSNotFound)
-        [tableView moveColumn:idx toColumn:0];
+        [keyTableView moveColumn:idx toColumn:0];
 }
 
 - (void)dealloc {
-    tableView.delegate = nil;
-    tableView.dataSource = nil;
+    keyTableView.delegate = nil;
+    keyTableView.dataSource = nil;
     searchField.delegate = nil;
     
 	[gpgContext release];
@@ -187,6 +187,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
    setObjectValue:(id)value
    forTableColumn:(NSTableColumn *)column
               row:(NSInteger)row {
+    if(tableView != keyTableView)
+        return;
+    
     if(row < keysMatchingSearch.count) {
         GPGKey* k = [keysMatchingSearch objectAtIndex:row];
         if([self.selectedKeys containsObject:k])
@@ -224,7 +227,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		keysMatchingSearch = [newFilteredArray retain];
 	}
 
-    [tableView reloadData];
+    [keyTableView reloadData];
 }
 
 - (void)controlTextDidChange:(NSNotification *)aNotification {
@@ -236,7 +239,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 #pragma mark Delegate
 
 - (void)tableView:(NSTableView *)aTableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
-    NSArray* tmp = [availableKeys sortedArrayUsingDescriptors:[tableView sortDescriptors]];
+    NSArray* tmp = [availableKeys sortedArrayUsingDescriptors:[keyTableView sortDescriptors]];
     [availableKeys release];
     availableKeys = [tmp retain];
     [self displayItemsMatchingString:[searchField stringValue]]; 
@@ -256,9 +259,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	NSMenuItem *menuItem;
 	NSString *title;
 	NSMenu *contextMenu = [[[NSMenu alloc] initWithTitle:@""] autorelease];
-	[[tableView headerView] setMenu:contextMenu];
+	[[keyTableView headerView] setMenu:contextMenu];
 	
-	NSArray *columns = [tableView tableColumns];
+	NSArray *columns = [keyTableView tableColumns];
 	for (NSTableColumn *column in columns) {
         if([[column identifier] isEqualToString:@"useKey"] == NO) {
             title = [[column headerCell] title];
@@ -278,6 +281,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldReorderColumn:(NSInteger)columnIndex toColumn:(NSInteger)newColumnIndex {
+    if(tableView != keyTableView)
+        return YES;
+    
     NSTableColumn* col = [[tableView tableColumns] objectAtIndex:columnIndex];
     
     if([[col identifier] isEqualToString:@"useKey"])
