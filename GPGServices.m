@@ -761,6 +761,8 @@
     
     [aContext setPassphraseDelegate:self];
     
+    BOOL succesfullyDecryptedAFile = NO;
+    
     for(NSString* file in files) {
         BOOL isDirectory = NO;
         @try {
@@ -781,6 +783,8 @@
                 
                 if(error != nil) 
                     NSLog(@"error!: %@", error);
+                else
+                    succesfullyDecryptedAFile = YES;
             }
         } @catch (NSException* localException) {
             switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])) {
@@ -799,13 +803,14 @@
         } 
     }
     
-    [GrowlApplicationBridge notifyWithTitle:@"Decryption finished"
-                                description:[NSString stringWithFormat:@"Finished decrypting %i file(s)", files.count]
-                           notificationName:@"DecryptionSucceeded"
-                                   iconData:[NSData data]
-                                   priority:0
-                                   isSticky:NO
-                               clickContext:files];
+    if(succesfullyDecryptedAFile == YES)
+        [GrowlApplicationBridge notifyWithTitle:@"Decryption finished"
+                                    description:[NSString stringWithFormat:@"Finished decrypting %i file(s)", files.count]
+                               notificationName:@"DecryptionSucceeded"
+                                       iconData:[NSData data]
+                                       priority:0
+                                       isSticky:NO
+                                   clickContext:files];
 
 }
 
