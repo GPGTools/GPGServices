@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>ccsv</string>
 	<key>CFBundleVersion</key>
-	<string>1.6a1</string>
+	<string>1.6a2</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -239,7 +239,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Decrypt (not implemented yet)</string>
+				<string>OpenPGP: Decrypt</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>decryptFile</string>
