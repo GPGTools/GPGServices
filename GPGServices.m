@@ -798,6 +798,15 @@
             }
         } 
     }
+    
+    [GrowlApplicationBridge notifyWithTitle:@"Decryption finished"
+                                description:[NSString stringWithFormat:@"Finished decrypting %i file(s)", files.count]
+                           notificationName:@"DecryptionSucceeded"
+                                   iconData:[NSData data]
+                                   priority:0
+                                   isSticky:NO
+                               clickContext:files];
+
 }
 
 #pragma mark -

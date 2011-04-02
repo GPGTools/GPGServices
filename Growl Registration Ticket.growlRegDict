@@ -11,6 +11,7 @@
         <string>SigningFileFailed</string>
         <string>FileToSignIsDirectory</string>
         <string>SigningSucceeded</string>
+        <string>DecryptionSucceeded</string>
 	</array>
 	<key>DefaultNotifications</key>
 	<array>
@@ -19,6 +20,7 @@
         <string>SigningFileFailed</string>
         <string>FileToSignIsDirectory</string>
         <string>SigningSucceeded</string>
+        <string>DecryptionSucceeded</string>
 	</array>    
 </dict>
 </plist>
