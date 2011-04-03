@@ -70,6 +70,9 @@ typedef enum {
 #pragma mark File Stuff
 
 - (NSString*)normalizedAndUniquifiedPathFromPath:(NSString*)path;
+- (NSNumber*)folderSize:(NSString *)folderPath;
+- (NSNumber*)sizeOfFiles:(NSArray*)files;
+
 - (void)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys;
 - (void)signFiles:(NSArray*)files;
 - (GPGData*)signedGPGDataForGPGData:(GPGData*)dataToSign withKeys:(NSArray*)keys;

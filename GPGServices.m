@@ -515,6 +515,45 @@
     }
 }
 
+- (NSNumber*)folderSize:(NSString *)folderPath {
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    NSArray *filesArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:folderPath error:nil];
+    NSEnumerator *filesEnumerator = [filesArray objectEnumerator];
+    NSString *fileName = nil;
+    unsigned long long int fileSize = 0;
+    
+    while((fileName = [filesEnumerator nextObject]) != nil) {
+        fileName = [folderPath stringByAppendingPathComponent:fileName];
+        
+        NSError* err = nil;
+        NSDictionary* fileDictionary = [fmgr attributesOfItemAtPath:fileName error:&err];
+        if(err)
+            NSLog(@"error in folderSize: %@", [err description]);
+        else
+            fileSize += [[fileDictionary valueForKey:NSFileSize] unsignedLongLongValue];
+    }
+    
+    return [NSNumber numberWithUnsignedLongLong:fileSize];
+}
+
+- (NSNumber*)sizeOfFiles:(NSArray*)files {
+    __block unsigned long long size = 0;
+    
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    [files enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSString* file = (NSString*)obj;
+        BOOL isDirectory = NO;
+        BOOL exists = [fmgr fileExistsAtPath:file isDirectory:&isDirectory];
+        if(exists && isDirectory)
+            size += [[self folderSize:file] unsignedLongLongValue];
+        else if(exists) {
+            size += [[[fmgr attributesOfItemAtPath:file error:NULL] valueForKey:NSFileSize] unsignedLongLongValue];
+        }
+    }];
+    
+    return [NSNumber numberWithUnsignedLongLong:size];
+}
+
 - (void)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys {
     @try {
         //Generate .sig file
@@ -615,6 +654,8 @@
 - (void)encryptFiles:(NSArray*)files {
     BOOL trustAllKeys = YES;
     
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    
     NSLog(@"encrypting file(s): %@...", [files componentsJoinedByString:@","]);
     
     if(files.count == 0)
@@ -639,11 +680,14 @@
             validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
         }
 
-        GPGData* gpgData = nil;
+        //GPGData* gpgData = nil;
         double megabytes = 0;
         NSString* destination = nil;
         
         NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+        
+        typedef NSData*(^DataProvider)();
+        DataProvider dataProvider = nil;
         
         if(files.count == 1) {
             NSString* file = [files objectAtIndex:0];
@@ -651,41 +695,42 @@
             BOOL exists = [fmgr fileExistsAtPath:file isDirectory:&isDirectory];
             
             if(exists && isDirectory) {
-                ZipOperation* operation = [[ZipOperation alloc] init];
-                operation.filePath = file;
-                operation.delegate = self;
-                [operation start];
-
                 NSString* filename = [NSString stringWithFormat:@"%@.zip.gpg", [file lastPathComponent]];
-                megabytes = [operation.zipData length] / 1048576.0;
+                megabytes = [[self folderSize:file] unsignedLongLongValue] / 1048576.0;
                 destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
-                gpgData = [[[GPGData alloc] initWithData:operation.zipData] autorelease];
-                
-                [operation release];
+                dataProvider = ^{
+                    ZipOperation* operation = [[[ZipOperation alloc] init] autorelease];
+                    operation.filePath = file;
+                    operation.delegate = self;
+                    [operation start];
+
+                    return operation.zipData;
+                };
             } else if(exists) {
                 NSError* error = nil;
                 NSNumber* fileSize = [[fmgr attributesOfItemAtPath:file error:&error] valueForKey:NSFileSize];
-                megabytes = [fileSize doubleValue] / 1048576;
+                megabytes = [fileSize unsignedLongLongValue] / 1048576;
                 destination = [file stringByAppendingString:@".gpg"];
-                gpgData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+                dataProvider = ^{
+                    return (NSData*)[NSData dataWithContentsOfFile:file];
+                };
             } else {    
                 [self displayMessageWindowWithTitleText:@"File doesn't exist"
                                                bodyText:@"Please try again"];
                 return;
             }
         } else if(files.count > 1) {
-            ZipOperation* operation = [[ZipOperation alloc] init];
-            operation.files = files;
-            operation.delegate = self;
-            [operation start];
-            
-            
-            megabytes = [operation.zipData length] / 1048576.0;
+            megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / 1048576.0;
             destination = [[[files objectAtIndex:0] stringByDeletingLastPathComponent] 
                            stringByAppendingPathComponent:@"Archive.zip.gpg"];
-            gpgData = [[[GPGData alloc] initWithData:operation.zipData] autorelease];
-            
-            [operation release];
+            dataProvider = ^{
+                ZipOperation* operation = [[[ZipOperation alloc] init] autorelease];
+                operation.files = files;
+                operation.delegate = self;
+                [operation start];
+                
+                return operation.zipData;
+            };
         }
         
         //Check if directory is writable and append i+1 if file already exists at destination
@@ -694,10 +739,9 @@
         NSLog(@"destination: %@", destination);
         NSLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
                                                                   numberStyle:NSNumberFormatterDecimalStyle]);        
-        NSLog(@"gpgData.length: %lld", [gpgData length]);
         
         if(megabytes > 10) {
-            int ret = [[NSAlert alertWithMessageText:@"Large File"
+            int ret = [[NSAlert alertWithMessageText:@"Large File(s)"
                                        defaultButton:@"Continue"
                                      alternateButton:@"Cancel"
                                          otherButton:nil
@@ -708,7 +752,13 @@
                 return;
         }
 
+        NSAssert(dataProvider != nil, @"dataProvider can't be nil");
+        NSAssert(destination != nil, @"destination can't be nil");
+        
         GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
+        GPGData* gpgData = nil;
+        if(dataProvider != nil) 
+            gpgData = [[[GPGData alloc] initWithData:dataProvider()] autorelease];
 
         GPGData* encrypted = nil;
         if(sign == YES && privateKey != nil) {
@@ -742,6 +792,8 @@
                                        clickContext:destination];
         }
     }
+    
+    [pool release];
 }
 
 
