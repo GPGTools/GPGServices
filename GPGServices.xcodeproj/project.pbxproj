@@ -14,7 +14,6 @@
 		2278DFC8133FD71E00EE5829 /* MacGPGME.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 22CA687B12DFD8D300ED919C /* MacGPGME.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
 		4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1908C00A4CBF0B00052798 /* GPGServices.m */; };
-		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -26,6 +25,7 @@
 		8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */; };
 		8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDC40F7133F6C5500D0A101 /* ZipOperation.m */; };
 		8EE8996813474D62004A3266 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EE8996713474D62004A3266 /* MainMenu.xib */; };
+		8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */; };
 		8EF7A61D1334C05300FD8C5B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 /* End PBXBuildFile section */
 
@@ -131,6 +131,8 @@
 		8EDC40F6133F6C5500D0A101 /* ZipOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipOperation.h; sourceTree = "<group>"; };
 		8EDC40F7133F6C5500D0A101 /* ZipOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipOperation.m; sourceTree = "<group>"; };
 		8EE8996713474D62004A3266 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		8EE899891348B92B004A3266 /* NSPredicate+negate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPredicate+negate.h"; sourceTree = "<group>"; };
+		8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPredicate+negate.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,8 @@
 				22D6D9CA13267E0C00622189 /* RecipientWindowController.m */,
 				8EDC40F6133F6C5500D0A101 /* ZipOperation.h */,
 				8EDC40F7133F6C5500D0A101 /* ZipOperation.m */,
+				8EE899891348B92B004A3266 /* NSPredicate+negate.h */,
+				8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -374,7 +378,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				2260756D12EBA0B50026DBEA /* Icon.icns in Resources */,
 				8E4A7B131328CA7C007953BE /* RecipientWindow.xib in Resources */,
@@ -397,6 +400,7 @@
 				8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */,
 				8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */,
 				8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */,
+				8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,14 +427,6 @@
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
-		};
-		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-			);
-			name = MainMenu.nib;
-			path = /Users/moritz/Development/GPGServices;
-			sourceTree = "<absolute>";
 		};
 /* End PBXVariantGroup section */
 

@@ -76,6 +76,11 @@ typedef enum {
 - (void)encryptFiles:(NSArray*)files;
 - (void)decryptFiles:(NSArray*)files; 
 
+#pragma mark NSPredicates for filtering file arrays
+
+- (NSPredicate*)fileExistsPredicate;
+- (NSPredicate*)isDirectoryPredicate;
+//- (NSPredicate*)isZipPredicate;
 
 #pragma mark -
 #pragma mark Service handling routines
@@ -105,6 +110,7 @@ typedef enum {
 #pragma mark UI Helpher
 
 -(void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body;
+- (void)displaySignatureVerificationForSig:(GPGSignature*)sig;
 -(NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again;
 -(IBAction)closeModalWindow:(id)sender;
 - (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path

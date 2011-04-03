@@ -13,6 +13,7 @@
 
 #import "ZipOperation.h"
 #import "ZipKit/ZKArchive.h"
+#import "NSPredicate+negate.h"
 
 @implementation GPGServices
 
@@ -468,19 +469,9 @@
         if([sigs count]>0)
         {
             GPGSignature* sig=[sigs objectAtIndex:0];
-            if(GPGErrorCodeFromError([sig status])==GPGErrorNoError)
-            {
-                NSString* userID = [[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
-                NSString* validity = [sig validityDescription];
-                
-                [[NSAlert alertWithMessageText:@"Verification successful."
-                                 defaultButton:@"Ok"
-                               alternateButton:nil
-                                   otherButton:nil
-                     informativeTextWithFormat:@"Good signature (%@ trust):\n\"%@\"",validity,userID]
-                 runModal];
-            }
-            else {
+            if(GPGErrorCodeFromError([sig status])==GPGErrorNoError) {
+                [self displaySignatureVerificationForSig:sig];
+            } else {
                 [self displayMessageWindowWithTitleText:@"Verification FAILED."
                                                bodyText:GPGErrorDescription([sig status])];
             }
@@ -756,6 +747,8 @@
 
     //For now, don't sign directories
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    
+    files = [files filteredArrayUsingPredicate:[[self isDirectoryPredicate] negate]];
     if(files.count == 0)
         return;
     
@@ -767,24 +760,33 @@
         BOOL isDirectory = NO;
         @try {
             if([fmgr fileExistsAtPath:file isDirectory:&isDirectory] &&
-               isDirectory == NO) {
-                NSLog(@"file: %@", file);
-                
+               isDirectory == NO) {                
                 GPGData* inputData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
                 NSLog(@"inputData.size: %lld", [inputData length]);
                 
-                GPGData* outputData = [aContext decryptedData:inputData];
-            
+                NSArray* signatures = nil;
+                GPGData* outputData = [aContext decryptedData:inputData signatures:&signatures];
                 NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
-                NSLog(@"writing decrypted data to file: %@", outputFile);
                 
                 NSError* error = nil;
                 [outputData.data writeToFile:outputFile options:NSDataWritingAtomic error:&error];
                 
                 if(error != nil) 
-                    NSLog(@"error!: %@", error);
+                    NSLog(@"error while writing to output: %@", error);
                 else
                     succesfullyDecryptedAFile = YES;
+                
+                if(signatures && signatures.count > 0) {
+                    NSLog(@"found signatures: %@", signatures);
+                    
+                    GPGSignature* sig = [signatures objectAtIndex:0];
+                    if(GPGErrorCodeFromError([sig status]) == GPGErrorNoError) {
+                        [self displaySignatureVerificationForSig:sig];
+                    } else {
+                        [self displayMessageWindowWithTitleText:@"Verification FAILED."
+                                                       bodyText:GPGErrorDescription([sig status])];
+                    }
+                }
             }
         } @catch (NSException* localException) {
             switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])) {
@@ -813,6 +815,27 @@
                                    clickContext:files];
 
 }
+
+
+#pragma mark NSPredicates for filtering file arrays
+
+- (NSPredicate*)fileExistsPredicate {
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    return [[[NSPredicate predicateWithBlock:^BOOL(id file, NSDictionary *bindings) {
+        return [file isKindOfClass:[NSString class]] && [fmgr fileExistsAtPath:file];
+    }] copy] autorelease];
+}
+
+- (NSPredicate*)isDirectoryPredicate {
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    return [[[NSPredicate predicateWithBlock:^BOOL(id file, NSDictionary *bindings) {
+        BOOL isDirectory = NO;
+        return ([file isKindOfClass:[NSString class]] && 
+                [fmgr fileExistsAtPath:file isDirectory:&isDirectory] &&
+                isDirectory);
+    }] copy] autorelease];
+}
+
 
 #pragma mark -
 #pragma mark Service handling routines
@@ -1001,6 +1024,19 @@
                   alternateButton:nil
                       otherButton:nil
          informativeTextWithFormat:[NSString stringWithFormat:@"%@", body]] runModal];
+}
+
+- (void)displaySignatureVerificationForSig:(GPGSignature*)sig {
+    GPGContext* aContext = [[[GPGContext alloc] init] autorelease];
+    NSString* userID = [[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
+    NSString* validity = [sig validityDescription];
+    
+    [[NSAlert alertWithMessageText:@"Verification successful."
+                     defaultButton:@"Ok"
+                   alternateButton:nil
+                       otherButton:nil
+         informativeTextWithFormat:@"Good signature (%@ trust):\n\"%@\"",validity,userID]
+     runModal];
 }
 
 -(NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again
