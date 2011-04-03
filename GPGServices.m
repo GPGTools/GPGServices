@@ -527,6 +527,7 @@
         GPGData* signData = [signContext signedData:dataToSign signatureMode:GPGSignatureModeDetach];
         
         NSString* sigFile = [file stringByAppendingPathExtension:@"sig"];
+        sigFile = [self normalizedAndUniquifiedPathFromPath:sigFile];
         [[signData data] writeToFile:sigFile atomically:YES];
     } @catch (NSException* e) {
         [GrowlApplicationBridge notifyWithTitle:@"Signing failed"
