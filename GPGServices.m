@@ -653,9 +653,7 @@
 
 - (void)encryptFiles:(NSArray*)files {
     BOOL trustAllKeys = YES;
-    
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    
+        
     NSLog(@"encrypting file(s): %@...", [files componentsJoinedByString:@","]);
     
     if(files.count == 0)
@@ -792,8 +790,6 @@
                                        clickContext:destination];
         }
     }
-    
-    [pool release];
 }
 
 
@@ -902,6 +898,9 @@
 	[self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
     
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+
+    
     NSString *pboardString = nil;
 	if(mode!=MyKeyService && mode!=MyFingerprintService)
 	{
@@ -971,6 +970,9 @@
 		[pboard setString:newString forType:NSStringPboardType];
    		[pboard setString:newString forType:NSRTFPboardType];
 	}
+    
+    [pool release];
+    
 	[self exitServiceRequest];
 }
 
