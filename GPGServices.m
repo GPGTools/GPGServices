@@ -43,7 +43,7 @@
                                        bodyText:GPGErrorDescription([[[localException userInfo] 
                                                                       objectForKey:@"GPGErrorKey"] 
                                                                      intValue])];
-
+        
         return;
 	} @finally {
         [inputData release];
@@ -87,7 +87,7 @@
         GPGKey* defaultKey=[aContext keyFromFingerprint:keyID secretKey:YES];
         return defaultKey;
     } @catch (NSException* s) {
-    
+        
     } @finally {
         [aContext release];
     }
@@ -158,7 +158,7 @@
 + (KeyValidatorT)isActiveValidator {
     // Copied from GPGMail's GPGMailBundle.m
     KeyValidatorT block =  ^(GPGKey* key) {
-
+        
         // Secret keys are never marked as revoked! Use public key
         key = [key publicKey];
         
@@ -289,7 +289,7 @@
 		BOOL sign = rcp.sign;
         NSArray* validRecipients = rcp.selectedKeys;
         GPGKey* privateKey = rcp.selectedPrivateKey;
-
+        
         if(rcp.encryptForOwnKeyToo && privateKey) {
             validRecipients = [[[NSSet setWithArray:validRecipients] 
                                 setByAddingObject:[privateKey publicKey]] 
@@ -297,7 +297,7 @@
         } else {
             validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
         }
-            
+        
         if(privateKey == nil) {
             [self displayMessageWindowWithTitleText:@"Encryption failed." 
                                            bodyText:@"No usable private key found"];
@@ -309,7 +309,7 @@
         if(validRecipients.count == 0) {
             [self displayMessageWindowWithTitleText:@"Encryption failed."
                                            bodyText:@"No valid recipients found"];
-
+            
             [inputData release];
             [aContext release];
             return nil;
@@ -344,7 +344,7 @@
             [aContext release];
         }
 	}
-	    
+    
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
 }
 
@@ -352,7 +352,7 @@
 {
     GPGData *outputData = nil;
 	GPGContext *aContext = [[GPGContext alloc] init];
-
+    
 	GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
     
 	@try {
@@ -396,11 +396,11 @@
                             [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         return [GPGServices canSignValidator]((GPGKey*)evaluatedObject);
     }]];
-                            
+    
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices canSignValidator]];
-             
+        
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
         else
@@ -554,7 +554,7 @@
     return [NSNumber numberWithUnsignedLongLong:size];
 }
 
-- (void)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys {
+- (NSString*)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys {
     @try {
         //Generate .sig file
         GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
@@ -568,6 +568,8 @@
         NSString* sigFile = [file stringByAppendingPathExtension:@"sig"];
         sigFile = [self normalizedAndUniquifiedPathFromPath:sigFile];
         [[signData data] writeToFile:sigFile atomically:YES];
+        
+        return sigFile;
     } @catch (NSException* e) {
         [GrowlApplicationBridge notifyWithTitle:@"Signing failed"
                                     description:[file lastPathComponent]
@@ -576,8 +578,9 @@
                                        priority:0
                                        isSticky:NO
                                    clickContext:file];
-        
     }
+    
+    return nil;
 }
 
 - (void)signFiles:(NSArray*)files {     
@@ -589,15 +592,13 @@
     }]];
     
     if(chosenKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
+        KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
         [wc setKeyValidator:[GPGServices canSignValidator]];
         
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
         else
-            chosenKey = nil;
-        
-        [wc release];
+            return;
     } else if(availableKeys.count == 1) {
         chosenKey = [availableKeys anyObject];
     }
@@ -624,17 +625,24 @@
     if(files.count == 0)
         return;
     
-    if(chosenKey != nil)
-        for(NSString* file in files) 
-            [self detachedSignFile:file withKeys:[NSArray arrayWithObject:chosenKey]];
+    unsigned int signedFilesCount = 0;
+    if(chosenKey != nil) {
+        for(NSString* file in files) {
+            NSString* sigFile = [self detachedSignFile:file withKeys:[NSArray arrayWithObject:chosenKey]];
+            if(sigFile != nil)
+                signedFilesCount++;
+        }
+    }
     
-    [GrowlApplicationBridge notifyWithTitle:@"Signing finished"
-                                description:[NSString stringWithFormat:@"Finished signing %i file(s)", files.count]
-                           notificationName:@"SigningSucceeded"
-                                   iconData:[NSData data]
-                                   priority:0
-                                   isSticky:NO
-                               clickContext:files];
+    if(signedFilesCount > 0) {
+        [GrowlApplicationBridge notifyWithTitle:@"Signing finished"
+                                    description:[NSString stringWithFormat:@"Finished signing %i file(s)", files.count]
+                               notificationName:@"SigningSucceeded"
+                                       iconData:[NSData data]
+                                       priority:0
+                                       isSticky:NO
+                                   clickContext:files];
+    }
 }
 
 - (GPGData*)signedGPGDataForGPGData:(GPGData*)dataToSign withKeys:(NSArray*)keys {
@@ -653,12 +661,12 @@
 
 - (void)encryptFiles:(NSArray*)files {
     BOOL trustAllKeys = YES;
-        
+    
     NSLog(@"encrypting file(s): %@...", [files componentsJoinedByString:@","]);
     
     if(files.count == 0)
         return;
-
+    
     RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
 	int ret = [rcp runModal];
     [rcp release];
@@ -677,7 +685,7 @@
         } else {
             validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
         }
-
+        
         //GPGData* gpgData = nil;
         double megabytes = 0;
         NSString* destination = nil;
@@ -701,7 +709,7 @@
                     operation.filePath = file;
                     operation.delegate = self;
                     [operation start];
-
+                    
                     return operation.zipData;
                 };
             } else if(exists) {
@@ -749,7 +757,7 @@
             if(ret == NSAlertAlternateReturn)
                 return;
         }
-
+        
         NSAssert(dataProvider != nil, @"dataProvider can't be nil");
         NSAssert(destination != nil, @"destination can't be nil");
         
@@ -757,7 +765,7 @@
         GPGData* gpgData = nil;
         if(dataProvider != nil) 
             gpgData = [[[GPGData alloc] initWithData:dataProvider()] autorelease];
-
+        
         GPGData* encrypted = nil;
         if(sign == YES && privateKey != nil) {
             [ctx addSignerKey:privateKey];
@@ -795,7 +803,7 @@
 
 - (void)decryptFiles:(NSArray*)files {
 	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
-
+    
     //For now, don't sign directories
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
     
@@ -805,7 +813,7 @@
     
     [aContext setPassphraseDelegate:self];
     
-    BOOL succesfullyDecryptedAFile = NO;
+    unsigned int decryptedFilesCount = 0;
     
     for(NSString* file in files) {
         BOOL isDirectory = NO;
@@ -825,7 +833,7 @@
                 if(error != nil) 
                     NSLog(@"error while writing to output: %@", error);
                 else
-                    succesfullyDecryptedAFile = YES;
+                    decryptedFilesCount++;
                 
                 if(signatures && signatures.count > 0) {
                     NSLog(@"found signatures: %@", signatures);
@@ -856,7 +864,7 @@
         } 
     }
     
-    if(succesfullyDecryptedAFile == YES)
+    if(decryptedFilesCount > 0)
         [GrowlApplicationBridge notifyWithTitle:@"Decryption finished"
                                     description:[NSString stringWithFormat:@"Finished decrypting %i file(s)", files.count]
                                notificationName:@"DecryptionSucceeded"
@@ -864,7 +872,7 @@
                                        priority:0
                                        isSticky:NO
                                    clickContext:files];
-
+    
 }
 
 
@@ -899,7 +907,7 @@
 	[NSApp activateIgnoringOtherApps:YES];
     
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-
+    
     
     NSString *pboardString = nil;
 	if(mode!=MyKeyService && mode!=MyFingerprintService)
@@ -1077,9 +1085,9 @@
 
 -(void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body {
     [[NSAlert alertWithMessageText:title
-                    defaultButton:@"Ok"
-                  alternateButton:nil
-                      otherButton:nil
+                     defaultButton:@"Ok"
+                   alternateButton:nil
+                       otherButton:nil
          informativeTextWithFormat:[NSString stringWithFormat:@"%@", body]] runModal];
 }
 
