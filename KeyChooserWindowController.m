@@ -46,9 +46,10 @@
 }
 
 - (NSInteger)runModal {
-    [self.window center];
-    [self.window display];
-    return [NSApp runModalForWindow:self.window];
+    [self showWindow:self];
+	NSInteger ret = [NSApp runModalForWindow:self.window];
+	[self.window close];
+	return ret;
 }
 
 - (void)setKeyValidator:(KeyValidatorT)validator {
