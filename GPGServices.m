@@ -588,7 +588,7 @@
     } @catch (NSException* e) {
         [GrowlApplicationBridge notifyWithTitle:@"Signing failed"
                                     description:[file lastPathComponent]
-                               notificationName:@"SigningFileFailed"
+                               notificationName:gpgGrowlOperationFailedName
                                        iconData:[NSData data]
                                        priority:0
                                        isSticky:NO
@@ -653,7 +653,7 @@
         if(signedFilesCount > 0) {
             [GrowlApplicationBridge notifyWithTitle:@"Signing finished"
                                         description:[NSString stringWithFormat:@"Finished signing %i file(s)", files.count]
-                                   notificationName:@"SigningSucceeded"
+                                   notificationName:gpgGrowlOperationSucceededName
                                            iconData:[NSData data]
                                            priority:0
                                            isSticky:NO
@@ -796,9 +796,9 @@
         }
         
         if(encrypted == nil) {
-            [GrowlApplicationBridge notifyWithTitle:@"Signing failed"
+            [GrowlApplicationBridge notifyWithTitle:@"Encryption failed"
                                         description:destination
-                                   notificationName:@"SigningFileFailed"
+                                   notificationName:gpgGrowlOperationFailedName
                                            iconData:[NSData data]
                                            priority:0
                                            isSticky:NO
@@ -808,7 +808,7 @@
             
             [GrowlApplicationBridge notifyWithTitle:@"Encryption finished"
                                         description:[destination lastPathComponent]
-                                   notificationName:@"EncryptionSucceeded"
+                                   notificationName:gpgGrowlOperationSucceededName
                                            iconData:[NSData data]
                                            priority:0
                                            isSticky:NO
@@ -884,7 +884,7 @@
     if(decryptedFilesCount > 0)
         [GrowlApplicationBridge notifyWithTitle:@"Decryption finished"
                                     description:[NSString stringWithFormat:@"Finished decrypting %i file(s)", files.count]
-                               notificationName:@"DecryptionSucceeded"
+                               notificationName:gpgGrowlOperationSucceededName
                                        iconData:[NSData data]
                                        priority:0
                                        isSticky:NO

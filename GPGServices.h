@@ -28,6 +28,12 @@ typedef enum {
     DecryptFileService, 
 } FileServiceModeEnum;
 
+
+#pragma mark Growl Constants
+
+#define gpgGrowlOperationSucceededName (@"Operation Succeeded")
+#define gpgGrowlOperationFailedName (@"Operation Failed")
+
 @interface GPGServices : NSObject <GrowlApplicationBridgeDelegate>
 {
 	IBOutlet NSWindow *recipientWindow;
