@@ -562,7 +562,22 @@
         for(GPGKey* k in keys)
             [signContext addSignerKey:k];
         
-        GPGData* dataToSign = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+        GPGData* dataToSign = nil;
+        if([[self isDirectoryPredicate] evaluateWithObject:file]) {
+            ZipOperation* zipOperation = [[[ZipOperation alloc] init] autorelease];
+            zipOperation.filePath = file;
+            [zipOperation start];
+            
+            //Rename file to <dirname>.zip
+            file = [file stringByAppendingPathExtension:@"zip"];
+            if([zipOperation.zipData writeToFile:file atomically:YES] == NO)
+                return nil;
+            
+            dataToSign = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+        } else {
+            dataToSign = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+        }
+        
         GPGData* signData = [signContext signedData:dataToSign signatureMode:GPGSignatureModeDetach];
         
         NSString* sigFile = [file stringByAppendingPathExtension:@"sig"];
@@ -603,6 +618,7 @@
         chosenKey = [availableKeys anyObject];
     }
     
+    /*
     //For now, don't sign directories
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
     files = [files filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id file, NSDictionary *bindings) {
@@ -621,9 +637,10 @@
         
         return exists && !isDir;
     }]];
-    
+
     if(files.count == 0)
         return;
+     */
     
     unsigned int signedFilesCount = 0;
     if(chosenKey != nil) {
@@ -632,16 +649,16 @@
             if(sigFile != nil)
                 signedFilesCount++;
         }
-    }
-    
-    if(signedFilesCount > 0) {
-        [GrowlApplicationBridge notifyWithTitle:@"Signing finished"
-                                    description:[NSString stringWithFormat:@"Finished signing %i file(s)", files.count]
-                               notificationName:@"SigningSucceeded"
-                                       iconData:[NSData data]
-                                       priority:0
-                                       isSticky:NO
-                                   clickContext:files];
+        
+        if(signedFilesCount > 0) {
+            [GrowlApplicationBridge notifyWithTitle:@"Signing finished"
+                                        description:[NSString stringWithFormat:@"Finished signing %i file(s)", files.count]
+                                   notificationName:@"SigningSucceeded"
+                                           iconData:[NSData data]
+                                           priority:0
+                                           isSticky:NO
+                                       clickContext:files];
+        }
     }
 }
 
