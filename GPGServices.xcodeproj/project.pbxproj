@@ -153,14 +153,9 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8E1BC3D6134B977500C1BFD6 /* UI Classes */,
 				4B1908BF0A4CBF0B00052798 /* GPGServices.h */,
 				4B1908C00A4CBF0B00052798 /* GPGServices.m */,
-				8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */,
-				8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */,
-				8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */,
-				8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */,
-				22D6D9C913267E0C00622189 /* RecipientWindowController.h */,
-				22D6D9CA13267E0C00622189 /* RecipientWindowController.m */,
 				8EDC40F6133F6C5500D0A101 /* ZipOperation.h */,
 				8EDC40F7133F6C5500D0A101 /* ZipOperation.m */,
 				8EE899891348B92B004A3266 /* NSPredicate+negate.h */,
@@ -258,6 +253,19 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8E1BC3D6134B977500C1BFD6 /* UI Classes */ = {
+			isa = PBXGroup;
+			children = (
+				8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */,
+				8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */,
+				8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */,
+				8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */,
+				22D6D9C913267E0C00622189 /* RecipientWindowController.h */,
+				22D6D9CA13267E0C00622189 /* RecipientWindowController.m */,
+			);
+			name = "UI Classes";
 			sourceTree = "<group>";
 		};
 		8EDC405C133F650800D0A101 /* Products */ = {
