@@ -17,6 +17,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */; };
 		8E4A7B131328CA7C007953BE /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */; };
 		8E7341A31334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */; };
 		8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
@@ -119,6 +120,8 @@
 		4B1908C00A4CBF0B00052798 /* GPGServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPGServices.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* GPGServices.service */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.service; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E1BC426134D013600C1BFD6 /* GPGKey+utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GPGKey+utils.h"; sourceTree = "<group>"; };
+		8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GPGKey+utils.m"; sourceTree = "<group>"; };
 		8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipientWindow.xib; sourceTree = "<group>"; };
 		8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		8E7341A21334BC1C003CBCEB /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
@@ -159,6 +162,8 @@
 				8EDC40F6133F6C5500D0A101 /* ZipOperation.h */,
 				8EDC40F7133F6C5500D0A101 /* ZipOperation.m */,
 				8EE899891348B92B004A3266 /* NSPredicate+negate.h */,
+				8E1BC426134D013600C1BFD6 /* GPGKey+utils.h */,
+				8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */,
 				8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */,
 			);
 			name = Classes;
@@ -409,6 +414,7 @@
 				8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */,
 				8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */,
 				8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */,
+				8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

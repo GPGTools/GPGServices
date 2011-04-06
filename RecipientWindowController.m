@@ -9,6 +9,8 @@
 #import "RecipientWindowController.h"
 #import "GPGServices.h"
 
+#import "GPGKey+utils.h"
+
 @implementation RecipientWindowController
 
 @synthesize encryptForOwnKeyToo, okEnabled, selectedKeys;
@@ -158,10 +160,10 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         
 		return [NSNumber numberWithInt:i];
 	} else if([iden isEqualToString:@"validity"]) {
-        return [key validityDescription];
+        return GPGValidityDescription([key overallValidity]);
 	} else if([iden isEqualToString:@"validityIndicator"]) {
         int i = 0;
-        switch([key validity]) {
+        switch([key overallValidity]) {
             case GPGValidityUnknown:
             case GPGValidityUndefined:
                 i = 0; break;
