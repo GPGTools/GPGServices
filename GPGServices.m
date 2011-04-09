@@ -798,15 +798,9 @@
 
 - (void)decryptFiles:(NSArray*)files {
 	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
-    
-    //For now, don't sign directories
-    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
-    
-    files = [files filteredArrayUsingPredicate:[[self isDirectoryPredicate] negate]];
-    if(files.count == 0)
-        return;
-    
     [aContext setPassphraseDelegate:self];
+    
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
     
     unsigned int decryptedFilesCount = 0;
     
@@ -870,6 +864,14 @@
     
 }
 
+
+- (void)verifyFiles:(NSArray*)files {
+    GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
+    [aContext setPassphraseDelegate:self];
+
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+
+}
 
 #pragma mark NSPredicates for filtering file arrays
 
@@ -1014,7 +1016,8 @@
             case DecryptFileService:
                 [self decryptFiles:filenames];
                 break;
-            default:
+            case VerifyFileService:
+                [self verifyFiles:filenames];
                 break;
         }
     }
@@ -1060,6 +1063,8 @@
 -(void)decryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error 
 {[self dealWithFilesPasteboard:pboard userData:userData mode:DecryptFileService error:error];}
 
+-(void)verifyFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
+{[self dealWithFilesPasteboard:pboard userData:userData mode:VerifyFileService error:error];}
 
 #pragma mark -
 #pragma mark UI Helpher
