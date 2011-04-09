@@ -461,7 +461,9 @@
 -(void)verifyTextString:(NSString *)inputString
 {
 	GPGContext *aContext = [[GPGContext alloc] init];
-	GPGData* inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+    GPGData* inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+
+    [aContext setUsesTextMode:YES];
     
 	@try {
         NSArray* sigs = [aContext verifySignedData:inputData originalData:nil];
@@ -617,30 +619,6 @@
     } else if(availableKeys.count == 1) {
         chosenKey = [availableKeys anyObject];
     }
-    
-    /*
-    //For now, don't sign directories
-    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
-    files = [files filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id file, NSDictionary *bindings) {
-        BOOL isDir = YES;
-        BOOL exists = [fmgr fileExistsAtPath:(NSString*)file isDirectory:&isDir];
-        
-        if(isDir) {
-            [GrowlApplicationBridge notifyWithTitle:@"Can't sign file"
-                                        description:[NSString stringWithFormat:@"%@ is a directory.", [file lastPathComponent]]
-                                   notificationName:@"FileToSignIsDirectory"
-                                           iconData:[NSData data]
-                                           priority:0
-                                           isSticky:NO
-                                       clickContext:file];
-        }
-        
-        return exists && !isDir;
-    }]];
-
-    if(files.count == 0)
-        return;
-     */
     
     unsigned int signedFilesCount = 0;
     if(chosenKey != nil) {
@@ -922,7 +900,7 @@
                     error:(NSString **)error {
 	[self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
-    
+        
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     
     
@@ -930,23 +908,24 @@
 	if(mode!=MyKeyService && mode!=MyFingerprintService)
 	{
 		NSString* type = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
-                                                         NSStringPboardType, 
-                                                         NSRTFPboardType,
-                                                         NSFilenamesPboardType, 
+                                                         NSPasteboardTypeString, 
+                                                         NSPasteboardTypeRTF,
                                                          nil]];
         
-        if([type isEqualToString:NSStringPboardType])
+        NSLog(@"type: %@", type);
+        
+        if([type isEqualToString:NSPasteboardTypeString])
 		{
-			if(!(pboardString = [pboard stringForType:NSStringPboardType]))
+			if(!(pboardString = [pboard stringForType:NSPasteboardTypeString]))
 			{
 				*error=[NSString stringWithFormat:@"Error: Could not perform GPG operation. Pasteboard could not supply text string."];
 				[self exitServiceRequest];
 				return;
 			}
 		}
-		else if([type isEqualToString:NSRTFPboardType])
+		else if([type isEqualToString:NSPasteboardTypeRTF])
 		{
-			if(!(pboardString = [pboard stringForType:NSStringPboardType]))
+			if(!(pboardString = [pboard stringForType:NSPasteboardTypeString]))
 			{
 				*error=[NSString stringWithFormat:@"Error: Could not perform GPG operation. Pasteboard could not supply text string."];
 				[self exitServiceRequest];
@@ -960,6 +939,9 @@
 			return;
 		}
 	}
+    
+    NSLog(@"pboardString:");
+    NSLog(@"%@", pboardString);
     
     NSString *newString=nil;
 	switch(mode)
@@ -991,9 +973,9 @@
     
 	if(newString!=nil)
 	{
-		[pboard declareTypes:[NSArray arrayWithObjects:NSStringPboardType,NSRTFPboardType,nil] owner:nil];
-		[pboard setString:newString forType:NSStringPboardType];
-   		[pboard setString:newString forType:NSRTFPboardType];
+		[pboard declareTypes:[NSArray arrayWithObjects:NSPasteboardTypeString,NSPasteboardTypeRTF,nil] owner:nil];
+		[pboard setString:newString forType:NSPasteboardTypeString];
+   		[pboard setString:newString forType:NSPasteboardTypeRTF];
 	}
     
     [pool release];
