@@ -571,7 +571,7 @@
             [zipOperation start];
             
             //Rename file to <dirname>.zip
-            file = [file stringByAppendingPathExtension:@"zip"];
+            file = [self normalizedAndUniquifiedPathFromPath:[file stringByAppendingPathExtension:@"zip"]];
             if([zipOperation.zipData writeToFile:file atomically:YES] == NO)
                 return nil;
             
