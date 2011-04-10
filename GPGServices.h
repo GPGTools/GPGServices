@@ -117,7 +117,7 @@ typedef enum {
 -(void)signFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)decryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
--(void)verifyFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
+-(void)validateFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 
 #pragma mark -
 #pragma mark UI Helpher

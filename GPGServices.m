@@ -10,6 +10,7 @@
 
 #import "RecipientWindowController.h"
 #import "KeyChooserWindowController.h"
+#import "FileVerificationController.h"
 
 #import "ZipOperation.h"
 #import "ZipKit/ZKArchive.h"
@@ -870,7 +871,12 @@
     [aContext setPassphraseDelegate:self];
 
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
-
+    
+    
+    FileVerificationController* fvc = [[FileVerificationController alloc] init];
+    fvc.filesToVerify = files;
+    [fvc showWindow:self];
+    [fvc startVerification:nil];
 }
 
 #pragma mark NSPredicates for filtering file arrays
@@ -1063,7 +1069,7 @@
 -(void)decryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error 
 {[self dealWithFilesPasteboard:pboard userData:userData mode:DecryptFileService error:error];}
 
--(void)verifyFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
+-(void)validateFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {[self dealWithFilesPasteboard:pboard userData:userData mode:VerifyFileService error:error];}
 
 #pragma mark -

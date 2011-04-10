@@ -40,13 +40,11 @@
 - (void)startVerification:(void(^)(NSArray*))callback {
     for(NSString* file in self.filesToVerify) {
         [verificationQueue addOperationWithBlock:^(void) {
-            
-            
-            
+
             //Add to results
             NSDictionary* results = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     [file lastPathComponent], @"file",
-                                     @"FULL TRUST - AWESOME", @"result", nil];
+                                     [file lastPathComponent], @"filename",
+                                     @"FULL TRUST - AWESOME", @"verificationResult", nil];
             [self performSelectorOnMainThread:@selector(addResults:) withObject:results waitUntilDone:YES];
         }];
     }
