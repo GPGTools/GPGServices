@@ -318,7 +318,7 @@
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMaxSize">{1e+13, 1e+13}</string>
 			</object>
-			<object class="NSArrayController" id="486651563">
+			<object class="NSArrayController" id="922808469">
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
 				<bool key="NSAvoidsEmptySelection">YES</bool>
@@ -350,10 +350,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">contentArray: self.verificationResults</string>
-						<reference key="source" ref="486651563"/>
+						<reference key="source" ref="922808469"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="486651563"/>
+							<reference key="NSSource" ref="922808469"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">contentArray: self.verificationResults</string>
 							<string key="NSBinding">contentArray</string>
@@ -367,10 +367,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: arrangedObjects.verificationResult</string>
 						<reference key="source" ref="585193839"/>
-						<reference key="destination" ref="486651563"/>
+						<reference key="destination" ref="922808469"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="585193839"/>
-							<reference key="NSDestination" ref="486651563"/>
+							<reference key="NSDestination" ref="922808469"/>
 							<string key="NSLabel">value: arrangedObjects.verificationResult</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">arrangedObjects.verificationResult</string>
@@ -387,10 +387,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: arrangedObjects.filename</string>
 						<reference key="source" ref="707736918"/>
-						<reference key="destination" ref="486651563"/>
+						<reference key="destination" ref="922808469"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="707736918"/>
-							<reference key="NSDestination" ref="486651563"/>
+							<reference key="NSDestination" ref="922808469"/>
 							<string key="NSLabel">value: arrangedObjects.filename</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">arrangedObjects.filename</string>
@@ -402,6 +402,22 @@
 						</object>
 					</object>
 					<int key="connectionID">103</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">fontBold: arrangedObjects.verificationSucceeded</string>
+						<reference key="source" ref="585193839"/>
+						<reference key="destination" ref="922808469"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="585193839"/>
+							<reference key="NSDestination" ref="922808469"/>
+							<string key="NSLabel">fontBold: arrangedObjects.verificationSucceeded</string>
+							<string key="NSBinding">fontBold</string>
+							<string key="NSKeyPath">arrangedObjects.verificationSucceeded</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">105</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -537,7 +553,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">97</int>
-						<reference key="object" ref="486651563"/>
+						<reference key="object" ref="922808469"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Array Controller</string>
 					</object>
@@ -612,7 +628,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">103</int>
+			<int key="maxID">105</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

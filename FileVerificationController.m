@@ -41,10 +41,21 @@
     for(NSString* file in self.filesToVerify) {
         [verificationQueue addOperationWithBlock:^(void) {
 
+            BOOL verified = YES;
+            
+            NSColor* color = nil;
+            if(verified)
+                color = [NSColor greenColor];
+            else
+                color = [NSColor redColor];
+            
             //Add to results
             NSDictionary* results = [NSDictionary dictionaryWithObjectsAndKeys:
                                      [file lastPathComponent], @"filename",
-                                     @"FULL TRUST - AWESOME", @"verificationResult", nil];
+                                     @"FULL TRUST - AWESOME", @"verificationResult", 
+                                     [NSNumber numberWithBool:verified], @"verificationSucceeded",
+                                     color, @"resultColor",
+                                     nil];
             [self performSelectorOnMainThread:@selector(addResults:) withObject:results waitUntilDone:YES];
         }];
     }
