@@ -75,7 +75,7 @@
 										<object class="NSTableView" id="205270778">
 											<reference key="NSNextResponder" ref="705848870"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrameSize">{460, 161}</string>
+											<string key="NSFrameSize">{1163, 146}</string>
 											<reference key="NSSuperview" ref="705848870"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="69268544"/>
@@ -83,7 +83,7 @@
 											<object class="NSTableHeaderView" key="NSHeaderView" id="750396429">
 												<reference key="NSNextResponder" ref="87422432"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrameSize">{460, 17}</string>
+												<string key="NSFrameSize">{1163, 17}</string>
 												<reference key="NSSuperview" ref="87422432"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="441511537"/>
@@ -158,8 +158,8 @@
 												</object>
 												<object class="NSTableColumn" id="585193839">
 													<string key="NSIdentifier">result</string>
-													<double key="NSWidth">274</double>
-													<double key="NSMinWidth">10</double>
+													<double key="NSWidth">999</double>
+													<double key="NSMinWidth">999</double>
 													<double key="NSMaxWidth">1000</double>
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
@@ -201,7 +201,7 @@
 												</object>
 											</object>
 											<double key="NSRowHeight">17</double>
-											<int key="NSTvFlags">-744488960</int>
+											<int key="NSTvFlags">-740294656</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
 											<string key="NSAutosaveName">recipientTable</string>
@@ -212,7 +212,7 @@
 											<int key="NSTableViewDraggingDestinationStyle">0</int>
 										</object>
 									</object>
-									<string key="NSFrame">{{1, 17}, {460, 161}}</string>
+									<string key="NSFrame">{{1, 17}, {460, 146}}</string>
 									<reference key="NSSuperview" ref="763479324"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="205270778"/>
@@ -234,19 +234,20 @@
 									<reference key="NSNextKeyView" ref="306690297"/>
 									<reference key="NSTarget" ref="763479324"/>
 									<string key="NSAction">_doScroller:</string>
-									<double key="NSPercent">0.47368421052631576</double>
+									<double key="NSPercent">0.90683229813664601</double>
 								</object>
 								<object class="NSScroller" id="306690297">
 									<reference key="NSNextResponder" ref="763479324"/>
-									<int key="NSvFlags">-2147483392</int>
-									<string key="NSFrame">{{1, 171}, {434, 15}}</string>
+									<int key="NSvFlags">256</int>
+									<string key="NSFrame">{{1, 163}, {460, 15}}</string>
 									<reference key="NSSuperview" ref="763479324"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1056624537"/>
+									<bool key="NSEnabled">YES</bool>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="763479324"/>
 									<string key="NSAction">_doScroller:</string>
-									<double key="NSPercent">0.9908675799086758</double>
+									<double key="NSPercent">0.39552880481513325</double>
 								</object>
 								<object class="NSClipView" id="87422432">
 									<reference key="NSNextResponder" ref="763479324"/>
@@ -269,7 +270,7 @@
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="87422432"/>
-							<int key="NSsFlags">562</int>
+							<int key="NSsFlags">690</int>
 							<reference key="NSVScroller" ref="69268544"/>
 							<reference key="NSHScroller" ref="306690297"/>
 							<reference key="NSContentView" ref="705848870"/>
@@ -405,22 +406,6 @@
 						</object>
 					</object>
 					<int key="connectionID">103</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">fontBold: arrangedObjects.verificationSucceeded</string>
-						<reference key="source" ref="585193839"/>
-						<reference key="destination" ref="524010493"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="585193839"/>
-							<reference key="NSDestination" ref="524010493"/>
-							<string key="NSLabel">fontBold: arrangedObjects.verificationSucceeded</string>
-							<string key="NSBinding">fontBold</string>
-							<string key="NSKeyPath">arrangedObjects.verificationSucceeded</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">105</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">

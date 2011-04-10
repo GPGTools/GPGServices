@@ -54,29 +54,37 @@
     [self willChangeValueForKey:@"queueIsActive"];
     queueIsActive = YES;
     [self didChangeValueForKey:@"queueIsActive"];
-    
-    NSColor* bgColor = nil;
-    NSString* verificationResult = nil;
-    BOOL verified = NO;
-    
-    GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
-    
-    for(NSString* file in self.filesToVerify) {
+        
+    for(NSString* serviceFile in self.filesToVerify) {
         [verificationQueue addOperationWithBlock:^(void) {
-            GPGData* fileData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+            NSString* file = serviceFile;
+            
+            NSColor* bgColor = nil;
+            NSString* verificationResult = nil;
+            BOOL verified = NO;
             
             NSException* firstException = nil;
             NSException* secondException = nil;
             
             NSArray* sigs = nil;
             NSString* signedFile = [self searchFileForSignatureFile:file];
+            if(signedFile == nil) {
+                NSString* tmp = [self searchSignatureFileForFile:file];
+                signedFile = file;
+                file = tmp;
+            }
+            
+            NSLog(@"file: %@", file);
+            NSLog(@"signedFile: %@", signedFile);
+            
+            GPGData* fileData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
             if(signedFile != nil) {
                 @try {
+                    GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
                     GPGData* signedData = [[[GPGData alloc] initWithContentsOfFile:signedFile] 
                                            autorelease];
                     sigs = [ctx verifySignatureData:fileData againstData:signedData];
-                }
-                @catch (NSException *exception) {
+                } @catch (NSException *exception) {
                     firstException = exception;
                     sigs = nil;
                 }
@@ -84,28 +92,53 @@
             //Try to verify the file itself without a detached sig
             if(sigs == nil) {
                 @try {
+                    GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
                     sigs = [ctx verifySignedData:fileData];
-                }
-                @catch (NSException *exception) {
-                    firstException = exception;
+                } @catch (NSException *exception) {
+                    secondException = exception;
                     sigs = nil;
                 }
             }
             
-            NSColor* color = nil;
-            if(verified)
-                color = [NSColor greenColor];
-            else
-                color = [NSColor redColor];
             
-            //Add to results
-            NSDictionary* results = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     [file lastPathComponent], @"filename",
-                                     verificationResults, @"verificationResult", 
-                                     [NSNumber numberWithBool:verified], @"verificationSucceeded",
-                                     color, @"resultColor",
-                                     nil];
-            [self performSelectorOnMainThread:@selector(addResults:) withObject:results waitUntilDone:YES];
+            NSDictionary* result = nil;
+            if(sigs != nil) {
+                verified = YES;
+
+                if(sigs.count == 0) {
+                    verificationResult = @"Verification FAILED: No signature data found.";
+                    bgColor = [NSColor redColor];
+                } else if(sigs.count > 0) {
+                    GPGSignature* sig=[sigs objectAtIndex:0];
+                    if(GPGErrorCodeFromError([sig status]) == GPGErrorNoError) {
+                        GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
+                        NSString* userID = [[ctx keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
+                        NSString* validity = [sig validityDescription];
+                        
+                        verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", userID, validity];
+                        bgColor = [NSColor greenColor];
+                    } else {
+                        verificationResult = [NSString stringWithFormat:@"Verification FAILED: %@", GPGErrorDescription([sig status])];
+                        bgColor = [NSColor redColor];
+                    }
+                }      
+                
+                //Add to results
+                result = [NSDictionary dictionaryWithObjectsAndKeys:
+                          [file lastPathComponent], @"filename",
+                          file, @"signaturePath",
+                          verificationResult, @"verificationResult", 
+                          [NSNumber numberWithBool:verified], @"verificationSucceeded",
+                          bgColor, @"bgColor",
+                          nil];
+            }
+            
+            
+            
+            if(result != nil)
+                [self performSelectorOnMainThread:@selector(addResults:) 
+                                       withObject:result
+                                    waitUntilDone:YES];
         }];
     }
 }
@@ -122,6 +155,18 @@
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
     
     NSString* file = [sigFile stringByDeletingPathExtension];
+    BOOL isDir = NO;
+    if([fmgr fileExistsAtPath:file isDirectory:&isDir] && !isDir)
+        return file;
+    else
+        return nil;
+}
+
+- (NSString*)searchSignatureFileForFile:(NSString*)sigFile {
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    
+    //TODO: More extensions
+    NSString* file = [sigFile stringByAppendingFormat:@".sig"];
     BOOL isDir = NO;
     if([fmgr fileExistsAtPath:file isDirectory:&isDir] && !isDir)
         return file;

@@ -33,5 +33,6 @@
 
 #pragma mark - Helper Methods
 - (NSString*)searchFileForSignatureFile:(NSString*)file;
+- (NSString*)searchSignatureFileForFile:(NSString*)sigFile;
 
 @end

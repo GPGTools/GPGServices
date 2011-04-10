@@ -131,7 +131,7 @@
 		8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserWindowController.h; sourceTree = "<group>"; };
 		8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserWindowController.m; sourceTree = "<group>"; };
 		8E935E61135125EC004E3E4F /* VerificationResultsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerificationResultsWindow.xib; sourceTree = "<group>"; };
-		8E935E63135128C6004E3E4F /* FileVerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = FileVerificationController.h; sourceTree = "<group>"; };
+		8E935E63135128C6004E3E4F /* FileVerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileVerificationController.h; sourceTree = "<group>"; };
 		8E935E64135128C6004E3E4F /* FileVerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileVerificationController.m; sourceTree = "<group>"; };
 		8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserDataSource.h; sourceTree = "<group>"; };
 		8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserDataSource.m; sourceTree = "<group>"; };
