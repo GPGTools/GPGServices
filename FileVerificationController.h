@@ -31,4 +31,7 @@
 - (void)startVerification:(void(^)(NSArray*))callback;
 - (void)addResults:(NSDictionary*)results;
 
+#pragma mark - Helper Methods
+- (NSString*)searchFileForSignatureFile:(NSString*)file;
+
 @end

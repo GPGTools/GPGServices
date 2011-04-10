@@ -7,7 +7,7 @@
 //
 
 #import "FileVerificationController.h"
-
+#import "MacGPGME/MacGPGME.h"
 
 @implementation FileVerificationController
 
@@ -55,10 +55,42 @@
     queueIsActive = YES;
     [self didChangeValueForKey:@"queueIsActive"];
     
+    NSColor* bgColor = nil;
+    NSString* verificationResult = nil;
+    BOOL verified = NO;
+    
+    GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
+    
     for(NSString* file in self.filesToVerify) {
         [verificationQueue addOperationWithBlock:^(void) {
-
-            BOOL verified = YES;
+            GPGData* fileData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+            
+            NSException* firstException = nil;
+            NSException* secondException = nil;
+            
+            NSArray* sigs = nil;
+            NSString* signedFile = [self searchFileForSignatureFile:file];
+            if(signedFile != nil) {
+                @try {
+                    GPGData* signedData = [[[GPGData alloc] initWithContentsOfFile:signedFile] 
+                                           autorelease];
+                    sigs = [ctx verifySignatureData:fileData againstData:signedData];
+                }
+                @catch (NSException *exception) {
+                    firstException = exception;
+                    sigs = nil;
+                }
+            }
+            //Try to verify the file itself without a detached sig
+            if(sigs == nil) {
+                @try {
+                    sigs = [ctx verifySignedData:fileData];
+                }
+                @catch (NSException *exception) {
+                    firstException = exception;
+                    sigs = nil;
+                }
+            }
             
             NSColor* color = nil;
             if(verified)
@@ -69,7 +101,7 @@
             //Add to results
             NSDictionary* results = [NSDictionary dictionaryWithObjectsAndKeys:
                                      [file lastPathComponent], @"filename",
-                                     @"FULL TRUST - AWESOME", @"verificationResult", 
+                                     verificationResults, @"verificationResult", 
                                      [NSNumber numberWithBool:verified], @"verificationSucceeded",
                                      color, @"resultColor",
                                      nil];
@@ -84,6 +116,18 @@
     [self didChangeValueForKey:@"verificationResults"];
 }
 
+#pragma mark - Helper Methods
+
+- (NSString*)searchFileForSignatureFile:(NSString*)sigFile {
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    
+    NSString* file = [sigFile stringByDeletingPathExtension];
+    BOOL isDir = NO;
+    if([fmgr fileExistsAtPath:file isDirectory:&isDir] && !isDir)
+        return file;
+    else
+        return nil;
+}
 
 
 @end
