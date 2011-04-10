@@ -37,7 +37,24 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
+- (NSInteger)runModal {
+	[self showWindow:self];
+	NSInteger ret = [NSApp runModalForWindow:self.window];
+	[self.window close];
+	return ret;
+}
+
+- (IBAction)okClicked:(id)sender {
+	[NSApp stopModalWithCode:0];
+}
+
+
+
 - (void)startVerification:(void(^)(NSArray*))callback {
+    [self willChangeValueForKey:@"queueIsActive"];
+    queueIsActive = YES;
+    [self didChangeValueForKey:@"queueIsActive"];
+    
     for(NSString* file in self.filesToVerify) {
         [verificationQueue addOperationWithBlock:^(void) {
 
@@ -66,5 +83,7 @@
     [verificationResults addObject:results];
     [self didChangeValueForKey:@"verificationResults"];
 }
+
+
 
 @end

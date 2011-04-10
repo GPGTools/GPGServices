@@ -24,6 +24,9 @@
 @property(readonly) NSOperationQueue* verificationQueue;
 @property(readonly) NSArray* verificationResults;
 
+- (NSInteger)runModal;
+- (IBAction)okClicked:(id)sender;
+
 //Callback contains all successfully checked files
 - (void)startVerification:(void(^)(NSArray*))callback;
 - (void)addResults:(NSDictionary*)results;

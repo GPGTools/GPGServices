@@ -868,15 +868,13 @@
 
 - (void)verifyFiles:(NSArray*)files {
     GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
-    [aContext setPassphraseDelegate:self];
-
-    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
-    
+    [aContext setPassphraseDelegate:self];    
     
     FileVerificationController* fvc = [[FileVerificationController alloc] init];
     fvc.filesToVerify = files;
-    [fvc showWindow:self];
     [fvc startVerification:nil];
+    [fvc runModal];
+    [fvc release];
 }
 
 #pragma mark NSPredicates for filtering file arrays
