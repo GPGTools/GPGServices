@@ -23,6 +23,8 @@
 		8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 		8E8837C413311E3E0044EFFF /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
+		8E935E62135125EC004E3E4F /* VerificationResultsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E935E61135125EC004E3E4F /* VerificationResultsWindow.xib */; };
+		8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E935E64135128C6004E3E4F /* FileVerificationController.m */; };
 		8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */; };
 		8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDC40F7133F6C5500D0A101 /* ZipOperation.m */; };
 		8EE8996813474D62004A3266 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EE8996713474D62004A3266 /* MainMenu.xib */; };
@@ -128,6 +130,9 @@
 		8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
 		8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserWindowController.h; sourceTree = "<group>"; };
 		8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserWindowController.m; sourceTree = "<group>"; };
+		8E935E61135125EC004E3E4F /* VerificationResultsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerificationResultsWindow.xib; sourceTree = "<group>"; };
+		8E935E63135128C6004E3E4F /* FileVerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = FileVerificationController.h; sourceTree = "<group>"; };
+		8E935E64135128C6004E3E4F /* FileVerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileVerificationController.m; sourceTree = "<group>"; };
 		8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserDataSource.h; sourceTree = "<group>"; };
 		8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserDataSource.m; sourceTree = "<group>"; };
 		8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZipKit.xcodeproj; path = Dependencies/zipkit/ZipKit.xcodeproj; sourceTree = "<group>"; };
@@ -247,6 +252,7 @@
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				8EE8996713474D62004A3266 /* MainMenu.xib */,
 				8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */,
+				8E935E61135125EC004E3E4F /* VerificationResultsWindow.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -269,6 +275,8 @@
 				8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */,
 				22D6D9C913267E0C00622189 /* RecipientWindowController.h */,
 				22D6D9CA13267E0C00622189 /* RecipientWindowController.m */,
+				8E935E63135128C6004E3E4F /* FileVerificationController.h */,
+				8E935E64135128C6004E3E4F /* FileVerificationController.m */,
 			);
 			name = "UI Classes";
 			sourceTree = "<group>";
@@ -397,6 +405,7 @@
 				8E8837C413311E3E0044EFFF /* PrivateKeyChooserWindow.xib in Resources */,
 				8E7341A31334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict in Resources */,
 				8EE8996813474D62004A3266 /* MainMenu.xib in Resources */,
+				8E935E62135125EC004E3E4F /* VerificationResultsWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +424,7 @@
 				8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */,
 				8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */,
 				8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */,
+				8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
