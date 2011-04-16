@@ -165,13 +165,16 @@
 - (NSString*)searchSignatureFileForFile:(NSString*)sigFile {
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
     
-    //TODO: More extensions
-    NSString* file = [sigFile stringByAppendingFormat:@".sig"];
-    BOOL isDir = NO;
-    if([fmgr fileExistsAtPath:file isDirectory:&isDir] && !isDir)
-        return file;
-    else
-        return nil;
+    NSSet* exts = [NSSet setWithObjects:@".sig", @".asc", nil];
+    
+    for(NSString* ext in exts) {
+        NSString* file = [sigFile stringByAppendingString:ext];
+        BOOL isDir = NO;
+        if([fmgr fileExistsAtPath:file isDirectory:&isDir] && !isDir)
+            return file;
+    }
+    
+    return nil;
 }
 
 
