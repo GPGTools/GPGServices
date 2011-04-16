@@ -57,6 +57,9 @@
         
     for(NSString* serviceFile in self.filesToVerify) {
         [verificationQueue addOperationWithBlock:^(void) {
+            NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+            NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+            
             NSString* file = serviceFile;
             
             NSColor* bgColor = nil;
@@ -76,6 +79,18 @@
             
             NSLog(@"file: %@", file);
             NSLog(@"signedFile: %@", signedFile);
+
+            //TODO: Provide way for user to choose file
+            if([fmgr fileExistsAtPath:file] == NO) {
+                NSLog(@"file not found: %@", file);
+                return;
+            }
+            
+            if([fmgr fileExistsAtPath:signedFile] == NO) {
+                NSLog(@"file not found: %@", signedFile);
+                return;
+            }
+            
             
             GPGData* fileData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
             if(signedFile != nil) {
@@ -139,6 +154,8 @@
                 [self performSelectorOnMainThread:@selector(addResults:) 
                                        withObject:result
                                     waitUntilDone:YES];
+            
+            [pool release];
         }];
     }
 }
