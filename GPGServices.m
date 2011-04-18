@@ -987,8 +987,6 @@
                                                          NSPasteboardTypeRTF,
                                                          nil]];
         
-        NSLog(@"type: %@", type);
-        
         if([type isEqualToString:NSPasteboardTypeString])
 		{
 			if(!(pboardString = [pboard stringForType:NSPasteboardTypeString]))
@@ -1014,9 +1012,6 @@
 			return;
 		}
 	}
-    
-    NSLog(@"pboardString:");
-    NSLog(@"%@", pboardString);
     
     NSString *newString=nil;
 	switch(mode)
