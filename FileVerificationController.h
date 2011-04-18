@@ -14,6 +14,7 @@
     NSArray* filesToVerify;
     NSOperationQueue* verificationQueue;
 
+    IBOutlet NSTableView* tableView;
     IBOutlet NSProgressIndicator* indicator;
 
     NSMutableSet* filesInVerification;

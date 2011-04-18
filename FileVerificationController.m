@@ -37,6 +37,11 @@
     [super dealloc];
 }
 
+- (void)windowDidLoad {
+    [tableView setDoubleAction:@selector(doubleClickAction:)];
+	[tableView setTarget:self];
+}
+
 - (NSInteger)runModal {
 	[self showWindow:self];
 	NSInteger ret = [NSApp runModalForWindow:self.window];
@@ -56,19 +61,19 @@
     for(NSString* serviceFile in self.filesToVerify) {
         
         //Do the file stuff here to be able to check if file is already in verification
-        NSString* file = serviceFile;
-        NSString* signedFile = [self searchFileForSignatureFile:file];
+        NSString* signatureFile = serviceFile;
+        NSString* signedFile = [self searchFileForSignatureFile:signatureFile];
         if(signedFile == nil) {
-            NSString* tmp = [self searchSignatureFileForFile:file];
-            signedFile = file;
-            file = tmp;
+            NSString* tmp = [self searchSignatureFileForFile:signatureFile];
+            signedFile = signatureFile;
+            signatureFile = tmp;
         }
         
-        if([filesInVerification containsObject:file]) {
+        if([filesInVerification containsObject:signatureFile]) {
             continue;
         } else {
             //Propably a problem with restarting of validation when files are missing
-            [filesInVerification addObject:file];
+            [filesInVerification addObject:signatureFile];
         }
         
         [verificationQueue addOperationWithBlock:^(void) {
@@ -85,8 +90,8 @@
             NSArray* sigs = nil;
 
             //TODO: Provide way for user to choose file
-            if([fmgr fileExistsAtPath:file] == NO) {
-                NSLog(@"file not found: %@", file);
+            if([fmgr fileExistsAtPath:signatureFile] == NO) {
+                NSLog(@"file not found: %@", signatureFile);
                 return;
             }
             
@@ -96,7 +101,7 @@
             }
             
             
-            GPGData* fileData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+            GPGData* fileData = [[[GPGData alloc] initWithContentsOfFile:signatureFile] autorelease];
             if(signedFile != nil) {
                 @try {
                     GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
@@ -145,7 +150,7 @@
                 //Add to results
                 result = [NSDictionary dictionaryWithObjectsAndKeys:
                           [signedFile lastPathComponent], @"filename",
-                          file, @"signaturePath",
+                          signatureFile, @"signaturePath",
                           verificationResult, @"verificationResult", 
                           [NSNumber numberWithBool:verified], @"verificationSucceeded",
                           bgColor, @"bgColor",
@@ -179,6 +184,11 @@
             [indicator stopAnimation:self];
     }
 }
+
+- (void)doubleClickAction:(id)sender {
+	
+}
+
 
 #pragma mark - Helper Methods
 
