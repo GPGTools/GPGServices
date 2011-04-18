@@ -94,12 +94,12 @@
             
             //TODO: Provide way for user to choose file
             if([fmgr fileExistsAtPath:signatureFile] == NO) {
-                NSLog(@"file not found: %@", signatureFile);
+                NSLog(@"Signature file not found: %@", signatureFile);
                 return;
             }
             
             if([fmgr fileExistsAtPath:signedFile] == NO) {
-                NSLog(@"file not found: %@", signedFile);
+                NSLog(@"Signed file not found: %@", signedFile);
                 return;
             }
             
