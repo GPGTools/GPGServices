@@ -197,7 +197,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         if([self.selectedKeys containsObject:k])
             [self.selectedKeys removeObject:k];
         else
-            [self.selectedKeys addObject:[keysMatchingSearch objectAtIndex:row]];
+            [self.selectedKeys addObject:k];
      
         self.okEnabled = (self.selectedKeys.count > 0);
         
@@ -250,8 +250,16 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (void)doubleClickAction:(id)sender {
 	if([sender clickedRow] != -1 && 
 	   [sender clickedRow] < keysMatchingSearch.count) {
-        [self.selectedKeys addObject:[keysMatchingSearch objectAtIndex:[sender clickedRow]]];
-        [self okClicked:sender];
+        GPGKey* k = [keysMatchingSearch objectAtIndex:[sender clickedRow]];
+     
+        if([self.selectedKeys containsObject:k])
+            [self.selectedKeys removeObject:k];
+        else
+            [self.selectedKeys addObject:k];
+     
+        self.okEnabled = (self.selectedKeys.count > 0);
+        
+        [keyTableView reloadData];
 	}
 }
 
