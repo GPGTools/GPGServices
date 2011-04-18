@@ -17,6 +17,8 @@
 			<string></string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>CFBundleTypeIconFile</key>
+			<string>Icon</string>
 			<key>LSHandlerRank</key>
 			<string>Default</string>
 		</dict>
