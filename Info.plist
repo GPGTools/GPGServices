@@ -13,12 +13,26 @@
 			<array>
 				<string>gpg</string>
 			</array>
-			<key>CFBundleTypeName</key>
-			<string></string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
 			<key>CFBundleTypeIconFile</key>
 			<string>Icon</string>
+			<key>CFBundleTypeName</key>
+			<string>GnuPG Encrypted File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sig</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Icon</string>
+			<key>CFBundleTypeName</key>
+			<string>GnuPG Signature File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>LSHandlerRank</key>
 			<string>Default</string>
 		</dict>

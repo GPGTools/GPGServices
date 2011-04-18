@@ -44,7 +44,15 @@
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     
-    [self decryptFiles:filenames];
+    NSArray* encs = [filenames pathsMatchingExtensions:[NSArray arrayWithObject:@"gpg"]];
+    NSArray* sigs = [filenames pathsMatchingExtensions:[NSArray arrayWithObject:@"sig"]];
+    
+    if(encs != nil && encs.count != 0)
+        [self decryptFiles:encs];
+    
+    if(sigs != nil && sigs.count != 0)
+        [self verifyFiles:sigs];
+    
     [NSApp replyToOpenOrPrint:NSApplicationDelegateReplySuccess];
     
     [pool release];
