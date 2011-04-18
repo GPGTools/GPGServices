@@ -315,7 +315,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Import (not implemented yet)</string>
+				<string>OpenPGP: Import</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>importFile</string>

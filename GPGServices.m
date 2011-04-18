@@ -62,19 +62,18 @@
 #pragma mark -
 #pragma mark GPG-Helper
 
--(void)importKey:(NSString *)inputString
-{
-	NSDictionary *importedKeys = nil;
+- (void)importKeyFromData:(NSData*)data {
+    NSDictionary *importedKeys = nil;
 	GPGContext *aContext = [[GPGContext alloc] init];
-	GPGData* inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    GPGData* inputData = [[GPGData alloc] initWithDataNoCopy:data];
     
 	@try {
         importedKeys = [aContext importKeyData:inputData];
 	} @catch(NSException* localException) {
         [self displayMessageWindowWithTitleText:@"Import result:"
                                        bodyText:GPGErrorDescription([[[localException userInfo] 
-                                                                      objectForKey:@"GPGErrorKey"] 
-                                                                     intValue])];
+                                                                      objectForKey:@"GPGErrorKey"]                                                              intValue])];
         
         return;
 	} @finally {
@@ -91,6 +90,10 @@
       [[importedKeys valueForKey:@"importedSecretKeyCount"] intValue],
       [[importedKeys valueForKey:@"newRevocationCount"] intValue]]
      runModal];
+}
+
+- (void)importKey:(NSString *)inputString {
+    [self importKeyFromData:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
 + (NSSet*)myPrivateKeys {
@@ -908,7 +911,42 @@
     [fvc release];
 }
 
-#pragma mark NSPredicates for filtering file arrays
+- (void)importFiles:(NSArray*)files {
+    NSDictionary *importedKeys = nil;
+	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
+    
+    NSUInteger importedKeyCount = 0;
+    NSUInteger importedSecretKeyCount = 0;
+    NSUInteger newRevocationCount = 0;
+    
+    for(NSString* file in files) {
+        GPGData* inputData = [[[GPGData alloc] initWithDataNoCopy:[NSData dataWithContentsOfFile:file]] autorelease];
+        
+        @try {
+            importedKeys = [aContext importKeyData:inputData];
+            
+            importedKeyCount += [[importedKeys valueForKey:@"importedKeyCount"] intValue];
+            importedSecretKeyCount += [[importedKeys valueForKey:@"importedSecretKeyCount"] intValue];
+            newRevocationCount += [[importedKeys valueForKey:@"newRevocationCount"] intValue];
+        } @catch(NSException* localException) {
+            [self displayMessageWindowWithTitleText:@"Import result:"
+                                           bodyText:GPGErrorDescription([[[localException userInfo] 
+                                                                          objectForKey:@"GPGErrorKey"]                                                              intValue])];
+        }
+    }
+    
+    [[NSAlert alertWithMessageText:@"Import result:"
+                     defaultButton:@"Ok"
+                   alternateButton:nil
+                       otherButton:nil
+         informativeTextWithFormat:@"%i key(s), %i secret key(s), %i revocation(s) ",
+      importedKeyCount,
+      importedSecretKeyCount,
+      newRevocationCount]
+     runModal];     
+}
+
+#pragma mark - NSPredicates for filtering file arrays
 
 - (NSPredicate*)fileExistsPredicate {
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
@@ -1054,6 +1092,9 @@
             case VerifyFileService:
                 [self verifyFiles:filenames];
                 break;
+            case ImportFileService:
+                [self importFiles:filenames];
+                break;
         }
     }
     
@@ -1100,6 +1141,9 @@
 
 -(void)validateFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {[self dealWithFilesPasteboard:pboard userData:userData mode:VerifyFileService error:error];}
+
+-(void)importFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
+{[self dealWithFilesPasteboard:pboard userData:userData mode:ImportFileService error:error];}
 
 #pragma mark -
 #pragma mark UI Helpher

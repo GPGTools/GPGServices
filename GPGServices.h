@@ -27,6 +27,7 @@ typedef enum {
     EncryptFileService, 
     DecryptFileService, 
     VerifyFileService,
+    ImportFileService,
 } FileServiceModeEnum;
 
 
@@ -51,7 +52,8 @@ typedef enum {
 #pragma mark -
 #pragma mark GPG-Helper
 
--(void)importKey:(NSString *)inputString;
+- (void)importKeyFromData:(NSData*)inputData;
+- (void)importKey:(NSString *)inputString;
 + (NSSet*)myPrivateKeys;
 + (GPGKey*)myPrivateKey;
 
@@ -86,6 +88,7 @@ typedef enum {
 - (void)encryptFiles:(NSArray*)files;
 - (void)decryptFiles:(NSArray*)files; 
 - (void)verifyFiles:(NSArray*)files;
+- (void)importFiles:(NSArray*)files;
 
 #pragma mark NSPredicates for filtering file arrays
 
@@ -118,6 +121,7 @@ typedef enum {
 -(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)decryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)validateFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
+-(void)importFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 
 #pragma mark -
 #pragma mark UI Helpher
