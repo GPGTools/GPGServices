@@ -14,13 +14,12 @@
     NSArray* filesToVerify;
     NSOperationQueue* verificationQueue;
 
-    BOOL queueIsActive;
+    IBOutlet NSProgressIndicator* indicator;
     
     NSMutableArray* verificationResults;
 }
 
 @property(retain) NSArray* filesToVerify;
-@property(readonly) BOOL queueIsActive;
 @property(readonly) NSOperationQueue* verificationQueue;
 @property(readonly) NSArray* verificationResults;
 

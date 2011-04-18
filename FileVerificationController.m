@@ -11,13 +11,17 @@
 
 @implementation FileVerificationController
 
-@synthesize filesToVerify, queueIsActive, verificationQueue, verificationResults;
+@synthesize filesToVerify, verificationQueue, verificationResults;
 
 - (id)init {
     self = [super initWithWindowNibName:@"VerificationResultsWindow"];
  
     verificationQueue = [[NSOperationQueue alloc] init];
-    queueIsActive = NO;
+    [verificationQueue addObserver:self 
+                        forKeyPath:@"operationCount" 
+                           options:NSKeyValueObservingOptionNew 
+                           context:NULL];
+
     verificationResults = [[NSMutableArray alloc] init];
     
     return self;
@@ -31,12 +35,6 @@
     [super dealloc];
 }
 
-- (void)windowDidLoad {
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-}
-
 - (NSInteger)runModal {
 	[self showWindow:self];
 	NSInteger ret = [NSApp runModalForWindow:self.window];
@@ -48,12 +46,10 @@
 	[NSApp stopModalWithCode:0];
 }
 
-
-
 - (void)startVerification:(void(^)(NSArray*))callback {
-    [self willChangeValueForKey:@"queueIsActive"];
-    queueIsActive = YES;
-    [self didChangeValueForKey:@"queueIsActive"];
+    [self window]; //Load window to setup bindings
+    
+    [indicator startAnimation:self];
         
     for(NSString* serviceFile in self.filesToVerify) {
         [verificationQueue addOperationWithBlock:^(void) {
@@ -164,6 +160,16 @@
     [self willChangeValueForKey:@"verificationResults"];
     [verificationResults addObject:results];
     [self didChangeValueForKey:@"verificationResults"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath 
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {    
+    if([keyPath isEqualToString:@"operationCount"]) {
+        if([object operationCount] == 0) 
+            [indicator stopAnimation:self];
+    }
 }
 
 #pragma mark - Helper Methods
