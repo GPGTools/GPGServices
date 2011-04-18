@@ -15,7 +15,8 @@
     NSOperationQueue* verificationQueue;
 
     IBOutlet NSProgressIndicator* indicator;
-    
+
+    NSMutableSet* filesInVerification;
     NSMutableArray* verificationResults;
 }
 

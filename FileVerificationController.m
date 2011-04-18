@@ -23,6 +23,7 @@
                            context:NULL];
 
     verificationResults = [[NSMutableArray alloc] init];
+    filesInVerification = [[NSMutableSet alloc] init];
     
     return self;
 }
@@ -31,6 +32,7 @@
     [verificationQueue waitUntilAllOperationsAreFinished];
     [verificationQueue release];
     [verificationResults release];
+    [filesInVerification release];
     
     [super dealloc];
 }
@@ -52,11 +54,26 @@
     [indicator startAnimation:self];
         
     for(NSString* serviceFile in self.filesToVerify) {
+        
+        //Do the file stuff here to be able to check if file is already in verification
+        NSString* file = serviceFile;
+        NSString* signedFile = [self searchFileForSignatureFile:file];
+        if(signedFile == nil) {
+            NSString* tmp = [self searchSignatureFileForFile:file];
+            signedFile = file;
+            file = tmp;
+        }
+        
+        if([filesInVerification containsObject:file]) {
+            continue;
+        } else {
+            //Propably a problem with restarting of validation when files are missing
+            [filesInVerification addObject:file];
+        }
+        
         [verificationQueue addOperationWithBlock:^(void) {
             NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
             NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
-            
-            NSString* file = serviceFile;
             
             NSColor* bgColor = nil;
             NSString* verificationResult = nil;
@@ -66,15 +83,6 @@
             NSException* secondException = nil;
             
             NSArray* sigs = nil;
-            NSString* signedFile = [self searchFileForSignatureFile:file];
-            if(signedFile == nil) {
-                NSString* tmp = [self searchSignatureFileForFile:file];
-                signedFile = file;
-                file = tmp;
-            }
-            
-            NSLog(@"file: %@", file);
-            NSLog(@"signedFile: %@", signedFile);
 
             //TODO: Provide way for user to choose file
             if([fmgr fileExistsAtPath:file] == NO) {
@@ -136,7 +144,7 @@
                 
                 //Add to results
                 result = [NSDictionary dictionaryWithObjectsAndKeys:
-                          [file lastPathComponent], @"filename",
+                          [signedFile lastPathComponent], @"filename",
                           file, @"signaturePath",
                           verificationResult, @"verificationResult", 
                           [NSNumber numberWithBool:verified], @"verificationSucceeded",
