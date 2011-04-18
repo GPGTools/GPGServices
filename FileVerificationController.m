@@ -134,6 +134,18 @@
                 
                 if(sigs.count == 0) {
                     verificationResult = @"Verification FAILED: No signature data found.";
+                    
+                    NSRange range = [verificationResult rangeOfString:@"FAILED"];
+                    verificationResult = [[NSMutableAttributedString alloc] 
+                                          initWithString:verificationResult];
+                    
+                    [verificationResult addAttribute:NSFontAttributeName 
+                                               value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
+                                               range:range];
+                    [verificationResult addAttribute:NSBackgroundColorAttributeName 
+                                               value:[NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7]
+                                               range:range];
+                    
                     bgColor = [NSColor redColor];
                 } else if(sigs.count > 0) {
                     GPGSignature* sig=[sigs objectAtIndex:0];
