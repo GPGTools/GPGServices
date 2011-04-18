@@ -27,6 +27,29 @@
     [GrowlApplicationBridge setGrowlDelegate:self];
 }
 
+/*
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
+    if([[filename pathExtension] isEqualToString:@"gpg"]) {
+        NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+        
+        [self decryptFiles:[NSArray arrayWithObject:filename]];
+        
+        [pool release];
+    }
+    
+	return NO;
+}
+ */
+
+- (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    
+    [self decryptFiles:filenames];
+    [NSApp replyToOpenOrPrint:NSApplicationDelegateReplySuccess];
+    
+    [pool release];
+}
+
 
 #pragma mark -
 #pragma mark GPG-Helper

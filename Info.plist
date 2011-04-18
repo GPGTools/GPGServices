@@ -7,7 +7,20 @@
 	<key>CFBundleDisplayName</key>
 	<string>GPGServices</string>
 	<key>CFBundleDocumentTypes</key>
-	<array/>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>gpg</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string></string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>GPGServices</string>
 	<key>CFBundleIconFile</key>
