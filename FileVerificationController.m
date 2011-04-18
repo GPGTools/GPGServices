@@ -69,11 +69,14 @@
             signatureFile = tmp;
         }
         
-        if([filesInVerification containsObject:signatureFile]) {
-            continue;
-        } else {
-            //Propably a problem with restarting of validation when files are missing
-            [filesInVerification addObject:signatureFile];
+        if(signatureFile != nil && signedFile != nil) {
+            
+            if([filesInVerification containsObject:signatureFile]) {
+                continue;
+            } else {
+                //Propably a problem with restarting of validation when files are missing
+                [filesInVerification addObject:signatureFile];
+            }
         }
         
         [verificationQueue addOperationWithBlock:^(void) {
