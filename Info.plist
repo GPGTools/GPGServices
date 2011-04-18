@@ -26,6 +26,7 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>sig</string>
+				<string>asc</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>Icon</string>

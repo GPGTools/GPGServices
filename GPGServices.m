@@ -45,7 +45,7 @@
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     
     NSArray* encs = [filenames pathsMatchingExtensions:[NSArray arrayWithObject:@"gpg"]];
-    NSArray* sigs = [filenames pathsMatchingExtensions:[NSArray arrayWithObject:@"sig"]];
+    NSArray* sigs = [filenames pathsMatchingExtensions:[NSArray arrayWithObjects:@"sig", @"asc", nil]];
     
     if(encs != nil && encs.count != 0)
         [self decryptFiles:encs];
