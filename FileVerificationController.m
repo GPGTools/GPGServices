@@ -15,13 +15,13 @@
 
 - (id)init {
     self = [super initWithWindowNibName:@"VerificationResultsWindow"];
- 
+    
     verificationQueue = [[NSOperationQueue alloc] init];
     [verificationQueue addObserver:self 
                         forKeyPath:@"operationCount" 
                            options:NSKeyValueObservingOptionNew 
                            context:NULL];
-
+    
     verificationResults = [[NSMutableArray alloc] init];
     filesInVerification = [[NSMutableSet alloc] init];
     
@@ -57,7 +57,7 @@
     [self window]; //Load window to setup bindings
     
     [indicator startAnimation:self];
-        
+    
     for(NSString* serviceFile in self.filesToVerify) {
         
         //Do the file stuff here to be able to check if file is already in verification
@@ -81,14 +81,14 @@
             NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
             
             NSColor* bgColor = nil;
-            NSString* verificationResult = nil;
+            id verificationResult = nil; //NSString or NSAttributedString
             BOOL verified = NO;
             
             NSException* firstException = nil;
             NSException* secondException = nil;
             
             NSArray* sigs = nil;
-
+            
             //TODO: Provide way for user to choose file
             if([fmgr fileExistsAtPath:signatureFile] == NO) {
                 NSLog(@"file not found: %@", signatureFile);
@@ -128,7 +128,7 @@
             NSDictionary* result = nil;
             if(sigs != nil) {
                 verified = YES;
-
+                
                 if(sigs.count == 0) {
                     verificationResult = @"Verification FAILED: No signature data found.";
                     bgColor = [NSColor redColor];
@@ -139,10 +139,33 @@
                         NSString* userID = [[ctx keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
                         NSString* validity = [sig validityDescription];
                         
-                        verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", userID, validity];
+                        verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", userID, validity];                         
+                        NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
+                                                                                                 attributes:nil] autorelease];
+                        NSRange range = [verificationResult rangeOfString:[NSString stringWithFormat:@"(%@ trust)", validity]];
+                        [tmp addAttribute:NSFontAttributeName 
+                                    value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
+                                    range:range];
+                        [tmp addAttribute:NSBackgroundColorAttributeName 
+                                    value:[NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0]
+                                    range:range];
+                        
+                        verificationResult = (NSString*)tmp;
+                        
                         bgColor = [NSColor greenColor];
                     } else {
                         verificationResult = [NSString stringWithFormat:@"Verification FAILED: %@", GPGErrorDescription([sig status])];
+                        NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
+                                                                                                 attributes:nil] autorelease];
+                        NSRange range = [verificationResult rangeOfString:@"FAILED"];
+                        [tmp addAttribute:NSFontAttributeName 
+                                    value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
+                                    range:range];
+                        [tmp addAttribute:NSBackgroundColorAttributeName 
+                                    value:[NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7]
+                                    range:range];
+                        
+                        verificationResult = (NSString*)tmp;
                         bgColor = [NSColor redColor];
                     }
                 }      
