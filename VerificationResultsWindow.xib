@@ -75,7 +75,7 @@
 										<object class="NSTableView" id="205270778">
 											<reference key="NSNextResponder" ref="705848870"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrameSize">{1163, 146}</string>
+											<string key="NSFrameSize">{1244, 146}</string>
 											<reference key="NSSuperview" ref="705848870"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="69268544"/>
@@ -83,7 +83,7 @@
 											<object class="NSTableHeaderView" key="NSHeaderView" id="750396429">
 												<reference key="NSNextResponder" ref="87422432"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrameSize">{1163, 17}</string>
+												<string key="NSFrameSize">{1244, 17}</string>
 												<reference key="NSSuperview" ref="87422432"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="441511537"/>
@@ -101,7 +101,7 @@
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSTableColumn" id="707736918">
 													<string key="NSIdentifier">file</string>
-													<double key="NSWidth">158</double>
+													<double key="NSWidth">239</double>
 													<double key="NSMinWidth">10</double>
 													<double key="NSMaxWidth">1000</double>
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -153,7 +153,8 @@
 															<reference key="NSColor" ref="92309330"/>
 														</object>
 													</object>
-													<bool key="NSIsEditable">YES</bool>
+													<int key="NSResizingMask">3</int>
+													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="205270778"/>
 												</object>
 												<object class="NSTableColumn" id="585193839">
@@ -181,7 +182,8 @@
 														<reference key="NSBackgroundColor" ref="289001675"/>
 														<reference key="NSTextColor" ref="157701483"/>
 													</object>
-													<bool key="NSIsEditable">YES</bool>
+													<int key="NSResizingMask">3</int>
+													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="205270778"/>
 												</object>
 											</object>
@@ -201,11 +203,11 @@
 												</object>
 											</object>
 											<double key="NSRowHeight">17</double>
-											<int key="NSTvFlags">-740294656</int>
+											<int key="NSTvFlags">1407188992</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
 											<string key="NSAutosaveName">recipientTable</string>
-											<int key="NSColumnAutoresizingStyle">4</int>
+											<int key="NSColumnAutoresizingStyle">5</int>
 											<int key="NSDraggingSourceMaskForLocal">15</int>
 											<int key="NSDraggingSourceMaskForNonLocal">0</int>
 											<bool key="NSAllowsTypeSelect">YES</bool>
@@ -247,7 +249,7 @@
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="763479324"/>
 									<string key="NSAction">_doScroller:</string>
-									<double key="NSPercent">0.39552880481513325</double>
+									<double key="NSPercent">0.36977491961414793</double>
 								</object>
 								<object class="NSClipView" id="87422432">
 									<reference key="NSNextResponder" ref="763479324"/>
