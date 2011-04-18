@@ -307,7 +307,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Validate (not implemented yet)</string>
+				<string>OpenPGP: Validate</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>validateFile</string>
