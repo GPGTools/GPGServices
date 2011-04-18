@@ -26,6 +26,9 @@
 		8E935E62135125EC004E3E4F /* VerificationResultsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E935E61135125EC004E3E4F /* VerificationResultsWindow.xib */; };
 		8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E935E64135128C6004E3E4F /* FileVerificationController.m */; };
 		8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */; };
+		8ED7990E135CAB60004C89D5 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
+		8ED7990F135CAB60004C89D5 /* lock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990C135CAB60004C89D5 /* lock.icns */; };
+		8ED79910135CAB60004C89D5 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
 		8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDC40F7133F6C5500D0A101 /* ZipOperation.m */; };
 		8EE8996813474D62004A3266 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EE8996713474D62004A3266 /* MainMenu.xib */; };
 		8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */; };
@@ -135,6 +138,9 @@
 		8E935E64135128C6004E3E4F /* FileVerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileVerificationController.m; sourceTree = "<group>"; };
 		8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserDataSource.h; sourceTree = "<group>"; };
 		8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserDataSource.m; sourceTree = "<group>"; };
+		8ED7990B135CAB60004C89D5 /* sig.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = sig.icns; sourceTree = "<group>"; };
+		8ED7990C135CAB60004C89D5 /* lock.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = lock.icns; sourceTree = "<group>"; };
+		8ED7990D135CAB60004C89D5 /* asc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = asc.icns; sourceTree = "<group>"; };
 		8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZipKit.xcodeproj; path = Dependencies/zipkit/ZipKit.xcodeproj; sourceTree = "<group>"; };
 		8EDC40F6133F6C5500D0A101 /* ZipOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipOperation.h; sourceTree = "<group>"; };
 		8EDC40F7133F6C5500D0A101 /* ZipOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipOperation.m; sourceTree = "<group>"; };
@@ -249,6 +255,9 @@
 				8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				2260756C12EBA0B50026DBEA /* Icon.icns */,
+				8ED7990B135CAB60004C89D5 /* sig.icns */,
+				8ED7990C135CAB60004C89D5 /* lock.icns */,
+				8ED7990D135CAB60004C89D5 /* asc.icns */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				8EE8996713474D62004A3266 /* MainMenu.xib */,
 				8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */,
@@ -406,6 +415,9 @@
 				8E7341A31334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict in Resources */,
 				8EE8996813474D62004A3266 /* MainMenu.xib in Resources */,
 				8E935E62135125EC004E3E4F /* VerificationResultsWindow.xib in Resources */,
+				8ED7990E135CAB60004C89D5 /* sig.icns in Resources */,
+				8ED7990F135CAB60004C89D5 /* lock.icns in Resources */,
+				8ED79910135CAB60004C89D5 /* asc.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

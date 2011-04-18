@@ -14,7 +14,7 @@
 				<string>gpg</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>Icon</string>
+			<string>lock.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>GnuPG Encrypted File</string>
 			<key>CFBundleTypeRole</key>
@@ -25,11 +25,24 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>sig</string>
 				<string>asc</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>Icon</string>
+			<string>asc.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>GnuPG Signature File (Ascii)</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sig</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>sig</string>
 			<key>CFBundleTypeName</key>
 			<string>GnuPG Signature File</string>
 			<key>CFBundleTypeRole</key>
