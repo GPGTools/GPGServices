@@ -63,6 +63,4 @@ style:
 	@if [ "`which uncrustify`" == "" ]; then echo 'usage: PATH=$$PATH:path_to_uncrustify make style'; echo "see: https://github.com/bengardner/uncrustify"; exit; fi
 	uncrustify -c Utilities/uncrustify.cfg --no-backup Source/*.h
 	uncrustify -c Utilities/uncrustify.cfg --no-backup Source/*.m
-	uncrustify -c Utilities/uncrustify.cfg --no-backup Source/PrivateHeaders/*
-	uncrustify -c Utilities/uncrustify.cfg --no-backup Source/GPG.subproj/*
 

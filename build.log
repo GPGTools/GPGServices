@@ -1,0 +1,723 @@
+
+
+=== BUILD NATIVE TARGET ZipKit OF PROJECT ZipKit WITH CONFIGURATION Release ===
+Check dependencies
+
+=== BUILD AGGREGATE TARGET Build gpgme OF PROJECT MacGPGME WITH CONFIGURATION Release ===
+Check dependencies
+PhaseScriptExecution "Run Script" "build/MacGPGME.build/Release/Build gpgme.build/Script-1B45A57E11CCA13000ED4663.sh"
+    cd /Users/Roman/Documents/OpenSource/GPG/MacGPGME
+    setenv ACTION build
+    setenv ALTERNATE_GROUP staff
+    setenv ALTERNATE_MODE u+w,go-w,a+rX
+    setenv ALTERNATE_OWNER Roman
+    setenv ALWAYS_SEARCH_USER_PATHS YES
+    setenv APPLE_INTERNAL_DEVELOPER_DIR /AppleInternal/Developer
+    setenv APPLE_INTERNAL_DIR /AppleInternal
+    setenv APPLE_INTERNAL_DOCUMENTATION_DIR /AppleInternal/Documentation
+    setenv APPLE_INTERNAL_LIBRARY_DIR /AppleInternal/Library
+    setenv APPLE_INTERNAL_TOOLS /AppleInternal/Developer/Tools
+    setenv APPLY_RULES_IN_COPY_FILES NO
+    setenv ARCHS x86_64
+    setenv ARCHS_STANDARD_32_64_BIT "x86_64 i386 ppc"
+    setenv ARCHS_STANDARD_32_BIT "i386 ppc"
+    setenv ARCHS_STANDARD_64_BIT x86_64
+    setenv BUILD_COMPONENTS "headers build"
+    setenv BUILD_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build
+    setenv BUILD_ROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build
+    setenv BUILD_STYLE Release
+    setenv BUILD_VARIANTS normal
+    setenv BUILT_PRODUCTS_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release
+    setenv CACHE_ROOT /var/folders/Gw/GwVGhdumGe0km0JY9wOF7U+++TI/-Caches-/com.apple.Xcode.501
+    setenv CCHROOT /var/folders/Gw/GwVGhdumGe0km0JY9wOF7U+++TI/-Caches-/com.apple.Xcode.501
+    setenv CHMOD /bin/chmod
+    setenv CHOWN /usr/sbin/chown
+    setenv CLASS_FILE_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/JavaClasses"
+    setenv CLEAN_PRECOMPS YES
+    setenv CLONE_HEADERS NO
+    setenv CODESIGNING_FOLDER_PATH /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release/
+    setenv COMMAND_MODE legacy
+    setenv COMPOSITE_SDK_DIRS /var/folders/Gw/GwVGhdumGe0km0JY9wOF7U+++TI/-Caches-/com.apple.Xcode.501/CompositeSDKs
+    setenv CONFIGURATION Release
+    setenv CONFIGURATION_BUILD_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release
+    setenv CONFIGURATION_TEMP_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release
+    setenv COPYING_PRESERVES_HFS_DATA NO
+    setenv COPY_PHASE_STRIP YES
+    setenv COPY_RESOURCES_FROM_STATIC_FRAMEWORKS YES
+    setenv CP /bin/cp
+    setenv CURRENT_ARCH x86_64
+    setenv CURRENT_VARIANT normal
+    setenv DEAD_CODE_STRIPPING NO
+    setenv DEBUGGING_SYMBOLS YES
+    setenv DEBUG_INFORMATION_FORMAT dwarf-with-dsym
+    setenv DEPLOYMENT_LOCATION NO
+    setenv DEPLOYMENT_POSTPROCESSING NO
+    setenv DERIVED_FILES_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/DerivedSources"
+    setenv DERIVED_FILE_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/DerivedSources"
+    setenv DERIVED_SOURCES_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/DerivedSources"
+    setenv DEVELOPER_APPLICATIONS_DIR /Developer/Applications
+    setenv DEVELOPER_BIN_DIR /Developer/usr/bin
+    setenv DEVELOPER_DIR /Developer
+    setenv DEVELOPER_FRAMEWORKS_DIR /Developer/Library/Frameworks
+    setenv DEVELOPER_FRAMEWORKS_DIR_QUOTED "\"/Developer/Library/Frameworks\""
+    setenv DEVELOPER_LIBRARY_DIR /Developer/Library
+    setenv DEVELOPER_SDK_DIR /Developer/SDKs
+    setenv DEVELOPER_TOOLS_DIR /Developer/Tools
+    setenv DEVELOPER_USR_DIR /Developer/usr
+    setenv DEVELOPMENT_LANGUAGE English
+    setenv DO_HEADER_SCANNING_IN_JAM NO
+    setenv DSTROOT /tmp/MacGPGME.dst
+    setenv DWARF_DSYM_FILE_NAME .dSYM
+    setenv DWARF_DSYM_FOLDER_PATH /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release
+    setenv ENABLE_HEADER_DEPENDENCIES YES
+    setenv ENABLE_OPENMP_SUPPORT NO
+    setenv EXCLUDED_INSTALLSRC_SUBDIRECTORY_PATTERNS ".svn CVS"
+    setenv EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES "*.nib *.lproj *.framework *.gch (*) CVS .svn *.xcodeproj *.xcode *.pbproj *.pbxproj"
+    setenv FILE_LIST "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/Objects/LinkFileList"
+    setenv FIXED_FILES_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/FixedFiles"
+    setenv FRAMEWORK_VERSION A
+    setenv GCC3_VERSION 3.3
+    setenv GCC_ENABLE_FIX_AND_CONTINUE NO
+    setenv GCC_ENABLE_OBJC_GC supported
+    setenv GCC_PFE_FILE_C_DIALECTS "c objective-c c++ objective-c++"
+    setenv GCC_TREAT_WARNINGS_AS_ERRORS NO
+    setenv GCC_VERSION com.apple.compilers.llvm.clang.1_0
+    setenv GCC_VERSION_IDENTIFIER com_apple_compilers_llvm_clang_1_0
+    setenv GENERATE_MASTER_OBJECT_FILE NO
+    setenv GENERATE_PKGINFO_FILE NO
+    setenv GENERATE_PROFILING_CODE NO
+    setenv GID 20
+    setenv GROUP staff
+    setenv HEADERMAP_INCLUDES_FLAT_ENTRIES_FOR_TARGET_BEING_BUILT YES
+    setenv HEADERMAP_INCLUDES_FRAMEWORK_ENTRIES_FOR_ALL_PRODUCT_TYPES YES
+    setenv HEADERMAP_INCLUDES_NONPUBLIC_NONPRIVATE_HEADERS YES
+    setenv HEADERMAP_INCLUDES_PROJECT_HEADERS YES
+    setenv ICONV /usr/bin/iconv
+    setenv INFOPLIST_EXPAND_BUILD_SETTINGS YES
+    setenv INFOPLIST_OUTPUT_FORMAT same-as-input
+    setenv INFOPLIST_PREPROCESS NO
+    setenv INSTALL_DIR /tmp/MacGPGME.dst
+    setenv INSTALL_GROUP staff
+    setenv INSTALL_MODE_FLAG u+w,go-w,a+rX
+    setenv INSTALL_OWNER Roman
+    setenv INSTALL_ROOT /tmp/MacGPGME.dst
+    setenv JAVAC_DEFAULT_FLAGS "-J-Xms64m -J-XX:NewSize=4M -J-Dfile.encoding=UTF8"
+    setenv JAVA_APP_STUB /System/Library/Frameworks/JavaVM.framework/Resources/MacOS/JavaApplicationStub
+    setenv JAVA_ARCHIVE_CLASSES YES
+    setenv JAVA_ARCHIVE_TYPE JAR
+    setenv JAVA_COMPILER /usr/bin/javac
+    setenv JAVA_FRAMEWORK_RESOURCES_DIRS Resources
+    setenv JAVA_JAR_FLAGS cv
+    setenv JAVA_SOURCE_SUBDIR .
+    setenv JAVA_USE_DEPENDENCIES YES
+    setenv JAVA_ZIP_FLAGS -urg
+    setenv JIKES_DEFAULT_FLAGS "+E +OLDCSO"
+    setenv KEEP_PRIVATE_EXTERNS NO
+    setenv LD_GENERATE_MAP_FILE NO
+    setenv LD_MAP_FILE_PATH "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/Build gpgme-LinkMap-normal-x86_64.txt"
+    setenv LD_OPENMP_FLAGS -fopenmp
+    setenv LEX /Developer/usr/bin/lex
+    setenv LINKER_DISPLAYS_MANGLED_NAMES NO
+    setenv LINK_FILE_LIST_normal_x86_64 
+    setenv LINK_WITH_STANDARD_LIBRARIES YES
+    setenv LOCAL_ADMIN_APPS_DIR /Applications/Utilities
+    setenv LOCAL_APPS_DIR /Applications
+    setenv LOCAL_DEVELOPER_DIR /Library/Developer
+    setenv LOCAL_LIBRARY_DIR /Library
+    setenv MACOSX_DEPLOYMENT_TARGET 10.6
+    setenv MAC_OS_X_VERSION_ACTUAL 1067
+    setenv MAC_OS_X_VERSION_MAJOR 1060
+    setenv MAC_OS_X_VERSION_MINOR 0607
+    setenv NATIVE_ARCH i386
+    setenv NATIVE_ARCH_32_BIT i386
+    setenv NATIVE_ARCH_64_BIT x86_64
+    setenv NATIVE_ARCH_ACTUAL x86_64
+    setenv NO_COMMON YES
+    setenv OBJECT_FILE_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/Objects"
+    setenv OBJECT_FILE_DIR_normal "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/Objects-normal"
+    setenv OBJROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build
+    setenv ONLY_ACTIVE_ARCH NO
+    setenv OPTIMIZATION_LEVEL 0
+    setenv OS MACOS
+    setenv OSAC /usr/bin/osacompile
+    setenv PASCAL_STRINGS YES
+    setenv PATH_PREFIXES_EXCLUDED_FROM_HEADER_DEPENDENCIES "/usr/include /usr/local/include /System/Library/Frameworks /System/Library/PrivateFrameworks /Developer/Headers /Developer/SDKs /Developer/Platforms"
+    setenv PKGINFO_FILE_PATH "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/PkgInfo"
+    setenv PLATFORM_DEVELOPER_APPLICATIONS_DIR /Developer/Applications
+    setenv PLATFORM_DEVELOPER_BIN_DIR /Developer/usr/bin
+    setenv PLATFORM_DEVELOPER_LIBRARY_DIR /Developer/Library
+    setenv PLATFORM_DEVELOPER_SDK_DIR /Developer/SDKs
+    setenv PLATFORM_DEVELOPER_TOOLS_DIR /Developer/Tools
+    setenv PLATFORM_DEVELOPER_USR_DIR /Developer/usr
+    setenv PLATFORM_NAME macosx
+    setenv PLIST_FILE_OUTPUT_FORMAT same-as-input
+    setenv PREBINDING YES
+    setenv PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR YES
+    setenv PRECOMP_DESTINATION_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/PrefixHeaders"
+    setenv PRESERVE_DEAD_CODE_INITS_AND_TERMS NO
+    setenv PRODUCT_NAME "Build gpgme"
+    setenv PRODUCT_SETTINGS_PATH 
+    setenv PROFILING_CODE NO
+    setenv PROJECT MacGPGME
+    setenv PROJECT_DERIVED_FILE_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/DerivedSources
+    setenv PROJECT_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME
+    setenv PROJECT_FILE_PATH /Users/Roman/Documents/OpenSource/GPG/MacGPGME/MacGPGME.xcodeproj
+    setenv PROJECT_NAME MacGPGME
+    setenv PROJECT_TEMP_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build
+    setenv RECURSIVE_SEARCH_PATHS_FOLLOW_SYMLINKS YES
+    setenv REMOVE_CVS_FROM_RESOURCES YES
+    setenv REMOVE_SVN_FROM_RESOURCES YES
+    setenv REZ_COLLECTOR_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/ResourceManagerResources"
+    setenv REZ_OBJECTS_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/ResourceManagerResources/Objects"
+    setenv RUN_CLANG_STATIC_ANALYZER NO
+    setenv SCAN_ALL_SOURCE_FILES_FOR_INCLUDES NO
+    setenv SCRIPT_INPUT_FILE_COUNT 0
+    setenv SCRIPT_OUTPUT_FILE_COUNT 0
+    setenv SDKROOT /Developer/SDKs/MacOSX10.6.sdk
+    setenv SDK_DIR /Developer/SDKs/MacOSX10.6.sdk
+    setenv SDK_NAME macosx10.6
+    setenv SED /usr/bin/sed
+    setenv SEPARATE_STRIP NO
+    setenv SEPARATE_SYMBOL_EDIT NO
+    setenv SET_DIR_MODE_OWNER_GROUP YES
+    setenv SET_FILE_MODE_OWNER_GROUP NO
+    setenv SHARED_DERIVED_FILE_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release/DerivedSources
+    setenv SHARED_PRECOMPS_DIR /var/folders/Gw/GwVGhdumGe0km0JY9wOF7U+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders
+    setenv SKIP_INSTALL YES
+    setenv SOURCE_ROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME
+    setenv SRCROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME
+    setenv STANDARD_C_PLUS_PLUS_LIBRARY_TYPE dynamic
+    setenv STRINGS_FILE_OUTPUT_ENCODING UTF-16
+    setenv STRIP_INSTALLED_PRODUCT YES
+    setenv STRIP_STYLE all
+    setenv SYMBOL_REPOSITORY_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/SymbolRepositories"
+    setenv SYMROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build
+    setenv SYSTEM_ADMIN_APPS_DIR /Applications/Utilities
+    setenv SYSTEM_APPS_DIR /Applications
+    setenv SYSTEM_CORE_SERVICES_DIR /System/Library/CoreServices
+    setenv SYSTEM_DEMOS_DIR /Applications/Extras
+    setenv SYSTEM_DEVELOPER_APPS_DIR /Developer/Applications
+    setenv SYSTEM_DEVELOPER_BIN_DIR /Developer/usr/bin
+    setenv SYSTEM_DEVELOPER_DEMOS_DIR "/Developer/Applications/Utilities/Built Examples"
+    setenv SYSTEM_DEVELOPER_DIR /Developer
+    setenv SYSTEM_DEVELOPER_DOC_DIR "/Developer/ADC Reference Library"
+    setenv SYSTEM_DEVELOPER_GRAPHICS_TOOLS_DIR "/Developer/Applications/Graphics Tools"
+    setenv SYSTEM_DEVELOPER_JAVA_TOOLS_DIR "/Developer/Applications/Java Tools"
+    setenv SYSTEM_DEVELOPER_PERFORMANCE_TOOLS_DIR "/Developer/Applications/Performance Tools"
+    setenv SYSTEM_DEVELOPER_RELEASENOTES_DIR "/Developer/ADC Reference Library/releasenotes"
+    setenv SYSTEM_DEVELOPER_TOOLS /Developer/Tools
+    setenv SYSTEM_DEVELOPER_TOOLS_DOC_DIR "/Developer/ADC Reference Library/documentation/DeveloperTools"
+    setenv SYSTEM_DEVELOPER_TOOLS_RELEASENOTES_DIR "/Developer/ADC Reference Library/releasenotes/DeveloperTools"
+    setenv SYSTEM_DEVELOPER_USR_DIR /Developer/usr
+    setenv SYSTEM_DEVELOPER_UTILITIES_DIR /Developer/Applications/Utilities
+    setenv SYSTEM_DOCUMENTATION_DIR /Library/Documentation
+    setenv SYSTEM_LIBRARY_DIR /System/Library
+    setenv TARGETNAME "Build gpgme"
+    setenv TARGET_BUILD_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release
+    setenv TARGET_NAME "Build gpgme"
+    setenv TARGET_TEMP_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build"
+    setenv TEMP_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build"
+    setenv TEMP_FILES_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build"
+    setenv TEMP_FILE_DIR "/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build"
+    setenv TEMP_ROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build
+    setenv UID 501
+    setenv UNSTRIPPED_PRODUCT NO
+    setenv USER Roman
+    setenv USER_APPS_DIR /Users/Roman/Applications
+    setenv USER_LIBRARY_DIR /Users/Roman/Library
+    setenv USE_DYNAMIC_NO_PIC YES
+    setenv USE_HEADERMAP YES
+    setenv USE_HEADER_SYMLINKS NO
+    setenv VALIDATE_PRODUCT NO
+    setenv VALID_ARCHS "x86_64 i386"
+    setenv VERBOSE_PBXCP NO
+    setenv VERSION_INFO_BUILDER Roman
+    setenv VERSION_INFO_FILE "Build gpgme_vers.c"
+    setenv VERSION_INFO_STRING "\"@(#)PROGRAM:Build gpgme  PROJECT:MacGPGME-\""
+    setenv XCODE_APP_SUPPORT_DIR /Developer/Library/Xcode
+    setenv XCODE_VERSION_ACTUAL 0323
+    setenv XCODE_VERSION_MAJOR 0300
+    setenv XCODE_VERSION_MINOR 0320
+    setenv YACC /Developer/usr/bin/yacc
+    setenv ZERO_LINK NO
+    /bin/sh -c "\"/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/Build gpgme.build/Script-1B45A57E11CCA13000ED4663.sh\""
+
+Building gettext for gpgme...
+gpgme was built successfully.
+Building libgpg-error for gpgme...
+gpgme was built successfully.
+Building libassuan for gpgme...
+gpgme was built successfully.
+Building gpgme...
+gpgme was built successfully.
+
+=== BUILD NATIVE TARGET MacGPGME OF PROJECT MacGPGME WITH CONFIGURATION Release ===
+Check dependencies
+PhaseScriptExecution "Filter C locales" build/MacGPGME.build/Release/MacGPGME.build/Script-55226A960F053E5F00CE3509.sh
+    cd /Users/Roman/Documents/OpenSource/GPG/MacGPGME
+    setenv ACTION build
+    setenv ALTERNATE_GROUP staff
+    setenv ALTERNATE_MODE u+w,go-w,a+rX
+    setenv ALTERNATE_OWNER Roman
+    setenv ALWAYS_SEARCH_USER_PATHS YES
+    setenv APPLE_INTERNAL_DEVELOPER_DIR /AppleInternal/Developer
+    setenv APPLE_INTERNAL_DIR /AppleInternal
+    setenv APPLE_INTERNAL_DOCUMENTATION_DIR /AppleInternal/Documentation
+    setenv APPLE_INTERNAL_LIBRARY_DIR /AppleInternal/Library
+    setenv APPLE_INTERNAL_TOOLS /AppleInternal/Developer/Tools
+    setenv APPLY_RULES_IN_COPY_FILES NO
+    setenv ARCHS "x86_64 i386"
+    setenv ARCHS_STANDARD_32_64_BIT "x86_64 i386 ppc"
+    setenv ARCHS_STANDARD_32_BIT "i386 ppc"
+    setenv ARCHS_STANDARD_64_BIT x86_64
+    setenv BUILD_COMPONENTS "headers build"
+    setenv BUILD_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build
+    setenv BUILD_ROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build
+    setenv BUILD_STYLE Release
+    setenv BUILD_VARIANTS normal
+    setenv BUILT_PRODUCTS_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release
+    setenv CACHE_ROOT /var/folders/Gw/GwVGhdumGe0km0JY9wOF7U+++TI/-Caches-/com.apple.Xcode.501
+    setenv CCHROOT /var/folders/Gw/GwVGhdumGe0km0JY9wOF7U+++TI/-Caches-/com.apple.Xcode.501
+    setenv CHMOD /bin/chmod
+    setenv CHOWN /usr/sbin/chown
+    setenv CLASS_FILE_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/JavaClasses
+    setenv CLEAN_PRECOMPS YES
+    setenv CLONE_HEADERS NO
+    setenv CODESIGNING_FOLDER_PATH /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release/MacGPGME.framework/Versions/1.1.4
+    setenv CODE_SIGNING_ALLOWED YES
+    setenv COMMAND_MODE legacy
+    setenv COMPOSITE_SDK_DIRS /var/folders/Gw/GwVGhdumGe0km0JY9wOF7U+++TI/-Caches-/com.apple.Xcode.501/CompositeSDKs
+    setenv CONFIGURATION Release
+    setenv CONFIGURATION_BUILD_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release
+    setenv CONFIGURATION_TEMP_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release
+    setenv CONTENTS_FOLDER_PATH MacGPGME.framework/Versions/1.1.4
+    setenv COPYING_PRESERVES_HFS_DATA NO
+    setenv COPY_PHASE_STRIP YES
+    setenv COPY_RESOURCES_FROM_STATIC_FRAMEWORKS YES
+    setenv CP /bin/cp
+    setenv CURRENT_ARCH i386
+    setenv CURRENT_PROJECT_VERSION 16
+    setenv CURRENT_VARIANT normal
+    setenv CURRENT_VERSION Current
+    setenv DEAD_CODE_STRIPPING NO
+    setenv DEBUGGING_SYMBOLS YES
+    setenv DEBUG_INFORMATION_FORMAT dwarf-with-dsym
+    setenv DEPLOYMENT_LOCATION NO
+    setenv DEPLOYMENT_POSTPROCESSING NO
+    setenv DERIVED_FILES_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/DerivedSources
+    setenv DERIVED_FILE_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/DerivedSources
+    setenv DERIVED_SOURCES_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/DerivedSources
+    setenv DEVELOPER_APPLICATIONS_DIR /Developer/Applications
+    setenv DEVELOPER_BIN_DIR /Developer/usr/bin
+    setenv DEVELOPER_DIR /Developer
+    setenv DEVELOPER_FRAMEWORKS_DIR /Developer/Library/Frameworks
+    setenv DEVELOPER_FRAMEWORKS_DIR_QUOTED "\"/Developer/Library/Frameworks\""
+    setenv DEVELOPER_LIBRARY_DIR /Developer/Library
+    setenv DEVELOPER_SDK_DIR /Developer/SDKs
+    setenv DEVELOPER_TOOLS_DIR /Developer/Tools
+    setenv DEVELOPER_USR_DIR /Developer/usr
+    setenv DEVELOPMENT_LANGUAGE English
+    setenv DOCUMENTATION_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/Resources/English.lproj/Documentation
+    setenv DO_HEADER_SCANNING_IN_JAM NO
+    setenv DSTROOT /tmp/MacGPGME.dst
+    setenv DWARF_DSYM_FILE_NAME MacGPGME.framework.dSYM
+    setenv DWARF_DSYM_FOLDER_PATH /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release
+    setenv DYLIB_COMPATIBILITY_VERSION 15
+    setenv DYLIB_CURRENT_VERSION 16
+    setenv DYLIB_INSTALL_NAME_BASE "@loader_path/../Frameworks"
+    setenv ENABLE_HEADER_DEPENDENCIES YES
+    setenv ENABLE_OPENMP_SUPPORT NO
+    setenv EXCLUDED_INSTALLSRC_SUBDIRECTORY_PATTERNS ".svn CVS"
+    setenv EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES "*.nib *.lproj *.framework *.gch (*) CVS .svn *.xcodeproj *.xcode *.pbproj *.pbxproj"
+    setenv EXECUTABLES_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/Resources/English.lproj
+    setenv EXECUTABLE_FOLDER_PATH MacGPGME.framework/Versions/1.1.4
+    setenv EXECUTABLE_NAME MacGPGME
+    setenv EXECUTABLE_PATH MacGPGME.framework/Versions/1.1.4/MacGPGME
+    setenv FILE_LIST /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/Objects/LinkFileList
+    setenv FIXED_FILES_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/FixedFiles
+    setenv FRAMEWORKS_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/Frameworks
+    setenv FRAMEWORK_FLAG_PREFIX -framework
+    setenv FRAMEWORK_SEARCH_PATHS "\"/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release\"  \"/Users/Roman/Documents/OpenSource/GPG/MacGPGME/../../Frameworks\" /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks"
+    setenv FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 "\"/Users/Roman/Documents/OpenSource/GPG/MacGPGME/../../Frameworks\""
+    setenv FRAMEWORK_VERSION 1.1.4
+    setenv FULL_PRODUCT_NAME MacGPGME.framework
+    setenv GCC3_VERSION 3.3
+    setenv GCC_ENABLE_OBJC_GC supported
+    setenv GCC_INLINES_ARE_PRIVATE_EXTERN YES
+    setenv GCC_PFE_FILE_C_DIALECTS "c objective-c c++ objective-c++"
+    setenv GCC_PRECOMPILE_PREFIX_HEADER YES
+    setenv GCC_PREFIX_HEADER MacGPGME_Prefix.pch
+    setenv GCC_PREPROCESSOR_DEFINITIONS BUILDING_MAC_GPGME
+    setenv GCC_TREAT_WARNINGS_AS_ERRORS NO
+    setenv GCC_VERSION com.apple.compilers.llvm.clang.1_0
+    setenv GCC_VERSION_IDENTIFIER com_apple_compilers_llvm_clang_1_0
+    setenv GENERATE_MASTER_OBJECT_FILE NO
+    setenv GENERATE_PKGINFO_FILE NO
+    setenv GENERATE_PROFILING_CODE NO
+    setenv GID 20
+    setenv GROUP staff
+    setenv HEADERMAP_INCLUDES_FLAT_ENTRIES_FOR_TARGET_BEING_BUILT YES
+    setenv HEADERMAP_INCLUDES_FRAMEWORK_ENTRIES_FOR_ALL_PRODUCT_TYPES YES
+    setenv HEADERMAP_INCLUDES_NONPUBLIC_NONPRIVATE_HEADERS YES
+    setenv HEADERMAP_INCLUDES_PROJECT_HEADERS YES
+    setenv HEADER_SEARCH_PATHS "\"/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release/include\" build/dist/include"
+    setenv ICONV /usr/bin/iconv
+    setenv INFOPLISTSTRINGS_PATH MacGPGME.framework/Versions/1.1.4/Resources/English.lproj/InfoPlist.strings
+    setenv INFOPLIST_EXPAND_BUILD_SETTINGS YES
+    setenv INFOPLIST_FILE Info-MacGPGME.plist
+    setenv INFOPLIST_OUTPUT_FORMAT same-as-input
+    setenv INFOPLIST_PATH MacGPGME.framework/Versions/1.1.4/Resources/Info.plist
+    setenv INFOPLIST_PREPROCESS NO
+    setenv INSTALL_DIR "/tmp/MacGPGME.dst@loader_path/../Frameworks"
+    setenv INSTALL_GROUP staff
+    setenv INSTALL_MODE_FLAG u+w,go-w,a+rX
+    setenv INSTALL_OWNER Roman
+    setenv INSTALL_PATH "@loader_path/../Frameworks"
+    setenv INSTALL_ROOT /tmp/MacGPGME.dst
+    setenv JAVAC_DEFAULT_FLAGS "-J-Xms64m -J-XX:NewSize=4M -J-Dfile.encoding=UTF8"
+    setenv JAVA_APP_STUB /System/Library/Frameworks/JavaVM.framework/Resources/MacOS/JavaApplicationStub
+    setenv JAVA_ARCHIVE_CLASSES YES
+    setenv JAVA_ARCHIVE_TYPE JAR
+    setenv JAVA_COMPILER /usr/bin/javac
+    setenv JAVA_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/Resources/Java
+    setenv JAVA_FRAMEWORK_RESOURCES_DIRS Resources
+    setenv JAVA_JAR_FLAGS cv
+    setenv JAVA_SOURCE_SUBDIR .
+    setenv JAVA_USE_DEPENDENCIES YES
+    setenv JAVA_ZIP_FLAGS -urg
+    setenv JIKES_DEFAULT_FLAGS "+E +OLDCSO"
+    setenv KEEP_PRIVATE_EXTERNS NO
+    setenv LD_DYLIB_INSTALL_NAME "@loader_path/../Frameworks/MacGPGME.framework/Versions/1.1.4/MacGPGME"
+    setenv LD_GENERATE_MAP_FILE NO
+    setenv LD_MAP_FILE_PATH /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/MacGPGME-LinkMap-normal-i386.txt
+    setenv LD_OPENMP_FLAGS -fopenmp
+    setenv LEX /Developer/usr/bin/lex
+    setenv LIBRARY_FLAG_NOSPACE YES
+    setenv LIBRARY_FLAG_PREFIX -l
+    setenv LIBRARY_SEARCH_PATHS "\"/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release\" build/dist/lib"
+    setenv LINKER_DISPLAYS_MANGLED_NAMES NO
+    setenv LINK_FILE_LIST_normal_i386 /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/Objects-normal/i386/MacGPGME.LinkFileList
+    setenv LINK_FILE_LIST_normal_x86_64 /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/Objects-normal/x86_64/MacGPGME.LinkFileList
+    setenv LINK_WITH_STANDARD_LIBRARIES YES
+    setenv LOCALIZED_RESOURCES_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/Resources/English.lproj
+    setenv LOCAL_ADMIN_APPS_DIR /Applications/Utilities
+    setenv LOCAL_APPS_DIR /Applications
+    setenv LOCAL_DEVELOPER_DIR /Library/Developer
+    setenv LOCAL_LIBRARY_DIR /Library
+    setenv MACH_O_TYPE mh_dylib
+    setenv MACOSX_DEPLOYMENT_TARGET 10.6
+    setenv MAC_OS_X_VERSION_ACTUAL 1067
+    setenv MAC_OS_X_VERSION_MAJOR 1060
+    setenv MAC_OS_X_VERSION_MINOR 0607
+    setenv NATIVE_ARCH i386
+    setenv NATIVE_ARCH_32_BIT i386
+    setenv NATIVE_ARCH_64_BIT x86_64
+    setenv NATIVE_ARCH_ACTUAL x86_64
+    setenv NO_COMMON YES
+    setenv OBJECT_FILE_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/Objects
+    setenv OBJECT_FILE_DIR_normal /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/Objects-normal
+    setenv OBJROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build
+    setenv ONLY_ACTIVE_ARCH NO
+    setenv OPTIMIZATION_LEVEL 0
+    setenv OS MACOS
+    setenv OSAC /usr/bin/osacompile
+    setenv OTHER_LDFLAGS "-Z -headerpad_max_install_names"
+    setenv PACKAGE_TYPE com.apple.package-type.wrapper.framework
+    setenv PASCAL_STRINGS YES
+    setenv PATH_PREFIXES_EXCLUDED_FROM_HEADER_DEPENDENCIES "/usr/include /usr/local/include /System/Library/Frameworks /System/Library/PrivateFrameworks /Developer/Headers /Developer/SDKs /Developer/Platforms"
+    setenv PBDEVELOPMENTPLIST_PATH MacGPGME.framework/Versions/1.1.4/pbdevelopment.plist
+    setenv PFE_FILE_C_DIALECTS objective-c
+    setenv PKGINFO_FILE_PATH /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/PkgInfo
+    setenv PKGINFO_PATH MacGPGME.framework/PkgInfo
+    setenv PLATFORM_DEVELOPER_APPLICATIONS_DIR /Developer/Applications
+    setenv PLATFORM_DEVELOPER_BIN_DIR /Developer/usr/bin
+    setenv PLATFORM_DEVELOPER_LIBRARY_DIR /Developer/Library
+    setenv PLATFORM_DEVELOPER_SDK_DIR /Developer/SDKs
+    setenv PLATFORM_DEVELOPER_TOOLS_DIR /Developer/Tools
+    setenv PLATFORM_DEVELOPER_USR_DIR /Developer/usr
+    setenv PLATFORM_NAME macosx
+    setenv PLIST_FILE_OUTPUT_FORMAT same-as-input
+    setenv PLUGINS_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/Resources
+    setenv PREBINDING YES
+    setenv PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR YES
+    setenv PRECOMP_DESTINATION_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/PrefixHeaders
+    setenv PRESERVE_DEAD_CODE_INITS_AND_TERMS NO
+    setenv PRIVATE_HEADERS_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/PrivateHeaders
+    setenv PRODUCT_NAME MacGPGME
+    setenv PRODUCT_SETTINGS_PATH /Users/Roman/Documents/OpenSource/GPG/MacGPGME/Info-MacGPGME.plist
+    setenv PRODUCT_TYPE com.apple.product-type.framework
+    setenv PROFILING_CODE NO
+    setenv PROJECT MacGPGME
+    setenv PROJECT_DERIVED_FILE_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/DerivedSources
+    setenv PROJECT_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME
+    setenv PROJECT_FILE_PATH /Users/Roman/Documents/OpenSource/GPG/MacGPGME/MacGPGME.xcodeproj
+    setenv PROJECT_NAME MacGPGME
+    setenv PROJECT_TEMP_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build
+    setenv PUBLIC_HEADERS_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/Headers
+    setenv RECURSIVE_SEARCH_PATHS_FOLLOW_SYMLINKS YES
+    setenv REMOVE_CVS_FROM_RESOURCES YES
+    setenv REMOVE_SVN_FROM_RESOURCES YES
+    setenv REZ_COLLECTOR_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/ResourceManagerResources
+    setenv REZ_OBJECTS_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/ResourceManagerResources/Objects
+    setenv REZ_SEARCH_PATHS "\"/Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release\" "
+    setenv RUN_CLANG_STATIC_ANALYZER NO
+    setenv SCAN_ALL_SOURCE_FILES_FOR_INCLUDES NO
+    setenv SCRIPTS_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/Resources/Scripts
+    setenv SCRIPT_INPUT_FILE_0 /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/dist/share/locale
+    setenv SCRIPT_INPUT_FILE_COUNT 1
+    setenv SCRIPT_OUTPUT_FILE_COUNT 0
+    setenv SDKROOT /Developer/SDKs/MacOSX10.6.sdk
+    setenv SDK_DIR /Developer/SDKs/MacOSX10.6.sdk
+    setenv SDK_NAME macosx10.6
+    setenv SED /usr/bin/sed
+    setenv SEPARATE_STRIP NO
+    setenv SEPARATE_SYMBOL_EDIT NO
+    setenv SET_DIR_MODE_OWNER_GROUP YES
+    setenv SET_FILE_MODE_OWNER_GROUP NO
+    setenv SHARED_DERIVED_FILE_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release/DerivedSources
+    setenv SHARED_FRAMEWORKS_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/SharedFrameworks
+    setenv SHARED_PRECOMPS_DIR /var/folders/Gw/GwVGhdumGe0km0JY9wOF7U+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders
+    setenv SHARED_SUPPORT_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/Resources
+    setenv SKIP_INSTALL YES
+    setenv SOURCE_ROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME
+    setenv SRCROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME
+    setenv STANDARD_C_PLUS_PLUS_LIBRARY_TYPE dynamic
+    setenv STRINGS_FILE_OUTPUT_ENCODING UTF-16
+    setenv STRIP_INSTALLED_PRODUCT YES
+    setenv STRIP_STYLE debugging
+    setenv SYMBOL_REPOSITORY_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/SymbolRepositories
+    setenv SYMROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build
+    setenv SYSTEM_ADMIN_APPS_DIR /Applications/Utilities
+    setenv SYSTEM_APPS_DIR /Applications
+    setenv SYSTEM_CORE_SERVICES_DIR /System/Library/CoreServices
+    setenv SYSTEM_DEMOS_DIR /Applications/Extras
+    setenv SYSTEM_DEVELOPER_APPS_DIR /Developer/Applications
+    setenv SYSTEM_DEVELOPER_BIN_DIR /Developer/usr/bin
+    setenv SYSTEM_DEVELOPER_DEMOS_DIR "/Developer/Applications/Utilities/Built Examples"
+    setenv SYSTEM_DEVELOPER_DIR /Developer
+    setenv SYSTEM_DEVELOPER_DOC_DIR "/Developer/ADC Reference Library"
+    setenv SYSTEM_DEVELOPER_GRAPHICS_TOOLS_DIR "/Developer/Applications/Graphics Tools"
+    setenv SYSTEM_DEVELOPER_JAVA_TOOLS_DIR "/Developer/Applications/Java Tools"
+    setenv SYSTEM_DEVELOPER_PERFORMANCE_TOOLS_DIR "/Developer/Applications/Performance Tools"
+    setenv SYSTEM_DEVELOPER_RELEASENOTES_DIR "/Developer/ADC Reference Library/releasenotes"
+    setenv SYSTEM_DEVELOPER_TOOLS /Developer/Tools
+    setenv SYSTEM_DEVELOPER_TOOLS_DOC_DIR "/Developer/ADC Reference Library/documentation/DeveloperTools"
+    setenv SYSTEM_DEVELOPER_TOOLS_RELEASENOTES_DIR "/Developer/ADC Reference Library/releasenotes/DeveloperTools"
+    setenv SYSTEM_DEVELOPER_USR_DIR /Developer/usr
+    setenv SYSTEM_DEVELOPER_UTILITIES_DIR /Developer/Applications/Utilities
+    setenv SYSTEM_DOCUMENTATION_DIR /Library/Documentation
+    setenv SYSTEM_LIBRARY_DIR /System/Library
+    setenv TARGETNAME MacGPGME
+    setenv TARGET_BUILD_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release
+    setenv TARGET_NAME MacGPGME
+    setenv TARGET_TEMP_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build
+    setenv TEMP_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build
+    setenv TEMP_FILES_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build
+    setenv TEMP_FILE_DIR /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build
+    setenv TEMP_ROOT /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build
+    setenv UID 501
+    setenv UNLOCALIZED_RESOURCES_FOLDER_PATH MacGPGME.framework/Versions/1.1.4/Resources
+    setenv UNSTRIPPED_PRODUCT NO
+    setenv USER Roman
+    setenv USER_APPS_DIR /Users/Roman/Applications
+    setenv USER_LIBRARY_DIR /Users/Roman/Library
+    setenv USE_DYNAMIC_NO_PIC YES
+    setenv USE_HEADERMAP YES
+    setenv USE_HEADER_SYMLINKS NO
+    setenv VALIDATE_PRODUCT NO
+    setenv VALID_ARCHS "x86_64 i386"
+    setenv VERBOSE_PBXCP NO
+    setenv VERSIONING_STUB /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/DerivedSources/MacGPGME_vers.c
+    setenv VERSIONING_SYSTEM apple-generic
+    setenv VERSIONPLIST_PATH MacGPGME.framework/Versions/1.1.4/Resources/version.plist
+    setenv VERSIONS_FOLDER_PATH MacGPGME.framework/Versions
+    setenv VERSION_INFO_BUILDER Roman
+    setenv VERSION_INFO_FILE MacGPGME_vers.c
+    setenv VERSION_INFO_STRING "\"@(#)PROGRAM:MacGPGME  PROJECT:MacGPGME-16\""
+    setenv WARNING_CFLAGS -Wmost
+    setenv WRAPPER_EXTENSION framework
+    setenv WRAPPER_NAME MacGPGME.framework
+    setenv WRAPPER_SUFFIX .framework
+    setenv XCODE_APP_SUPPORT_DIR /Developer/Library/Xcode
+    setenv XCODE_VERSION_ACTUAL 0323
+    setenv XCODE_VERSION_MAJOR 0300
+    setenv XCODE_VERSION_MINOR 0320
+    setenv YACC /Developer/usr/bin/yacc
+    /bin/sh -c /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/MacGPGME.build/Release/MacGPGME.build/Script-55226A960F053E5F00CE3509.sh
+
+
+=== BUILD NATIVE TARGET GPGServices OF PROJECT GPGServices WITH CONFIGURATION Release ===
+Check dependencies
+ProcessInfoPlistFile build/Release/GPGServices.service/Contents/Info.plist Resources/Info.plist
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    builtin-infoPlistUtility Resources/Info.plist -genpkginfo /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/PkgInfo -expandbuildsettings -platform macosx -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Info.plist
+
+CopyStringsFile build/Release/GPGServices.service/Contents/Resources/English.lproj/InfoPlist.strings Resources/English.lproj/InfoPlist.strings
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv ICONV /usr/bin/iconv
+    /Developer/Library/Xcode/Plug-ins/CoreBuildTasks.xcplugin/Contents/Resources/copystrings --validate --inputencoding utf-16 --outputencoding UTF-16 Resources/English.lproj/InfoPlist.strings --outdir /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Resources/English.lproj
+
+CpResource build/Release/GPGServices.service/Contents/Resources/Icon.icns Resources/Images/Icon.icns
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -strip-debug-symbols -resolve-src-symlinks /Users/Roman/Documents/OpenSource/GPG/GPGServices/Resources/Images/Icon.icns /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Resources
+
+CompileXIB Resources/English.lproj/RecipientWindow.xib
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Resources/English.lproj/RecipientWindow.nib /Users/Roman/Documents/OpenSource/GPG/GPGServices/Resources/English.lproj/RecipientWindow.xib --sdk /Developer/SDKs/MacOSX10.6.sdk
+
+CompileXIB Resources/English.lproj/PrivateKeyChooserWindow.xib
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Resources/English.lproj/PrivateKeyChooserWindow.nib /Users/Roman/Documents/OpenSource/GPG/GPGServices/Resources/English.lproj/PrivateKeyChooserWindow.xib --sdk /Developer/SDKs/MacOSX10.6.sdk
+
+CpResource "build/Release/GPGServices.service/Contents/Resources/Growl Registration Ticket.growlRegDict" "Resources/Growl Registration Ticket.growlRegDict"
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -strip-debug-symbols -resolve-src-symlinks "/Users/Roman/Documents/OpenSource/GPG/GPGServices/Resources/Growl Registration Ticket.growlRegDict" /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Resources
+
+CompileXIB Resources/English.lproj/MainMenu.xib
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Resources/English.lproj/MainMenu.nib /Users/Roman/Documents/OpenSource/GPG/GPGServices/Resources/English.lproj/MainMenu.xib --sdk /Developer/SDKs/MacOSX10.6.sdk
+
+CompileXIB Resources/English.lproj/VerificationResultsWindow.xib
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Resources/English.lproj/VerificationResultsWindow.nib /Users/Roman/Documents/OpenSource/GPG/GPGServices/Resources/English.lproj/VerificationResultsWindow.xib --sdk /Developer/SDKs/MacOSX10.6.sdk
+
+CpResource build/Release/GPGServices.service/Contents/Resources/sig.icns Resources/Images/sig.icns
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -strip-debug-symbols -resolve-src-symlinks /Users/Roman/Documents/OpenSource/GPG/GPGServices/Resources/Images/sig.icns /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Resources
+
+CpResource build/Release/GPGServices.service/Contents/Resources/lock.icns Resources/Images/lock.icns
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -strip-debug-symbols -resolve-src-symlinks /Users/Roman/Documents/OpenSource/GPG/GPGServices/Resources/Images/lock.icns /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Resources
+
+CpResource build/Release/GPGServices.service/Contents/Resources/asc.icns Resources/Images/asc.icns
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -strip-debug-symbols -resolve-src-symlinks /Users/Roman/Documents/OpenSource/GPG/GPGServices/Resources/Images/asc.icns /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Resources
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/main.o Source/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/i386 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/main.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/main.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/GPGServices.o Source/GPGServices.m normal i386 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/i386 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/GPGServices.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/GPGServices.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/RecipientWindowController.o Source/RecipientWindowController.m normal i386 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/i386 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/RecipientWindowController.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/RecipientWindowController.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/KeyChooserWindowController.o Source/KeyChooserWindowController.m normal i386 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/i386 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/KeyChooserWindowController.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/KeyChooserWindowController.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/KeyChooserDataSource.o Source/KeyChooserDataSource.m normal i386 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/i386 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/KeyChooserDataSource.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/KeyChooserDataSource.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/ZipOperation.o Source/ZipOperation.m normal i386 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/i386 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/ZipOperation.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/ZipOperation.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/NSPredicate+negate.o Source/NSPredicate+negate.m normal i386 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/i386 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/NSPredicate+negate.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/NSPredicate+negate.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/GPGKey+utils.o Source/GPGKey+utils.m normal i386 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/i386 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/GPGKey+utils.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/GPGKey+utils.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/FileVerificationController.o Source/FileVerificationController.m normal i386 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/i386 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/FileVerificationController.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/FileVerificationController.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/main.o Source/main.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/x86_64 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/main.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/main.o
+
+Ld build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/GPGServices normal i386
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv MACOSX_DEPLOYMENT_TARGET 10.6
+    /Developer/usr/bin/gcc-4.2 -arch i386 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -filelist /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/GPGServices.LinkFileList -Xlinker -rpath -Xlinker @loader_path/../ -mmacosx-version-min=10.6 /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release/MacGPGME.framework/MacGPGME /Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release/ZipKit.framework/ZipKit -framework Cocoa -framework Growl -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/GPGServices
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/GPGServices.o Source/GPGServices.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/x86_64 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/GPGServices.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/GPGServices.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/RecipientWindowController.o Source/RecipientWindowController.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/x86_64 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/RecipientWindowController.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/RecipientWindowController.o
+
+/Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/RecipientWindowController.m: In function '-[RecipientWindowController numberOfRowsInTableView:]':
+/Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/RecipientWindowController.m:116: warning: conflicting types for '-(int)numberOfRowsInTableView:(NSTableView *)tableView'
+/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSTableView.h:591: warning: previous declaration of '-(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView'
+/Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/RecipientWindowController.m: In function '-[RecipientWindowController tableView:objectValueForTableColumn:row:]':
+/Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/RecipientWindowController.m:122: warning: conflicting types for '-(id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row'
+/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSTableView.h:592: warning: previous declaration of '-(id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row'
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/KeyChooserWindowController.o Source/KeyChooserWindowController.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/x86_64 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/KeyChooserWindowController.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/KeyChooserWindowController.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/KeyChooserDataSource.o Source/KeyChooserDataSource.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/x86_64 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/KeyChooserDataSource.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/KeyChooserDataSource.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/ZipOperation.o Source/ZipOperation.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/x86_64 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/ZipOperation.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/ZipOperation.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/NSPredicate+negate.o Source/NSPredicate+negate.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/x86_64 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/NSPredicate+negate.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/NSPredicate+negate.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/GPGKey+utils.o Source/GPGKey+utils.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/x86_64 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/GPGKey+utils.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/GPGKey+utils.o
+
+CompileC build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/FileVerificationController.o Source/FileVerificationController.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv LANG en_US.US-ASCII
+    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/GPGServices.hmap -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/include -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources/x86_64 -I/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/DerivedSources -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/Source/FileVerificationController.m -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/FileVerificationController.o
+
+Ld build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/GPGServices normal x86_64
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    setenv MACOSX_DEPLOYMENT_TARGET 10.6
+    /Developer/usr/bin/gcc-4.2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release -F/Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/MacGPGME/build/Release -filelist /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/GPGServices.LinkFileList -Xlinker -rpath -Xlinker @loader_path/../ -mmacosx-version-min=10.6 /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release/MacGPGME.framework/MacGPGME /Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release/ZipKit.framework/ZipKit -framework Cocoa -framework Growl -o /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/GPGServices
+
+CreateUniversalBinary build/Release/GPGServices.service/Contents/MacOS/GPGServices normal "i386 x86_64"
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /usr/bin/lipo -create /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/i386/GPGServices /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/GPGServices.build/Release/GPGServices.build/Objects-normal/x86_64/GPGServices -output /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/MacOS/GPGServices
+
+PBXCp build/Release/GPGServices.service/Contents/Frameworks/MacGPGME.framework /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release/MacGPGME.framework
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -strip-debug-symbols -resolve-src-symlinks /Users/Roman/Documents/OpenSource/GPG/MacGPGME/build/Release/MacGPGME.framework /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Frameworks
+
+PBXCp build/Release/GPGServices.service/Contents/Frameworks/Growl.framework Frameworks/Growl.framework
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -strip-debug-symbols -resolve-src-symlinks /Users/Roman/Documents/OpenSource/GPG/GPGServices/Frameworks/Growl.framework /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Frameworks
+
+PBXCp build/Release/GPGServices.service/Contents/Frameworks/ZipKit.framework Dependencies/zipkit/build/Release/ZipKit.framework
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -strip-debug-symbols -resolve-src-symlinks /Users/Roman/Documents/OpenSource/GPG/GPGServices/Dependencies/zipkit/build/Release/ZipKit.framework /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service/Contents/Frameworks
+
+Touch build/Release/GPGServices.service
+    cd /Users/Roman/Documents/OpenSource/GPG/GPGServices
+    /usr/bin/touch -c /Users/Roman/Documents/OpenSource/GPG/GPGServices/build/Release/GPGServices.service
+
+** BUILD SUCCEEDED **
+
