@@ -10,29 +10,29 @@
 		2260756D12EBA0B50026DBEA /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2260756C12EBA0B50026DBEA /* Icon.icns */; };
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC6133FD70E00EE5829 /* MacGPGME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CA687B12DFD8D300ED919C /* MacGPGME.framework */; };
-		2278DFC7133FD71A00EE5829 /* ZipKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
-		2278DFC8133FD71E00EE5829 /* MacGPGME.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 22CA687B12DFD8D300ED919C /* MacGPGME.framework */; };
+		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
+		2278DFC8133FD71E00EE5829 /* MacGPGME.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 22CA687B12DFD8D300ED919C /* MacGPGME.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
+		3023EF261360787E00CFC02F /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3023EF251360787E00CFC02F /* RecipientWindow.xib */; };
+		3023EF281360788000CFC02F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3023EF271360788000CFC02F /* MainMenu.xib */; };
+		3023EF2A1360788200CFC02F /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3023EF291360788200CFC02F /* PrivateKeyChooserWindow.xib */; };
+		3023EF2C1360788500CFC02F /* VerificationResultsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3023EF2B1360788500CFC02F /* VerificationResultsWindow.xib */; };
 		4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1908C00A4CBF0B00052798 /* GPGServices.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */; };
-		8E4A7B131328CA7C007953BE /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */; };
 		8E7341A31334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */; };
 		8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
-		8E8837C413311E3E0044EFFF /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
-		8E935E62135125EC004E3E4F /* VerificationResultsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E935E61135125EC004E3E4F /* VerificationResultsWindow.xib */; };
 		8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E935E64135128C6004E3E4F /* FileVerificationController.m */; };
 		8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */; };
 		8ED7990E135CAB60004C89D5 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
 		8ED7990F135CAB60004C89D5 /* lock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990C135CAB60004C89D5 /* lock.icns */; };
 		8ED79910135CAB60004C89D5 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
 		8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDC40F7133F6C5500D0A101 /* ZipOperation.m */; };
-		8EE8996813474D62004A3266 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EE8996713474D62004A3266 /* MainMenu.xib */; };
 		8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */; };
-		8EF7A61D1334C05300FD8C5B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
+		8EF7A61D1334C05300FD8C5B /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,58 +95,59 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4B1906FF0A4CBD8A00052798 /* CopyFiles */ = {
+		4B1906FF0A4CBD8A00052798 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2278DFC8133FD71E00EE5829 /* MacGPGME.framework in CopyFiles */,
-				2278DFC7133FD71A00EE5829 /* ZipKit.framework in CopyFiles */,
-				8EF7A61D1334C05300FD8C5B /* Growl.framework in CopyFiles */,
+				2278DFC8133FD71E00EE5829 /* MacGPGME.framework in Copy Frameworks */,
+				2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */,
+				8EF7A61D1334C05300FD8C5B /* Growl.framework in Copy Frameworks */,
 			);
+			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		2260756C12EBA0B50026DBEA /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.icns; sourceTree = "<group>"; };
+		2260756C12EBA0B50026DBEA /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.icns; path = Resources/Images/Icon.icns; sourceTree = "<group>"; };
 		22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MacGPGME.xcodeproj; path = Dependencies/MacGPGME/MacGPGME.xcodeproj; sourceTree = "<group>"; };
-		22D6D9C913267E0C00622189 /* RecipientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipientWindowController.h; sourceTree = "<group>"; };
-		22D6D9CA13267E0C00622189 /* RecipientWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipientWindowController.m; sourceTree = "<group>"; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		22D6D9C913267E0C00622189 /* RecipientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecipientWindowController.h; path = Source/RecipientWindowController.h; sourceTree = "<group>"; };
+		22D6D9CA13267E0C00622189 /* RecipientWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecipientWindowController.m; path = Source/RecipientWindowController.m; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32CA4F630368D1EE00C91783 /* GPGServices_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPGServices_Prefix.pch; sourceTree = "<group>"; };
-		4B1908BF0A4CBF0B00052798 /* GPGServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPGServices.h; sourceTree = "<group>"; };
-		4B1908C00A4CBF0B00052798 /* GPGServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPGServices.m; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* GPGServices_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGServices_Prefix.pch; path = Source/GPGServices_Prefix.pch; sourceTree = "<group>"; };
+		4B1908BF0A4CBF0B00052798 /* GPGServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGServices.h; path = Source/GPGServices.h; sourceTree = "<group>"; };
+		4B1908C00A4CBF0B00052798 /* GPGServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GPGServices.m; path = Source/GPGServices.m; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* GPGServices.service */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.service; sourceTree = BUILT_PRODUCTS_DIR; };
-		8E1BC426134D013600C1BFD6 /* GPGKey+utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GPGKey+utils.h"; sourceTree = "<group>"; };
-		8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GPGKey+utils.m"; sourceTree = "<group>"; };
-		8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipientWindow.xib; sourceTree = "<group>"; };
-		8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
-		8E7341A21334BC1C003CBCEB /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
-		8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
-		8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserWindowController.h; sourceTree = "<group>"; };
-		8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserWindowController.m; sourceTree = "<group>"; };
-		8E935E61135125EC004E3E4F /* VerificationResultsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerificationResultsWindow.xib; sourceTree = "<group>"; };
-		8E935E63135128C6004E3E4F /* FileVerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileVerificationController.h; sourceTree = "<group>"; };
-		8E935E64135128C6004E3E4F /* FileVerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileVerificationController.m; sourceTree = "<group>"; };
-		8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChooserDataSource.h; sourceTree = "<group>"; };
-		8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChooserDataSource.m; sourceTree = "<group>"; };
-		8ED7990B135CAB60004C89D5 /* sig.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = sig.icns; sourceTree = "<group>"; };
-		8ED7990C135CAB60004C89D5 /* lock.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = lock.icns; sourceTree = "<group>"; };
-		8ED7990D135CAB60004C89D5 /* asc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = asc.icns; sourceTree = "<group>"; };
+		8E1BC426134D013600C1BFD6 /* GPGKey+utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GPGKey+utils.h"; path = "Source/GPGKey+utils.h"; sourceTree = "<group>"; };
+		8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GPGKey+utils.m"; path = "Source/GPGKey+utils.m"; sourceTree = "<group>"; };
+		8E4A7AF51328C9A5007953BE /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
+		8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Growl Registration Ticket.growlRegDict"; path = "Resources/Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
+		8E7341A21334BC1C003CBCEB /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
+		8E8837C313311E3E0044EFFF /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
+		8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyChooserWindowController.h; path = Source/KeyChooserWindowController.h; sourceTree = "<group>"; };
+		8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChooserWindowController.m; path = Source/KeyChooserWindowController.m; sourceTree = "<group>"; };
+		8E935E61135125EC004E3E4F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
+		8E935E63135128C6004E3E4F /* FileVerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileVerificationController.h; path = Source/FileVerificationController.h; sourceTree = "<group>"; };
+		8E935E64135128C6004E3E4F /* FileVerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileVerificationController.m; path = Source/FileVerificationController.m; sourceTree = "<group>"; };
+		8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyChooserDataSource.h; path = Source/KeyChooserDataSource.h; sourceTree = "<group>"; };
+		8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChooserDataSource.m; path = Source/KeyChooserDataSource.m; sourceTree = "<group>"; };
+		8ED7990B135CAB60004C89D5 /* sig.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = sig.icns; path = Resources/Images/sig.icns; sourceTree = "<group>"; };
+		8ED7990C135CAB60004C89D5 /* lock.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = lock.icns; path = Resources/Images/lock.icns; sourceTree = "<group>"; };
+		8ED7990D135CAB60004C89D5 /* asc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = asc.icns; path = Resources/Images/asc.icns; sourceTree = "<group>"; };
 		8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZipKit.xcodeproj; path = Dependencies/zipkit/ZipKit.xcodeproj; sourceTree = "<group>"; };
-		8EDC40F6133F6C5500D0A101 /* ZipOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipOperation.h; sourceTree = "<group>"; };
-		8EDC40F7133F6C5500D0A101 /* ZipOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipOperation.m; sourceTree = "<group>"; };
-		8EE8996713474D62004A3266 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
-		8EE899891348B92B004A3266 /* NSPredicate+negate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPredicate+negate.h"; sourceTree = "<group>"; };
-		8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPredicate+negate.m"; sourceTree = "<group>"; };
+		8EDC40F6133F6C5500D0A101 /* ZipOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipOperation.h; path = Source/ZipOperation.h; sourceTree = "<group>"; };
+		8EDC40F7133F6C5500D0A101 /* ZipOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZipOperation.m; path = Source/ZipOperation.m; sourceTree = "<group>"; };
+		8EE8996713474D62004A3266 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		8EE899891348B92B004A3266 /* NSPredicate+negate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSPredicate+negate.h"; path = "Source/NSPredicate+negate.h"; sourceTree = "<group>"; };
+		8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSPredicate+negate.m"; path = "Source/NSPredicate+negate.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,17 +252,17 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */,
-				8E4A7AF51328C9A5007953BE /* RecipientWindow.xib */,
+				3023EF271360788000CFC02F /* MainMenu.xib */,
+				3023EF291360788200CFC02F /* PrivateKeyChooserWindow.xib */,
+				3023EF251360787E00CFC02F /* RecipientWindow.xib */,
+				3023EF2B1360788500CFC02F /* VerificationResultsWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
-				2260756C12EBA0B50026DBEA /* Icon.icns */,
-				8ED7990B135CAB60004C89D5 /* sig.icns */,
-				8ED7990C135CAB60004C89D5 /* lock.icns */,
-				8ED7990D135CAB60004C89D5 /* asc.icns */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
-				8EE8996713474D62004A3266 /* MainMenu.xib */,
-				8E8837C313311E3E0044EFFF /* PrivateKeyChooserWindow.xib */,
-				8E935E61135125EC004E3E4F /* VerificationResultsWindow.xib */,
+				2260756C12EBA0B50026DBEA /* Icon.icns */,
+				8ED7990D135CAB60004C89D5 /* asc.icns */,
+				8ED7990C135CAB60004C89D5 /* lock.icns */,
+				8ED7990B135CAB60004C89D5 /* sig.icns */,
+				8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -310,7 +311,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				4B1906FF0A4CBD8A00052798 /* CopyFiles */,
+				4B1906FF0A4CBD8A00052798 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -331,7 +332,6 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GPGServices" */;
 			compatibilityVersion = "Xcode 2.4";
-			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -410,11 +410,11 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				2260756D12EBA0B50026DBEA /* Icon.icns in Resources */,
-				8E4A7B131328CA7C007953BE /* RecipientWindow.xib in Resources */,
-				8E8837C413311E3E0044EFFF /* PrivateKeyChooserWindow.xib in Resources */,
+				3023EF261360787E00CFC02F /* RecipientWindow.xib in Resources */,
+				3023EF2A1360788200CFC02F /* PrivateKeyChooserWindow.xib in Resources */,
 				8E7341A31334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict in Resources */,
-				8EE8996813474D62004A3266 /* MainMenu.xib in Resources */,
-				8E935E62135125EC004E3E4F /* VerificationResultsWindow.xib in Resources */,
+				3023EF281360788000CFC02F /* MainMenu.xib in Resources */,
+				3023EF2C1360788500CFC02F /* VerificationResultsWindow.xib in Resources */,
 				8ED7990E135CAB60004C89D5 /* sig.icns in Resources */,
 				8ED7990F135CAB60004C89D5 /* lock.icns in Resources */,
 				8ED79910135CAB60004C89D5 /* asc.icns in Resources */,
@@ -464,6 +464,38 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		3023EF251360787E00CFC02F /* RecipientWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8E4A7AF51328C9A5007953BE /* English */,
+			);
+			name = RecipientWindow.xib;
+			sourceTree = "<group>";
+		};
+		3023EF271360788000CFC02F /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8EE8996713474D62004A3266 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		3023EF291360788200CFC02F /* PrivateKeyChooserWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8E8837C313311E3E0044EFFF /* English */,
+			);
+			name = PrivateKeyChooserWindow.xib;
+			sourceTree = "<group>";
+		};
+		3023EF2B1360788500CFC02F /* VerificationResultsWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8E935E61135125EC004E3E4F /* English */,
+			);
+			name = VerificationResultsWindow.xib;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -479,14 +511,14 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/Debug\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/Dependencies/MacGPGME/build/Debug\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/Dependencies/MacGPGME/build/$CONFIGURATION\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = GPGServices;
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -498,7 +530,6 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = i386;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Dependencies/MacGPGME/build/Release",
 					"$(SRCROOT)/Dependencies/zipkit/build/Release",
@@ -507,12 +538,12 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/Debug\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/Dependencies/MacGPGME/build/Debug\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/Dependencies/MacGPGME/build/$CONFIGURATION\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = /Library/Services;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../";
 				PRODUCT_NAME = GPGServices;
@@ -523,8 +554,13 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					i386,
+					x86_64,
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 			};
@@ -533,6 +569,10 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					i386,
+					x86_64,
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
