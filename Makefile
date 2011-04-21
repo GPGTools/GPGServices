@@ -1,5 +1,9 @@
 all: compile
 
+update:
+	@git submodule foreach git pull origin master
+	@git pull
+
 compile:
 	@echo "(have a look at build.log for details)";
 	@echo "" > build.log
