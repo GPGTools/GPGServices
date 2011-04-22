@@ -43,23 +43,39 @@
     if(GPGErrorCodeFromError([sig status]) == GPGErrorNoError) {
         GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
         NSString* userID = [[ctx keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
-        NSString* validity = [sig validityDescription];
+        GPGValidity validity = [sig validity];
+        NSString* validityDesc = [sig validityDescription];
         
-        verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", userID, validity];                         
+        switch(validity) {
+            case GPGValidityNever:
+                bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
+                break;
+            case GPGValidityMarginal: 
+                bgColor = [NSColor colorWithCalibratedRed:0.9 green:0.8 blue:0.0 alpha:1.0];
+                break;
+            case GPGValidityFull:
+            case GPGValidityUltimate:
+                bgColor = [NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0];
+                break;
+            default:
+                bgColor = [NSColor whiteColor];
+        }
+        
+        verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", userID, validityDesc];                         
         NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
                                                                                  attributes:nil] autorelease];
-        NSRange range = [verificationResult rangeOfString:[NSString stringWithFormat:@"(%@ trust)", validity]];
+        NSRange range = [verificationResult rangeOfString:[NSString stringWithFormat:@"(%@ trust)", validityDesc]];
         [tmp addAttribute:NSFontAttributeName 
                     value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
                     range:range];
         [tmp addAttribute:NSBackgroundColorAttributeName 
-                    value:[NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0]
+                    value:bgColor
                     range:range];
         
         verificationResult = (NSString*)tmp;
-        
-        bgColor = [NSColor greenColor];
     } else {
+        bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
+        
         verificationResult = [NSString stringWithFormat:@"Verification FAILED: %@", GPGErrorDescription([sig status])];
         NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
                                                                                  attributes:nil] autorelease];
@@ -68,11 +84,10 @@
                     value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
                     range:range];
         [tmp addAttribute:NSBackgroundColorAttributeName 
-                    value:[NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7]
+                    value:bgColor
                     range:range];
         
         verificationResult = (NSString*)tmp;
-        bgColor = [NSColor redColor];
     }
     
     

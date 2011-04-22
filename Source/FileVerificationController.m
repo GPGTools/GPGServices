@@ -8,6 +8,7 @@
 
 #import "FileVerificationController.h"
 #import "MacGPGME/MacGPGME.h"
+#import "FileVerificationDataSource.h"
 
 @implementation FileVerificationController
 
@@ -81,10 +82,6 @@
             NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
             NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
             
-            NSColor* bgColor = nil;
-            id verificationResult = nil; //NSString or NSAttributedString
-            BOOL verified = NO;
-            
             NSException* firstException = nil;
             NSException* secondException = nil;
             
@@ -126,12 +123,12 @@
             }
             
             
-            NSDictionary* result = nil;
             if(sigs != nil) {
-                verified = YES;
-                
                 if(sigs.count == 0) {
+                    id verificationResult = nil; //NSString or NSAttributedString
                     verificationResult = @"Verification FAILED: No signature data found.";
+                    
+                    NSColor* bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
                     
                     NSRange range = [verificationResult rangeOfString:@"FAILED"];
                     verificationResult = [[NSMutableAttributedString alloc] 
@@ -141,64 +138,26 @@
                                                value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
                                                range:range];
                     [verificationResult addAttribute:NSBackgroundColorAttributeName 
-                                               value:[NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7]
+                                               value:bgColor
                                                range:range];
                     
-                    bgColor = [NSColor redColor];
+                    NSDictionary* result = [NSDictionary dictionaryWithObjectsAndKeys:
+                                            [signedFile lastPathComponent], @"filename",
+                                            verificationResult, @"verificationResult", 
+                                            bgColor, @"bgColor",
+                                            nil];
+                    
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                        [dataSource addResults:result];
+                    }];
                 } else if(sigs.count > 0) {
-                    GPGSignature* sig=[sigs objectAtIndex:0];
-                    if(GPGErrorCodeFromError([sig status]) == GPGErrorNoError) {
-                        GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
-                        NSString* userID = [[ctx keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
-                        NSString* validity = [sig validityDescription];
-                        
-                        verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", userID, validity];                         
-                        NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
-                                                                                                 attributes:nil] autorelease];
-                        NSRange range = [verificationResult rangeOfString:[NSString stringWithFormat:@"(%@ trust)", validity]];
-                        [tmp addAttribute:NSFontAttributeName 
-                                    value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
-                                    range:range];
-                        [tmp addAttribute:NSBackgroundColorAttributeName 
-                                    value:[NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0]
-                                    range:range];
-                        
-                        verificationResult = (NSString*)tmp;
-                        
-                        bgColor = [NSColor greenColor];
-                    } else {
-                        verificationResult = [NSString stringWithFormat:@"Verification FAILED: %@", GPGErrorDescription([sig status])];
-                        NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
-                                                                                                 attributes:nil] autorelease];
-                        NSRange range = [verificationResult rangeOfString:@"FAILED"];
-                        [tmp addAttribute:NSFontAttributeName 
-                                    value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
-                                    range:range];
-                        [tmp addAttribute:NSBackgroundColorAttributeName 
-                                    value:[NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7]
-                                    range:range];
-                        
-                        verificationResult = (NSString*)tmp;
-                        bgColor = [NSColor redColor];
+                    for(GPGSignature* sig in sigs) {
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                            [dataSource addResultFromSig:sig forFile:signedFile];
+                        }];
                     }
-                }      
-                
-                //Add to results
-                result = [NSDictionary dictionaryWithObjectsAndKeys:
-                          [signedFile lastPathComponent], @"filename",
-                          signatureFile, @"signaturePath",
-                          verificationResult, @"verificationResult", 
-                          [NSNumber numberWithBool:verified], @"verificationSucceeded",
-                          bgColor, @"bgColor",
-                          nil];
+                }         
             }
-            
-            
-            
-            if(result != nil)
-                [dataSource performSelectorOnMainThread:@selector(addResults:) 
-                                             withObject:result
-                                          waitUntilDone:YES];
             
             [pool release];
         }];
