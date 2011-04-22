@@ -875,6 +875,13 @@
                     for(GPGSignature* sig in signatures) {
                         [dummyController addResultFromSig:sig forFile:file];
                     }
+                } else if(dummyController != nil) {
+                    //Add a line to mention that the file isn't signed
+                    [dummyController addResults:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                 [file lastPathComponent], @"filename",
+                                                 @"No signatures found", @"verificationResult",
+                                                 nil]];
+                
                 }
             }
         } @catch (NSException* localException) {
