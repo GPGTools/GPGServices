@@ -15,10 +15,12 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName {
     self = [super initWithWindowNibName:windowNibName];
-    
-    [self bind:@"isActive" toObject:dataSource withKeyPath:@"isActive" options:nil];
-    
+        
     return self;
+}
+
+- (void)windowDidLoad {
+    [self bind:@"isActive" toObject:dataSource withKeyPath:@"isActive" options:nil];
 }
 
 - (void)addResults:(NSDictionary*)results {
@@ -29,9 +31,15 @@
     [dataSource addResultFromSig:sig forFile:file];
 }
 
+- (NSInteger)runModal {
+	[self showWindow:self];
+	NSInteger ret = [NSApp runModalForWindow:self.window];
+	[self.window close];
+	return ret;
+}
+
 - (IBAction)okClicked:(id)sender {
-    [self close];
-    [self release];
+	[NSApp stopModalWithCode:0];
 }
 
 @end

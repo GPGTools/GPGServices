@@ -25,6 +25,7 @@
 - (void)addResults:(NSDictionary*)results;
 - (void)addResultFromSig:(GPGSignature*)sig forFile:(NSString*)file;
 
+- (NSInteger)runModal;
 - (IBAction)okClicked:(id)sender;
 
 @end

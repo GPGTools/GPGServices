@@ -868,11 +868,7 @@
                     if(dummyController == nil) {
                         dummyController = [[DummyVerificationController alloc]
                                            initWithWindowNibName:@"VerificationResultsWindow"];
-                        [dummyController showWindow:self];   
-                        //dummyController will do its own release when 'ok' is clicked
-                        //However, we retain it once to make sure it doesn't get released prematurely
-                        [dummyController retain];
-                        
+                        [dummyController showWindow:self];
                         dummyController.isActive = YES;
                     }
                     
@@ -906,7 +902,6 @@
     }
     
     dummyController.isActive = NO;
-    [dummyController release];
     
     if(decryptedFilesCount > 0)
         [GrowlApplicationBridge notifyWithTitle:@"Decryption finished"
@@ -917,6 +912,8 @@
                                        isSticky:NO
                                    clickContext:files];
     
+    [dummyController runModal];
+    [dummyController release];
 }
 
 
