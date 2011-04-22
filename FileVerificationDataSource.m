@@ -58,7 +58,7 @@
                 bgColor = [NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0];
                 break;
             default:
-                bgColor = [NSColor whiteColor];
+                bgColor = [NSColor clearColor];
         }
         
         verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", userID, validityDesc];                         
