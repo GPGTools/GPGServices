@@ -58,7 +58,7 @@
     [indicator startAnimation:self];
     
     for(NSString* serviceFile in self.filesToVerify) {
-        
+
         //Do the file stuff here to be able to check if file is already in verification
         NSString* signatureFile = serviceFile;
         NSString* signedFile = [self searchFileForSignatureFile:signatureFile];
@@ -68,8 +68,7 @@
             signatureFile = tmp;
         }
         
-        if(signatureFile != nil && signedFile != nil) {
-            
+        if(signatureFile != nil) {
             if([filesInVerification containsObject:signatureFile]) {
                 continue;
             } else {
@@ -86,23 +85,16 @@
             NSException* secondException = nil;
             
             NSArray* sigs = nil;
+          
+            /*
+            NSLog(@"signedFile: %@", signedFile);
+            NSLog(@"signatureFile: %@", signatureFile);
+             */
             
-            //TODO: Provide way for user to choose file
-            if([fmgr fileExistsAtPath:signatureFile] == NO) {
-                NSLog(@"Signature file not found: %@", signatureFile);
-                return;
-            }
-            
-            if([fmgr fileExistsAtPath:signedFile] == NO) {
-                NSLog(@"Signed file not found: %@", signedFile);
-                return;
-            }
-            
-            
-            GPGData* fileData = [[[GPGData alloc] initWithContentsOfFile:signatureFile] autorelease];
-            if(signedFile != nil) {
+            if([fmgr fileExistsAtPath:signedFile] && [fmgr fileExistsAtPath:signatureFile]) {
                 @try {
                     GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
+                    GPGData* fileData = [[[GPGData alloc] initWithContentsOfFile:signatureFile] autorelease];
                     GPGData* signedData = [[[GPGData alloc] initWithContentsOfFile:signedFile] 
                                            autorelease];
                     sigs = [ctx verifySignatureData:fileData againstData:signedData];
@@ -111,22 +103,28 @@
                     sigs = nil;
                 }
             }
+            
             //Try to verify the file itself without a detached sig
-            if(sigs == nil) {
+            if(sigs == nil || sigs.count == 0) {
                 @try {
                     GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
-                    sigs = [ctx verifySignedData:fileData];
+                    GPGData* serviceData = [[[GPGData alloc] initWithContentsOfFile:serviceFile] autorelease];
+                    sigs = [ctx verifySignedData:serviceData];
                 } @catch (NSException *exception) {
                     secondException = exception;
                     sigs = nil;
                 }
             }
             
+            /*
+            NSLog(@"firstException: %@", [firstException description]);
+            NSLog(@"secondException: %@", [secondException description]);
+             */
             
             if(sigs != nil) {
                 if(sigs.count == 0) {
                     id verificationResult = nil; //NSString or NSAttributedString
-                    verificationResult = @"Verification FAILED: No signature data found.";
+                    verificationResult = @"Verification FAILED: No signatures found";
                     
                     NSColor* bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
                     
@@ -156,6 +154,13 @@
                         }];
                     }
                 }         
+            } else {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                    [dataSource addResults:[NSDictionary dictionaryWithObjectsAndKeys:
+                                            [signedFile lastPathComponent], @"filename",
+                                            @"No verifiable data found", @"verificationResult",
+                                            nil]]; 
+                }];
             }
             
             [pool release];
