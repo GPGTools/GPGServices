@@ -22,6 +22,7 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */; };
+		8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */; };
 		8E7341A31334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */; };
 		8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
@@ -130,6 +131,8 @@
 		8D1107320486CEB800E47090 /* GPGServices.service */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGServices.service; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1BC426134D013600C1BFD6 /* GPGKey+utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GPGKey+utils.h"; path = "Source/GPGKey+utils.h"; sourceTree = "<group>"; };
 		8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GPGKey+utils.m"; path = "Source/GPGKey+utils.m"; sourceTree = "<group>"; };
+		8E472FE91361CED5009462E4 /* ShortcutHandlingFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShortcutHandlingFields.h; sourceTree = "<group>"; };
+		8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortcutHandlingFields.m; sourceTree = "<group>"; };
 		8E4A7AF51328C9A5007953BE /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
 		8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Growl Registration Ticket.growlRegDict"; path = "Resources/Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		8E7341A21334BC1C003CBCEB /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
@@ -297,6 +300,8 @@
 				8EFFC2261360FBAC00712940 /* FileVerificationDataSource.m */,
 				8EFFC2281361009400712940 /* DummyVerificationController.h */,
 				8EFFC2291361009400712940 /* DummyVerificationController.m */,
+				8E472FE91361CED5009462E4 /* ShortcutHandlingFields.h */,
+				8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */,
 			);
 			name = "UI Classes";
 			sourceTree = "<group>";
@@ -450,6 +455,7 @@
 				8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */,
 				8EFFC2271360FBAC00712940 /* FileVerificationDataSource.m in Sources */,
 				8EFFC22A1361009400712940 /* DummyVerificationController.m in Sources */,
+				8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
