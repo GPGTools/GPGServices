@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class FileVerificationDataSource;
 
 @interface FileVerificationController : NSWindowController {
 @private
@@ -16,21 +17,19 @@
 
     IBOutlet NSTableView* tableView;
     IBOutlet NSProgressIndicator* indicator;
-
+    IBOutlet FileVerificationDataSource* dataSource;
+    
     NSMutableSet* filesInVerification;
-    NSMutableArray* verificationResults;
 }
 
 @property(retain) NSArray* filesToVerify;
 @property(readonly) NSOperationQueue* verificationQueue;
-@property(readonly) NSArray* verificationResults;
 
 - (NSInteger)runModal;
 - (IBAction)okClicked:(id)sender;
 
 //Callback contains all successfully checked files
 - (void)startVerification:(void(^)(NSArray*))callback;
-- (void)addResults:(NSDictionary*)results;
 
 #pragma mark - Helper Methods
 - (NSString*)searchFileForSignatureFile:(NSString*)file;

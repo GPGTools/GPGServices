@@ -11,7 +11,7 @@
 
 @implementation FileVerificationController
 
-@synthesize filesToVerify, verificationQueue, verificationResults;
+@synthesize filesToVerify, verificationQueue;
 
 - (id)init {
     self = [super initWithWindowNibName:@"VerificationResultsWindow"];
@@ -22,7 +22,6 @@
                            options:NSKeyValueObservingOptionNew 
                            context:NULL];
     
-    verificationResults = [[NSMutableArray alloc] init];
     filesInVerification = [[NSMutableSet alloc] init];
     
     return self;
@@ -31,7 +30,6 @@
 - (void)dealloc {
     [verificationQueue waitUntilAllOperationsAreFinished];
     [verificationQueue release];
-    [verificationResults release];
     [filesInVerification release];
     
     [super dealloc];
@@ -198,19 +196,13 @@
             
             
             if(result != nil)
-                [self performSelectorOnMainThread:@selector(addResults:) 
-                                       withObject:result
-                                    waitUntilDone:YES];
+                [dataSource performSelectorOnMainThread:@selector(addResults:) 
+                                             withObject:result
+                                          waitUntilDone:YES];
             
             [pool release];
         }];
     }
-}
-
-- (void)addResults:(NSDictionary*)results {
-    [self willChangeValueForKey:@"verificationResults"];
-    [verificationResults addObject:results];
-    [self didChangeValueForKey:@"verificationResults"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath 
