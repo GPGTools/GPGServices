@@ -95,8 +95,6 @@
     result = [NSDictionary dictionaryWithObjectsAndKeys:
               [file lastPathComponent], @"filename",
               verificationResult, @"verificationResult", 
-              [NSNumber numberWithBool:YES], @"verificationSucceeded",
-              bgColor, @"bgColor",
               nil];
     
     [self addResults:result];
