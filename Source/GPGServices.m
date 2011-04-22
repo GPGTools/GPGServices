@@ -17,6 +17,8 @@
 #import "ZipKit/ZKArchive.h"
 #import "NSPredicate+negate.h"
 
+#define SIZE_WARNING_LEVEL_IN_MB 10
+
 @implementation GPGServices
 
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -637,6 +639,20 @@
 }
 
 - (void)signFiles:(NSArray*)files {     
+    long double megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / 1048576.0;
+    
+    if(megabytes > SIZE_WARNING_LEVEL_IN_MB) {
+        int ret = [[NSAlert alertWithMessageText:@"Large File(s)"
+                                   defaultButton:@"Continue"
+                                 alternateButton:@"Cancel"
+                                     otherButton:nil
+                       informativeTextWithFormat:@"Encryption will take a long time.\nPress 'Cancel' to abort."] 
+                   runModal];
+        
+        if(ret == NSAlertAlternateReturn)
+            return;
+    }
+    
     GPGKey* chosenKey = [GPGServices myPrivateKey];
     
     NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
@@ -718,7 +734,7 @@
         }
         
         //GPGData* gpgData = nil;
-        double megabytes = 0;
+        long double megabytes = 0;
         NSString* destination = nil;
         
         NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
@@ -777,7 +793,7 @@
         NSLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
                                                                   numberStyle:NSNumberFormatterDecimalStyle]);        
         
-        if(megabytes > 10) {
+        if(megabytes > SIZE_WARNING_LEVEL_IN_MB) {
             int ret = [[NSAlert alertWithMessageText:@"Large File(s)"
                                        defaultButton:@"Continue"
                                      alternateButton:@"Cancel"
