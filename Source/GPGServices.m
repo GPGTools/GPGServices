@@ -11,6 +11,7 @@
 #import "RecipientWindowController.h"
 #import "KeyChooserWindowController.h"
 #import "FileVerificationController.h"
+#import "FileVerificationDummyController.h"
 
 #import "ZipOperation.h"
 #import "ZipKit/ZKArchive.h"
@@ -839,6 +840,8 @@
     
     unsigned int decryptedFilesCount = 0;
     
+    FileVerificationDummyController* dummyController = nil;
+    
     for(NSString* file in files) {
         BOOL isDirectory = NO;
         @try {
@@ -861,13 +864,16 @@
                 
                 if(signatures && signatures.count > 0) {
                     NSLog(@"found signatures: %@", signatures);
+
+                    if(dummyController == nil) {
+                        dummyController = [[FileVerificationDummyController alloc]
+                                           initWithWindowNibName:@"VerificationResultsWindow"];
+                        [dummyController showWindow:self];   
+                        //dummyController will do its own release when 'ok' is clicked
+                    }
                     
-                    GPGSignature* sig = [signatures objectAtIndex:0];
-                    if(GPGErrorCodeFromError([sig status]) == GPGErrorNoError) {
-                        [self displaySignatureVerificationForSig:sig];
-                    } else {
-                        [self displayMessageWindowWithTitleText:@"Verification FAILED."
-                                                       bodyText:GPGErrorDescription([sig status])];
+                    for(GPGSignature* sig in signatures) {
+                        [dummyController addResultFromSig:sig forFile:file];
                     }
                 }
             }

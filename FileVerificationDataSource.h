@@ -8,13 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@class GPGSignature;
 
 @interface FileVerificationDataSource : NSObject {
     NSMutableArray* verificationResults;
+    BOOL isActive;
 }
 
 @property(readonly) NSArray* verificationResults;
+@property(assign) BOOL isActive;
 
 - (void)addResults:(NSDictionary*)results;
+- (void)addResultFromSig:(GPGSignature*)sig forFile:(NSString*)file;
 
 @end

@@ -49,7 +49,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSWindowTemplate" id="1005">
-				<int key="NSWindowStyleMask">15</int>
+				<int key="NSWindowStyleMask">11</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 240}, {502, 259}}</string>
 				<int key="NSWTFlags">544735232</int>
@@ -333,7 +333,7 @@
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 			</object>
-			<object class="NSCustomObject" id="159954332">
+			<object class="NSCustomObject" id="197083449">
 				<string key="NSClassName">FileVerificationDataSource</string>
 			</object>
 		</object>
@@ -416,7 +416,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="159954332"/>
+						<reference key="destination" ref="197083449"/>
 					</object>
 					<int key="connectionID">113</int>
 				</object>
@@ -424,10 +424,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">contentArray: self.verificationResults</string>
 						<reference key="source" ref="524010493"/>
-						<reference key="destination" ref="159954332"/>
+						<reference key="destination" ref="197083449"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="524010493"/>
-							<reference key="NSDestination" ref="159954332"/>
+							<reference key="NSDestination" ref="197083449"/>
 							<string key="NSLabel">contentArray: self.verificationResults</string>
 							<string key="NSBinding">contentArray</string>
 							<string key="NSKeyPath">self.verificationResults</string>
@@ -576,7 +576,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">112</int>
-						<reference key="object" ref="159954332"/>
+						<reference key="object" ref="197083449"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</object>
@@ -617,7 +617,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{357, 418}, {480, 270}}</string>
-					<integer value="1"/>
+					<boolean value="NO"/>
 					<string>{196, 240}</string>
 					<string>{{357, 418}, {480, 270}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
