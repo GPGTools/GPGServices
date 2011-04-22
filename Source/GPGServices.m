@@ -870,6 +870,8 @@
                                            initWithWindowNibName:@"VerificationResultsWindow"];
                         [dummyController showWindow:self];   
                         //dummyController will do its own release when 'ok' is clicked
+                        
+                        dummyController.isActive = YES;
                     }
                     
                     for(GPGSignature* sig in signatures) {
@@ -900,6 +902,8 @@
             }
         } 
     }
+    
+    dummyController.isActive = NO;
     
     if(decryptedFilesCount > 0)
         [GrowlApplicationBridge notifyWithTitle:@"Decryption finished"

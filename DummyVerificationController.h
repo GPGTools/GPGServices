@@ -16,7 +16,11 @@
     IBOutlet NSTableView* tableView;
     IBOutlet NSProgressIndicator* indicator;
     IBOutlet FileVerificationDataSource* dataSource;
+    
+    BOOL isActive;
 }
+
+@property(assign) BOOL isActive;
 
 - (void)addResults:(NSDictionary*)results;
 - (void)addResultFromSig:(GPGSignature*)sig forFile:(NSString*)file;

@@ -11,6 +11,16 @@
 
 @implementation DummyVerificationController
 
+@synthesize isActive;
+
+- (id)initWithWindowNibName:(NSString *)windowNibName {
+    self = [super initWithWindowNibName:windowNibName];
+    
+    [self bind:@"isActive" toObject:dataSource withKeyPath:@"isActive" options:nil];
+    
+    return self;
+}
+
 - (void)addResults:(NSDictionary*)results {
     [dataSource addResults:results];
 }
