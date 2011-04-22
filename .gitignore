@@ -1,6 +1,7 @@
 # Xcode
 build/*
 Dependencies/zipkit/build/*
+build.log
 *.pbxuser
 !default.pbxuser
 *.mode1v3
