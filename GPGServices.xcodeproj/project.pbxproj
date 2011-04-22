@@ -34,7 +34,7 @@
 		8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */; };
 		8EF7A61D1334C05300FD8C5B /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 		8EFFC2271360FBAC00712940 /* FileVerificationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFC2261360FBAC00712940 /* FileVerificationDataSource.m */; };
-		8EFFC22A1361009400712940 /* FileVerificationDummyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFC2291361009400712940 /* FileVerificationDummyController.m */; };
+		8EFFC22A1361009400712940 /* DummyVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFC2291361009400712940 /* DummyVerificationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,8 +152,8 @@
 		8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSPredicate+negate.m"; path = "Source/NSPredicate+negate.m"; sourceTree = "<group>"; };
 		8EFFC2251360FBAC00712940 /* FileVerificationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileVerificationDataSource.h; sourceTree = "<group>"; };
 		8EFFC2261360FBAC00712940 /* FileVerificationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileVerificationDataSource.m; sourceTree = "<group>"; };
-		8EFFC2281361009400712940 /* FileVerificationDummyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileVerificationDummyController.h; sourceTree = "<group>"; };
-		8EFFC2291361009400712940 /* FileVerificationDummyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileVerificationDummyController.m; sourceTree = "<group>"; };
+		8EFFC2281361009400712940 /* DummyVerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DummyVerificationController.h; sourceTree = "<group>"; };
+		8EFFC2291361009400712940 /* DummyVerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DummyVerificationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,8 +295,8 @@
 				8E935E64135128C6004E3E4F /* FileVerificationController.m */,
 				8EFFC2251360FBAC00712940 /* FileVerificationDataSource.h */,
 				8EFFC2261360FBAC00712940 /* FileVerificationDataSource.m */,
-				8EFFC2281361009400712940 /* FileVerificationDummyController.h */,
-				8EFFC2291361009400712940 /* FileVerificationDummyController.m */,
+				8EFFC2281361009400712940 /* DummyVerificationController.h */,
+				8EFFC2291361009400712940 /* DummyVerificationController.m */,
 			);
 			name = "UI Classes";
 			sourceTree = "<group>";
@@ -449,7 +449,7 @@
 				8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */,
 				8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */,
 				8EFFC2271360FBAC00712940 /* FileVerificationDataSource.m in Sources */,
-				8EFFC22A1361009400712940 /* FileVerificationDummyController.m in Sources */,
+				8EFFC22A1361009400712940 /* DummyVerificationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

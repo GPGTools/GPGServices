@@ -144,7 +144,6 @@
                     NSDictionary* result = [NSDictionary dictionaryWithObjectsAndKeys:
                                             [signedFile lastPathComponent], @"filename",
                                             verificationResult, @"verificationResult", 
-                                            bgColor, @"bgColor",
                                             nil];
                     
                     [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {

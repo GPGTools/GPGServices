@@ -11,7 +11,7 @@
 #import "RecipientWindowController.h"
 #import "KeyChooserWindowController.h"
 #import "FileVerificationController.h"
-#import "FileVerificationDummyController.h"
+#import "DummyVerificationController.h"
 
 #import "ZipOperation.h"
 #import "ZipKit/ZKArchive.h"
@@ -840,7 +840,7 @@
     
     unsigned int decryptedFilesCount = 0;
     
-    FileVerificationDummyController* dummyController = nil;
+    DummyVerificationController* dummyController = nil;
     
     for(NSString* file in files) {
         BOOL isDirectory = NO;
@@ -866,7 +866,7 @@
                     NSLog(@"found signatures: %@", signatures);
 
                     if(dummyController == nil) {
-                        dummyController = [[FileVerificationDummyController alloc]
+                        dummyController = [[DummyVerificationController alloc]
                                            initWithWindowNibName:@"VerificationResultsWindow"];
                         [dummyController showWindow:self];   
                         //dummyController will do its own release when 'ok' is clicked
