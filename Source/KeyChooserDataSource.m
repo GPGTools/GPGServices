@@ -11,7 +11,7 @@
 
 @implementation KeyChooserDataSource
 
-@synthesize availableKeys, selectedIndex, keyDescriptions;
+@synthesize availableKeys, selectedIndex, keyDescriptions, keyValidator;
 
 - (GPGKey*)selectedKey {
     if(self.selectedIndex < self.availableKeys.count)
@@ -27,17 +27,6 @@
     [self didChangeValueForKey:@"selectedKey"];
     
     self.selectedIndex = [self.availableKeys indexOfObject:selKey];
-}
-
-- (void)setKeyValidator:(KeyValidatorT)kv {
-    [self willChangeValueForKey:@"keyValidator"];
-    [keyValidator release];
-    keyValidator = [kv retain];
-    [self didChangeValueForKey:@"keyValidator"];
-}
-
-- (KeyValidatorT)keyValidator {
-    return keyValidator;
 }
 
 - (id)init {
