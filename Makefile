@@ -20,7 +20,7 @@ install: compile
 	@./Dependencies/GPGTools_Core/bin/ServicesRestart
 	@echo "Go to 'Preferences>Keyboard>Shortcuts>Services>Text>..."
 
-dmg: compile update
+dmg: compile update clean-gpgservices
 	@./Dependencies/GPGTools_Core/scripts/create_dmg.sh
 
 clean-gpgme:
