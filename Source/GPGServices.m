@@ -945,22 +945,48 @@
 }
 
 - (void)importFiles:(NSArray*)files {
-    NSDictionary *importedKeys = nil;
 	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
     
+    NSUInteger foundKeysCount = 0; //Track valid key-files
     NSUInteger importedKeyCount = 0;
     NSUInteger importedSecretKeyCount = 0;
     NSUInteger newRevocationCount = 0;
     
     for(NSString* file in files) {
+        if([[self isDirectoryPredicate] evaluateWithObject:file] == YES) {
+            [GrowlApplicationBridge notifyWithTitle:@"Can't import keys from directory"
+                                        description:[file lastPathComponent]
+                                   notificationName:gpgGrowlOperationFailedName
+                                           iconData:[NSData data]
+                                           priority:0
+                                           isSticky:NO
+                                       clickContext:file];
+            
+            continue; //Shortcut all following code, go to next file
+        }
+        
         GPGData* inputData = [[[GPGData alloc] initWithDataNoCopy:[NSData dataWithContentsOfFile:file]] autorelease];
         
         @try {
-            importedKeys = [aContext importKeyData:inputData];
+            NSDictionary* importResults = [aContext importKeyData:inputData];
+            NSDictionary* changedKeys = [importResults valueForKey:GPGChangesKey];
             
-            importedKeyCount += [[importedKeys valueForKey:@"importedKeyCount"] intValue];
-            importedSecretKeyCount += [[importedKeys valueForKey:@"importedSecretKeyCount"] intValue];
-            newRevocationCount += [[importedKeys valueForKey:@"newRevocationCount"] intValue];
+            if(changedKeys.count > 0) {
+                ++foundKeysCount;
+                
+                importedKeyCount += [[importResults valueForKey:@"importedKeyCount"] unsignedIntValue];
+                importedSecretKeyCount += [[importResults valueForKey:@"importedSecretKeyCount"] unsignedIntValue];
+                newRevocationCount += [[importResults valueForKey:@"newRevocationCount"] unsignedIntValue];
+            } else {  
+                //Show growl notification
+                [GrowlApplicationBridge notifyWithTitle:@"No importable Keys found"
+                                            description:[file lastPathComponent]
+                                       notificationName:gpgGrowlOperationFailedName
+                                               iconData:[NSData data]
+                                               priority:0
+                                               isSticky:NO
+                                           clickContext:file];
+            }    
         } @catch(NSException* localException) {
             [self displayMessageWindowWithTitleText:@"Import result:"
                                            bodyText:GPGErrorDescription([[[localException userInfo] 
@@ -968,15 +994,18 @@
         }
     }
     
-    [[NSAlert alertWithMessageText:@"Import result:"
-                     defaultButton:@"Ok"
-                   alternateButton:nil
-                       otherButton:nil
-         informativeTextWithFormat:@"%i key(s), %i secret key(s), %i revocation(s) ",
-      importedKeyCount,
-      importedSecretKeyCount,
-      newRevocationCount]
-     runModal];     
+    //Don't show result window when there were no imported keys
+    if(foundKeysCount > 0) {
+        [[NSAlert alertWithMessageText:@"Import result:"
+                         defaultButton:@"Ok"
+                       alternateButton:nil
+                           otherButton:nil
+             informativeTextWithFormat:@"%i key(s), %i secret key(s), %i revocation(s) ",
+          importedKeyCount,
+          importedSecretKeyCount,
+          newRevocationCount]
+         runModal];     
+    }
 }
 
 #pragma mark - NSPredicates for filtering file arrays
