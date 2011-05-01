@@ -32,6 +32,7 @@
 }
 
 - (NSInteger)runModal {
+    [NSApp activateIgnoringOtherApps:YES];
 	[self showWindow:self];
 	NSInteger ret = [NSApp runModalForWindow:self.window];
 	[self.window close];
