@@ -555,9 +555,36 @@
     }
 }
 
+- (unsigned long long)sizeOfFile:(NSString*)file {
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+
+    if([fmgr fileExistsAtPath:file]) {
+        NSError* err = nil;
+        NSDictionary* fileDictionary = [fmgr attributesOfItemAtPath:file error:&err];
+        
+        if([fileDictionary valueForKey:NSFileType] == NSFileTypeSymbolicLink) {
+            NSString* destFile = [fmgr destinationOfSymbolicLinkAtPath:file error:&err];
+            
+            if(!err) {
+                fileDictionary = [fmgr attributesOfItemAtPath:destFile error:&err];
+            } else {
+                NSLog(@"error with symbolic link in folderSize: %@", [err description]);
+                err = nil;
+            }
+        }
+        
+        if(err)
+            NSLog(@"error in folderSize: %@", [err description]);
+        else
+            return [[fileDictionary valueForKey:NSFileSize] unsignedLongLongValue];
+    }
+    
+    return 0;
+}
+
 - (NSNumber*)folderSize:(NSString *)folderPath {
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
-    NSArray *filesArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:folderPath error:nil];
+    NSArray *filesArray = [fmgr subpathsOfDirectoryAtPath:folderPath error:nil];
     NSEnumerator *filesEnumerator = [filesArray objectEnumerator];
     NSString *fileName = nil;
     unsigned long long int fileSize = 0;
@@ -565,12 +592,7 @@
     while((fileName = [filesEnumerator nextObject]) != nil) {
         fileName = [folderPath stringByAppendingPathComponent:fileName];
         
-        NSError* err = nil;
-        NSDictionary* fileDictionary = [fmgr attributesOfItemAtPath:fileName error:&err];
-        if(err)
-            NSLog(@"error in folderSize: %@", [err description]);
-        else
-            fileSize += [[fileDictionary valueForKey:NSFileSize] unsignedLongLongValue];
+        fileSize += [self sizeOfFile:fileName];
     }
     
     return [NSNumber numberWithUnsignedLongLong:fileSize];
@@ -586,15 +608,9 @@
         BOOL exists = [fmgr fileExistsAtPath:file isDirectory:&isDirectory];
         if(exists && isDirectory)
             size += [[self folderSize:file] unsignedLongLongValue];
-        else if(exists) {
-            NSError* err = nil;
-            NSDictionary* fileDictionary = [fmgr attributesOfItemAtPath:file error:&err];
-            if(err)
-                NSLog(@"error in folderSize: %@", [err description]);
-            else
-                size += [[fileDictionary valueForKey:NSFileSize] unsignedLongLongValue];
-        }
-    }];
+        else if(exists) 
+            size += [self sizeOfFile:file];
+        }];
     
     return [NSNumber numberWithUnsignedLongLong:size];
 }
@@ -765,8 +781,7 @@
                     return operation.zipData;
                 };
             } else if(exists) {
-                NSError* error = nil;
-                NSNumber* fileSize = [[fmgr attributesOfItemAtPath:file error:&error] valueForKey:NSFileSize];
+                NSNumber* fileSize = [self sizeOfFiles:[NSArray arrayWithObject:file]];
                 megabytes = [fileSize unsignedLongLongValue] / 1048576;
                 destination = [file stringByAppendingString:@".gpg"];
                 dataProvider = ^{
