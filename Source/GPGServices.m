@@ -587,7 +587,12 @@
         if(exists && isDirectory)
             size += [[self folderSize:file] unsignedLongLongValue];
         else if(exists) {
-            size += [[[fmgr attributesOfItemAtPath:file error:NULL] valueForKey:NSFileSize] unsignedLongLongValue];
+            NSError* err = nil;
+            NSDictionary* fileDictionary = [fmgr attributesOfItemAtPath:file error:&err];
+            if(err)
+                NSLog(@"error in folderSize: %@", [err description]);
+            else
+                size += [[fileDictionary valueForKey:NSFileSize] unsignedLongLongValue];
         }
     }];
     
