@@ -74,10 +74,9 @@
 	@try {
         importedKeys = [aContext importKeyData:inputData];
 	} @catch(NSException* localException) {
-        [self displayMessageWindowWithTitleText:@"Import result:"
-                                       bodyText:GPGErrorDescription([[[localException userInfo] 
-                                                                      objectForKey:@"GPGErrorKey"]                                                              intValue])];
-        
+        [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
+                                                  message:GPGErrorDescription([[[localException userInfo] 
+                                                                                objectForKey:@"GPGErrorKey"]                                                              intValue])];
         return;
 	} @finally {
         [inputData release];
@@ -296,8 +295,8 @@
         }
 	} @catch(NSException* localException) {
         GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-        [self displayMessageWindowWithTitleText:@"Exporting key failed."
-                                       bodyText:GPGErrorDescription(error)];
+        [self displayOperationFailedNotificationWithTitle:@"Exporting key failed"
+                                                  message:GPGErrorDescription(error)];
         return nil;
 	} @finally {
         [ctx release];
@@ -337,16 +336,16 @@
         }
         
         if(privateKey == nil) {
-            [self displayMessageWindowWithTitleText:@"Encryption failed." 
-                                           bodyText:@"No usable private key found"];
+            [self displayOperationFailedNotificationWithTitle:@"Encryption failed." 
+                                           message:@"No usable private key found"];
             [inputData release];
             [aContext release];
             return nil;
         }
         
         if(validRecipients.count == 0) {
-            [self displayMessageWindowWithTitleText:@"Encryption failed."
-                                           bodyText:@"No valid recipients found"];
+            [self displayOperationFailedNotificationWithTitle:@"Encryption failed."
+                                                      message:@"No valid recipients found"];
             
             [inputData release];
             [aContext release];
@@ -365,15 +364,15 @@
             switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
             {
                 case GPGErrorNoData:
-                    [self displayMessageWindowWithTitleText:@"Encryption failed."  
-                                                   bodyText:@"No encryptable text was found within the selection."];
+                    [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
+                                                              message:@"No encryptable text was found within the selection."];
                     break;
                 case GPGErrorCancelled:
                     break;
                 default: {
                     GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-                    [self displayMessageWindowWithTitleText:@"Encryption failed."  
-                                                   bodyText:GPGErrorDescription(error)];
+                    [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
+                                                              message:GPGErrorDescription(error)];
                 }
             }
             return nil;
@@ -401,15 +400,15 @@
         switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
         {
             case GPGErrorNoData:
-                [self displayMessageWindowWithTitleText:@"Decryption failed."
-                                               bodyText:@"No decryptable text was found within the selection."];
+                [self displayOperationFailedNotificationWithTitle:@"Decryption failed."
+                                                          message:@"No decryptable text was found within the selection."];
                 break;
             case GPGErrorCancelled:
                 break;
             default: {
                 GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-                [self displayMessageWindowWithTitleText:@"Decryption failed." 
-                                               bodyText:GPGErrorDescription(error)];
+                [self displayOperationFailedNotificationWithTitle:@"Decryption failed." 
+                                                          message:GPGErrorDescription(error)];
             }
         }
         return nil;
@@ -464,28 +463,30 @@
         outputData = [aContext signedData:inputData signatureMode:GPGSignatureModeClear];
 	} @catch(NSException* localException) {
         outputData = nil;
+        NSString* errorMessage = nil;
         switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
         {
             case GPGErrorNoData:
-                [self displayMessageWindowWithTitleText:@"Signing failed."
-                                               bodyText:@"No signable text was found within the selection."];
+                errorMessage = @"No signable text was found within the selection.";
                 break;
             case GPGErrorBadPassphrase:
-                [self displayMessageWindowWithTitleText:@"Signing failed."
-                                               bodyText:@"The passphrase is incorrect."];
+                errorMessage = @"The passphrase is incorrect.";
                 break;
             case GPGErrorUnusableSecretKey:
-                [self displayMessageWindowWithTitleText:@"Signing failed."
-                                               bodyText:@"The default secret key is unusable."];
+                errorMessage = @"The default secret key is unusable.";
                 break;
             case GPGErrorCancelled:
                 break;
             default: {
                 GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-                [self displayMessageWindowWithTitleText:@"Signing failed."
-                                               bodyText:GPGErrorDescription(error)];
+                errorMessage = GPGErrorDescription(error);
             }
         }
+        
+        if(errorMessage != nil)
+            [self displayMessageWindowWithTitleText:@"Signing failed."
+                                           bodyText:errorMessage];
+        
         return nil;
 	} @finally {
         [inputData release];
@@ -512,8 +513,8 @@
             if(GPGErrorCodeFromError([sig status])==GPGErrorNoError) {
                 [self displaySignatureVerificationForSig:sig];
             } else {
-                [self displayMessageWindowWithTitleText:@"Verification FAILED."
-                                               bodyText:GPGErrorDescription([sig status])];
+                [self displayOperationFailedNotificationWithTitle:@"Verification FAILED."
+                                                          message:GPGErrorDescription([sig status])];
             }
         }
         else {
@@ -521,18 +522,18 @@
             //[self displayMessageWindowWithTitleText:@"Verification error."
             //                               bodyText:@"Unable to verify due to an internal error"];
             
-            [self displayMessageWindowWithTitleText:@"Verification failed." 
-                                           bodyText:@"No signatures found within the selection."];
+            [self displayOperationFailedNotificationWithTitle:@"Verification failed." 
+                                                      message:@"No signatures found within the selection."];
         }
         
 	} @catch(NSException* localException) {
         if(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])==GPGErrorNoData)
-            [self displayMessageWindowWithTitleText:@"Verification failed." 
-                                           bodyText:@"No verifiable text was found within the selection"];
+            [self displayOperationFailedNotificationWithTitle:@"Verification failed." 
+                                                      message:@"No verifiable text was found within the selection"];
         else {
             GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-            [self displayMessageWindowWithTitleText:@"Verification failed." 
-                                           bodyText:GPGErrorDescription(error)];
+            [self displayOperationFailedNotificationWithTitle:@"Verification failed." 
+                                                      message:GPGErrorDescription(error)];
         }
         return;
 	} @finally {
@@ -788,8 +789,8 @@
                     return (NSData*)[NSData dataWithContentsOfFile:file];
                 };
             } else {    
-                [self displayMessageWindowWithTitleText:@"File doesn't exist"
-                                               bodyText:@"Please try again"];
+                [self displayOperationFailedNotificationWithTitle:@"File doesn't exist"
+                                                          message:@"Please try again"];
                 return;
             }
         } else if(files.count > 1) {
@@ -923,15 +924,15 @@
         } @catch (NSException* localException) {
             switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])) {
                 case GPGErrorNoData:
-                    [self displayMessageWindowWithTitleText:@"Decryption failed."
-                                                   bodyText:@"No decryptable data was found."];
+                    [self displayOperationFailedNotificationWithTitle:@"Decryption failed."
+                                                              message:@"No decryptable data was found."];
                     break;
                 case GPGErrorCancelled:
                     break;
                 default: {
                     GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-                    [self displayMessageWindowWithTitleText:@"Decryption failed." 
-                                                   bodyText:GPGErrorDescription(error)];
+                    [self displayOperationFailedNotificationWithTitle:@"Decryption failed." 
+                                                              message:GPGErrorDescription(error)];
                 }
             }
         } 
@@ -1008,9 +1009,10 @@
                                            clickContext:file];
             }    
         } @catch(NSException* localException) {
-            [self displayMessageWindowWithTitleText:@"Import result:"
-                                           bodyText:GPGErrorDescription([[[localException userInfo] 
-                                                                          objectForKey:@"GPGErrorKey"]                                                              intValue])];
+            if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
+                [self displayOperationFailedNotificationWithTitle:@"Import failed:"
+                                                          message:GPGErrorDescription([[[localException userInfo] 
+                                                                                        objectForKey:@"GPGErrorKey"]                                                              intValue])];
         }
     }
     
@@ -1249,6 +1251,34 @@
                    alternateButton:nil
                        otherButton:nil
          informativeTextWithFormat:[NSString stringWithFormat:@"%@", body]] runModal];
+}
+
+- (void)displayOperationFinishedNotificationWithTitle:(NSString*)title message:(NSString*)body {
+    if([GrowlApplicationBridge isGrowlRunning]) {
+        [GrowlApplicationBridge notifyWithTitle:title
+                                    description:body
+                               notificationName:gpgGrowlOperationSucceededName
+                                       iconData:[NSData data]
+                                       priority:0
+                                       isSticky:NO
+                                   clickContext:NULL];
+    } else {
+        [self displayMessageWindowWithTitleText:title bodyText:body];
+    }
+}
+
+- (void)displayOperationFailedNotificationWithTitle:(NSString*)title message:(NSString*)body {
+    if([GrowlApplicationBridge isGrowlRunning]) {
+        [GrowlApplicationBridge notifyWithTitle:title
+                                    description:body
+                               notificationName:gpgGrowlOperationFailedName
+                                       iconData:[NSData data]
+                                       priority:0
+                                       isSticky:NO
+                                   clickContext:NULL];
+    } else {
+        [self displayMessageWindowWithTitleText:title bodyText:body];
+    }
 }
 
 - (void)displaySignatureVerificationForSig:(GPGSignature*)sig {

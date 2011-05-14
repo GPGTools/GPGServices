@@ -126,15 +126,17 @@ typedef enum {
 #pragma mark -
 #pragma mark UI Helpher
 
--(void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body;
+- (void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body;
+- (void)displayOperationFinishedNotificationWithTitle:(NSString*)title message:(NSString*)body;
+- (void)displayOperationFailedNotificationWithTitle:(NSString*)title message:(NSString*)body;
 - (void)displaySignatureVerificationForSig:(GPGSignature*)sig;
--(NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again;
--(IBAction)closeModalWindow:(id)sender;
+- (NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again;
+- (IBAction)closeModalWindow:(id)sender;
 - (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path
                          withSuggestedExtension:(NSString*)ext;
 
--(void)cancelTerminateTimer;
--(void)goneIn60Seconds;
--(void)selfQuit:(NSTimer *)timer;
+- (void)cancelTerminateTimer;
+- (void)goneIn60Seconds;
+- (void)selfQuit:(NSTimer *)timer;
 
 @end
