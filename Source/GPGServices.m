@@ -648,13 +648,9 @@
         
         return sigFile;
     } @catch (NSException* e) {
-        [GrowlApplicationBridge notifyWithTitle:@"Signing failed"
-                                    description:[file lastPathComponent]
-                               notificationName:gpgGrowlOperationFailedName
-                                       iconData:[NSData data]
-                                       priority:0
-                                       isSticky:NO
-                                   clickContext:file];
+        if([GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
+            [self displayOperationFailedNotificationWithTitle:@"Signing failed"
+                                                      message:[file lastPathComponent]];
     }
     
     return nil;
@@ -703,13 +699,9 @@
         }
         
         if(signedFilesCount > 0) {
-            [GrowlApplicationBridge notifyWithTitle:@"Signing finished"
-                                        description:[NSString stringWithFormat:@"Finished signing %i file(s)", files.count]
-                                   notificationName:gpgGrowlOperationSucceededName
-                                           iconData:[NSData data]
-                                           priority:0
-                                           isSticky:NO
-                                       clickContext:files];
+            [self displayOperationFinishedNotificationWithTitle:@"Signing finished"
+                                                        message:[NSString 
+                                                                 stringWithFormat:@"Finished signing %i file(s)", files.count]];
         }
     }
 }
@@ -847,23 +839,10 @@
         }
         
         if(encrypted == nil) {
-            [GrowlApplicationBridge notifyWithTitle:@"Encryption failed"
-                                        description:destination
-                                   notificationName:gpgGrowlOperationFailedName
-                                           iconData:[NSData data]
-                                           priority:0
-                                           isSticky:NO
-                                       clickContext:destination];
+            [self displayOperationFailedNotificationWithTitle:@"Encryption failed" message:[destination lastPathComponent]];
         } else {
             [encrypted.data writeToFile:destination atomically:YES];
-            
-            [GrowlApplicationBridge notifyWithTitle:@"Encryption finished"
-                                        description:[destination lastPathComponent]
-                                   notificationName:gpgGrowlOperationSucceededName
-                                           iconData:[NSData data]
-                                           priority:0
-                                           isSticky:NO
-                                       clickContext:destination];
+            [self displayOperationFinishedNotificationWithTitle:@"Encryption finished" message:[destination lastPathComponent]];
         }
     }
 }
@@ -941,13 +920,8 @@
     dummyController.isActive = NO;
     
     if(decryptedFilesCount > 0)
-        [GrowlApplicationBridge notifyWithTitle:@"Decryption finished"
-                                    description:[NSString stringWithFormat:@"Finished decrypting %i file(s)", files.count]
-                               notificationName:gpgGrowlOperationSucceededName
-                                       iconData:[NSData data]
-                                       priority:0
-                                       isSticky:NO
-                                   clickContext:files];
+        [self displayOperationFinishedNotificationWithTitle:@"Decryption finished" 
+                                                    message:[NSString stringWithFormat:@"Finished decrypting %i file(s)", files.count]];
     
     [dummyController runModal];
     [dummyController release];
@@ -975,14 +949,9 @@
     
     for(NSString* file in files) {
         if([[self isDirectoryPredicate] evaluateWithObject:file] == YES) {
-            [GrowlApplicationBridge notifyWithTitle:@"Can't import keys from directory"
-                                        description:[file lastPathComponent]
-                                   notificationName:gpgGrowlOperationFailedName
-                                           iconData:[NSData data]
-                                           priority:0
-                                           isSticky:NO
-                                       clickContext:file];
-            
+            if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
+                [self displayOperationFailedNotificationWithTitle:@"Can't import keys from directory"
+                                                          message:[file lastPathComponent]];
             continue; //Shortcut all following code, go to next file
         }
         
@@ -998,15 +967,9 @@
                 importedKeyCount += [[importResults valueForKey:@"importedKeyCount"] unsignedIntValue];
                 importedSecretKeyCount += [[importResults valueForKey:@"importedSecretKeyCount"] unsignedIntValue];
                 newRevocationCount += [[importResults valueForKey:@"newRevocationCount"] unsignedIntValue];
-            } else {  
-                //Show growl notification
-                [GrowlApplicationBridge notifyWithTitle:@"No importable Keys found"
-                                            description:[file lastPathComponent]
-                                       notificationName:gpgGrowlOperationFailedName
-                                               iconData:[NSData data]
-                                               priority:0
-                                               isSticky:NO
-                                           clickContext:file];
+            } else if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) { //This is in a loop, so only display Growl... 
+                [self displayOperationFailedNotificationWithTitle:@"No importable Keys found"
+                                                          message:[file lastPathComponent]];
             }    
         } @catch(NSException* localException) {
             if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
