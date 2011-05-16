@@ -275,24 +275,7 @@
 								</dict>
 								<dict>
 									<key>CHILDREN</key>
-									<array>
-										<dict>
-											<key>CHILDREN</key>
-											<array/>
-											<key>GID</key>
-											<integer>80</integer>
-											<key>PATH</key>
-											<string>../build/Release/GPGServices.service</string>
-											<key>PATH_TYPE</key>
-											<integer>1</integer>
-											<key>PERMISSIONS</key>
-											<integer>493</integer>
-											<key>TYPE</key>
-											<integer>3</integer>
-											<key>UID</key>
-											<integer>0</integer>
-										</dict>
-									</array>
+									<array/>
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
@@ -333,6 +316,56 @@
 							<integer>1021</integer>
 							<key>TYPE</key>
 							<integer>1</integer>
+							<key>UID</key>
+							<integer>0</integer>
+						</dict>
+						<dict>
+							<key>CHILDREN</key>
+							<array>
+								<dict>
+									<key>CHILDREN</key>
+									<array>
+										<dict>
+											<key>CHILDREN</key>
+											<array/>
+											<key>GID</key>
+											<integer>80</integer>
+											<key>PATH</key>
+											<string>../build/Release/GPGServices.service</string>
+											<key>PATH_TYPE</key>
+											<integer>1</integer>
+											<key>PERMISSIONS</key>
+											<integer>493</integer>
+											<key>TYPE</key>
+											<integer>3</integer>
+											<key>UID</key>
+											<integer>501</integer>
+										</dict>
+									</array>
+									<key>GID</key>
+									<integer>80</integer>
+									<key>PATH</key>
+									<string>tmp</string>
+									<key>PATH_TYPE</key>
+									<integer>0</integer>
+									<key>PERMISSIONS</key>
+									<integer>509</integer>
+									<key>TYPE</key>
+									<integer>2</integer>
+									<key>UID</key>
+									<integer>0</integer>
+								</dict>
+							</array>
+							<key>GID</key>
+							<integer>80</integer>
+							<key>PATH</key>
+							<string>private</string>
+							<key>PATH_TYPE</key>
+							<integer>0</integer>
+							<key>PERMISSIONS</key>
+							<integer>509</integer>
+							<key>TYPE</key>
+							<integer>2</integer>
 							<key>UID</key>
 							<integer>0</integer>
 						</dict>
@@ -435,6 +468,8 @@
 				</dict>
 				<key>PAYLOAD_TYPE</key>
 				<integer>0</integer>
+				<key>SPLIT_FORKS</key>
+				<true/>
 				<key>VERSION</key>
 				<integer>1</integer>
 			</dict>
@@ -444,13 +479,6 @@
 				<dict>
 					<key>PATH</key>
 					<string>/Data/Temp/GPGServices/Installer/postflight.sh</string>
-					<key>PATH_TYPE</key>
-					<integer>0</integer>
-				</dict>
-				<key>PREINSTALL_PATH</key>
-				<dict>
-					<key>PATH</key>
-					<string>/Data/Temp/GPGServices/Installer/preflight.sh</string>
 					<key>PATH_TYPE</key>
 					<integer>0</integer>
 				</dict>
