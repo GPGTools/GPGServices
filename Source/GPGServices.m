@@ -102,7 +102,6 @@
     GPGController* context = [GPGController gpgController];
     
     NSMutableSet* keySet = [NSMutableSet set];
-    //for(GPGKey* k in [NSSet setWithArray:[[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects]]) {
     for(GPGKey* k in [context keysForSearchPattern:@""]) {
         if(k.secret == YES)
             [keySet addObject:k];
@@ -111,28 +110,22 @@
     return keySet;
 }
 
-/*
 + (GPGKey*)myPrivateKey {
-    GPGOptions *myOptions=[[GPGOptions alloc] init];
-	NSString *keyID=[myOptions optionValueForName:@"default-key"];
-	[myOptions release];
+    NSString* keyID = [[[GPGOptions sharedOptions] gpgConf] valueForKey:@"default-key"];
 	if(keyID == nil)
         return nil;
     
-	GPGContext *aContext = [[GPGContext alloc] init];
+    GPGController* controller = [GPGController gpgController];
     
 	@try {
-        GPGKey* defaultKey=[aContext keyFromFingerprint:keyID secretKey:YES];
-        return defaultKey;
+        GPGKey* key = [[controller keysForSearchPattern:keyID] anyObject];
+        NSAssert(key.secret == YES, @"myPrivateKey must return a secret key");
+        return key;
     } @catch (NSException* s) {
-        
-    } @finally {
-        [aContext release];
     }
     
     return nil;
 }
-*/
 
 #pragma mark -
 #pragma mark Validators
