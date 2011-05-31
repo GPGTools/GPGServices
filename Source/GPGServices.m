@@ -30,7 +30,6 @@
     [GrowlApplicationBridge setGrowlDelegate:self];
 }
 
-/*
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
     if([[filename pathExtension] isEqualToString:@"gpg"]) {
         NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
@@ -42,7 +41,6 @@
     
 	return NO;
 }
- */
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
@@ -546,6 +544,7 @@
         [aContext release];
     }
 }
+ */
 
 #pragma mark -
 #pragma mark File Stuff
@@ -621,6 +620,7 @@
     return [NSNumber numberWithUnsignedLongLong:size];
 }
 
+/*
 - (NSString*)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys {
     @try {
         //Generate .sig file
@@ -932,11 +932,9 @@
     [dummyController release];
 }
 
-
+ */
+ 
 - (void)verifyFiles:(NSArray*)files {
-    GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
-    [aContext setPassphraseDelegate:self];    
-    
     FileVerificationController* fvc = [[FileVerificationController alloc] init];
     fvc.filesToVerify = files;
     [fvc startVerification:nil];
@@ -944,6 +942,7 @@
     [fvc release];
 }
 
+/*
 - (void)importFiles:(NSArray*)files {
 	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
     
@@ -997,6 +996,7 @@
          runModal];     
     }
 }
+*/
 
 #pragma mark - NSPredicates for filtering file arrays
 
@@ -1016,7 +1016,6 @@
                 isDirectory);
     }] copy] autorelease];
 }
-*/
 
 #pragma mark -
 #pragma mark Service handling routines
