@@ -28,6 +28,8 @@
 	currentTerminateTimer=nil;
     
     [GrowlApplicationBridge setGrowlDelegate:self];
+    
+    NSLog(@"myKey: %@", [self myKey]);
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
@@ -102,7 +104,7 @@
     GPGController* context = [GPGController gpgController];
     
     NSMutableSet* keySet = [NSMutableSet set];
-    for(GPGKey* k in [context keysForSearchPattern:@""]) {
+    for(GPGKey* k in [context allKeys]) {
         if(k.secret == YES)
             [keySet addObject:k];
     }
@@ -186,27 +188,26 @@
     
     return [[block copy] autorelease];
 }
+*/
 
 + (KeyValidatorT)isActiveValidator {
-    // Copied from GPGMail's GPGMailBundle.m
-    KeyValidatorT block =  ^(GPGKey* key) {
+    KeyValidatorT block = ^(GPGKey* key) {
         
         // Secret keys are never marked as revoked! Use public key
-        key = [key publicKey];
+        key = [key primaryKey];
         
-        // If primary key itself can sign, that's OK (unlike what gpgme documentation says!)
-        if (![key hasKeyExpired] && 
-            ![key isKeyRevoked] && 
-            ![key isKeyInvalid] && 
-            ![key isKeyDisabled]) {
+        if (![key expired] && 
+            ![key revoked] && 
+            ![key invalid] && 
+            ![key disabled]) {
             return YES;
         }
         
         for (GPGSubkey *aSubkey in [key subkeys]) {
-            if (![aSubkey hasKeyExpired] && 
-                ![aSubkey isKeyRevoked] && 
-                ![aSubkey isKeyInvalid] && 
-                ![aSubkey isKeyDisabled]) {
+            if (![aSubkey expired] && 
+                ![aSubkey revoked] && 
+                ![aSubkey invalid] && 
+                ![aSubkey disabled]) {
                 return YES;
             }
         }
@@ -215,7 +216,6 @@
     
     return [[block copy] autorelease];
 }
-*/
 
 #pragma mark -
 #pragma mark Text Stuff
@@ -247,6 +247,7 @@
         return nil;
 }
 
+*/
 
 -(NSString *)myKey {
     GPGKey* selectedPrivateKey = [GPGServices myPrivateKey];
@@ -256,6 +257,8 @@
         return [GPGServices isActiveValidator]((GPGKey*)evaluatedObject);
     }]];
     
+    /*
+     //TODO: Re-Enable when KeyChooserWindowController is implemented
     if(selectedPrivateKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices isActiveValidator]];
@@ -267,17 +270,19 @@
         
         [wc release];
     }
+     */
+    
+    NSLog(@"selectedPrivateKey: %@", selectedPrivateKey);
     
     if(selectedPrivateKey == nil)
         return nil;
     
-    GPGContext* ctx = [[GPGContext alloc] init];
-    [ctx setUsesArmor:YES];
-    [ctx setUsesTextMode:YES];
+    GPGController* ctx = [GPGController gpgController];
+    ctx.useArmor = YES;
+    ctx.useTextMode = YES; //Propably not needed
     
-    NSData* keyData = nil;
     @try {
-        keyData = [[ctx exportedKeys:[NSArray arrayWithObject:selectedPrivateKey]] data];
+        NSData* keyData = [ctx exportKeys:[NSArray arrayWithObject:selectedPrivateKey] allowSecret:NO fullExport:NO];
         
         if(keyData == nil) {
             [[NSAlert alertWithMessageText:@"Exporting key failed." 
@@ -288,20 +293,19 @@
              runModal];
             
             return nil;
+        } else {
+            return [[[NSString alloc] initWithData:keyData 
+                                          encoding:NSUTF8StringEncoding] autorelease];
         }
 	} @catch(NSException* localException) {
-        GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
         [self displayOperationFailedNotificationWithTitle:@"Exporting key failed"
-                                                  message:GPGErrorDescription(error)];
-        return nil;
-	} @finally {
-        [ctx release];
-    }
+                                                  message:localException.reason];
+	}
     
-	return [[[NSString alloc] initWithData:keyData 
-                                  encoding:NSUTF8StringEncoding] autorelease];
+	return nil;
 }
 
+/*
 -(NSString *)encryptTextString:(NSString *)inputString
 {
     GPGContext *aContext = [[GPGContext alloc] init];
