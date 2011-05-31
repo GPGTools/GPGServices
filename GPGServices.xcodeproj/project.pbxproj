@@ -67,6 +67,27 @@
 			remoteGlobalIDString = 554B558F069F0111005E1C92;
 			remoteInfo = MacGPGME;
 		};
+		8E81D257139523890034B9D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Libmacgpg;
+		};
+		8E81D259139523890034B9D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 30C8B38E139503A800F49AA1;
+			remoteInfo = UnitTest;
+		};
+		8E81D25C139523DC0034B9D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = Libmacgpg;
+		};
 		8EDC4076133F650800D0A101 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
@@ -136,6 +157,7 @@
 		8E4A7AF51328C9A5007953BE /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
 		8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Growl Registration Ticket.growlRegDict"; path = "Resources/Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		8E7341A21334BC1C003CBCEB /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
+		8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Libmacgpg.xcodeproj; path = Dependencies/libmacgpg/Libmacgpg.xcodeproj; sourceTree = "<group>"; };
 		8E8837C313311E3E0044EFFF /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
 		8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyChooserWindowController.h; path = Source/KeyChooserWindowController.h; sourceTree = "<group>"; };
 		8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChooserWindowController.m; path = Source/KeyChooserWindowController.m; sourceTree = "<group>"; };
@@ -220,6 +242,7 @@
 		22CA686C12DFD8B400ED919C /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */,
 				22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */,
 				8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */,
 			);
@@ -306,6 +329,15 @@
 			name = "UI Classes";
 			sourceTree = "<group>";
 		};
+		8E81D250139523890034B9D1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8E81D258139523890034B9D1 /* Libmacgpg.framework */,
+				8E81D25A139523890034B9D1 /* UnitTest.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8EDC405C133F650800D0A101 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,6 +363,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8E81D25D139523DC0034B9D1 /* PBXTargetDependency */,
 				8EDC40F4133F6B3E00D0A101 /* PBXTargetDependency */,
 				22CA699412DFD9A800ED919C /* PBXTargetDependency */,
 			);
@@ -358,6 +391,10 @@
 			mainGroup = 29B97314FDCFA39411CA2CEA /* GPGServices */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 8E81D250139523890034B9D1 /* Products */;
+					ProjectRef = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
+				},
 				{
 					ProductGroup = 22CA687012DFD8D300ED919C /* Products */;
 					ProjectRef = 22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */;
@@ -394,6 +431,20 @@
 			fileType = wrapper.cfbundle;
 			path = MacGPGMETesting.octest;
 			remoteRef = 22CA687E12DFD8D300ED919C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8E81D258139523890034B9D1 /* Libmacgpg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Libmacgpg.framework;
+			remoteRef = 8E81D257139523890034B9D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8E81D25A139523890034B9D1 /* UnitTest.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTest.octest;
+			remoteRef = 8E81D259139523890034B9D1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		8EDC4077133F650800D0A101 /* ZipKit.framework */ = {
@@ -467,6 +518,11 @@
 			name = MacGPGME;
 			targetProxy = 22CA699312DFD9A800ED919C /* PBXContainerItemProxy */;
 		};
+		8E81D25D139523DC0034B9D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Libmacgpg;
+			targetProxy = 8E81D25C139523DC0034B9D1 /* PBXContainerItemProxy */;
+		};
 		8EDC40F4133F6B3E00D0A101 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ZipKit;
@@ -529,6 +585,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+					"$(SRCROOT)/Dependencies/Libmacgpg/build/Debug",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
@@ -550,8 +607,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/Dependencies/MacGPGME/build/Release",
-					"$(SRCROOT)/Dependencies/zipkit/build/Release",
+					"$(SRCROOT)/Dependencies/MacGPGME/build/Debug",
+					"$(SRCROOT)/Dependencies/zipkit/build/Debug",
 					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
