@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <MacGPGME/MacGPGME.h>
+//#import <MacGPGME/MacGPGME.h>
+#import "Libmacgpg/Libmacgpg.h"
 #import <Growl/Growl.h>
 
 typedef BOOL(^KeyValidatorT)(GPGKey* key);
@@ -84,7 +85,7 @@ typedef enum {
 
 - (NSString*)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys;
 - (void)signFiles:(NSArray*)files;
-- (GPGData*)signedGPGDataForGPGData:(GPGData*)dataToSign withKeys:(NSArray*)keys;
+- (NSData*)signedGPGDataForGPGData:(NSData*)dataToSign withKeys:(NSArray*)keys;
 - (void)encryptFiles:(NSArray*)files;
 - (void)decryptFiles:(NSArray*)files; 
 - (void)verifyFiles:(NSArray*)files;
@@ -130,7 +131,7 @@ typedef enum {
 - (void)displayOperationFinishedNotificationWithTitle:(NSString*)title message:(NSString*)body;
 - (void)displayOperationFailedNotificationWithTitle:(NSString*)title message:(NSString*)body;
 - (void)displaySignatureVerificationForSig:(GPGSignature*)sig;
-- (NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again;
+//- (NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again;
 - (IBAction)closeModalWindow:(id)sender;
 - (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path
                          withSuggestedExtension:(NSString*)ext;

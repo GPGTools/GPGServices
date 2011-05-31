@@ -65,6 +65,7 @@
 #pragma mark -
 #pragma mark GPG-Helper
 
+/*
 - (void)importKeyFromData:(NSData*)data {
     NSDictionary *importedKeys = nil;
 	GPGContext *aContext = [[GPGContext alloc] init];
@@ -97,20 +98,22 @@
 - (void)importKey:(NSString *)inputString {
     [self importKeyFromData:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 }
+*/
 
 + (NSSet*)myPrivateKeys {
-    GPGContext* context = [[GPGContext alloc] init];
+    GPGController* context = [GPGController gpgController];
     
     NSMutableSet* keySet = [NSMutableSet set];
-    for(GPGKey* k in [NSSet setWithArray:[[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects]]) {
-        [keySet addObject:[context refreshKey:k]];
+    //for(GPGKey* k in [NSSet setWithArray:[[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects]]) {
+    for(GPGKey* k in [context keysForSearchPattern:@""]) {
+        if(k.secret == YES)
+            [keySet addObject:k];
     }
-    
-    [context release];
-    
+        
     return keySet;
 }
 
+/*
 + (GPGKey*)myPrivateKey {
     GPGOptions *myOptions=[[GPGOptions alloc] init];
 	NSString *keyID=[myOptions optionValueForName:@"default-key"];
@@ -131,11 +134,12 @@
     
     return nil;
 }
-
+*/
 
 #pragma mark -
 #pragma mark Validators
 
+/*
 + (KeyValidatorT)canEncryptValidator {
     id block = ^(GPGKey* key) {
         // A subkey can be expired, without the key being, thus making key useless because it has
@@ -220,11 +224,12 @@
     
     return [[block copy] autorelease];
 }
-
+*/
 
 #pragma mark -
 #pragma mark Text Stuff
 
+/*
 -(NSString *)myFingerprint {
     GPGKey* chosenKey = [GPGServices myPrivateKey];
     
@@ -1011,7 +1016,7 @@
                 isDirectory);
     }] copy] autorelease];
 }
-
+*/
 
 #pragma mark -
 #pragma mark Service handling routines
@@ -1244,6 +1249,7 @@
     }
 }
 
+/*
 - (void)displaySignatureVerificationForSig:(GPGSignature*)sig {
     GPGContext* aContext = [[[GPGContext alloc] init] autorelease];
     NSString* userID = [[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
@@ -1256,7 +1262,9 @@
          informativeTextWithFormat:@"Good signature (%@ trust):\n\"%@\"",validity,userID]
      runModal];
 }
+ */
 
+/*
 -(NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again
 {
 	[passphraseText setStringValue:@""];
@@ -1268,7 +1276,7 @@
 	else
 		return nil;
 }
-
+*/
 
 -(IBAction)closeModalWindow:(id)sender{
 	[NSApp stopModalWithCode:[sender tag]];
