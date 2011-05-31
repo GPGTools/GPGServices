@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <MacGPGME/MacGPGME.h>
+//#import <MacGPGME/MacGPGME.h>
+#import "Libmacgpg/Libmacgpg.h"
 
 #import "KeyChooserDataSource.h"
 
@@ -16,7 +17,7 @@
 	IBOutlet NSSearchField* searchField;
     IBOutlet KeyChooserDataSource* privateKeyDataSource;
 	
-	GPGContext* gpgContext;
+	//GPGContext* gpgContext;
 	
 	NSArray* availableKeys;
 	NSArray* keysMatchingSearch;

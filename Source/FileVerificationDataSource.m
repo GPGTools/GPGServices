@@ -7,14 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <MacGPGME/MacGPGME.h>
+//#import <MacGPGME/MacGPGME.h>
+#import "Libmacgpg/Libmacgpg.h"
 
 #import "FileVerificationDataSource.h"
 
 @implementation FileVerificationDataSource
 
 @synthesize isActive, verificationResults;
-
+/*
 - (id)init {
     self = [super init];
     
@@ -99,5 +100,5 @@
     
     [self addResults:result];
 }
-
+*/
 @end

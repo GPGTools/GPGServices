@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MacGPGME/MacGPGME.h"
+#import "Libmacgpg/Libmacgpg.h"
+
 
 @interface GPGKey (GPGKey_utils)
 

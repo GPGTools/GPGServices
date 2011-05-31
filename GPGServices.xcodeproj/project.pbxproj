@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		2260756D12EBA0B50026DBEA /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2260756C12EBA0B50026DBEA /* Icon.icns */; };
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
-		2278DFC6133FD70E00EE5829 /* MacGPGME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CA687B12DFD8D300ED919C /* MacGPGME.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
-		2278DFC8133FD71E00EE5829 /* MacGPGME.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 22CA687B12DFD8D300ED919C /* MacGPGME.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
 		3023EF261360787E00CFC02F /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3023EF251360787E00CFC02F /* RecipientWindow.xib */; };
 		3023EF281360788000CFC02F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3023EF271360788000CFC02F /* MainMenu.xib */; };
@@ -23,6 +21,7 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */; };
 		8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */; };
+		8E6935F013953BD1004DFAE5 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E6935EF13953BD0004DFAE5 /* Libmacgpg.framework */; };
 		8E7341A31334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */; };
 		8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
@@ -39,33 +38,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		22CA687A12DFD8D300ED919C /* PBXContainerItemProxy */ = {
+		8E6935ED13953A33004DFAE5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 554B55C0069F0111005E1C92;
-			remoteInfo = MacGPGME;
-		};
-		22CA687C12DFD8D300ED919C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 554B55EB069F0245005E1C92;
-			remoteInfo = GPGTester;
-		};
-		22CA687E12DFD8D300ED919C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 551DF42B0B2886420061FE17;
-			remoteInfo = MacGPGMETesting;
-		};
-		22CA699312DFD9A800ED919C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */;
+			containerPortal = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 554B558F069F0111005E1C92;
-			remoteInfo = MacGPGME;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = Libmacgpg;
 		};
 		8E81D257139523890034B9D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -80,13 +58,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 30C8B38E139503A800F49AA1;
 			remoteInfo = UnitTest;
-		};
-		8E81D25C139523DC0034B9D1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = Libmacgpg;
 		};
 		8EDC4076133F650800D0A101 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -125,7 +96,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2278DFC8133FD71E00EE5829 /* MacGPGME.framework in Copy Frameworks */,
 				2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */,
 				8EF7A61D1334C05300FD8C5B /* Growl.framework in Copy Frameworks */,
 			);
@@ -139,7 +109,6 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		2260756C12EBA0B50026DBEA /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.icns; path = Resources/Images/Icon.icns; sourceTree = "<group>"; };
-		22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MacGPGME.xcodeproj; path = Dependencies/MacGPGME/MacGPGME.xcodeproj; sourceTree = "<group>"; };
 		22D6D9C913267E0C00622189 /* RecipientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecipientWindowController.h; path = Source/RecipientWindowController.h; sourceTree = "<group>"; };
 		22D6D9CA13267E0C00622189 /* RecipientWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecipientWindowController.m; path = Source/RecipientWindowController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
@@ -155,6 +124,7 @@
 		8E472FE91361CED5009462E4 /* ShortcutHandlingFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShortcutHandlingFields.h; path = Source/ShortcutHandlingFields.h; sourceTree = "<group>"; };
 		8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShortcutHandlingFields.m; path = Source/ShortcutHandlingFields.m; sourceTree = "<group>"; };
 		8E4A7AF51328C9A5007953BE /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
+		8E6935EF13953BD0004DFAE5 /* Libmacgpg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Libmacgpg.framework; path = /Users/moritz/Development/GPGServices/Dependencies/libmacgpg/build/Debug/Libmacgpg.framework; sourceTree = "<absolute>"; };
 		8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Growl Registration Ticket.growlRegDict"; path = "Resources/Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		8E7341A21334BC1C003CBCEB /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Libmacgpg.xcodeproj; path = Dependencies/libmacgpg/Libmacgpg.xcodeproj; sourceTree = "<group>"; };
@@ -186,7 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2278DFC6133FD70E00EE5829 /* MacGPGME.framework in Frameworks */,
+				8E6935F013953BD1004DFAE5 /* Libmacgpg.framework in Frameworks */,
 				2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */,
@@ -243,25 +213,15 @@
 			isa = PBXGroup;
 			children = (
 				8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */,
-				22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */,
 				8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
 		};
-		22CA687012DFD8D300ED919C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				22CA687B12DFD8D300ED919C /* MacGPGME.framework */,
-				22CA687D12DFD8D300ED919C /* GPGTester.app */,
-				22CA687F12DFD8D300ED919C /* MacGPGMETesting.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		29B97314FDCFA39411CA2CEA /* GPGServices */ = {
 			isa = PBXGroup;
 			children = (
+				8E6935EF13953BD0004DFAE5 /* Libmacgpg.framework */,
 				22CA686C12DFD8B400ED919C /* Dependencies */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -363,9 +323,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				8E81D25D139523DC0034B9D1 /* PBXTargetDependency */,
+				8E6935EE13953A33004DFAE5 /* PBXTargetDependency */,
 				8EDC40F4133F6B3E00D0A101 /* PBXTargetDependency */,
-				22CA699412DFD9A800ED919C /* PBXTargetDependency */,
 			);
 			name = GPGServices;
 			productInstallPath = "$(HOME)/Applications";
@@ -396,10 +355,6 @@
 					ProjectRef = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
 				},
 				{
-					ProductGroup = 22CA687012DFD8D300ED919C /* Products */;
-					ProjectRef = 22CA686F12DFD8D300ED919C /* MacGPGME.xcodeproj */;
-				},
-				{
 					ProductGroup = 8EDC405C133F650800D0A101 /* Products */;
 					ProjectRef = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
 				},
@@ -412,27 +367,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		22CA687B12DFD8D300ED919C /* MacGPGME.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MacGPGME.framework;
-			remoteRef = 22CA687A12DFD8D300ED919C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		22CA687D12DFD8D300ED919C /* GPGTester.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = GPGTester.app;
-			remoteRef = 22CA687C12DFD8D300ED919C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		22CA687F12DFD8D300ED919C /* MacGPGMETesting.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MacGPGMETesting.octest;
-			remoteRef = 22CA687E12DFD8D300ED919C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		8E81D258139523890034B9D1 /* Libmacgpg.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -513,15 +447,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		22CA699412DFD9A800ED919C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MacGPGME;
-			targetProxy = 22CA699312DFD9A800ED919C /* PBXContainerItemProxy */;
-		};
-		8E81D25D139523DC0034B9D1 /* PBXTargetDependency */ = {
+		8E6935EE13953A33004DFAE5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Libmacgpg;
-			targetProxy = 8E81D25C139523DC0034B9D1 /* PBXContainerItemProxy */;
+			targetProxy = 8E6935ED13953A33004DFAE5 /* PBXContainerItemProxy */;
 		};
 		8EDC40F4133F6B3E00D0A101 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -579,17 +508,16 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/Dependencies/MacGPGME/build/Debug",
 					"$(SRCROOT)/Dependencies/zipkit/build/Debug",
 					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
-					"$(SRCROOT)/Dependencies/Libmacgpg/build/Debug",
+					"$(SRCROOT)/Dependencies/libmacgpg/build/Debug",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/Dependencies/MacGPGME/build/$CONFIGURATION\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/Dependencies/Libmacgpg/build/$CONFIGURATION\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -607,7 +535,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/Dependencies/MacGPGME/build/Debug",
+					"$(SRCROOT)/Dependencies/libmacgpg/build/Debug",
 					"$(SRCROOT)/Dependencies/zipkit/build/Debug",
 					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -616,7 +544,7 @@
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/Dependencies/MacGPGME/build/$CONFIGURATION\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/Dependencies/Libmacgpg/build/$CONFIGURATION\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -630,13 +558,10 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH_ACTUAL)";
 				PREBINDING = NO;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 			};
@@ -645,10 +570,8 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;

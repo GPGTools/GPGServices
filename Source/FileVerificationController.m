@@ -7,13 +7,16 @@
 //
 
 #import "FileVerificationController.h"
-#import "MacGPGME/MacGPGME.h"
+//#import "MacGPGME/MacGPGME.h"
+#import "Libmacgpg/Libmacgpg.h"
+
 #import "FileVerificationDataSource.h"
 
 @implementation FileVerificationController
 
 @synthesize filesToVerify, verificationQueue;
 
+/*
 - (id)init {
     self = [super initWithWindowNibName:@"VerificationResultsWindow"];
     
@@ -87,11 +90,6 @@
             
             NSArray* sigs = nil;
           
-            /*
-            NSLog(@"signedFile: %@", signedFile);
-            NSLog(@"signatureFile: %@", signatureFile);
-             */
-            
             if([fmgr fileExistsAtPath:signedFile] && [fmgr fileExistsAtPath:signatureFile]) {
                 @try {
                     GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
@@ -116,11 +114,6 @@
                     sigs = nil;
                 }
             }
-            
-            /*
-            NSLog(@"firstException: %@", [firstException description]);
-            NSLog(@"secondException: %@", [secondException description]);
-             */
             
             if(sigs != nil) {
                 if(sigs.count == 0) {
@@ -211,6 +204,6 @@
     
     return nil;
 }
-
+*/
 
 @end
