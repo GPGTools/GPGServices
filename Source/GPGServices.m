@@ -28,8 +28,6 @@
 	currentTerminateTimer=nil;
     
     [GrowlApplicationBridge setGrowlDelegate:self];
-    
-    NSLog(@"myKey: %@", [self myKey]);
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
@@ -220,7 +218,6 @@
 #pragma mark -
 #pragma mark Text Stuff
 
-/*
 -(NSString *)myFingerprint {
     GPGKey* chosenKey = [GPGServices myPrivateKey];
     
@@ -228,7 +225,9 @@
                             [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         return [GPGServices isActiveValidator]((GPGKey*)evaluatedObject);
     }]];
-    
+
+    //TODO: Re-Enable when KeyChooserWindowController is implemented
+    /*
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices isActiveValidator]];
@@ -240,14 +239,21 @@
         
         [wc release];
     }
+     */
     
-    if(chosenKey != nil)
-        return [[[chosenKey formattedFingerprint] copy] autorelease];
-    else
-        return nil;
+    if(chosenKey != nil) {
+        NSString* fp = [[[chosenKey fingerprint] copy] autorelease];
+        NSMutableArray* arr  = [NSMutableArray arrayWithCapacity:8];
+        int i = 0;
+        for(i = 0; i < 10; ++i) {
+            [arr addObject:[fp substringWithRange:NSMakeRange(i*4, 4)]];
+        }
+        return [arr componentsJoinedByString:@" "];
+    } 
+      
+    return nil;
 }
 
-*/
 
 -(NSString *)myKey {
     GPGKey* selectedPrivateKey = [GPGServices myPrivateKey];
@@ -256,9 +262,9 @@
                             [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         return [GPGServices isActiveValidator]((GPGKey*)evaluatedObject);
     }]];
-    
+
+    //TODO: Re-Enable when KeyChooserWindowController is implemented
     /*
-     //TODO: Re-Enable when KeyChooserWindowController is implemented
     if(selectedPrivateKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices isActiveValidator]];
