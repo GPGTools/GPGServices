@@ -13,7 +13,7 @@
 
 @implementation RecipientWindowController
 
-@synthesize okEnabled, selectedKeys;
+@synthesize okEnabled, selectedKeys, sign;
 
 - (GPGKey*)selectedPrivateKey {
     return privateKeyDataSource.selectedKey;
@@ -28,33 +28,12 @@
 	return encryptForOwnKeyToo;
 }
 
-- (void)setSign:(BOOL)s {
-    sign = s;
-    
-    [availableKeys release];
-    availableKeys = [[[[gpgController allKeys] filteredSetUsingPredicate:[self validationPredicate]] 
-                      sortedArrayUsingDescriptors:[keyTableView sortDescriptors]] retain];
-    
-    [self displayItemsMatchingString:[searchField stringValue]];
-}
-
-- (BOOL)sign {
-    return sign;
-}
-
 - (id)init {
 	self = [super initWithWindowNibName:@"RecipientWindow"];
     
 	gpgController = [[GPGController gpgController] retain];
     encryptPredicate = [[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         return [GPGServices canSignValidator]((GPGKey*)evaluatedObject);
-    }] retain];
-    encryptSignPredicate = [[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        GPGKey* k = (GPGKey*)evaluatedObject;
-        
-        return ([GPGServices canSignValidator](k) && 
-                [GPGServices canEncryptValidator](k));
-        
     }] retain];
 	
     availableKeys = [[[[gpgController allKeys] filteredSetUsingPredicate:[self validationPredicate]] 
@@ -99,7 +78,6 @@
 	[keysMatchingSearch release];
 	
     [encryptPredicate release];
-    [encryptSignPredicate release];
     
 	[super dealloc];
 }
@@ -140,7 +118,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	else if([iden isEqualToString:@"type"]) {
 		return [key type];
 	} else if([iden isEqualToString:@"ownerTrust"]) {
-        return [key ownerTrustDescription];
+        return [GPGKey validityDescription:[key ownerTrust]];
 	} else if([iden isEqualToString:@"ownerTrustIndicator"]) {
         int i = 0;
         switch([key ownerTrust]) {
@@ -302,10 +280,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 #pragma mark Helpers
 
 - (NSPredicate*)validationPredicate {
-    if(sign)
-        return encryptSignPredicate;
-    else
-        return encryptPredicate;
+    return encryptPredicate;
 }
 
 #pragma mark -

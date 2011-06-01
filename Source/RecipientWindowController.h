@@ -23,7 +23,6 @@
 	NSArray* keysMatchingSearch;
     
     NSPredicate* encryptPredicate;
-    NSPredicate* encryptSignPredicate;
 	
     NSMutableArray* selectedKeys;
 	
