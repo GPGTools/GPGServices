@@ -226,8 +226,6 @@
         return [GPGServices isActiveValidator]((GPGKey*)evaluatedObject);
     }]];
 
-    //TODO: Re-Enable when KeyChooserWindowController is implemented
-    /*
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices isActiveValidator]];
@@ -239,7 +237,6 @@
         
         [wc release];
     }
-     */
     
     if(chosenKey != nil) {
         NSString* fp = [[[chosenKey fingerprint] copy] autorelease];
@@ -263,8 +260,6 @@
         return [GPGServices isActiveValidator]((GPGKey*)evaluatedObject);
     }]];
 
-    //TODO: Re-Enable when KeyChooserWindowController is implemented
-    /*
     if(selectedPrivateKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices isActiveValidator]];
@@ -276,9 +271,6 @@
         
         [wc release];
     }
-     */
-    
-    NSLog(@"selectedPrivateKey: %@", selectedPrivateKey);
     
     if(selectedPrivateKey == nil)
         return nil;

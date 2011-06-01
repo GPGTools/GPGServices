@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-//#import "MacGPGME/MacGPGME.h"
 #import "Libmacgpg/Libmacgpg.h"
 
 #import "GPGServices.h"
