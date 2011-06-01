@@ -14,7 +14,7 @@
 @implementation RecipientWindowController
 
 @synthesize okEnabled, selectedKeys;
-/*
+
 - (GPGKey*)selectedPrivateKey {
     return privateKeyDataSource.selectedKey;
 }
@@ -32,12 +32,8 @@
     sign = s;
     
     [availableKeys release];
-    
-    availableKeys = [[[[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
-                                                    secretKeysOnly:NO] allObjects] 
-                       filteredArrayUsingPredicate:[self validationPredicate]] 
-                      sortedArrayUsingDescriptors:[keyTableView sortDescriptors]]
-                     retain];
+    availableKeys = [[[[gpgController allKeys] filteredSetUsingPredicate:[self validationPredicate]] 
+                      sortedArrayUsingDescriptors:[keyTableView sortDescriptors]] retain];
     
     [self displayItemsMatchingString:[searchField stringValue]];
 }
@@ -49,7 +45,7 @@
 - (id)init {
 	self = [super initWithWindowNibName:@"RecipientWindow"];
     
-	gpgContext = [[GPGContext alloc] init];
+	gpgController = [[GPGController gpgController] retain];
     encryptPredicate = [[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         return [GPGServices canSignValidator]((GPGKey*)evaluatedObject);
     }] retain];
@@ -61,10 +57,8 @@
         
     }] retain];
 	
-	availableKeys = [[[[gpgContext keyEnumeratorForSearchPatterns:[NSArray array]
-                                                   secretKeysOnly:NO] 
-                      allObjects] 
-                      filteredArrayUsingPredicate:[self validationPredicate]] retain];
+    availableKeys = [[[[gpgController allKeys] filteredSetUsingPredicate:[self validationPredicate]] 
+                      sortedArrayUsingDescriptors:[keyTableView sortDescriptors]] retain];
 	keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
     
     selectedKeys = [[NSMutableArray alloc] init];
@@ -100,7 +94,7 @@
     keyTableView.dataSource = nil;
     searchField.delegate = nil;
     
-	[gpgContext release];
+	[gpgController release];
 	[availableKeys release];
 	[keysMatchingSearch release];
 	
@@ -144,10 +138,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	else if([iden isEqualToString:@"expirationDate"])
 		return [key expirationDate];
 	else if([iden isEqualToString:@"type"]) {
-		if([key secretKey] == key)
-			return @"sec";
-		else if([key publicKey] == key)
-			return @"pub";
+		return [key type];
 	} else if([iden isEqualToString:@"ownerTrust"]) {
         return [key ownerTrustDescription];
 	} else if([iden isEqualToString:@"ownerTrustIndicator"]) {
@@ -167,7 +158,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         
 		return [NSNumber numberWithInt:i];
 	} else if([iden isEqualToString:@"validity"]) {
-        return GPGValidityDescription([key overallValidity]);
+        //return GPGValidityDescription([key overallValidity]);
+        return [GPGKey validityDescription:[key overallValidity]];
 	} else if([iden isEqualToString:@"validityIndicator"]) {
         int i = 0;
         switch([key overallValidity]) {
@@ -218,20 +210,16 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		[keysMatchingSearch release];		
 		keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
 	} else {
-		//Search name, shortKeyID, keyID, email comment and fingerprint for the string (case-insensitive)
-		//Somethat ugly... 
+        searchString = [searchString lowercaseString];
+        
 		NSMutableArray* newFilteredArray = [NSMutableArray array];
 		[availableKeys enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 			GPGKey* k = (GPGKey*)obj;
-			if([[[k name] lowercaseString]rangeOfString:searchString].location != NSNotFound ||
-			   [[[k shortKeyID] lowercaseString] rangeOfString:searchString].location != NSNotFound ||
-			   [[[k keyID] lowercaseString] rangeOfString:searchString].location != NSNotFound ||
-			   [[[k email] lowercaseString] rangeOfString:searchString].location != NSNotFound ||
-			   [[[k comment] lowercaseString] rangeOfString:searchString].location != NSNotFound ||
-			   [[[k fingerprint] lowercaseString] rangeOfString:searchString].location != NSNotFound)
-				[newFilteredArray addObject:k];
+            if([[k textForFilter] rangeOfString:searchString].location != NSNotFound)
+                [newFilteredArray addObject:k];
 		}];
 		
+        
 		[keysMatchingSearch release];
 		keysMatchingSearch = [newFilteredArray retain];
 	}
@@ -342,7 +330,5 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (IBAction)cancelClicked:(id)sender {
 	[NSApp stopModalWithCode:1];
 }
-
- */
 
 @end

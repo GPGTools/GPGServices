@@ -17,7 +17,7 @@
 	IBOutlet NSSearchField* searchField;
     IBOutlet KeyChooserDataSource* privateKeyDataSource;
 	
-	//GPGContext* gpgContext;
+	GPGController* gpgController;
 	
 	NSArray* availableKeys;
 	NSArray* keysMatchingSearch;

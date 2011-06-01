@@ -12,6 +12,9 @@
 
 @interface GPGKey (GPGKey_utils)
 
++ (NSString*)validityDescription:(GPGValidity)validity;
+
 - (GPGValidity)overallValidity;
+- (NSString*)algorithmDescription;
 
 @end
