@@ -151,42 +151,11 @@
     
     return [[block copy] autorelease];
 }
-
+*/
 
 + (KeyValidatorT)canSignValidator {
-    // Copied from GPGMail's GPGMailBundle.m
-    KeyValidatorT block =  ^(GPGKey* key) {
-        // A subkey can be expired, without the key being, thus making key useless because it has
-        // no other subkey...
-        // We don't care about ownerTrust, validity, subkeys
-        
-        // Secret keys are never marked as revoked! Use public key
-        key = [key publicKey];
-        
-        // If primary key itself can sign, that's OK (unlike what gpgme documentation says!)
-        if ([key canSign] && 
-            ![key hasKeyExpired] && 
-            ![key isKeyRevoked] && 
-            ![key isKeyInvalid] && 
-            ![key isKeyDisabled]) {
-            return YES;
-        }
-        
-        for (GPGSubkey *aSubkey in [key subkeys]) {
-            if ([aSubkey canSign] && 
-                ![aSubkey hasKeyExpired] && 
-                ![aSubkey isKeyRevoked] && 
-                ![aSubkey isKeyInvalid] && 
-                ![aSubkey isKeyDisabled]) {
-                return YES;
-            }
-        }
-        return NO;
-    };
-    
-    return [[block copy] autorelease];
+    return [self isActiveValidator];
 }
-*/
 
 + (KeyValidatorT)isActiveValidator {
     KeyValidatorT block = ^(GPGKey* key) {
@@ -303,31 +272,27 @@
 	return nil;
 }
 
-/*
+
 -(NSString *)encryptTextString:(NSString *)inputString
 {
-    GPGContext *aContext = [[GPGContext alloc] init];
-    [aContext setUsesArmor:YES];
-    
-	BOOL trustsAllKeys = YES;
-    GPGData *outputData = nil;
+    GPGController* ctx = [GPGController gpgController];
+	ctx.trustAllKeys = YES;
+    ctx.useArmor = YES;
     
 	RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
 	int ret = [rcp runModal];
     [rcp release];
 	if(ret != 0) {
-		[aContext release];
 		return nil;
 	} else {
-		GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-		
+		NSData* inputData = [inputString gpgData];
 		BOOL sign = rcp.sign;
         NSArray* validRecipients = rcp.selectedKeys;
         GPGKey* privateKey = rcp.selectedPrivateKey;
         
         if(rcp.encryptForOwnKeyToo && privateKey) {
             validRecipients = [[[NSSet setWithArray:validRecipients] 
-                                setByAddingObject:[privateKey publicKey]] 
+                                setByAddingObject:privateKey] 
                                allObjects];
         } else {
             validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
@@ -336,29 +301,32 @@
         if(privateKey == nil) {
             [self displayOperationFailedNotificationWithTitle:@"Encryption failed." 
                                            message:@"No usable private key found"];
-            [inputData release];
-            [aContext release];
             return nil;
         }
         
         if(validRecipients.count == 0) {
             [self displayOperationFailedNotificationWithTitle:@"Encryption failed."
                                                       message:@"No valid recipients found"];
-            
-            [inputData release];
-            [aContext release];
             return nil;
         }
         
 		@try {
-            if(sign) {
-                [aContext addSignerKey:privateKey];
-                outputData=[aContext encryptedSignedData:inputData withKeys:validRecipients trustAllKeys:trustsAllKeys];
-            } else {
-                outputData=[aContext encryptedData:inputData withKeys:validRecipients trustAllKeys:trustsAllKeys];
-            }
+            if(sign)
+                [ctx addSignerKey:[privateKey description]];
+            
+            GPGEncryptSignMode mode = sign ? GPGEnryptSign : GPGPublicKeyEncrypt;
+            NSData* outputData = [ctx processData:inputData 
+                              withEncryptSignMode:mode
+                                       recipients:validRecipients
+                                 hiddenRecipients:nil];
+            
+            return [outputData gpgString];
+            
 		} @catch(NSException* localException) {
-            outputData = nil;
+            [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
+                                                      message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
+
+            /*
             switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
             {
                 case GPGErrorNoData:
@@ -373,16 +341,14 @@
                                                               message:GPGErrorDescription(error)];
                 }
             }
+             */
             return nil;
-		} @finally {
-            [inputData release];
-            [aContext release];
-        }
+		} 
 	}
     
-	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
+	return nil;
 }
-*/
+
 
 -(NSString *)decryptTextString:(NSString *)inputString
 {
@@ -408,10 +374,9 @@
 /*
 -(NSString *)signTextString:(NSString *)inputString
 {
-	GPGContext *aContext = [[GPGContext alloc] init];
-	[aContext setPassphraseDelegate:self];
+	GPGController* ctx = [GPGController gpgController];
     
-	GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+	NSData* inputData = [inputString gpgData];
     GPGKey* chosenKey = [GPGServices myPrivateKey];
     
     NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
@@ -434,12 +399,8 @@
     }
     
     if(chosenKey != nil) {
-        [aContext clearSignerKeys];
-        [aContext addSignerKey:chosenKey];
+        [ctx addSignerKey:[chosenKey description]];
     } else {
-        [inputData release];
-        [aContext release];
-        
         return nil;
     }
     
@@ -480,7 +441,6 @@
     
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
 }
-
 
 -(void)verifyTextString:(NSString *)inputString
 {
