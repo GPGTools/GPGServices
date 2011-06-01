@@ -390,43 +390,30 @@
     
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
 }
+*/
 
 -(NSString *)decryptTextString:(NSString *)inputString
 {
-    GPGData *outputData = nil;
-	GPGContext *aContext = [[GPGContext alloc] init];
+	GPGController* ctx = [GPGController gpgController];
+    ctx.trustAllKeys = YES;
+    ctx.useArmor = YES;
     
-	GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+    NSData* outputData = nil;
     
 	@try {
-     	[aContext setPassphraseDelegate:self];
-        outputData = [aContext decryptedData:inputData];
+        outputData = [ctx decryptData:[inputString gpgData]];
 	} @catch (NSException* localException) {
-        outputData = nil;
-        switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
-        {
-            case GPGErrorNoData:
-                [self displayOperationFailedNotificationWithTitle:@"Decryption failed."
-                                                          message:@"No decryptable text was found within the selection."];
-                break;
-            case GPGErrorCancelled:
-                break;
-            default: {
-                GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-                [self displayOperationFailedNotificationWithTitle:@"Decryption failed." 
-                                                          message:GPGErrorDescription(error)];
-            }
-        }
+        [self displayOperationFailedNotificationWithTitle:[localException reason]
+                                                  message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
+        
         return nil;
-	} @finally {
-        [inputData release];
-        [aContext release];
-    }
+	} 
     
-	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
+	//return [[[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding] autorelease];
+    return [outputData gpgString];
 }
 
-
+/*
 -(NSString *)signTextString:(NSString *)inputString
 {
 	GPGContext *aContext = [[GPGContext alloc] init];
