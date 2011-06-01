@@ -371,11 +371,11 @@
     return [outputData gpgString];
 }
 
-/*
 -(NSString *)signTextString:(NSString *)inputString
 {
 	GPGController* ctx = [GPGController gpgController];
-    
+    ctx.useArmor = YES;
+
 	NSData* inputData = [inputString gpgData];
     GPGKey* chosenKey = [GPGServices myPrivateKey];
     
@@ -404,11 +404,12 @@
         return nil;
     }
     
-    GPGData *outputData = nil;
 	@try {
-        outputData = [aContext signedData:inputData signatureMode:GPGSignatureModeClear];
+        //[ctx signedData:inputData signatureMode:GPGSignatureModeClear];
+        NSData* outputData = [ctx processData:inputData withEncryptSignMode:GPGSign recipients:nil hiddenRecipients:nil];
+        return [outputData gpgString];
 	} @catch(NSException* localException) {
-        outputData = nil;
+        /*
         NSString* errorMessage = nil;
         switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
         {
@@ -428,41 +429,38 @@
                 errorMessage = GPGErrorDescription(error);
             }
         }
-        
+         */
+        NSString* errorMessage = [[[localException userInfo] valueForKey:@"gpgTask"] errText];
         if(errorMessage != nil)
             [self displayMessageWindowWithTitleText:@"Signing failed."
                                            bodyText:errorMessage];
         
         return nil;
-	} @finally {
-        [inputData release];
-        [aContext release];
-    }
+	}
     
-	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
+	return nil;
 }
 
 -(void)verifyTextString:(NSString *)inputString
 {
-	GPGContext *aContext = [[GPGContext alloc] init];
-    GPGData* inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [aContext setUsesTextMode:YES];
+    GPGController* ctx = [GPGController gpgController];
+    ctx.useArmor = YES;
     
 	@try {
-        NSArray* sigs = [aContext verifySignedData:inputData originalData:nil];
+        //NSArray* sigs = [ctx verifySignature:[inputString gpgData] originalData:[NSData data]];
+        NSArray* sigs = [ctx verifySignature:[inputString gpgData] originalData:[NSData data]];
         
-        if([sigs count]>0)
+        if([sigs count] > 0)
         {
-            GPGSignature* sig=[sigs objectAtIndex:0];
-            if(GPGErrorCodeFromError([sig status])==GPGErrorNoError) {
+            GPGSignature* sig = [sigs objectAtIndex:0];
+            NSLog(@"sig: %@", sig);
+            if([sig status] == GPGErrorNoError) {
                 [self displaySignatureVerificationForSig:sig];
             } else {
                 [self displayOperationFailedNotificationWithTitle:@"Verification FAILED."
-                                                          message:GPGErrorDescription([sig status])];
+                                                          message:[NSString stringWithFormat:@"Signature verification failed with error code: ", [sig status]]];
             }
-        }
-        else {
+        } else {
             //Looks like sigs.count == 0 when we have encrypted text but no signature
             //[self displayMessageWindowWithTitleText:@"Verification error."
             //                               bodyText:@"Unable to verify due to an internal error"];
@@ -472,6 +470,12 @@
         }
         
 	} @catch(NSException* localException) {
+        //TODO: Implement correct error handling (might be a problem on libmacgpg's side)
+        if([[[localException userInfo] valueForKey:@"errorCode"] intValue] != GPGErrorNoError)
+            [self displayOperationFailedNotificationWithTitle:@"Verification failed." 
+                                                      message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
+        
+        /*
         if(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])==GPGErrorNoData)
             [self displayOperationFailedNotificationWithTitle:@"Verification failed." 
                                                       message:@"No verifiable text was found within the selection"];
@@ -480,13 +484,12 @@
             [self displayOperationFailedNotificationWithTitle:@"Verification failed." 
                                                       message:GPGErrorDescription(error)];
         }
+         */
         return;
-	} @finally {
-        [inputData release];
-        [aContext release];
-    }
+	} 
+    
+    return nil;
 }
- */
 
 #pragma mark -
 #pragma mark File Stuff
