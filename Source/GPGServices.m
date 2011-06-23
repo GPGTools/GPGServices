@@ -16,6 +16,7 @@
 #import "ZipOperation.h"
 #import "ZipKit/ZKArchive.h"
 #import "NSPredicate+negate.h"
+#import "GPGKey+utils.h"
 
 #define SIZE_WARNING_LEVEL_IN_MB 10
 
@@ -407,7 +408,7 @@
     
 	@try {
         //[ctx signedData:inputData signatureMode:GPGSignatureModeClear];
-        NSData* outputData = [ctx processData:inputData withEncryptSignMode:GPGSign recipients:nil hiddenRecipients:nil];
+        NSData* outputData = [ctx processData:inputData withEncryptSignMode:GPGClearSign recipients:nil hiddenRecipients:nil];
         return [outputData gpgString];
 	} @catch(NSException* localException) {
         /*
@@ -449,12 +450,11 @@
     
 	@try {
         //NSArray* sigs = [ctx verifySignature:[inputString gpgData] originalData:[NSData data]];
-        NSArray* sigs = [ctx verifySignature:[inputString gpgData] originalData:[NSData data]];
-        
+        NSArray* sigs = [ctx verifySignature:[inputString gpgData] originalData:nil];
+
         if([sigs count] > 0)
         {
             GPGSignature* sig = [sigs objectAtIndex:0];
-            NSLog(@"sig: %@", sig);
             if([sig status] == GPGErrorNoError) {
                 [self displaySignatureVerificationForSig:sig];
             } else {
@@ -471,6 +471,8 @@
         }
         
 	} @catch(NSException* localException) {
+        NSLog(@"localException: %@", [localException userInfo]);
+
         //TODO: Implement correct error handling (might be a problem on libmacgpg's side)
         if([[[localException userInfo] valueForKey:@"errorCode"] intValue] != GPGErrorNoError)
             [self displayOperationFailedNotificationWithTitle:@"Verification failed." 
@@ -1191,11 +1193,15 @@
     }
 }
 
-/*
 - (void)displaySignatureVerificationForSig:(GPGSignature*)sig {
+    /*
     GPGContext* aContext = [[[GPGContext alloc] init] autorelease];
     NSString* userID = [[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
     NSString* validity = [sig validityDescription];
+    */
+    
+    NSString* userID = [sig userID];
+    NSString* validity = [GPGKey validityDescription:[sig trust]];
     
     [[NSAlert alertWithMessageText:@"Verification successful."
                      defaultButton:@"Ok"
@@ -1204,7 +1210,6 @@
          informativeTextWithFormat:@"Good signature (%@ trust):\n\"%@\"",validity,userID]
      runModal];
 }
- */
 
 /*
 -(NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again
