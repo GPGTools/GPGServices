@@ -1181,7 +1181,7 @@
 {[self dealWithFilesPasteboard:pboard userData:userData mode:SignFileService error:error];}
 
 -(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
-{[self dealWithFilesPasteboard:pboard userData:userData mode:EncryptService error:error];}
+{[self dealWithFilesPasteboard:pboard userData:userData mode:EncryptFileService error:error];}
 
 -(void)decryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error 
 {[self dealWithFilesPasteboard:pboard userData:userData mode:DecryptFileService error:error];}
