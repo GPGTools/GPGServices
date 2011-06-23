@@ -53,7 +53,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 240}, {502, 259}}</string>
 				<int key="NSWTFlags">544735232</int>
-				<string key="NSWindowTitle">Verification Results</string>
+				<string key="NSWindowTitle">Verifikation - Ergebnisse</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -79,7 +79,7 @@
 											<string key="NSFrameSize">{1244, 161}</string>
 											<reference key="NSSuperview" ref="705848870"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="87422432"/>
+											<reference key="NSNextKeyView" ref="69268544"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="750396429">
 												<reference key="NSNextResponder" ref="87422432"/>
@@ -87,10 +87,10 @@
 												<string key="NSFrameSize">{1244, 17}</string>
 												<reference key="NSSuperview" ref="87422432"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="441511537"/>
+												<reference key="NSNextKeyView" ref="705848870"/>
 												<reference key="NSTableView" ref="205270778"/>
 											</object>
-											<object class="_NSCornerView" key="NSCornerView" id="441511537">
+											<object class="_NSCornerView" key="NSCornerView">
 												<nil key="NSNextResponder"/>
 												<int key="NSvFlags">-2147483392</int>
 												<string key="NSFrame">{{286, 0}, {16, 17}}</string>
@@ -106,7 +106,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">File</string>
+														<string key="NSContents">Datei</string>
 														<object class="NSFont" key="NSSupport" id="26">
 															<string key="NSName">LucidaGrande</string>
 															<double key="NSSize">11</double>
@@ -164,7 +164,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Result</string>
+														<string key="NSContents">Ergebnis</string>
 														<reference key="NSSupport" ref="26"/>
 														<object class="NSColor" key="NSBackgroundColor">
 															<int key="NSColorSpace">3</int>
@@ -270,7 +270,7 @@
 							<string key="NSFrame">{{20, 60}, {462, 179}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="705848870"/>
+							<reference key="NSNextKeyView" ref="87422432"/>
 							<int key="NSsFlags">133810</int>
 							<reference key="NSVScroller" ref="69268544"/>
 							<reference key="NSHScroller" ref="306690297"/>
@@ -284,6 +284,7 @@
 							<string key="NSFrame">{{392, 12}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="388739811">
 								<int key="NSCellFlags">67239424</int>
@@ -316,7 +317,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="763479324"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1280, 800}}</string>
 				<string key="NSMinSize">{480, 227}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">verificationResults</string>
