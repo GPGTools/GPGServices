@@ -125,7 +125,7 @@
             if(sigs != nil) {
                 if(sigs.count == 0) {
                     id verificationResult = nil; //NSString or NSAttributedString
-                    verificationResult = @"Verification FAILED: No signatures found";
+                    verificationResult = localized(@"Verification FAILED: No signatures found");
                     
                     NSColor* bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
                     
@@ -159,7 +159,7 @@
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
                     [dataSource addResults:[NSDictionary dictionaryWithObjectsAndKeys:
                                             [signedFile lastPathComponent], @"filename",
-                                            @"No verifiable data found", @"verificationResult",
+                                            localized(@"No verifiable data found"), @"verificationResult",
                                             nil]]; 
                 }];
             }
