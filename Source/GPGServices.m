@@ -88,7 +88,7 @@
                    alternateButton:nil
                        otherButton:nil
          informativeTextWithFormat:NSLocalizedString(@"%i key(s), %i secret key(s), %i revocation(s)", 
-                                                     @"informative text in import alert-box)"),
+                                                     @"alert-box informative"),
       [[importedKeys valueForKey:@"importedKeyCount"] intValue],
       [[importedKeys valueForKey:@"importedSecretKeyCount"] intValue],
       [[importedKeys valueForKey:@"newRevocationCount"] intValue]]
@@ -997,11 +997,11 @@
     
     //Don't show result window when there were no imported keys
     if(foundKeysCount > 0) {
-        [[NSAlert alertWithMessageText:NSLocalizedString(@"Import result:", @"alert-box text")
+        [[NSAlert alertWithMessageText:NSLocalizedString(@"Import result:", @"Alert box import result message text")
                          defaultButton:NSLocalizedString(@"Ok", nil)
                        alternateButton:nil
                            otherButton:nil
-             informativeTextWithFormat:NSLocalizedString(@"%i key(s), %i secret key(s), %i revocation(s) ", "alert-box informative"),
+             informativeTextWithFormat:NSLocalizedString(@"%i key(s), %i secret key(s), %i revocation(s)", "alert-box informative"),
           importedKeyCount,
           importedSecretKeyCount,
           newRevocationCount]
