@@ -74,7 +74,7 @@
 	@try {
         importedKeys = [aContext importKeyData:inputData];
 	} @catch(NSException* localException) {
-        [self displayOperationFailedNotificationWithTitle:localized(@"Import failed:")
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Import failed:", nil)
                                                   message:GPGErrorDescription([[[localException userInfo] 
                                                                                 objectForKey:@"GPGErrorKey"]                                                              intValue])];
         return;
@@ -83,11 +83,12 @@
         [aContext release];
     }
     
-    [[NSAlert alertWithMessageText:localized(@"Import result:")
-                     defaultButton:localized(@"Ok")
+    [[NSAlert alertWithMessageText:NSLocalizedString(@"Import result:", @"Alert box import result message text")
+                     defaultButton:NSLocalizedString(@"Ok", nil)
                    alternateButton:nil
                        otherButton:nil
-         informativeTextWithFormat:localized(@"%i key(s), %i secret key(s), %i revocation(s) "),
+         informativeTextWithFormat:NSLocalizedString(@"%i key(s), %i secret key(s), %i revocation(s)", 
+                                                     @"informative text in import alert-box)"),
       [[importedKeys valueForKey:@"importedKeyCount"] intValue],
       [[importedKeys valueForKey:@"importedSecretKeyCount"] intValue],
       [[importedKeys valueForKey:@"newRevocationCount"] intValue]]
@@ -284,18 +285,19 @@
         keyData = [[ctx exportedKeys:[NSArray arrayWithObject:selectedPrivateKey]] data];
         
         if(keyData == nil) {
-            [[NSAlert alertWithMessageText:localized(@"Exporting key failed.")
-                             defaultButton:localized(@"Ok")
+            [[NSAlert alertWithMessageText:NSLocalizedString(@"Exporting key failed.", @"exporting key error message text")
+                             defaultButton:NSLocalizedString(@"Ok", nil)
                            alternateButton:nil
                                otherButton:nil
-                 informativeTextWithFormat:localized(@"Could not export key %@"), [selectedPrivateKey shortKeyID]] 
+                 informativeTextWithFormat:NSLocalizedString(@"Could not export key %@", @"export key alert box informative text"),
+              [selectedPrivateKey shortKeyID]] 
              runModal];
             
             return nil;
         }
 	} @catch(NSException* localException) {
         GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-        [self displayOperationFailedNotificationWithTitle:localized(@"Exporting key failed")
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Exporting key failed", @"key export failed title")
                                                   message:GPGErrorDescription(error)];
         return nil;
 	} @finally {
@@ -336,16 +338,17 @@
         }
         
         if(privateKey == nil) {
-            [self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed.")
-                                           message:localized(@"No usable private key found")];
+            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed.", @"operation failed title")
+                                           message:NSLocalizedString(@"No usable private key found", @"operation failed message")];
             [inputData release];
             [aContext release];
             return nil;
         }
         
         if(validRecipients.count == 0) {
-            [self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed.")
-                                                      message:localized(@"No valid recipients found")];
+            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed.", @"operation failed title")
+                                                      message:NSLocalizedString(@"No valid recipients found", 
+                                                                                @"operation failed message")];
             
             [inputData release];
             [aContext release];
@@ -364,14 +367,15 @@
             switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
             {
                 case GPGErrorNoData:
-                    [self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed.")
-                                                              message:localized(@"No encryptable text was found within the selection.")];
+                    [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed.", @"operation failed title")
+                                                              message:NSLocalizedString(@"No encryptable text was found within the selection.",
+                                                                                        @"operation failed message")];
                     break;
                 case GPGErrorCancelled:
                     break;
                 default: {
                     GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-                    [self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed.")
+                    [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed.", @"operation failed title")
                                                               message:GPGErrorDescription(error)];
                 }
             }
@@ -400,14 +404,14 @@
         switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
         {
             case GPGErrorNoData:
-                [self displayOperationFailedNotificationWithTitle:localized(@"Decryption failed.")
-                                                          message:localized(@"No decryptable text was found within the selection.")];
+                [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Decryption failed.", @"operation failed title")
+                                                          message:NSLocalizedString(@"No decryptable text was found within the selection.", @"operation failed message")];
                 break;
             case GPGErrorCancelled:
                 break;
             default: {
                 GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-                [self displayOperationFailedNotificationWithTitle:localized(@"Decryption failed.")
+                [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Decryption failed.", @"operation failed title")
                                                           message:GPGErrorDescription(error)];
             }
         }
@@ -467,13 +471,13 @@
         switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
         {
             case GPGErrorNoData:
-                errorMessage = localized(@"No signable text was found within the selection.");
+                errorMessage = NSLocalizedString(@"No signable text was found within the selection.", @"operation failed message");
                 break;
             case GPGErrorBadPassphrase:
-                errorMessage = localized(@"The passphrase is incorrect.");
+                errorMessage = NSLocalizedString(@"The passphrase is incorrect.", @"operation failed message");
                 break;
             case GPGErrorUnusableSecretKey:
-                errorMessage = localized(@"The default secret key is unusable.");
+                errorMessage = NSLocalizedString(@"The default secret key is unusable.", @"operation failed message");
                 break;
             case GPGErrorCancelled:
                 break;
@@ -484,7 +488,7 @@
         }
         
         if(errorMessage != nil)
-            [self displayMessageWindowWithTitleText:localized(@"Signing failed.")
+            [self displayMessageWindowWithTitleText:NSLocalizedString(@"Signing failed.", @"operation failed title")
                                            bodyText:errorMessage];
         
         return nil;
@@ -513,7 +517,7 @@
             if(GPGErrorCodeFromError([sig status])==GPGErrorNoError) {
                 [self displaySignatureVerificationForSig:sig];
             } else {
-                [self displayOperationFailedNotificationWithTitle:localized(@"Verification FAILED.")
+                [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification FAILED.", @"operation failed title")
                                                           message:GPGErrorDescription([sig status])];
             }
         }
@@ -522,17 +526,19 @@
             //[self displayMessageWindowWithTitleText:@"Verification error."
             //                               bodyText:@"Unable to verify due to an internal error"];
             
-            [self displayOperationFailedNotificationWithTitle:localized(@"Verification failed.")
-                                                      message:localized(@"No signatures found within the selection.")];
+            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed.", @"operation failed title")
+                                                      message:NSLocalizedString(@"No signatures found within the selection.",
+                                                                                @"operation failed message")];
         }
         
 	} @catch(NSException* localException) {
         if(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])==GPGErrorNoData)
-            [self displayOperationFailedNotificationWithTitle:localized(@"Verification failed.")
-                                                      message:localized(@"No verifiable text was found within the selection")];
+            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed.", @"operation failed title")
+                                                      message:NSLocalizedString(@"No verifiable text was found within the selection", 
+                                                                                @"operation failed message")];
         else {
             GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-            [self displayOperationFailedNotificationWithTitle:localized(@"Verification failed.")
+            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed.", @"operation failed title")
                                                       message:GPGErrorDescription(error)];
         }
         return;
@@ -649,7 +655,7 @@
         return sigFile;
     } @catch (NSException* e) {
         if([GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
-            [self displayOperationFailedNotificationWithTitle:localized(@"Signing failed")
+            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Signing failed", @"operation failed title")
                                                       message:[file lastPathComponent]];
     }
     
@@ -660,11 +666,12 @@
     long double megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / 1048576.0;
     
     if(megabytes > SIZE_WARNING_LEVEL_IN_MB) {
-        int ret = [[NSAlert alertWithMessageText:localized(@"Large File(s)")
-                                   defaultButton:localized(@"Continue")
-                                 alternateButton:localized(@"Cancel")
+        int ret = [[NSAlert alertWithMessageText:NSLocalizedString(@"Large File(s)", @"alert-box message text")
+                                   defaultButton:NSLocalizedString(@"Continue", nil)
+                                 alternateButton:NSLocalizedString(@"Cancel", nil)
                                      otherButton:nil
-                       informativeTextWithFormat:localized(@"Encryption will take a long time.\nPress 'Cancel' to abort.")] 
+                       informativeTextWithFormat:NSLocalizedString(@"Encryption will take a long time.\nPress 'Cancel' to abort.",
+                                                                   @"alert box informative text")] 
                    runModal];
         
         if(ret == NSAlertAlternateReturn)
@@ -699,9 +706,10 @@
         }
         
         if(signedFilesCount > 0) {
-            [self displayOperationFinishedNotificationWithTitle:localized(@"Signing finished")
+            [self displayOperationFinishedNotificationWithTitle:NSLocalizedString(@"Signing finished", @"operation finished title")
                                                         message:[NSString 
-                                                                 stringWithFormat:localized(@"Finished signing %i file(s)"), 
+                                                                 stringWithFormat:NSLocalizedString(@"Finished signing %i file(s)",
+                                                                                                    @"operation finished message"), 
                                                                  files.count]];
         }
     }
@@ -782,8 +790,8 @@
                     return (NSData*)[NSData dataWithContentsOfFile:file];
                 };
             } else {    
-                [self displayOperationFailedNotificationWithTitle:localized(@"File doesn't exist")
-                                                          message:localized(@"Please try again")];
+                [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"File doesn't exist", @"operation failed title")
+                                                          message:NSLocalizedString(@"Please try again", @"operation failed message")];
                 return;
             }
         } else if(files.count > 1) {
@@ -808,11 +816,12 @@
                                                                   numberStyle:NSNumberFormatterDecimalStyle]);        
         
         if(megabytes > SIZE_WARNING_LEVEL_IN_MB) {
-            int ret = [[NSAlert alertWithMessageText:localized(@"Large File(s)")
-                                       defaultButton:localized(@"Continue")
-                                     alternateButton:localized(@"Cancel")
+            int ret = [[NSAlert alertWithMessageText:NSLocalizedString(@"Large File(s)", @"alert-box message text")
+                                       defaultButton:NSLocalizedString(@"Continue", nil)
+                                     alternateButton:NSLocalizedString(@"Cancel", nil)
                                          otherButton:nil
-                           informativeTextWithFormat:localized(@"Encryption will take a long time.\nPress 'Cancel' to abort.")] 
+                           informativeTextWithFormat:NSLocalizedString(@"Encryption will take a long time.\nPress 'Cancel' to abort.",
+                                                                       @"alert box informative text")] 
                        runModal];
             
             if(ret == NSAlertAlternateReturn)
@@ -840,11 +849,11 @@
         }
         
         if(encrypted == nil) {
-            [self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
+            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", @"operation failed title")
                                                       message:[destination lastPathComponent]];
         } else {
             [encrypted.data writeToFile:destination atomically:YES];
-            [self displayOperationFinishedNotificationWithTitle:localized(@"Encryption finished")
+            [self displayOperationFinishedNotificationWithTitle:NSLocalizedString(@"Encryption finished", @"operation finished title")
                                                         message:[destination lastPathComponent]];
         }
     }
@@ -898,7 +907,7 @@
                     //Add a line to mention that the file isn't signed
                     [dummyController addResults:[NSDictionary dictionaryWithObjectsAndKeys:
                                                  [file lastPathComponent], @"filename",
-                                                 localized(@"No signatures found"), @"verificationResult",
+                                                 NSLocalizedString(@"No signatures found", @"verficiation result"),@"verificationResult",
                                                  nil]];
                 
                 }
@@ -906,14 +915,15 @@
         } @catch (NSException* localException) {
             switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])) {
                 case GPGErrorNoData:
-                    [self displayOperationFailedNotificationWithTitle:localized(@"Decryption failed.")
-                                                              message:localized(@"No decryptable data was found.")];
+                    [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Decryption failed.", @"operation failed title")
+                                                              message:NSLocalizedString(@"No decryptable data was found.", 
+                                                                                        @"operation failed message")];
                     break;
                 case GPGErrorCancelled:
                     break;
                 default: {
                     GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-                    [self displayOperationFailedNotificationWithTitle:localized(@"Decryption failed.")
+                    [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Decryption failed.", @"operation failed title")
                                                               message:GPGErrorDescription(error)];
                 }
             }
@@ -923,9 +933,9 @@
     dummyController.isActive = NO;
     
     if(decryptedFilesCount > 0)
-        [self displayOperationFinishedNotificationWithTitle:localized(@"Decryption finished")
-                                                    message:[NSString stringWithFormat:localized(@"Finished decrypting %i file(s)"), 
-                                                             files.count]];
+        [self displayOperationFinishedNotificationWithTitle:NSLocalizedString(@"Decryption finished", @"operation failed title")
+                                                    message:
+         [NSString stringWithFormat:NSLocalizedString(@"Finished decrypting %i file(s)", @"operation finished message"), files.count]];
     
     [dummyController runModal];
     [dummyController release];
@@ -954,7 +964,8 @@
     for(NSString* file in files) {
         if([[self isDirectoryPredicate] evaluateWithObject:file] == YES) {
             if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
-                [self displayOperationFailedNotificationWithTitle:localized(@"Can't import keys from directory")
+                [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Can't import keys from directory", 
+                                                                                    @"operation failed title")
                                                           message:[file lastPathComponent]];
             continue; //Shortcut all following code, go to next file
         }
@@ -972,12 +983,13 @@
                 importedSecretKeyCount += [[importResults valueForKey:@"importedSecretKeyCount"] unsignedIntValue];
                 newRevocationCount += [[importResults valueForKey:@"newRevocationCount"] unsignedIntValue];
             } else if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) { //This is in a loop, so only display Growl... 
-                [self displayOperationFailedNotificationWithTitle:localized(@"No importable Keys found")
+                [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"No importable Keys found", 
+                                                                                    @"operation failed title")
                                                           message:[file lastPathComponent]];
             }    
         } @catch(NSException* localException) {
             if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
-                [self displayOperationFailedNotificationWithTitle:localized(@"Import failed:")
+                [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Import failed:", @"operation failed title")
                                                           message:GPGErrorDescription([[[localException userInfo] 
                                                                                         objectForKey:@"GPGErrorKey"]                                                              intValue])];
         }
@@ -985,11 +997,11 @@
     
     //Don't show result window when there were no imported keys
     if(foundKeysCount > 0) {
-        [[NSAlert alertWithMessageText:localized(@"Import result:")
-                         defaultButton:localized(@"Ok")
+        [[NSAlert alertWithMessageText:NSLocalizedString(@"Import result:", @"alert-box text")
+                         defaultButton:NSLocalizedString(@"Ok", nil)
                        alternateButton:nil
                            otherButton:nil
-             informativeTextWithFormat:localized(@"%i key(s), %i secret key(s), %i revocation(s) "),
+             informativeTextWithFormat:NSLocalizedString(@"%i key(s), %i secret key(s), %i revocation(s) ", "alert-box informative"),
           importedKeyCount,
           importedSecretKeyCount,
           newRevocationCount]
@@ -1042,7 +1054,8 @@
 		{
 			if(!(pboardString = [pboard stringForType:NSPasteboardTypeString]))
 			{
-				*error = localized(@"Error: Could not perform GPG operation. Pasteboard could not supply text string.");
+				*error = NSLocalizedString(@"Error: Could not perform GPG operation. Pasteboard could not supply text string.",
+                                           @"pasteboard error string");
 				[self exitServiceRequest];
 				return;
 			}
@@ -1051,7 +1064,8 @@
 		{
 			if(!(pboardString = [pboard stringForType:NSPasteboardTypeString]))
 			{
-				*error = @"Error: Could not perform GPG operation. Pasteboard could not supply text string.";
+				*error = NSLocalizedString(@"Error: Could not perform GPG operation. Pasteboard could not supply text string.",
+                                           @"pasteboard error string");
 				[self exitServiceRequest];
 				return;
 			}
@@ -1059,7 +1073,8 @@
 		else
 		{
             //@"Pasteboard could not supply the string in an acceptible format.";
-			*error = localized(@"Error: Could not perform GPG operation.");
+			*error = NSLocalizedString(@"Error: Could not perform GPG operation.",
+                                       @"pasteboard error string");
 			[self exitServiceRequest];
 			return;
 		}
@@ -1198,7 +1213,7 @@
 - (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path 
                          withSuggestedExtension:(NSString*)ext {    
     NSSavePanel* savePanel = [NSSavePanel savePanel];
-    savePanel.title = localized(@"Choose Destination");
+    savePanel.title = NSLocalizedString(@"Choose Destination", @"save-panel title");
     savePanel.directory = [path stringByDeletingLastPathComponent];
     
     if(ext == nil)
@@ -1215,7 +1230,7 @@
 
 -(void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body {
     [[NSAlert alertWithMessageText:title
-                     defaultButton:localized(@"Ok")
+                     defaultButton:NSLocalizedString(@"Ok", nil)
                    alternateButton:nil
                        otherButton:nil
          informativeTextWithFormat:[NSString stringWithFormat:@"%@", body]] runModal];
@@ -1254,11 +1269,11 @@
     NSString* userID = [[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
     NSString* validity = [sig validityDescription];
     
-    [[NSAlert alertWithMessageText:localized(@"Verification successful.")
-                     defaultButton:localized(@"Ok")
+    [[NSAlert alertWithMessageText:NSLocalizedString(@"Verification successful.", @"alert-box message text")
+                     defaultButton:NSLocalizedString(@"Ok", nil)
                    alternateButton:nil
                        otherButton:nil
-         informativeTextWithFormat:localized(@"Good signature (%@ trust):\n\"%@\""),validity,userID]
+         informativeTextWithFormat:NSLocalizedString(@"Good signature (%@ trust):\n\"%@\"", @"alert-box informative"),validity,userID]
      runModal];
 }
 

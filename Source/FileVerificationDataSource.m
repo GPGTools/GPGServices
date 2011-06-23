@@ -61,7 +61,8 @@
                 bgColor = [NSColor clearColor];
         }
         
-        verificationResult = [NSString stringWithFormat:localized(@"Signed by: %@ (%@ trust)"), userID, validityDesc];                         
+        verificationResult = [NSString stringWithFormat:NSLocalizedString(@"Signed by: %@ (%@ trust)",
+                                                                          @"'signed by ...' verification result"), userID, validityDesc];                         
         NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
                                                                                  attributes:nil] autorelease];
         NSRange range = [verificationResult rangeOfString:[NSString stringWithFormat:@"(%@ trust)", validityDesc]];
@@ -76,10 +77,14 @@
     } else {
         bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
         
-        verificationResult = [NSString stringWithFormat:localized(@"Verification FAILED: %@"), GPGErrorDescription([sig status])];
+        NSString* failedString = NSLocalizedString(@"FAILED", @"'FAILED' translated. Needed to colorize the in the results window");
+        verificationResult = [NSString stringWithFormat:NSLocalizedString(@"Verification %@: %@",
+                                                                          @"'Verification FAILED ...' verification-result"),
+                              failedString,
+                              GPGErrorDescription([sig status])];
         NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
                                                                                  attributes:nil] autorelease];
-        NSRange range = [verificationResult rangeOfString:localized(@"FAILED")];
+        NSRange range = [verificationResult rangeOfString:failedString];
         [tmp addAttribute:NSFontAttributeName 
                     value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
                     range:range];

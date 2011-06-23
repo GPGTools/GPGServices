@@ -10,6 +10,8 @@
 #import "MacGPGME/MacGPGME.h"
 #import "FileVerificationDataSource.h"
 
+#import <Foundation/Foundation.h>
+
 @implementation FileVerificationController
 
 @synthesize filesToVerify, verificationQueue;
@@ -125,7 +127,8 @@
             if(sigs != nil) {
                 if(sigs.count == 0) {
                     id verificationResult = nil; //NSString or NSAttributedString
-                    verificationResult = localized(@"Verification FAILED: No signatures found");
+                    verificationResult = NSLocalizedString(@"Verification FAILED: No signatures found", 
+                                                           @"verification window no signatures result");
                     
                     NSColor* bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
                     
@@ -159,7 +162,8 @@
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
                     [dataSource addResults:[NSDictionary dictionaryWithObjectsAndKeys:
                                             [signedFile lastPathComponent], @"filename",
-                                            localized(@"No verifiable data found"), @"verificationResult",
+                                            NSLocalizedString(@"No verifiable data found",
+                                                              @"verification window no data found result"), @"verificationResult",
                                             nil]]; 
                 }];
             }

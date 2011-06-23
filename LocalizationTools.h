@@ -6,4 +6,4 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#define localized(key) ([[NSBundle mainBundle] localizedStringForKey:(key) value:nil table:nil])
+//#define localized(key) ([[NSBundle mainBundle] localizedStringForKey:(key) value:nil table:nil])
