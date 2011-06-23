@@ -728,9 +728,9 @@
     if(files.count == 0)
         return;
     
-    RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
+    RecipientWindowController* rcp = [[[RecipientWindowController alloc] init] autorelease];
 	int ret = [rcp runModal];
-    [rcp release];
+    
 	if(ret != 0) {
         //User pressed 'cancel'
 		return;
