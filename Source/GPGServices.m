@@ -111,7 +111,8 @@
 }
 
 + (GPGKey*)myPrivateKey {
-    NSString* keyID = [[[GPGOptions sharedOptions] gpgConf] valueForKey:@"default-key"];
+	
+    NSString* keyID = [[GPGOptions sharedOptions] valueInGPGConfForKey:@"default-key"];
 	if(keyID == nil)
         return nil;
     
@@ -485,10 +486,7 @@
                                                       message:GPGErrorDescription(error)];
         }
          */
-        return;
 	} 
-    
-    return nil;
 }
 
 #pragma mark -
