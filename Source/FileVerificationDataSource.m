@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import <MacGPGME/MacGPGME.h>
 
 #import "FileVerificationDataSource.h"
@@ -61,11 +62,14 @@
                 bgColor = [NSColor clearColor];
         }
         
-        verificationResult = [NSString stringWithFormat:NSLocalizedString(@"Signed by: %@ (%@ trust)",
-                                                                          @"'signed by ...' verification result"), userID, validityDesc];                         
+        NSString* trustString = [NSString stringWithFormat:
+                                 NSLocalizedString(@"(%@ trust)", @"Needed to colorize the in the results window"), 
+                                 validityDesc];
+        verificationResult = [NSString stringWithFormat:NSLocalizedString(@"Signed by: %@ %@",
+                                                                          @"'signed by ...' verification result"), userID, trustString];                         
         NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
                                                                                  attributes:nil] autorelease];
-        NSRange range = [verificationResult rangeOfString:[NSString stringWithFormat:@"(%@ trust)", validityDesc]];
+        NSRange range = [verificationResult rangeOfString:[NSString stringWithFormat:trustString, validityDesc]];
         [tmp addAttribute:NSFontAttributeName 
                     value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
                     range:range];
