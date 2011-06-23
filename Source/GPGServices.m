@@ -517,7 +517,10 @@
             if(GPGErrorCodeFromError([sig status])==GPGErrorNoError) {
                 [self displaySignatureVerificationForSig:sig];
             } else {
-                [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification FAILED.", @"operation failed title")
+                NSString* failedString = NSLocalizedString(@"FAILED", @"'FAILED' translated. Needed to colorize the in the results window");
+                NSString* title = [NSString stringWithFormat:NSLocalizedString(@"Verification %@.", @"operation failed title"),
+                                   failedString];
+                [self displayOperationFailedNotificationWithTitle:title
                                                           message:GPGErrorDescription([sig status])];
             }
         }

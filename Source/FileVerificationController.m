@@ -127,12 +127,15 @@
             if(sigs != nil) {
                 if(sigs.count == 0) {
                     id verificationResult = nil; //NSString or NSAttributedString
-                    verificationResult = NSLocalizedString(@"Verification FAILED: No signatures found", 
+                    NSString* failedString = NSLocalizedString(@"FAILED", @"'FAILED' translated. Needed to colorize the in the results window");
+                    verificationResult = NSLocalizedString(@"Verification %@: No signatures found", 
                                                            @"verification window no signatures result");
+                    verificationResult = [NSString stringWithFormat:verificationResult, 
+                                          failedString];
                     
                     NSColor* bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
                     
-                    NSRange range = [verificationResult rangeOfString:@"FAILED"];
+                    NSRange range = [verificationResult rangeOfString:failedString];
                     verificationResult = [[NSMutableAttributedString alloc] 
                                           initWithString:verificationResult];
                     
