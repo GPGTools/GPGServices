@@ -13,6 +13,7 @@
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC8133FD71E00EE5829 /* MacGPGME.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 22CA687B12DFD8D300ED919C /* MacGPGME.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
+		3075B42313B3B09D00A73DB8 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3075B42113B3B09D00A73DB8 /* ServicesMenu.strings */; };
 		4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1908C00A4CBF0B00052798 /* GPGServices.m */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -124,6 +125,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		3075B42213B3B09D00A73DB8 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		3075B42413B3B25700A73DB8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* GPGServices_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGServices_Prefix.pch; path = Source/GPGServices_Prefix.pch; sourceTree = "<group>"; };
 		4B1908BF0A4CBF0B00052798 /* GPGServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGServices.h; path = Source/GPGServices.h; sourceTree = "<group>"; };
 		4B1908C00A4CBF0B00052798 /* GPGServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GPGServices.m; path = Source/GPGServices.m; sourceTree = "<group>"; };
@@ -271,6 +274,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3075B42113B3B09D00A73DB8 /* ServicesMenu.strings */,
 				8E0CE0C413B3671400390D92 /* InfoPlist.strings */,
 				8E0CE0C013B3665000390D92 /* MainMenu.xib */,
 				8E0CE0C813B3674200390D92 /* PrivateKeyChooserWindow.xib */,
@@ -366,6 +370,7 @@
 				French,
 				German,
 				de,
+				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* GPGServices */;
 			projectDirPath = "";
@@ -447,6 +452,7 @@
 				8E0CE0C613B3674200390D92 /* PrivateKeyChooserWindow.xib in Resources */,
 				8E0CE0CA13B3677700390D92 /* RecipientWindow.xib in Resources */,
 				8E0CE0CE13B367AE00390D92 /* VerificationResultsWindow.xib in Resources */,
+				3075B42313B3B09D00A73DB8 /* ServicesMenu.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +494,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		3075B42113B3B09D00A73DB8 /* ServicesMenu.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3075B42213B3B09D00A73DB8 /* de */,
+				3075B42413B3B25700A73DB8 /* en */,
+			);
+			name = ServicesMenu.strings;
+			sourceTree = "<group>";
+		};
 		8E0CE0AC13B3625400390D92 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
