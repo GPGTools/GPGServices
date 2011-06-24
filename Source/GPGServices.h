@@ -54,8 +54,9 @@ typedef enum {
 
 - (void)importKeyFromData:(NSData*)inputData;
 - (void)importKey:(NSString *)inputString;
+
 + (NSSet*)myPrivateKeys;
-+ (GPGKey*)myPrivateKey;
++ (GPGKey*)myPrivateKey; //Will return nil if more than one private key is available and no default key is set
 
 #pragma mark -
 #pragma mark Validators

@@ -125,6 +125,10 @@
         } 
         
         if(keyID == nil || returnKey == nil) {
+            //return nil if more than one private key is set and more than one key available
+            if([[self myPrivateKeys] count] > 1) 
+                return nil;
+            
             returnKey = [[aContext keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] nextObject];
         }
         
