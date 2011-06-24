@@ -1304,7 +1304,7 @@
                      runModal];
     if(ret == NSAlertAlternateReturn) {
         //Open browser with help
-        NSString* localizedURLString = NSLocalizedString(@"http://www.dewinter.com/gnupg_howto/english/GPGMiniHowto-3.html#ss3.1",
+        NSString* localizedURLString = NSLocalizedString(@"https://github.com/GPGTools/GPGKeychainAccess/wiki/Getting-started",
                                                          @"URL to a good tutorial about generating keys");
         NSURL* url = [NSURL URLWithString:localizedURLString];
         [[NSWorkspace sharedWorkspace] openURL:url];
