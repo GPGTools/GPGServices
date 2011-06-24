@@ -241,7 +241,9 @@
         return [GPGServices isActiveValidator]((GPGKey*)evaluatedObject);
     }]];
     
-    if(chosenKey == nil || availableKeys.count > 1) {
+    if(availableKeys.count == 0) {
+        [self showNoPrivateKeyErrorMessage]; return nil;
+    } else if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices isActiveValidator]];
         
@@ -268,7 +270,9 @@
         return [GPGServices isActiveValidator]((GPGKey*)evaluatedObject);
     }]];
     
-    if(selectedPrivateKey == nil || availableKeys.count > 1) {
+    if(availableKeys.count == 0) {
+        [self showNoPrivateKeyErrorMessage]; return nil;
+    } else if(selectedPrivateKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices isActiveValidator]];
         
@@ -445,7 +449,9 @@
         return [GPGServices canSignValidator]((GPGKey*)evaluatedObject);
     }]];
     
-    if(chosenKey == nil || availableKeys.count > 1) {
+    if(availableKeys.count == 0) {
+        [self showNoPrivateKeyErrorMessage]; return nil;
+    } else if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices canSignValidator]];
         
@@ -695,7 +701,9 @@
         return [GPGServices canSignValidator]((GPGKey*)evaluatedObject);
     }]];
     
-    if(chosenKey == nil || availableKeys.count > 1) {
+    if(availableKeys.count == 0) {
+        [self showNoPrivateKeyErrorMessage]; return nil;
+    } else if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
         [wc setKeyValidator:[GPGServices canSignValidator]];
         
@@ -1285,6 +1293,22 @@
                        otherButton:nil
          informativeTextWithFormat:NSLocalizedString(@"Good signature (%@ trust):\n\"%@\"", @"alert-box informative"),validity,userID]
      runModal];
+}
+
+- (void)showNoPrivateKeyErrorMessage {
+    NSInteger ret = [[NSAlert alertWithMessageText:NSLocalizedString(@"No Private-Key found", @"alert-box message text")
+                                     defaultButton:NSLocalizedString(@"Ok", nil)
+                                   alternateButton:NSLocalizedString(@"Help", nil)
+                                       otherButton:nil
+                         informativeTextWithFormat:NSLocalizedString(@"No private-key found on your system.\nClick 'Help' to open a web-browser with a tutorial.", @"alert-box informative")]
+                     runModal];
+    if(ret == NSAlertAlternateReturn) {
+        //Open browser with help
+        NSString* localizedURLString = NSLocalizedString(@"http://www.dewinter.com/gnupg_howto/english/GPGMiniHowto-3.html#ss3.1",
+                                                         @"URL to a good tutorial about generating keys");
+        NSURL* url = [NSURL URLWithString:localizedURLString];
+        [[NSWorkspace sharedWorkspace] openURL:url];
+    }
 }
 
 -(NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again

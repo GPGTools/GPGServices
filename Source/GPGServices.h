@@ -131,6 +131,8 @@ typedef enum {
 - (void)displayOperationFinishedNotificationWithTitle:(NSString*)title message:(NSString*)body;
 - (void)displayOperationFailedNotificationWithTitle:(NSString*)title message:(NSString*)body;
 - (void)displaySignatureVerificationForSig:(GPGSignature*)sig;
+- (void)showNoPrivateKeyErrorMessage;
+
 - (NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again;
 - (IBAction)closeModalWindow:(id)sender;
 - (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path
