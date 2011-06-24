@@ -1,5 +1,6 @@
-Port of the GPGServices to Snow Leopard.
-See http://www.far-blue.co.uk/projects/gpgservices.html for details.
+GPGServices is a service plugin to add various GnuPG related menu entries to the Service Menu of Mac OS X.
+
+See http://www.far-blue.co.uk/projects/gpgservices.html for details of the original version.
 
 To compile and test (takes some time since MacGPGME gets compiled too):
 
