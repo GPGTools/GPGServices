@@ -113,22 +113,25 @@
 }
 
 + (GPGKey*)myPrivateKey {
-    GPGOptions *myOptions=[[GPGOptions alloc] init];
-	NSString *keyID=[myOptions optionValueForName:@"default-key"];
-	[myOptions release];
-	if(keyID == nil)
-        return nil;
-    
-	GPGContext *aContext = [[GPGContext alloc] init];
+    GPGOptions *myOptions = [[[GPGOptions alloc] init] autorelease];
+	NSString *keyID = [myOptions optionValueForName:@"default-key"];
     
 	@try {
-        GPGKey* defaultKey=[aContext keyFromFingerprint:keyID secretKey:YES];
-        return defaultKey;
+        GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
+        
+        GPGKey* returnKey = nil;
+        if(keyID != nil) {
+            returnKey = [aContext keyFromFingerprint:keyID secretKey:YES];
+        } 
+        
+        if(keyID == nil || returnKey == nil) {
+            returnKey = [[aContext keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] nextObject];
+        }
+        
+        return returnKey;
     } @catch (NSException* s) {
         
-    } @finally {
-        [aContext release];
-    }
+    } 
     
     return nil;
 }
