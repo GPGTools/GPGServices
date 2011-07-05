@@ -127,6 +127,31 @@
 			<key>NSKeyEquivalent</key>
 			<dict>
 				<key>default</key>
+				<string>R</string>
+			</dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>OpenPGP: Sign and show Result</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>sign</string>
+			<key>NSPortName</key>
+			<string>GPGServices</string>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
+			<key>NSReturnTypes</key>
+			<array/>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+				<string>NSRTFPboardType</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSKeyEquivalent</key>
+			<dict>
+				<key>default</key>
 				<string>E</string>
 			</dict>
 			<key>NSMenuItem</key>
@@ -152,6 +177,29 @@
 			<key>NSKeyEquivalent</key>
 			<dict>
 				<key>default</key>
+				<string>E</string>
+			</dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>OpenPGP: Encrypt and show Result</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>encrypt</string>
+			<key>NSPortName</key>
+			<string>GPGServices</string>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+				<string>NSRTFPboardType</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSKeyEquivalent</key>
+			<dict>
+				<key>default</key>
 				<string>D</string>
 			</dict>
 			<key>NSMenuItem</key>
@@ -167,6 +215,29 @@
 			<array>
 				<string>NSStringPboardType</string>
 			</array>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+				<string>NSRTFPboardType</string>
+			</array>
+		</dict>
+		<dict>
+			<key>NSKeyEquivalent</key>
+			<dict>
+				<key>default</key>
+				<string>D</string>
+			</dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>OpenPGP: Decrypt and show Result</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>decrypt</string>
+			<key>NSPortName</key>
+			<string>GPGServices</string>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
 			<key>NSSendTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
