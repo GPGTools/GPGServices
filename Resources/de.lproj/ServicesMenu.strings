@@ -3,9 +3,12 @@
 "OpenPGP: Verify" = "OpenPGP: Verifizieren"
 "OpenPGP: Import key" = "OpenPGP: Schlüssel importieren";
 "OpenPGP: Sign" = "OpenPGP: Signieren";
+"OpenPGP: Sign and show Result" = "OpenPGP: Signieren und Ergebnis anzeigen";
 "OpenPGP: Insert my fingerprint" = "OpenPGP: Meinen Fingerabdruck einfügen";
 "OpenPGP: Insert my key" = "OpenPGP: Meinen Schlüssel einfügen";
 "OpenPGP: Decrypt" = "OpenPGP: Entschlüsseln";
+"OpenPGP: Decrypt and show Result" = "OpenPGP: Entschlüsseln und Ergebnis anzeigen";
 "OpenPGP: Encrypt" = "OpenPGP: Verschlüsseln";
+"OpenPGP: Encrypt and show Result" = "OpenPGP: Verschlüsseln und Ergebnis anzeigen";
 "OpenPGP: Import" = "OpenPGP: Importieren"
 "OpenPGP: Validate" = "OpenPGP: Validieren";

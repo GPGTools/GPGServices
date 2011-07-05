@@ -1058,8 +1058,7 @@
 	[NSApp activateIgnoringOtherApps:YES];
         
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    
-    
+
     NSString *pboardString = nil;
 	if(mode!=MyKeyService && mode!=MyFingerprintService)
 	{
@@ -1126,11 +1125,27 @@
             break;
 	}
     
-	if(newString!=nil)
-	{
+	if(newString!=nil) {
+        if([userData isEqualToString:@"showInWindow"]) {
+            //Use new pasteboard for invoking the show in TextEdit service
+            pboard = [NSPasteboard pasteboardWithUniqueName];
+        }
+        
 		[pboard declareTypes:[NSArray arrayWithObjects:NSPasteboardTypeString,NSPasteboardTypeRTF,nil] owner:nil];
 		[pboard setString:newString forType:NSPasteboardTypeString];
    		[pboard setString:newString forType:NSPasteboardTypeRTF];
+        
+        if([userData isEqualToString:@"showInWindow"]) {
+            bool ret = NSPerformService(@"New TextEdit Window Containing Selection", pboard);
+            if(ret == NO)
+                [self displayOperationFailedNotificationWithTitle:@"Fail"
+                                                          message:@"Opening TextEdit failed"];
+            else
+                [self displayOperationFinishedNotificationWithTitle:NSLocalizedString(@"Text opened in TextEdit", 
+                                                                                      @"text was opened in textedit") 
+                                                            message:NSLocalizedString(@"Please see TextEdit for the result", 
+                                                                                      @"text was opened in TextEdit message")];
+        }
 	}
     
     [pool release];

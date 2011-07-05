@@ -124,11 +124,6 @@
 			</array>
 		</dict>
 		<dict>
-			<key>NSKeyEquivalent</key>
-			<dict>
-				<key>default</key>
-				<string>R</string>
-			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -174,11 +169,6 @@
 			</array>
 		</dict>
 		<dict>
-			<key>NSKeyEquivalent</key>
-			<dict>
-				<key>default</key>
-				<string>E</string>
-			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -222,11 +212,6 @@
 			</array>
 		</dict>
 		<dict>
-			<key>NSKeyEquivalent</key>
-			<dict>
-				<key>default</key>
-				<string>D</string>
-			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
