@@ -98,7 +98,7 @@
 											<object class="NSMutableArray" key="NSTableColumns">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSTableColumn" id="707736918">
-													<string key="NSIdentifier">result</string>
+													<string key="NSIdentifier">resultIndicator</string>
 													<double key="NSWidth">42</double>
 													<double key="NSMinWidth">10</double>
 													<double key="NSMaxWidth">1000</double>
