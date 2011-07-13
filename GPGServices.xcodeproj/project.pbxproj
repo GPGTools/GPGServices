@@ -26,11 +26,15 @@
 		8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */; };
 		8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */; };
 		8E49AF5C13CDC1E0005600B6 /* IndicatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E49AF5B13CDC1E0005600B6 /* IndicatorCell.m */; };
+		8E49AF6813CDD5A5005600B6 /* VerificationResultsWindow.xib.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E49AF6613CDD5A5005600B6 /* VerificationResultsWindow.xib.strings */; };
 		8E7341A31334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */; };
 		8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
 		8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E935E64135128C6004E3E4F /* FileVerificationController.m */; };
 		8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */; };
+		8ED2C28F13CDD8A000638F65 /* MainMenu.xib.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8ED2C28913CDD8A000638F65 /* MainMenu.xib.strings */; };
+		8ED2C29013CDD8A000638F65 /* PrivateKeyChooserWindow.xib.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8ED2C28B13CDD8A000638F65 /* PrivateKeyChooserWindow.xib.strings */; };
+		8ED2C29113CDD8A000638F65 /* RecipientWindow.xib.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8ED2C28D13CDD8A000638F65 /* RecipientWindow.xib.strings */; };
 		8ED7990E135CAB60004C89D5 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
 		8ED7990F135CAB60004C89D5 /* lock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990C135CAB60004C89D5 /* lock.icns */; };
 		8ED79910135CAB60004C89D5 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
@@ -152,6 +156,8 @@
 		8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShortcutHandlingFields.m; path = Source/ShortcutHandlingFields.m; sourceTree = "<group>"; };
 		8E49AF5A13CDC1E0005600B6 /* IndicatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorCell.h; sourceTree = "<group>"; };
 		8E49AF5B13CDC1E0005600B6 /* IndicatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorCell.m; sourceTree = "<group>"; };
+		8E49AF6713CDD5A5005600B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
+		8E49AF6A13CDD5EA005600B6 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
 		8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Growl Registration Ticket.growlRegDict"; path = "Resources/Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		8E7341A21334BC1C003CBCEB /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyChooserWindowController.h; path = Source/KeyChooserWindowController.h; sourceTree = "<group>"; };
@@ -160,6 +166,12 @@
 		8E935E64135128C6004E3E4F /* FileVerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileVerificationController.m; path = Source/FileVerificationController.m; sourceTree = "<group>"; };
 		8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyChooserDataSource.h; path = Source/KeyChooserDataSource.h; sourceTree = "<group>"; };
 		8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChooserDataSource.m; path = Source/KeyChooserDataSource.m; sourceTree = "<group>"; };
+		8ED2C28A13CDD8A000638F65 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/MainMenu.xib.strings; sourceTree = "<group>"; };
+		8ED2C28C13CDD8A000638F65 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
+		8ED2C28E13CDD8A000638F65 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
+		8ED2C29213CDD8AF00638F65 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/MainMenu.xib.strings; sourceTree = "<group>"; };
+		8ED2C29313CDD8B900638F65 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
+		8ED2C29413CDD8BC00638F65 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
 		8ED7990B135CAB60004C89D5 /* sig.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = sig.icns; path = Resources/Images/sig.icns; sourceTree = "<group>"; };
 		8ED7990C135CAB60004C89D5 /* lock.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = lock.icns; path = Resources/Images/lock.icns; sourceTree = "<group>"; };
 		8ED7990D135CAB60004C89D5 /* asc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = asc.icns; path = Resources/Images/asc.icns; sourceTree = "<group>"; };
@@ -277,12 +289,16 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8ED2C28913CDD8A000638F65 /* MainMenu.xib.strings */,
+				8ED2C28B13CDD8A000638F65 /* PrivateKeyChooserWindow.xib.strings */,
+				8ED2C28D13CDD8A000638F65 /* RecipientWindow.xib.strings */,
 				3075B42113B3B09D00A73DB8 /* ServicesMenu.strings */,
 				8E0CE0C413B3671400390D92 /* InfoPlist.strings */,
 				8E0CE0C013B3665000390D92 /* MainMenu.xib */,
 				8E0CE0C813B3674200390D92 /* PrivateKeyChooserWindow.xib */,
 				8E0CE0CC13B3677700390D92 /* RecipientWindow.xib */,
 				8E0CE0D013B367AE00390D92 /* VerificationResultsWindow.xib */,
+				8E49AF6613CDD5A5005600B6 /* VerificationResultsWindow.xib.strings */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				2260756C12EBA0B50026DBEA /* Icon.icns */,
 				8ED7990D135CAB60004C89D5 /* asc.icns */,
@@ -343,6 +359,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "GPGServices" */;
 			buildPhases = (
+				8E49AF6513CDD419005600B6 /* ShellScript */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
@@ -458,10 +475,30 @@
 				8E0CE0CA13B3677700390D92 /* RecipientWindow.xib in Resources */,
 				8E0CE0CE13B367AE00390D92 /* VerificationResultsWindow.xib in Resources */,
 				3075B42313B3B09D00A73DB8 /* ServicesMenu.strings in Resources */,
+				8E49AF6813CDD5A5005600B6 /* VerificationResultsWindow.xib.strings in Resources */,
+				8ED2C28F13CDD8A000638F65 /* MainMenu.xib.strings in Resources */,
+				8ED2C29013CDD8A000638F65 /* PrivateKeyChooserWindow.xib.strings in Resources */,
+				8ED2C29113CDD8A000638F65 /* RecipientWindow.xib.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8E49AF6513CDD419005600B6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "pushd $SRCROOT > /dev/null\n\necho \"Localize VerificationResultsWindow.xib\"\n./localizeXIB Resources/en.lproj/VerificationResultsWindow.xib de\n\necho \"Localize PrivateKeyChooserWindow.xib\"\n./localizeXIB Resources/en.lproj/PrivateKeyChooserWindow.xib de\n\necho \"Localize MainMenu.xib\"\n./localizeXIB Resources/en.lproj/MainMenu.xib de\n\necho \"Localize RecipientWindow.xib\"\n./localizeXIB Resources/en.lproj/RecipientWindow.xib de\n\n\npopd > /dev/null\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
@@ -567,6 +604,42 @@
 			);
 			name = VerificationResultsWindow.xib;
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		8E49AF6613CDD5A5005600B6 /* VerificationResultsWindow.xib.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8E49AF6713CDD5A5005600B6 /* en */,
+				8E49AF6A13CDD5EA005600B6 /* de */,
+			);
+			name = VerificationResultsWindow.xib.strings;
+			sourceTree = "<group>";
+		};
+		8ED2C28913CDD8A000638F65 /* MainMenu.xib.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8ED2C28A13CDD8A000638F65 /* en */,
+				8ED2C29213CDD8AF00638F65 /* de */,
+			);
+			name = MainMenu.xib.strings;
+			sourceTree = "<group>";
+		};
+		8ED2C28B13CDD8A000638F65 /* PrivateKeyChooserWindow.xib.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8ED2C28C13CDD8A000638F65 /* en */,
+				8ED2C29313CDD8B900638F65 /* de */,
+			);
+			name = PrivateKeyChooserWindow.xib.strings;
+			sourceTree = "<group>";
+		};
+		8ED2C28D13CDD8A000638F65 /* RecipientWindow.xib.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8ED2C28E13CDD8A000638F65 /* en */,
+				8ED2C29413CDD8BC00638F65 /* de */,
+			);
+			name = RecipientWindow.xib.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

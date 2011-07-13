@@ -158,7 +158,7 @@
 						<object class="NSButton" id="298748538">
 							<reference key="NSNextResponder" ref="713100153"/>
 							<int key="NSvFlags">256</int>
-							<string key="NSFrame">{{204, 12}, {98, 32}}</string>
+							<string key="NSFrame">{{220, 12}, {82, 32}}</string>
 							<reference key="NSSuperview" ref="713100153"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="543360516">

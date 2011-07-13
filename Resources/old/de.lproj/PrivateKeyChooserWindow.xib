@@ -68,7 +68,7 @@
 							<object class="NSButtonCell" key="NSCell" id="977507724">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Auswählen</string>
+								<string key="NSContents">Privaten Schlüssel auswählen</string>
 								<object class="NSFont" key="NSSupport" id="207278408">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
