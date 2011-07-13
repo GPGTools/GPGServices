@@ -29,6 +29,13 @@
     [super dealloc];
 }
 
+- (void)awakeFromNib {
+    [resultIndicatorColumn bind:@"value" 
+                       toObject:arrayController
+                    withKeyPath:@"arrangedObjects.color" 
+                        options:nil];
+}
+
 - (void)addResults:(NSDictionary*)results {
     [self willChangeValueForKey:@"verificationResults"];
     [verificationResults addObject:results];
@@ -104,6 +111,7 @@
     result = [NSDictionary dictionaryWithObjectsAndKeys:
               [file lastPathComponent], @"filename",
               verificationResult, @"verificationResult", 
+              bgColor, @"color",
               nil];
     
     [self addResults:result];

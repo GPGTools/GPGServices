@@ -13,6 +13,9 @@
 @interface FileVerificationDataSource : NSObject {
     NSMutableArray* verificationResults;
     BOOL isActive;
+    
+    IBOutlet NSTableColumn* resultIndicatorColumn; //Hack for Binding
+    IBOutlet NSArrayController* arrayController; //Same hack
 }
 
 @property(readonly) NSArray* verificationResults;
