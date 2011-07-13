@@ -113,13 +113,13 @@
 #pragma mark -
 #pragma mark Data Source
 
-- (int)numberOfRowsInTableView:(NSTableView *)tableView {
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
 	return [keysMatchingSearch count];
 }
 
 - (id)tableView:(NSTableView *)tableView 
 objectValueForTableColumn:(NSTableColumn *)tableColumn
-			row:(int)row {
+			row:(NSInteger)row {
 	NSString* iden = tableColumn.identifier;
 	GPGKey* key = [keysMatchingSearch objectAtIndex:row];
 	

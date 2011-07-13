@@ -149,6 +149,7 @@
                     NSDictionary* result = [NSDictionary dictionaryWithObjectsAndKeys:
                                             [signedFile lastPathComponent], @"filename",
                                             verificationResult, @"verificationResult", 
+                                            bgColor, @"color",
                                             nil];
                     
                     [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
@@ -167,6 +168,7 @@
                                             [signedFile lastPathComponent], @"filename",
                                             NSLocalizedString(@"No verifiable data found",
                                                               @"verification window no data found result"), @"verificationResult",
+                                            [NSColor redColor], @"color",
                                             nil]]; 
                 }];
             }

@@ -702,7 +702,7 @@
     }]];
     
     if(availableKeys.count == 0) {
-        [self showNoPrivateKeyErrorMessage]; return nil;
+        [self showNoPrivateKeyErrorMessage]; return;
     } else if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
         [wc setKeyValidator:[GPGServices canSignValidator]];
