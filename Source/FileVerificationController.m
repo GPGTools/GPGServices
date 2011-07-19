@@ -134,6 +134,7 @@
                                           failedString];
                     
                     NSColor* bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
+                    NSImage* indicatorImage = [NSImage imageNamed:@"redmaterial"];
                     
                     NSRange range = [verificationResult rangeOfString:failedString];
                     verificationResult = [[NSMutableAttributedString alloc] 
@@ -149,7 +150,7 @@
                     NSDictionary* result = [NSDictionary dictionaryWithObjectsAndKeys:
                                             [signedFile lastPathComponent], @"filename",
                                             verificationResult, @"verificationResult", 
-                                            bgColor, @"color",
+                                            indicatorImage, @"indicatorImage",
                                             nil];
                     
                     [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {

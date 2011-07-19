@@ -29,13 +29,6 @@
     [super dealloc];
 }
 
-- (void)awakeFromNib {
-    [resultIndicatorColumn bind:@"value" 
-                       toObject:arrayController
-                    withKeyPath:@"arrangedObjects.color" 
-                        options:nil];
-}
-
 - (void)addResults:(NSDictionary*)results {
     [self willChangeValueForKey:@"verificationResults"];
     [verificationResults addObject:results];
@@ -47,7 +40,8 @@
     
     id verificationResult = nil;
     NSColor* bgColor = nil;
-    
+    NSImage* indicatorImage = nil;
+
     if(GPGErrorCodeFromError([sig status]) == GPGErrorNoError) {
         GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
         NSString* userID = [[ctx keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
@@ -56,16 +50,22 @@
         
         switch(validity) {
             case GPGValidityNever:
+            case GPGValidityUndefined:
+            case GPGValidityUnknown:
                 bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
+                indicatorImage = [NSImage imageNamed:@"redmaterial"];
                 break;
             case GPGValidityMarginal: 
                 bgColor = [NSColor colorWithCalibratedRed:0.9 green:0.8 blue:0.0 alpha:1.0];
+                indicatorImage = [NSImage imageNamed:@"yellowmaterial"];
                 break;
             case GPGValidityFull:
             case GPGValidityUltimate:
                 bgColor = [NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0];
+                indicatorImage = [NSImage imageNamed:@"greenmaterial"];
                 break;
             default:
+                indicatorImage = [NSImage imageNamed:@"aquamaterial"];
                 bgColor = [NSColor clearColor];
         }
         
@@ -87,6 +87,7 @@
         verificationResult = (NSString*)tmp;
     } else {
         bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
+        indicatorImage = [NSImage imageNamed:@"redmaterial"];
         
         NSString* failedString = NSLocalizedString(@"FAILED", @"'FAILED' translated. Needed to colorize the in the results window");
         verificationResult = [NSString stringWithFormat:NSLocalizedString(@"Verification %@: %@",
@@ -106,12 +107,14 @@
         verificationResult = (NSString*)tmp;
     }
     
+    NSLog(@"color: %@", bgColor);
+    NSLog(@"image: %@", indicatorImage);
     
     //Add to results
     result = [NSDictionary dictionaryWithObjectsAndKeys:
               [file lastPathComponent], @"filename",
               verificationResult, @"verificationResult", 
-              bgColor, @"color",
+              indicatorImage, @"indicatorImage",
               nil];
     
     [self addResults:result];
