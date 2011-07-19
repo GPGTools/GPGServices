@@ -40,6 +40,10 @@
 		8ED79910135CAB60004C89D5 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
 		8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDC40F7133F6C5500D0A101 /* ZipOperation.m */; };
 		8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */; };
+		8EF4894713D5CC3F00099556 /* yellowmaterial.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF4894313D5CC3F00099556 /* yellowmaterial.png */; };
+		8EF4894813D5CC3F00099556 /* aquamaterial.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF4894413D5CC3F00099556 /* aquamaterial.png */; };
+		8EF4894913D5CC3F00099556 /* greenmaterial.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF4894513D5CC3F00099556 /* greenmaterial.png */; };
+		8EF4894A13D5CC3F00099556 /* redmaterial.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF4894613D5CC3F00099556 /* redmaterial.png */; };
 		8EF7A61D1334C05300FD8C5B /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 		8EFFC2271360FBAC00712940 /* FileVerificationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFC2261360FBAC00712940 /* FileVerificationDataSource.m */; };
 		8EFFC22A1361009400712940 /* DummyVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFC2291361009400712940 /* DummyVerificationController.m */; };
@@ -180,6 +184,10 @@
 		8EDC40F7133F6C5500D0A101 /* ZipOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZipOperation.m; path = Source/ZipOperation.m; sourceTree = "<group>"; };
 		8EE899891348B92B004A3266 /* NSPredicate+negate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSPredicate+negate.h"; path = "Source/NSPredicate+negate.h"; sourceTree = "<group>"; };
 		8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSPredicate+negate.m"; path = "Source/NSPredicate+negate.m"; sourceTree = "<group>"; };
+		8EF4894313D5CC3F00099556 /* yellowmaterial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowmaterial.png; sourceTree = "<group>"; };
+		8EF4894413D5CC3F00099556 /* aquamaterial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aquamaterial.png; sourceTree = "<group>"; };
+		8EF4894513D5CC3F00099556 /* greenmaterial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenmaterial.png; sourceTree = "<group>"; };
+		8EF4894613D5CC3F00099556 /* redmaterial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redmaterial.png; sourceTree = "<group>"; };
 		8EFFC2251360FBAC00712940 /* FileVerificationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileVerificationDataSource.h; path = Source/FileVerificationDataSource.h; sourceTree = "<group>"; };
 		8EFFC2261360FBAC00712940 /* FileVerificationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileVerificationDataSource.m; path = Source/FileVerificationDataSource.m; sourceTree = "<group>"; };
 		8EFFC2281361009400712940 /* DummyVerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DummyVerificationController.h; path = Source/DummyVerificationController.h; sourceTree = "<group>"; };
@@ -289,6 +297,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8EF4894313D5CC3F00099556 /* yellowmaterial.png */,
+				8EF4894413D5CC3F00099556 /* aquamaterial.png */,
+				8EF4894513D5CC3F00099556 /* greenmaterial.png */,
+				8EF4894613D5CC3F00099556 /* redmaterial.png */,
 				8ED2C28913CDD8A000638F65 /* MainMenu.xib.strings */,
 				8ED2C28B13CDD8A000638F65 /* PrivateKeyChooserWindow.xib.strings */,
 				8ED2C28D13CDD8A000638F65 /* RecipientWindow.xib.strings */,
@@ -482,6 +494,10 @@
 				8ED2C28F13CDD8A000638F65 /* MainMenu.xib.strings in Resources */,
 				8ED2C29013CDD8A000638F65 /* PrivateKeyChooserWindow.xib.strings in Resources */,
 				8ED2C29113CDD8A000638F65 /* RecipientWindow.xib.strings in Resources */,
+				8EF4894713D5CC3F00099556 /* yellowmaterial.png in Resources */,
+				8EF4894813D5CC3F00099556 /* aquamaterial.png in Resources */,
+				8EF4894913D5CC3F00099556 /* greenmaterial.png in Resources */,
+				8EF4894A13D5CC3F00099556 /* redmaterial.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
