@@ -1,9 +1,6 @@
 ﻿/* alert-box informative */
 "%i key(s), %i secret key(s), %i revocation(s)" = "%1$i key(s), %2$i secret key(s), %3$i revocation(s)";
 
-/* Needed to colorize the in the results window */
-"(%@ trust)" = "(%@ trust)";
-
 /* operation failed title */
 "Can't import keys from directory" = "Can't import keys from directory";
 
@@ -48,9 +45,6 @@
 
 /* exporting key error message text */
 "Exporting key failed." = "Exporting key failed.";
-
-/* 'FAILED' translated. Needed to colorize the in the results window */
-"FAILED" = "FAILED";
 
 /* operation failed title */
 "File doesn't exist" = "File doesn't exist";
@@ -124,8 +118,8 @@
 /* operation failed message */
 "Please try again" = "Please try again";
 
-/* 'signed by ...' verification result */
-"Signed by: %@ %@" = "Signed by: %1$@ %2$@";
+/* 'signer name and trust */
+"Signed by: %@ (%@ trust)" = "Signed by: %1$@ (%2$@ trust)";
 
 /* operation failed title */
 "Signing failed" = "Signing failed";
@@ -145,8 +139,8 @@
 /* operation failed title */
 "Verification %@." = "Verification %@.";
 
-/* 'Verification FAILED ...' verification-result */
-"Verification %@: %@" = "Verification %1$@: %2$@";
+/* Verification failed message */
+"Verification FAILED: %@" = "Verification FAILED: %1$@";
 
 /* verification window no signatures result */
 "Verification %@: No signatures found" = "Verification %@: No signatures found";

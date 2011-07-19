@@ -39,7 +39,6 @@
     NSDictionary* result = nil;
     
     id verificationResult = nil;
-    NSColor* bgColor = nil;
     NSImage* indicatorImage = nil;
 
     if(GPGErrorCodeFromError([sig status]) == GPGErrorNoError) {
@@ -52,63 +51,27 @@
             case GPGValidityNever:
             case GPGValidityUndefined:
             case GPGValidityUnknown:
-                bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
                 indicatorImage = [NSImage imageNamed:@"redmaterial"];
                 break;
             case GPGValidityMarginal: 
-                bgColor = [NSColor colorWithCalibratedRed:0.9 green:0.8 blue:0.0 alpha:1.0];
                 indicatorImage = [NSImage imageNamed:@"yellowmaterial"];
                 break;
             case GPGValidityFull:
             case GPGValidityUltimate:
-                bgColor = [NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0];
                 indicatorImage = [NSImage imageNamed:@"greenmaterial"];
                 break;
             default:
                 indicatorImage = [NSImage imageNamed:@"aquamaterial"];
-                bgColor = [NSColor clearColor];
         }
         
-        NSString* trustString = [NSString stringWithFormat:
-                                 NSLocalizedString(@"(%@ trust)", @"Needed to colorize the in the results window"), 
-                                 validityDesc];
-        verificationResult = [NSString stringWithFormat:NSLocalizedString(@"Signed by: %@ %@",
-                                                                          @"'signed by ...' verification result"), userID, trustString];                         
-        NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
-                                                                                 attributes:nil] autorelease];
-        NSRange range = [verificationResult rangeOfString:[NSString stringWithFormat:trustString, validityDesc]];
-        [tmp addAttribute:NSFontAttributeName 
-                    value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
-                    range:range];
-        [tmp addAttribute:NSBackgroundColorAttributeName 
-                    value:bgColor
-                    range:range];
-        
-        verificationResult = (NSString*)tmp;
+        verificationResult = [NSString stringWithFormat:NSLocalizedString(@"Signed by: %@ (%@ trust)", @"signer name and trust"), 
+                              userID, validityDesc];
     } else {
-        bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
         indicatorImage = [NSImage imageNamed:@"redmaterial"];
         
-        NSString* failedString = NSLocalizedString(@"FAILED", @"'FAILED' translated. Needed to colorize the in the results window");
-        verificationResult = [NSString stringWithFormat:NSLocalizedString(@"Verification %@: %@",
-                                                                          @"'Verification FAILED ...' verification-result"),
-                              failedString,
+        verificationResult = [NSString stringWithFormat:NSLocalizedString(@"Verification FAILED: %@", @"Verification failed message"),
                               GPGErrorDescription([sig status])];
-        NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
-                                                                                 attributes:nil] autorelease];
-        NSRange range = [verificationResult rangeOfString:failedString];
-        [tmp addAttribute:NSFontAttributeName 
-                    value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
-                    range:range];
-        [tmp addAttribute:NSBackgroundColorAttributeName 
-                    value:bgColor
-                    range:range];
-        
-        verificationResult = (NSString*)tmp;
     }
-    
-    NSLog(@"color: %@", bgColor);
-    NSLog(@"image: %@", indicatorImage);
     
     //Add to results
     result = [NSDictionary dictionaryWithObjectsAndKeys:
