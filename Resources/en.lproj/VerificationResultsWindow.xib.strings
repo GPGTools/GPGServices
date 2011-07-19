@@ -3,7 +3,7 @@
 "1.title" = "Verification Results";
 
 /* Class = "NSTableColumn"; headerCell.title = "Result"; ObjectID = "28"; */
-"28.headerCell.title" = "Indicator";
+"28.headerCell.title" = "Result";
 
 /* Class = "NSButtonCell"; title = "Ok"; ObjectID = "56"; */
 "56.title" = "Ok";

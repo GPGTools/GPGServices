@@ -1,6 +1,6 @@
 ﻿/* Localized versions of Service menu items */
 
-"OpenPGP: Verify" = "OpenPGP: Verifizieren"
+"OpenPGP: Verify" = "OpenPGP: Verifizieren";
 "OpenPGP: Import key" = "OpenPGP: Schlüssel importieren";
 "OpenPGP: Sign" = "OpenPGP: Signieren";
 "OpenPGP: Sign and show Result" = "OpenPGP: Signieren und Ergebnis anzeigen";
@@ -10,5 +10,5 @@
 "OpenPGP: Decrypt and show Result" = "OpenPGP: Entschlüsseln und Ergebnis anzeigen";
 "OpenPGP: Encrypt" = "OpenPGP: Verschlüsseln";
 "OpenPGP: Encrypt and show Result" = "OpenPGP: Verschlüsseln und Ergebnis anzeigen";
-"OpenPGP: Import" = "OpenPGP: Importieren"
+"OpenPGP: Import" = "OpenPGP: Importieren";
 "OpenPGP: Validate" = "OpenPGP: Validieren";
