@@ -1,50 +1,101 @@
 ﻿
-/* Class = "NSWindow"; title = "Choose Recipients - GPGServices"; ObjectID = "3"; */
+/* Class = "NSWindow"; title = "Empfänger auswählen - GPGServices"; ObjectID = "3"; */
 "3.title" = "Empfänger auswählen - GPGServices";
 
-/* Class = "NSButtonCell"; title = "OK"; ObjectID = "10"; */
+/* Class = "NSButtonCell"; title = "Ok"; ObjectID = "10"; */
 "10.title" = "Ok";
 
-/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "11"; */
+/* Class = "NSButtonCell"; title = "Abbrechen"; ObjectID = "11"; */
 "11.title" = "Abbrechen";
 
-/* Class = "NSButtonCell"; title = "Sign"; ObjectID = "12"; */
+/* Class = "NSButtonCell"; title = "Signieren"; ObjectID = "12"; */
 "12.title" = "Signieren";
 
-/* Class = "NSTableColumn"; headerCell.title = "Short ID"; ObjectID = "18"; */
+/* Class = "NSTableColumn"; headerCell.title = "Kurz-ID"; ObjectID = "18"; */
 "18.headerCell.title" = "Kurz-ID";
 
 /* Class = "NSTableColumn"; headerCell.title = "E-Mail"; ObjectID = "19"; */
 "19.headerCell.title" = "E-Mail";
 
-/* Class = "NSTableColumn"; headerCell.title = "Fingerprint"; ObjectID = "20"; */
+/* Class = "NSTableColumn"; headerCell.title = "Fingerabdruck"; ObjectID = "20"; */
 "20.headerCell.title" = "Fingerabdruck";
 
 /* Class = "NSTableColumn"; headerCell.title = "ID"; ObjectID = "21"; */
 "21.headerCell.title" = "ID";
 
-/* Class = "NSTableColumn"; headerCell.title = "Algorithm"; ObjectID = "22"; */
+/* Class = "NSTableColumn"; headerCell.title = "Algorithmus"; ObjectID = "22"; */
 "22.headerCell.title" = "Algorithmus";
 
-/* Class = "NSTableColumn"; headerCell.title = "Length"; ObjectID = "23"; */
+/* Class = "NSTableColumn"; headerCell.title = "Länge"; ObjectID = "23"; */
 "23.headerCell.title" = "Länge";
 
-/* Class = "NSTableColumn"; headerCell.title = "Expires"; ObjectID = "24"; */
+/* Class = "NSTableColumn"; headerCell.title = "Verfällt"; ObjectID = "24"; */
 "24.headerCell.title" = "Verfällt";
 
-/* Class = "NSTableColumn"; headerCell.title = "Created"; ObjectID = "25"; */
+/* Class = "NSTableColumn"; headerCell.title = "Erstellt"; ObjectID = "25"; */
 "25.headerCell.title" = "Erstellt";
 
-/* Class = "NSTableColumn"; headerCell.title = "Use?"; ObjectID = "26"; */
+/* Class = "NSTableColumn"; headerCell.title = "Auswählen?"; ObjectID = "26"; */
 "26.headerCell.title" = "Auswählen?";
 
-/* Class = "NSTableColumn"; headerCell.title = "Type"; ObjectID = "27"; */
+/* Class = "NSTableColumn"; headerCell.title = "Typ"; ObjectID = "27"; */
 "27.headerCell.title" = "Typ";
 
-/* Class = "NSTableColumn"; headerCell.title = "Comment"; ObjectID = "28"; */
+/* Class = "NSTableColumn"; headerCell.title = "Kommentar"; ObjectID = "28"; */
 "28.headerCell.title" = "Kommentar";
 
-/* Class = "NSTableColumn"; headerCell.title = "Validity Indicator"; ObjectID = "53"; */
+/* Class = "NSTextFieldCell"; title = "Comment Cell"; ObjectID = "29"; */
+"29.title" = "Comment Cell";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "30"; */
+"30.title" = "Text Cell";
+
+/* Class = "NSTextFieldCell"; placeholderString = "1999-03-15"; ObjectID = "32"; */
+"32.placeholderString" = "1999-03-15";
+
+/* Class = "NSTextFieldCell"; title = "Created Cell"; ObjectID = "32"; */
+"32.title" = "Created Cell";
+
+/* Class = "NSTextFieldCell"; title = "Expires Cell"; ObjectID = "34"; */
+"34.title" = "Expires Cell";
+
+/* Class = "NSTextFieldCell"; placeholderString = "1024"; ObjectID = "36"; */
+"36.placeholderString" = "1024";
+
+/* Class = "NSTextFieldCell"; title = "Length Cell"; ObjectID = "36"; */
+"36.title" = "Length Cell";
+
+/* Class = "NSTextFieldCell"; placeholderString = "RSA"; ObjectID = "37"; */
+"37.placeholderString" = "RSA";
+
+/* Class = "NSTextFieldCell"; title = "Algorithm Cell"; ObjectID = "37"; */
+"37.title" = "Algorithm Cell";
+
+/* Class = "NSTextFieldCell"; placeholderString = "0x5de249965b0358a2"; ObjectID = "38"; */
+"38.placeholderString" = "0x5de249965b0358a2";
+
+/* Class = "NSTextFieldCell"; title = "ID Cell"; ObjectID = "38"; */
+"38.title" = "ID Cell";
+
+/* Class = "NSTextFieldCell"; placeholderString = "A4D9 4E92 B098 6AB5 EE9D  CD75 5DE2 4996 5B03 58A2"; ObjectID = "39"; */
+"39.placeholderString" = "A4D9 4E92 B098 6AB5 EE9D  CD75 5DE2 4996 5B03 58A2";
+
+/* Class = "NSTextFieldCell"; title = "Fingerprint Cell"; ObjectID = "39"; */
+"39.title" = "Fingerprint Cell";
+
+/* Class = "NSTextFieldCell"; placeholderString = "wk@gnupg.org"; ObjectID = "40"; */
+"40.placeholderString" = "wk@gnupg.org";
+
+/* Class = "NSTextFieldCell"; title = "Email Cell"; ObjectID = "40"; */
+"40.title" = "Email Cell";
+
+/* Class = "NSTextFieldCell"; placeholderString = "5B0358A2"; ObjectID = "41"; */
+"41.placeholderString" = "5B0358A2";
+
+/* Class = "NSTextFieldCell"; title = "Short Cell ID"; ObjectID = "41"; */
+"41.title" = "Short Cell ID";
+
+/* Class = "NSTableColumn"; headerCell.title = "Gültigkeitsindikator"; ObjectID = "53"; */
 "53.headerCell.title" = "Gültigkeitsindikator";
 
 /* Class = "NSMenu"; title = "OtherViews"; ObjectID = "76"; */
@@ -62,27 +113,41 @@
 /* Class = "NSBox"; title = "Box"; ObjectID = "104"; */
 "104.title" = "Box";
 
-/* Class = "NSButtonCell"; title = "Add to Recipients"; ObjectID = "106"; */
+/* Class = "NSButtonCell"; title = "Zu Empfänger hinzufügen"; ObjectID = "106"; */
 "106.title" = "Zu Empfänger hinzufügen";
 
-/* Class = "NSTextFieldCell"; title = "Secret Key:"; ObjectID = "118"; */
+/* Class = "NSTextFieldCell"; title = "Geheimer Schlüssel:"; ObjectID = "118"; */
 "118.title" = "Geheimer Schlüssel:";
 
-/* Class = "NSTableColumn"; headerCell.title = "Owner Trust"; ObjectID = "138"; */
+/* Class = "NSTableColumn"; headerCell.title = "Vertrauen"; ObjectID = "138"; */
 "138.headerCell.title" = "Vertrauen";
+
+/* Class = "NSTextFieldCell"; placeholderString = "Ultimate"; ObjectID = "139"; */
+"139.placeholderString" = "Ultimate";
+
+/* Class = "NSTextFieldCell"; title = "Owner Trust Cell"; ObjectID = "139"; */
+"139.title" = "Owner Trust Cell";
 
 /* Class = "NSTableColumn"; headerCell.title = "Name"; ObjectID = "147"; */
 "147.headerCell.title" = "Name";
 
-/* Class = "NSTableColumn"; headerCell.title = "Owner Trust Indicator"; ObjectID = "158"; */
+/* Class = "NSTextFieldCell"; placeholderString = "Werner Koch"; ObjectID = "148"; */
+"148.placeholderString" = "Werner Koch";
+
+/* Class = "NSTextFieldCell"; title = "Name Cell"; ObjectID = "148"; */
+"148.title" = "Name Cell";
+
+/* Class = "NSTableColumn"; headerCell.title = "Gültigkeitsindikator"; ObjectID = "158"; */
 "158.headerCell.title" = "Gültigkeitsindikator";
 
-/* Class = "NSTableColumn"; headerCell.title = "Validity"; ObjectID = "160"; */
+/* Class = "NSTableColumn"; headerCell.title = "Gültigkeit"; ObjectID = "160"; */
 "160.headerCell.title" = "Gültigkeit";
+
+/* Class = "NSTextFieldCell"; placeholderString = "Ultimate"; ObjectID = "162"; */
+"162.placeholderString" = "Ultimate";
 
 /* Class = "NSTextFieldCell"; title = "Text"; ObjectID = "162"; */
 "162.title" = "Text";
 
-/* Class = "NSTextFieldCell"; title = "Text"; ObjectID = "162"; */
+/* Class = "NSTextFieldCell"; title = "Text"; ObjectID = "174"; */
 "174.title" = "Text";
-

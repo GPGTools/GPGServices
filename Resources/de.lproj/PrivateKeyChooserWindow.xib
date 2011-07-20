@@ -112,7 +112,7 @@
 							<reference key="NSNextKeyView" ref="398892952"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSPopUpButtonCell" key="NSCell" id="1058455001">
-								<int key="NSCellFlags">-2080244160</int>
+								<int key="NSCellFlags">-2076049856</int>
 								<int key="NSCellFlags2">2048</int>
 								<reference key="NSSupport" ref="207278408"/>
 								<reference key="NSControlView" ref="507214626"/>

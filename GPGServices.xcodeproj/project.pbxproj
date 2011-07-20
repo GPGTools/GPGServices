@@ -510,7 +510,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "pushd $SRCROOT > /dev/null\n\necho \"Localize VerificationResultsWindow.xib\"\n./localizeXIB Resources/en.lproj/VerificationResultsWindow.xib de\n\necho \"Localize PrivateKeyChooserWindow.xib\"\n./localizeXIB Resources/en.lproj/PrivateKeyChooserWindow.xib de\n\necho \"Localize MainMenu.xib\"\n./localizeXIB Resources/en.lproj/MainMenu.xib de\n\necho \"Localize RecipientWindow.xib\"\n./localizeXIB Resources/en.lproj/RecipientWindow.xib de\n\n\npopd > /dev/null\n";
+			shellScript = "pushd $SRCROOT > /dev/null\n\necho \"Localize VerificationResultsWindow.xib\"\nibtool --strings-file Resources/de.lproj/VerificationResultsWindow.xib.strings --write Resources/de.lproj/VerificationResultsWindow.xib Resources/en.lproj/VerificationResultsWindow.xib\n\necho \"Localize PrivateKeyChooserWindow.xib\"\nibtool --strings-file Resources/de.lproj/PrivateKeyChooserWindow.xib.strings --write Resources/de.lproj/PrivateKeyChooserWindow.xib Resources/en.lproj/PrivateKeyChooserWindow.xib\n\necho \"Localize MainMenu.xib\"\nibtool --strings-file Resources/de.lproj/MainMenu.xib.strings --write Resources/de.lproj/MainMenu.xib Resources/en.lproj/MainMenu.xib\n\necho \"Localize RecipientWindow.xib\"\nibtool --strings-file Resources/de.lproj/RecipientWindow.xib.strings --write Resources/de.lproj/RecipientWindow.xib Resources/en.lproj/RecipientWindow.xib\n\n\npopd > /dev/null\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
