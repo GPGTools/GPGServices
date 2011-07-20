@@ -151,45 +151,43 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	} else if([iden isEqualToString:@"ownerTrust"]) {
         return [key ownerTrustDescription];
 	} else if([iden isEqualToString:@"ownerTrustIndicator"]) {
-        int i = 0;
         switch([key ownerTrust]) {
             case GPGValidityUnknown:
             case GPGValidityUndefined:
-                i = 0; break;
+                return nil;
             case GPGValidityNever:
-                i = 1; break;
+                return [NSImage imageNamed:@"redmaterial"];
             case GPGValidityMarginal: 
-                i = 2; break;
+                return [NSImage imageNamed:@"yellowmaterial"];
             case GPGValidityFull:
             case GPGValidityUltimate:
-                i = 3; break;
+                return [NSImage imageNamed:@"greenmaterial"];
+            default:
+                return nil;
         }
-        
-		return [NSNumber numberWithInt:i];
 	} else if([iden isEqualToString:@"validity"]) {
         return GPGValidityDescription([key overallValidity]);
 	} else if([iden isEqualToString:@"validityIndicator"]) {
-        int i = 0;
         switch([key overallValidity]) {
             case GPGValidityUnknown:
             case GPGValidityUndefined:
-                i = 0; break;
+                return nil;
             case GPGValidityNever:
-                i = 1; break;
+                return [NSImage imageNamed:@"redmaterial"];
             case GPGValidityMarginal: 
-                i = 2; break;
+                return [NSImage imageNamed:@"yellowmaterial"];
             case GPGValidityFull:
             case GPGValidityUltimate:
-                i = 3; break;
+                return [NSImage imageNamed:@"greenmaterial"];
+            default:
+                return nil;
         }
-        
-		return [NSNumber numberWithInt:i];
 	} else if([iden isEqualToString:@"useKey"]) {
         GPGKey* k = [keysMatchingSearch objectAtIndex:row];
         return [NSNumber numberWithBool:[self.selectedKeys containsObject:k]];
     }
 
-	return @"";
+	return nil;
 }
 
 - (void)tableView:(NSTableView *)tableView
