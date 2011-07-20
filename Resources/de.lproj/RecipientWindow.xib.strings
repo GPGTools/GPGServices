@@ -1,9 +1,9 @@
 ﻿
 /* Class = "NSWindow"; title = "Choose Recipients - GPGServices"; ObjectID = "3"; */
-"3.title" = "Empfänger auswählen";
+"3.title" = "Empfänger auswählen - GPGServices";
 
 /* Class = "NSButtonCell"; title = "OK"; ObjectID = "10"; */
-"10.title" = "OK";
+"10.title" = "Ok";
 
 /* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "11"; */
 "11.title" = "Abbrechen";
@@ -18,7 +18,7 @@
 "19.headerCell.title" = "E-Mail";
 
 /* Class = "NSTableColumn"; headerCell.title = "Fingerprint"; ObjectID = "20"; */
-"20.headerCell.title" = "Schlüsselabdruck";
+"20.headerCell.title" = "Fingerabdruck";
 
 /* Class = "NSTableColumn"; headerCell.title = "ID"; ObjectID = "21"; */
 "21.headerCell.title" = "ID";
@@ -36,7 +36,7 @@
 "25.headerCell.title" = "Erstellt";
 
 /* Class = "NSTableColumn"; headerCell.title = "Use?"; ObjectID = "26"; */
-"26.headerCell.title" = "Nutzen?";
+"26.headerCell.title" = "Auswählen?";
 
 /* Class = "NSTableColumn"; headerCell.title = "Type"; ObjectID = "27"; */
 "27.headerCell.title" = "Typ";
@@ -44,38 +44,8 @@
 /* Class = "NSTableColumn"; headerCell.title = "Comment"; ObjectID = "28"; */
 "28.headerCell.title" = "Kommentar";
 
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "29"; */
-"29.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "30"; */
-"30.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "32"; */
-"32.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "34"; */
-"34.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "36"; */
-"36.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "37"; */
-"37.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "38"; */
-"38.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "39"; */
-"39.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "40"; */
-"40.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "41"; */
-"41.title" = "Text Cell";
-
 /* Class = "NSTableColumn"; headerCell.title = "Validity Indicator"; ObjectID = "53"; */
-"53.headerCell.title" = "Gültigkeitssindikator";
+"53.headerCell.title" = "Gültigkeitsindikator";
 
 /* Class = "NSMenu"; title = "OtherViews"; ObjectID = "76"; */
 "76.title" = "OtherViews";
@@ -93,7 +63,7 @@
 "104.title" = "Box";
 
 /* Class = "NSButtonCell"; title = "Add to Recipients"; ObjectID = "106"; */
-"106.title" = "Zu Empfängern hinzufügen";
+"106.title" = "Zu Empfänger hinzufügen";
 
 /* Class = "NSTextFieldCell"; title = "Secret Key:"; ObjectID = "118"; */
 "118.title" = "Geheimer Schlüssel:";
@@ -101,20 +71,18 @@
 /* Class = "NSTableColumn"; headerCell.title = "Owner Trust"; ObjectID = "138"; */
 "138.headerCell.title" = "Vertrauen";
 
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "139"; */
-"139.title" = "Text Cell";
-
 /* Class = "NSTableColumn"; headerCell.title = "Name"; ObjectID = "147"; */
 "147.headerCell.title" = "Name";
 
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "148"; */
-"148.title" = "Text Cell";
-
 /* Class = "NSTableColumn"; headerCell.title = "Owner Trust Indicator"; ObjectID = "158"; */
-"158.headerCell.title" = "Vertrauensindikator";
+"158.headerCell.title" = "Gültigkeitsindikator";
 
 /* Class = "NSTableColumn"; headerCell.title = "Validity"; ObjectID = "160"; */
 "160.headerCell.title" = "Gültigkeit";
 
 /* Class = "NSTextFieldCell"; title = "Text"; ObjectID = "162"; */
 "162.title" = "Text";
+
+/* Class = "NSTextFieldCell"; title = "Text"; ObjectID = "162"; */
+"174.title" = "Text";
+

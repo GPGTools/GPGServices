@@ -118,3 +118,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Text"; ObjectID = "162"; */
 "162.title" = "Text";
+
+/* Class = "NSTextFieldCell"; title = "Text"; ObjectID = "174"; */
+"174.title" = "Text";
