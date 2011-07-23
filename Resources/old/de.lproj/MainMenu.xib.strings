@@ -1,0 +1,12 @@
+﻿
+/* Class = "NSWindow"; title = "GPGServices"; ObjectID = "217"; */
+"217.title" = "GPGServices";
+
+/* Class = "NSTextFieldCell"; title = "GPG Passphrase:"; ObjectID = "234"; */
+"234.title" = "GPG Passphrase:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "236"; */
+"236.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "237"; */
+"237.title" = "Abbrechen";

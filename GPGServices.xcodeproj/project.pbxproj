@@ -366,7 +366,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "GPGServices" */;
 			buildPhases = (
-				8E49AF6513CDD419005600B6 /* ShellScript */,
+				8E49AF6513CDD419005600B6 /* Localize XIBs */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
@@ -499,18 +499,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8E49AF6513CDD419005600B6 /* ShellScript */ = {
+		8E49AF6513CDD419005600B6 /* Localize XIBs */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Localize XIBs";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "pushd $SRCROOT > /dev/null\n\necho \"Localize VerificationResultsWindow.xib\"\nibtool --strings-file Resources/de.lproj/VerificationResultsWindow.xib.strings --write Resources/de.lproj/VerificationResultsWindow.xib Resources/en.lproj/VerificationResultsWindow.xib\n\necho \"Localize PrivateKeyChooserWindow.xib\"\nibtool --strings-file Resources/de.lproj/PrivateKeyChooserWindow.xib.strings --write Resources/de.lproj/PrivateKeyChooserWindow.xib Resources/en.lproj/PrivateKeyChooserWindow.xib\n\necho \"Localize MainMenu.xib\"\nibtool --strings-file Resources/de.lproj/MainMenu.xib.strings --write Resources/de.lproj/MainMenu.xib Resources/en.lproj/MainMenu.xib\n\necho \"Localize RecipientWindow.xib\"\nibtool --strings-file Resources/de.lproj/RecipientWindow.xib.strings --write Resources/de.lproj/RecipientWindow.xib Resources/en.lproj/RecipientWindow.xib\n\n\npopd > /dev/null\n";
+			shellScript = "pushd $SRCROOT > /dev/null\n\n\necho \"Localize MainMenu.xib\"\nDependencies/GPGTools_Core/bin/localizeXIB Resources/en.lproj/MainMenu.xib de\n\necho \"Localize RecipientWindow.xib\"\nDependencies/GPGTools_Core/bin/localizeXIB Resources/en.lproj/RecipientWindow.xib de\n\necho \"Localize PrivateKeyChooserWindow.xib\"\nDependencies/GPGTools_Core/bin/localizeXIB Resources/en.lproj/PrivateKeyChooserWindow.xib de\n\necho \"Localize VerificationResultsWindow.xib\"\nDependencies/GPGTools_Core/bin/localizeXIB Resources/en.lproj/VerificationResultsWindow.xib de\n\n\npopd > /dev/null\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
