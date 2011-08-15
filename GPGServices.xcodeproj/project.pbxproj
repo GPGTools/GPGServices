@@ -169,10 +169,10 @@
 		8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChooserDataSource.m; path = Source/KeyChooserDataSource.m; sourceTree = "<group>"; };
 		8ED2C28A13CDD8A000638F65 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/MainMenu.xib.strings; sourceTree = "<group>"; };
 		8ED2C28C13CDD8A000638F65 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
-		8ED2C28E13CDD8A000638F65 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
+		8ED2C28E13CDD8A000638F65 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
 		8ED2C29213CDD8AF00638F65 /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/MainMenu.xib.strings; sourceTree = "<group>"; };
 		8ED2C29313CDD8B900638F65 /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
-		8ED2C29413CDD8BC00638F65 /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
+		8ED2C29413CDD8BC00638F65 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
 		8ED7990B135CAB60004C89D5 /* sig.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = sig.icns; path = Resources/Images/sig.icns; sourceTree = "<group>"; };
 		8ED7990C135CAB60004C89D5 /* lock.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = lock.icns; path = Resources/Images/lock.icns; sourceTree = "<group>"; };
 		8ED7990D135CAB60004C89D5 /* asc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = asc.icns; path = Resources/Images/asc.icns; sourceTree = "<group>"; };

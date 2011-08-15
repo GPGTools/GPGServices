@@ -61,7 +61,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{423, 166}, {690, 290}}</string>
 				<int key="NSWTFlags">1081606144</int>
-				<string key="NSWindowTitle">Empfänger auswählen - GPGServices</string>
+				<string key="NSWindowTitle">Choose Recipients - GPGServices</string>
 				<object class="NSMutableString" key="NSWindowClass">
 					<characters key="NS.bytes">NSWindow</characters>
 				</object>
@@ -84,7 +84,7 @@
 							<object class="NSButtonCell" key="NSCell" id="161748282">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Ok</string>
+								<string key="NSContents">OK</string>
 								<object class="NSFont" key="NSSupport" id="66272850">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -112,7 +112,7 @@
 							<object class="NSButtonCell" key="NSCell" id="196726294">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Abbrechen</string>
+								<string key="NSContents">Cancel</string>
 								<reference key="NSSupport" ref="66272850"/>
 								<reference key="NSControlView" ref="907311194"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -165,7 +165,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Typ</string>
+														<string key="NSContents">Type</string>
 														<object class="NSFont" key="NSSupport" id="26">
 															<string key="NSName">LucidaGrande</string>
 															<double key="NSSize">11</double>
@@ -225,7 +225,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Auswählen?</string>
+														<string key="NSContents">Use?</string>
 														<reference key="NSSupport" ref="26"/>
 														<object class="NSColor" key="NSBackgroundColor" id="172804979">
 															<int key="NSColorSpace">3</int>
@@ -331,7 +331,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Gültigkeitsindikator</string>
+														<string key="NSContents">Validity Indicator</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSBackgroundColor" ref="295105864"/>
 														<reference key="NSTextColor" ref="561487084"/>
@@ -361,7 +361,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Gültigkeit</string>
+														<string key="NSContents">Validity</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSBackgroundColor" ref="295105864"/>
 														<reference key="NSTextColor" ref="561487084"/>
@@ -369,7 +369,7 @@
 													<object class="NSTextFieldCell" key="NSDataCell" id="573585281">
 														<int key="NSCellFlags">67239488</int>
 														<int key="NSCellFlags2">272630784</int>
-														<string key="NSContents">Text</string>
+														<string key="NSContents">Validity Cell</string>
 														<reference key="NSSupport" ref="66272850"/>
 														<string key="NSPlaceholderString">Ultimate</string>
 														<reference key="NSControlView" ref="1027869562"/>
@@ -396,7 +396,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Gültigkeitsindikator</string>
+														<string key="NSContents">Owner Trust Indicator</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSBackgroundColor" ref="295105864"/>
 														<reference key="NSTextColor" ref="561487084"/>
@@ -412,7 +412,7 @@
 														<bool key="NSAnimates">NO</bool>
 													</object>
 													<reference key="NSTableView" ref="1027869562"/>
-													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype" id="52493311">
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
 														<string key="NSKey">ownerTrust</string>
 														<bool key="NSAscending">NO</bool>
 														<string key="NSSelector">compare:</string>
@@ -427,7 +427,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Vertrauen</string>
+														<string key="NSContents">Owner Trust</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSBackgroundColor" ref="295105864"/>
 														<reference key="NSTextColor" ref="561487084"/>
@@ -460,7 +460,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Erstellt</string>
+														<string key="NSContents">Created</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSBackgroundColor" ref="295105864"/>
 														<reference key="NSTextColor" ref="561487084"/>
@@ -510,7 +510,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Verfällt</string>
+														<string key="NSContents">Expires</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSBackgroundColor" ref="295105864"/>
 														<reference key="NSTextColor" ref="561487084"/>
@@ -558,7 +558,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Länge</string>
+														<string key="NSContents">Length</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSBackgroundColor" ref="295105864"/>
 														<reference key="NSTextColor" ref="561487084"/>
@@ -590,7 +590,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Algorithmus</string>
+														<string key="NSContents">Algorithm</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSBackgroundColor" ref="295105864"/>
 														<reference key="NSTextColor" ref="561487084"/>
@@ -622,7 +622,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Kurz-ID</string>
+														<string key="NSContents">Short ID</string>
 														<reference key="NSSupport" ref="26"/>
 														<object class="NSColor" key="NSBackgroundColor">
 															<int key="NSColorSpace">3</int>
@@ -690,7 +690,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Fingerabdruck</string>
+														<string key="NSContents">Fingerprint</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSBackgroundColor" ref="295105864"/>
 														<reference key="NSTextColor" ref="561487084"/>
@@ -723,7 +723,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Kommentar</string>
+														<string key="NSContents">Comment</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSBackgroundColor" ref="295105864"/>
 														<reference key="NSTextColor" ref="561487084"/>
@@ -764,10 +764,6 @@
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
 											<string key="NSAutosaveName">recipientTable</string>
-											<object class="NSArray" key="NSSortDescriptors">
-												<bool key="EncodedWithXMLCoder">YES</bool>
-												<reference ref="52493311"/>
-											</object>
 											<int key="NSColumnAutoresizingStyle">4</int>
 											<int key="NSDraggingSourceMaskForLocal">15</int>
 											<int key="NSDraggingSourceMaskForNonLocal">0</int>
@@ -840,7 +836,7 @@
 							<object class="NSButtonCell" key="NSCell" id="293567591">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">0</int>
-								<string key="NSContents">Signieren</string>
+								<string key="NSContents">Sign</string>
 								<reference key="NSSupport" ref="66272850"/>
 								<reference key="NSControlView" ref="137209181"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -928,7 +924,7 @@
 							<reference key="NSNextKeyView" ref="691932034"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSPopUpButtonCell" key="NSCell" id="657403616">
-								<int key="NSCellFlags">-2076049856</int>
+								<int key="NSCellFlags">-2080244160</int>
 								<int key="NSCellFlags2">2048</int>
 								<reference key="NSSupport" ref="66272850"/>
 								<reference key="NSControlView" ref="1183693"/>
@@ -1026,7 +1022,7 @@
 							<object class="NSButtonCell" key="NSCell" id="694982552">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">0</int>
-								<string key="NSContents">Zu Empfänger hinzufügen</string>
+								<string key="NSContents">Add to Recipients</string>
 								<reference key="NSSupport" ref="66272850"/>
 								<reference key="NSControlView" ref="691932034"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -1049,7 +1045,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="1069021312">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Geheimer Schlüssel:</string>
+								<string key="NSContents">Secret Key:</string>
 								<reference key="NSSupport" ref="66272850"/>
 								<reference key="NSControlView" ref="61361730"/>
 								<reference key="NSBackgroundColor" ref="404552521"/>

@@ -282,7 +282,7 @@
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">Name Cell</string>
 														<reference key="NSSupport" ref="66272850"/>
-														<string key="NSPlaceholderString">Werner Koch</string>
+														<string key="NSPlaceholderString"/>
 														<reference key="NSControlView" ref="1027869562"/>
 														<reference key="NSBackgroundColor" ref="524164029"/>
 														<reference key="NSTextColor" ref="687194004"/>
@@ -314,7 +314,7 @@
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">Email Cell</string>
 														<reference key="NSSupport" ref="66272850"/>
-														<string key="NSPlaceholderString">wk@gnupg.org</string>
+														<string key="NSPlaceholderString"/>
 														<reference key="NSControlView" ref="1027869562"/>
 														<reference key="NSBackgroundColor" ref="524164029"/>
 														<reference key="NSTextColor" ref="687194004"/>
@@ -376,7 +376,7 @@
 														<int key="NSCellFlags2">272630784</int>
 														<string key="NSContents">Validity Cell</string>
 														<reference key="NSSupport" ref="66272850"/>
-														<string key="NSPlaceholderString">Ultimate</string>
+														<string key="NSPlaceholderString"/>
 														<reference key="NSControlView" ref="1027869562"/>
 														<object class="NSColor" key="NSBackgroundColor" id="404552521">
 															<int key="NSColorSpace">6</int>
@@ -417,7 +417,7 @@
 														<bool key="NSAnimates">NO</bool>
 													</object>
 													<reference key="NSTableView" ref="1027869562"/>
-													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype" id="52493311">
+													<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
 														<string key="NSKey">ownerTrust</string>
 														<bool key="NSAscending">NO</bool>
 														<string key="NSSelector">compare:</string>
@@ -439,10 +439,10 @@
 													</object>
 													<object class="NSTextFieldCell" key="NSDataCell" id="966866038">
 														<int key="NSCellFlags">337772096</int>
-														<int key="NSCellFlags2">2048</int>
+														<int key="NSCellFlags2">134219776</int>
 														<string key="NSContents">Owner Trust Cell</string>
 														<reference key="NSSupport" ref="66272850"/>
-														<string key="NSPlaceholderString">Ultimate</string>
+														<string key="NSPlaceholderString"/>
 														<reference key="NSControlView" ref="1027869562"/>
 														<reference key="NSBackgroundColor" ref="524164029"/>
 														<reference key="NSTextColor" ref="687194004"/>
@@ -492,7 +492,7 @@
 															<string key="NS.format">dd.MM.yyyy</string>
 															<bool key="NS.natural">NO</bool>
 														</object>
-														<string key="NSPlaceholderString">1999-03-15</string>
+														<string key="NSPlaceholderString"/>
 														<reference key="NSControlView" ref="1027869562"/>
 														<reference key="NSBackgroundColor" ref="524164029"/>
 														<reference key="NSTextColor" ref="687194004"/>
@@ -573,7 +573,7 @@
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">Length Cell</string>
 														<reference key="NSSupport" ref="66272850"/>
-														<string key="NSPlaceholderString">1024</string>
+														<string key="NSPlaceholderString"/>
 														<reference key="NSControlView" ref="1027869562"/>
 														<reference key="NSBackgroundColor" ref="524164029"/>
 														<reference key="NSTextColor" ref="687194004"/>
@@ -605,7 +605,7 @@
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">Algorithm Cell</string>
 														<reference key="NSSupport" ref="66272850"/>
-														<string key="NSPlaceholderString">RSA</string>
+														<string key="NSPlaceholderString"/>
 														<reference key="NSControlView" ref="1027869562"/>
 														<reference key="NSBackgroundColor" ref="524164029"/>
 														<reference key="NSTextColor" ref="687194004"/>
@@ -640,7 +640,7 @@
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">Short Cell ID</string>
 														<reference key="NSSupport" ref="66272850"/>
-														<string key="NSPlaceholderString">5B0358A2</string>
+														<string key="NSPlaceholderString"/>
 														<reference key="NSControlView" ref="1027869562"/>
 														<reference key="NSBackgroundColor" ref="524164029"/>
 														<reference key="NSTextColor" ref="687194004"/>
@@ -672,7 +672,7 @@
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">ID Cell</string>
 														<reference key="NSSupport" ref="66272850"/>
-														<string key="NSPlaceholderString">0x5de249965b0358a2</string>
+														<string key="NSPlaceholderString"/>
 														<reference key="NSControlView" ref="1027869562"/>
 														<reference key="NSBackgroundColor" ref="524164029"/>
 														<reference key="NSTextColor" ref="687194004"/>
@@ -705,7 +705,7 @@
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">Fingerprint Cell</string>
 														<reference key="NSSupport" ref="66272850"/>
-														<string key="NSPlaceholderString">A4D9 4E92 B098 6AB5 EE9D  CD75 5DE2 4996 5B03 58A2</string>
+														<string key="NSPlaceholderString"/>
 														<reference key="NSControlView" ref="1027869562"/>
 														<reference key="NSBackgroundColor" ref="524164029"/>
 														<reference key="NSTextColor" ref="687194004"/>
@@ -769,10 +769,6 @@
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
 											<string key="NSAutosaveName">recipientTable</string>
-											<object class="NSArray" key="NSSortDescriptors">
-												<bool key="EncodedWithXMLCoder">YES</bool>
-												<reference ref="52493311"/>
-											</object>
 											<int key="NSColumnAutoresizingStyle">4</int>
 											<int key="NSDraggingSourceMaskForLocal">15</int>
 											<int key="NSDraggingSourceMaskForNonLocal">0</int>
@@ -1466,7 +1462,6 @@
 							<reference ref="412868625"/>
 							<reference ref="934770653"/>
 							<reference ref="1023882559"/>
-							<reference ref="479140475"/>
 							<reference ref="768338024"/>
 							<reference ref="1007808256"/>
 							<reference ref="852852368"/>
@@ -1477,6 +1472,7 @@
 							<reference ref="293590503"/>
 							<reference ref="1043357124"/>
 							<reference ref="568636854"/>
+							<reference ref="479140475"/>
 						</object>
 						<reference key="parent" ref="1057667522"/>
 					</object>
