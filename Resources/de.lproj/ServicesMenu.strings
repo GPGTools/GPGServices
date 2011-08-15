@@ -12,3 +12,9 @@
 "OpenPGP: Encrypt and show Result" = "OpenPGP: Verschlüsseln und Ergebnis anzeigen";
 "OpenPGP: Import" = "OpenPGP: Importieren";
 "OpenPGP: Validate" = "OpenPGP: Validieren";
+
+"OpenPGP: Decrypt File" = "OpenPGP: Datei Entschlüsseln";
+"OpenPGP: Encrypt File" = "OpenPGP: Datei Verschlüsseln";
+"OpenPGP: Import File" = "OpenPGP: Datei Importieren";
+"OpenPGP: Sign File" = "OpenPGP: Datei Signieren";
+"OpenPGP: Validate File" = "OpenPGP: Datei Verifizieren";

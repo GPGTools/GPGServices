@@ -133,8 +133,6 @@
 			<string>sign</string>
 			<key>NSPortName</key>
 			<string>GPGServices</string>
-			<key>NSUserData</key>
-			<string>showInWindow</string>
 			<key>NSReturnTypes</key>
 			<array/>
 			<key>NSSendTypes</key>
@@ -142,6 +140,8 @@
 				<string>NSStringPboardType</string>
 				<string>NSRTFPboardType</string>
 			</array>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
 		</dict>
 		<dict>
 			<key>NSKeyEquivalent</key>
@@ -178,13 +178,13 @@
 			<string>encrypt</string>
 			<key>NSPortName</key>
 			<string>GPGServices</string>
-			<key>NSUserData</key>
-			<string>showInWindow</string>
 			<key>NSSendTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
 				<string>NSRTFPboardType</string>
 			</array>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
 		</dict>
 		<dict>
 			<key>NSKeyEquivalent</key>
@@ -221,13 +221,13 @@
 			<string>decrypt</string>
 			<key>NSPortName</key>
 			<string>GPGServices</string>
-			<key>NSUserData</key>
-			<string>showInWindow</string>
 			<key>NSSendTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
 				<string>NSRTFPboardType</string>
 			</array>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
 		</dict>
 		<dict>
 			<key>NSKeyEquivalent</key>
@@ -299,9 +299,9 @@
 		<dict>
 			<key>NSMenuItem</key>
 			<dict>
-				<key>default</key>
-				<string>OpenPGP: Sign</string>
-			</dict>
+                <key>default</key>
+                <string>OpenPGP: Sign File</string>
+            </dict>
 			<key>NSMessage</key>
 			<string>signFile</string>
 			<key>NSPortName</key>
@@ -321,7 +321,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Encrypt</string>
+				<string>OpenPGP: Encrypt File</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>encryptFile</string>
@@ -342,7 +342,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Decrypt</string>
+				<string>OpenPGP: Decrypt File</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>decryptFile</string>
@@ -363,7 +363,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Validate</string>
+				<string>OpenPGP: Validate File</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>validateFile</string>
@@ -384,7 +384,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Import</string>
+				<string>OpenPGP: Import File</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>importFile</string>
