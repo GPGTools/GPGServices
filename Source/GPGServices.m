@@ -47,7 +47,7 @@
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     
-    NSArray* encs = [filenames pathsMatchingExtensions:[NSArray arrayWithObject:@"gpg"]];
+    NSArray* encs = [filenames pathsMatchingExtensions:[NSArray arrayWithObjects:@"gpg", @"pgp", nil]];
     NSArray* sigs = [filenames pathsMatchingExtensions:[NSArray arrayWithObjects:@"sig", @"asc", nil]];
     
     if(encs != nil && encs.count != 0)

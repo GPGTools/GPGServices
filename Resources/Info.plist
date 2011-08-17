@@ -12,6 +12,7 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>gpg</string>
+				<string>pgp</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>lock.icns</string>
@@ -299,9 +300,9 @@
 		<dict>
 			<key>NSMenuItem</key>
 			<dict>
-                <key>default</key>
-                <string>OpenPGP: Sign File</string>
-            </dict>
+				<key>default</key>
+				<string>OpenPGP: Sign File</string>
+			</dict>
 			<key>NSMessage</key>
 			<string>signFile</string>
 			<key>NSPortName</key>
