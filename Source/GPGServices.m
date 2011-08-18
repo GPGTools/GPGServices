@@ -888,6 +888,8 @@
     
     DummyVerificationController* dummyController = nil;
     
+    NSMutableArray* noDataErrorFiles = [NSMutableArray array];
+    
     for(NSString* file in files) {
         BOOL isDirectory = NO;
         @try {
@@ -933,9 +935,7 @@
         } @catch (NSException* localException) {
             switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])) {
                 case GPGErrorNoData:
-                    [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Decryption failed.", @"operation failed title")
-                                                              message:NSLocalizedString(@"No decryptable data was found.", 
-                                                                                        @"operation failed message")];
+                    [noDataErrorFiles addObject:[file lastPathComponent]];
                     break;
                 case GPGErrorCancelled:
                     break;
@@ -950,10 +950,22 @@
     
     dummyController.isActive = NO;
     
+    if(noDataErrorFiles.count > 0) {
+        NSMutableString* message = [NSMutableString stringWithString:NSLocalizedString(@"No decryptable data was found.", 
+                                                                                       @"operation failed message")];
+        [message appendString:@"\n"];
+        [noDataErrorFiles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [message appendFormat:@"\n%@", (NSString*)obj];
+        }];
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Decryption failed.", @"operation failed title")
+                                                  message:message];
+    }
+    
     if(decryptedFilesCount > 0)
         [self displayOperationFinishedNotificationWithTitle:NSLocalizedString(@"Decryption finished", @"operation failed title")
                                                     message:
-         [NSString stringWithFormat:NSLocalizedString(@"Finished decrypting %i file(s)", @"operation finished message"), files.count]];
+         [NSString stringWithFormat:NSLocalizedString(@"Finished decrypting %i file(s)", @"operation finished message"), 
+          decryptedFilesCount]];
     
     [dummyController runModal];
     [dummyController release];
