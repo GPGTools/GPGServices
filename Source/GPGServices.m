@@ -67,9 +67,9 @@
 
 - (void)importKeyFromData:(NSData*)data {
     NSDictionary *importedKeys = nil;
-	GPGContext *aContext = [[GPGContext alloc] init];
+	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
     
-    GPGData* inputData = [[GPGData alloc] initWithDataNoCopy:data];
+    GPGData* inputData = [[[GPGData alloc] initWithDataNoCopy:data] autorelease];
     
 	@try {
         importedKeys = [aContext importKeyData:inputData];
@@ -78,10 +78,7 @@
                                                   message:GPGErrorDescription([[[localException userInfo] 
                                                                                 objectForKey:@"GPGErrorKey"]                                                              intValue])];
         return;
-	} @finally {
-        [inputData release];
-        [aContext release];
-    }
+	}
     
     [[NSAlert alertWithMessageText:NSLocalizedString(@"Import result:", @"Alert box import result message text")
                      defaultButton:NSLocalizedString(@"Ok", nil)
@@ -100,14 +97,12 @@
 }
 
 + (NSSet*)myPrivateKeys {
-    GPGContext* context = [[GPGContext alloc] init];
+    GPGContext* context = [[[GPGContext alloc] init] autorelease];
     
     NSMutableSet* keySet = [NSMutableSet set];
     for(GPGKey* k in [NSSet setWithArray:[[context keyEnumeratorForSearchPattern:@"" secretKeysOnly:YES] allObjects]]) {
         [keySet addObject:[context refreshKey:k]];
     }
-    
-    [context release];
     
     return keySet;
 }
@@ -287,7 +282,7 @@
     if(selectedPrivateKey == nil)
         return nil;
     
-    GPGContext* ctx = [[GPGContext alloc] init];
+    GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
     [ctx setUsesArmor:YES];
     [ctx setUsesTextMode:YES];
     
@@ -311,9 +306,7 @@
         [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Exporting key failed", @"key export failed title")
                                                   message:GPGErrorDescription(error)];
         return nil;
-	} @finally {
-        [ctx release];
-    }
+	}
     
 	return [[[NSString alloc] initWithData:keyData 
                                   encoding:NSUTF8StringEncoding] autorelease];
@@ -397,9 +390,9 @@
 -(NSString *)decryptTextString:(NSString *)inputString
 {
     GPGData *outputData = nil;
-	GPGContext *aContext = [[GPGContext alloc] init];
+	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
     
-	GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+	GPGData *inputData = [[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
     
 	@try {
      	[aContext setPassphraseDelegate:self];
@@ -421,10 +414,7 @@
             }
         }
         return nil;
-	} @finally {
-        [inputData release];
-        [aContext release];
-    }
+	} 
     
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
 }
@@ -432,10 +422,10 @@
 
 -(NSString *)signTextString:(NSString *)inputString
 {
-	GPGContext *aContext = [[GPGContext alloc] init];
+	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
 	[aContext setPassphraseDelegate:self];
     
-	GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+	GPGData *inputData = [[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
     GPGKey* chosenKey = [GPGServices myPrivateKey];
     
     NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
@@ -462,10 +452,7 @@
     if(chosenKey != nil) {
         [aContext clearSignerKeys];
         [aContext addSignerKey:chosenKey];
-    } else {
-        [inputData release];
-        [aContext release];
-        
+    } else {        
         return nil;
     }
     
@@ -499,20 +486,15 @@
                                            bodyText:errorMessage];
         
         return nil;
-	} @finally {
-        [inputData release];
-        [aContext release];
-    }
+	}
     
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
 }
 
 
--(void)verifyTextString:(NSString *)inputString
-{
-	GPGContext *aContext = [[GPGContext alloc] init];
-    GPGData* inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
-
+-(void)verifyTextString:(NSString *)inputString {
+	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
+    GPGData* inputData=[[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
     [aContext setUsesTextMode:YES];
     
 	@try {
@@ -552,10 +534,7 @@
                                                       message:GPGErrorDescription(error)];
         }
         return;
-	} @finally {
-        [inputData release];
-        [aContext release];
-    }
+	}
 }
 
 #pragma mark -
