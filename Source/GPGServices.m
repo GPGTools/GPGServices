@@ -319,9 +319,8 @@
                                   encoding:NSUTF8StringEncoding] autorelease];
 }
 
--(NSString *)encryptTextString:(NSString *)inputString
-{
-    GPGContext *aContext = [[GPGContext alloc] init];
+-(NSString *)encryptTextString:(NSString *)inputString {
+    GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
     [aContext setUsesArmor:YES];
     
 	BOOL trustsAllKeys = YES;
@@ -331,10 +330,9 @@
 	int ret = [rcp runModal];
     [rcp release];
 	if(ret != 0) {
-		[aContext release];
 		return nil;
 	} else {
-		GPGData *inputData=[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+		GPGData *inputData = [[[GPGData alloc] initWithDataNoCopy:[inputString dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
 		
 		BOOL sign = rcp.sign;
         NSArray* validRecipients = rcp.selectedKeys;
@@ -351,8 +349,6 @@
         if(privateKey == nil) {
             [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed.", @"operation failed title")
                                            message:NSLocalizedString(@"No usable private key found", @"operation failed message")];
-            [inputData release];
-            [aContext release];
             return nil;
         }
         
@@ -360,18 +356,19 @@
             [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed.", @"operation failed title")
                                                       message:NSLocalizedString(@"No valid recipients found", 
                                                                                 @"operation failed message")];
-            
-            [inputData release];
-            [aContext release];
             return nil;
         }
         
 		@try {
             if(sign) {
                 [aContext addSignerKey:privateKey];
-                outputData=[aContext encryptedSignedData:inputData withKeys:validRecipients trustAllKeys:trustsAllKeys];
+                outputData = [[aContext encryptedSignedData:inputData 
+                                                   withKeys:validRecipients
+                                               trustAllKeys:trustsAllKeys] autorelease];
             } else {
-                outputData=[aContext encryptedData:inputData withKeys:validRecipients trustAllKeys:trustsAllKeys];
+                outputData = [[aContext encryptedData:inputData 
+                                             withKeys:validRecipients 
+                                         trustAllKeys:trustsAllKeys] autorelease];
             }
 		} @catch(NSException* localException) {
             outputData = nil;
@@ -391,10 +388,7 @@
                 }
             }
             return nil;
-		} @finally {
-            [inputData release];
-            [aContext release];
-        }
+		} 
 	}
     
 	return [[[NSString alloc] initWithData:[outputData data] encoding:NSUTF8StringEncoding] autorelease];
