@@ -101,9 +101,6 @@
 "No signatures found within the selection." = "Keine Signaturen in der Auwahl gefunden.";
 
 /* operation failed message */
-"No usable private key found" = "Keine benutzbaren geheime Schlüssel gefunden";
-
-/* operation failed message */
 "No valid recipients found" = "Keine validen Empfänger gefunden";
 
 /* verification window no data found result */

@@ -101,9 +101,6 @@
 "No signatures found within the selection." = "No signatures found within the selection.";
 
 /* operation failed message */
-"No usable private key found" = "No usable private key found";
-
-/* operation failed message */
 "No valid recipients found" = "No valid recipients found";
 
 /* verification window no data found result */

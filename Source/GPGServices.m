@@ -339,9 +339,9 @@
             validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
         }
         
-        if(privateKey == nil) {
+        if(sign && privateKey == nil) {
             [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed.", @"operation failed title")
-                                           message:NSLocalizedString(@"No usable private key found", @"operation failed message")];
+                                           message:NSLocalizedString(@"No Private-Key found", @"operation failed message")];
             return nil;
         }
         
