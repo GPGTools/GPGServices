@@ -64,40 +64,32 @@
 #pragma mark -
 #pragma mark GPG-Helper
 
+//Disable this for now. We need better handling of imports in libmacgpg.
 /*
 - (void)importKeyFromData:(NSData*)data {
-    NSDictionary *importedKeys = nil;
-	GPGContext *aContext = [[GPGContext alloc] init];
+	GPGController* ctx = [[[GPGController alloc] init] autorelease];
     
-    GPGData* inputData = [[GPGData alloc] initWithDataNoCopy:data];
-    
+    NSString* importText = nil;
 	@try {
-        importedKeys = [aContext importKeyData:inputData];
-	} @catch(NSException* localException) {
+        importText = [ctx importFromData:data fullImport:NO];
+	} @catch(GPGException* ex) {
         [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
-                                                  message:GPGErrorDescription([[[localException userInfo] 
-                                                                                objectForKey:@"GPGErrorKey"]                                                              intValue])];
+                                                  message:[ex description]];
         return;
-	} @finally {
-        [inputData release];
-        [aContext release];
-    }
+	} 
     
     [[NSAlert alertWithMessageText:@"Import result:"
                      defaultButton:@"Ok"
                    alternateButton:nil
                        otherButton:nil
-         informativeTextWithFormat:@"%i key(s), %i secret key(s), %i revocation(s) ",
-      [[importedKeys valueForKey:@"importedKeyCount"] intValue],
-      [[importedKeys valueForKey:@"importedSecretKeyCount"] intValue],
-      [[importedKeys valueForKey:@"newRevocationCount"] intValue]]
+         informativeTextWithFormat:importText]
      runModal];
 }
 
 - (void)importKey:(NSString *)inputString {
     [self importKeyFromData:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 }
-*/
+ */
 
 + (NSSet*)myPrivateKeys {
     GPGController* context = [GPGController gpgController];
