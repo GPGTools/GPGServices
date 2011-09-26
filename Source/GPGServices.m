@@ -407,7 +407,6 @@
     }
     
 	@try {
-        //[ctx signedData:inputData signatureMode:GPGSignatureModeClear];
         NSData* outputData = [ctx processData:inputData withEncryptSignMode:GPGClearSign recipients:nil hiddenRecipients:nil];
         return [outputData gpgString];
 	} @catch(NSException* localException) {
@@ -455,11 +454,18 @@
         if([sigs count] > 0)
         {
             GPGSignature* sig = [sigs objectAtIndex:0];
+            GPGErrorCode status = sig.status;
+            NSLog(@"sig.status: %i", status);
             if([sig status] == GPGErrorNoError) {
                 [self displaySignatureVerificationForSig:sig];
             } else {
+                NSString* errorMessage = nil;
+                switch(status) {
+                        case GPGErrorBadSignature:
+                        errorMessage = [@"Bad signature by " stringByAppendingString:sig.userID]; break;
+                }
                 [self displayOperationFailedNotificationWithTitle:@"Verification FAILED."
-                                                          message:[NSString stringWithFormat:@"Signature verification failed with error code: ", [sig status]]];
+                                                          message:errorMessage];
             }
         } else {
             //Looks like sigs.count == 0 when we have encrypted text but no signature
@@ -476,7 +482,7 @@
         //TODO: Implement correct error handling (might be a problem on libmacgpg's side)
         if([[[localException userInfo] valueForKey:@"errorCode"] intValue] != GPGErrorNoError)
             [self displayOperationFailedNotificationWithTitle:@"Verification failed." 
-                                                      message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
+                                                      message:[ctx.error description]];
         
         /*
         if(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])==GPGErrorNoData)
