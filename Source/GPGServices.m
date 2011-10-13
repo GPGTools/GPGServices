@@ -308,7 +308,7 @@
             if(sign)
                 [ctx addSignerKey:[privateKey description]];
             
-            GPGEncryptSignMode mode = sign ? GPGEnryptSign : GPGPublicKeyEncrypt;
+            GPGEncryptSignMode mode = sign ? GPGEncryptSign : GPGPublicKeyEncrypt;
             NSData* outputData = [ctx processData:inputData 
                               withEncryptSignMode:mode
                                        recipients:validRecipients

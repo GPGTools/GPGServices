@@ -1,8 +1,13 @@
 all: compile
 
-update:
-	@git submodule foreach git pull origin master
+update-core:
+	@cd Dependencies/GPGTools_Core; git pull origin master; cd -
+update-libmac:
+	@cd Dependencies/Libmacgpg; git pull origin lion; cd -
+update-me:
 	@git pull
+
+update: update-core update-libmac update-me
 
 compile:
 	@echo "(have a look at build.log for details)";
