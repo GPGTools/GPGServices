@@ -13,7 +13,7 @@ compile:
 	@echo "(have a look at build.log for details)";
 	@echo "" > build.log
 	@echo "  * Building...(can take some minutes)";
-	@xcodebuild -project GPGServices.xcodeproj -target GPGServices -configuration Release build >> build.log 2>&1
+	@xcodebuild -project GPGServices.xcodeproj -target GPGServices -configuration Release build
 
 install: compile
 	@echo "  * Installing...";
