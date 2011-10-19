@@ -500,10 +500,50 @@
 				<key>RELOCATABLE</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.6</string>
+				<string>1.7a1</string>
 			</dict>
 			<key>UUID</key>
 			<string>5BCCF690-7295-423B-89B3-5BAC72D8B16A</string>
+		</dict>
+		<dict>
+			<key>PACKAGE_SETTINGS</key>
+			<dict>
+				<key>LOCATION</key>
+				<integer>0</integer>
+				<key>NAME</key>
+				<string>autofix</string>
+			</dict>
+			<key>PATH</key>
+			<dict>
+				<key>PATH</key>
+				<string>../Dependencies/GPGTools_Core/installer/autofix.pkg</string>
+				<key>PATH_TYPE</key>
+				<integer>1</integer>
+			</dict>
+			<key>TYPE</key>
+			<integer>1</integer>
+			<key>UUID</key>
+			<string>3D2F2B51-7B79-489F-AF7B-D3BBC584519A</string>
+		</dict>
+		<dict>
+			<key>PACKAGE_SETTINGS</key>
+			<dict>
+				<key>LOCATION</key>
+				<integer>0</integer>
+				<key>NAME</key>
+				<string>key</string>
+			</dict>
+			<key>PATH</key>
+			<dict>
+				<key>PATH</key>
+				<string>../Dependencies/GPGTools_Core/installer/key.pkg</string>
+				<key>PATH_TYPE</key>
+				<integer>1</integer>
+			</dict>
+			<key>TYPE</key>
+			<integer>1</integer>
+			<key>UUID</key>
+			<string>CA49FA97-785C-4404-90A3-6B9ECBA67A27</string>
 		</dict>
 	</array>
 	<key>PROJECT</key>
@@ -553,7 +593,18 @@
 						<array>
 							<dict>
 								<key>DESCRIPTION</key>
-								<array/>
+								<array>
+									<dict>
+										<key>LANGUAGE</key>
+										<string>English</string>
+										<key>VALUE</key>
+										<string>Version: 1.7a1
+Web: http://gpgtools.org/gpgservices.html
+Requirements: OS X &gt;= 10.6 (Intel)
+Installs to: /Library/Services
+Description: OpenPGP for all applications via OS X Services menu.</string>
+									</dict>
+								</array>
 								<key>OPTIONS</key>
 								<dict>
 									<key>HIDDEN</key>
@@ -564,15 +615,134 @@
 								<key>PACKAGE_UUID</key>
 								<string>5BCCF690-7295-423B-89B3-5BAC72D8B16A</string>
 								<key>REQUIREMENTS</key>
-								<array/>
+								<array>
+									<dict>
+										<key>BEHAVIOR</key>
+										<integer>1</integer>
+										<key>DICTIONARY</key>
+										<dict>
+											<key>IC_REQUIREMENT_SCRIPT_ARGUMENTS</key>
+											<array/>
+											<key>IC_REQUIREMENT_SCRIPT_COMPARATOR</key>
+											<integer>0</integer>
+											<key>IC_REQUIREMENT_SCRIPT_EMBED</key>
+											<true/>
+											<key>IC_REQUIREMENT_SCRIPT_PATH</key>
+											<dict>
+												<key>PATH</key>
+												<string>../Dependencies/GPGTools_Core/scripts/check_for_gpg.sh</string>
+												<key>PATH_TYPE</key>
+												<integer>1</integer>
+											</dict>
+											<key>IC_REQUIREMENT_SCRIPT_VALUE</key>
+											<integer>0</integer>
+										</dict>
+										<key>IDENTIFIER</key>
+										<string>fr.whitebox.Packages.requirement.scripts</string>
+										<key>MESSAGE</key>
+										<array>
+											<dict>
+												<key>LANGUAGE</key>
+												<string>English</string>
+												<key>VALUE</key>
+												<string>No GPG installation found!</string>
+											</dict>
+										</array>
+										<key>NAME</key>
+										<string>GPG</string>
+										<key>STATE</key>
+										<true/>
+									</dict>
+								</array>
 								<key>TITLE</key>
-								<array/>
+								<array>
+									<dict>
+										<key>LANGUAGE</key>
+										<string>English</string>
+										<key>VALUE</key>
+										<string>GPGTools GPGServices</string>
+									</dict>
+								</array>
 								<key>TOOLTIP</key>
 								<array/>
 								<key>TYPE</key>
 								<integer>0</integer>
 								<key>UUID</key>
 								<string>3B9B2196-E2AB-44E4-891E-42F13E45C6E2</string>
+							</dict>
+							<dict>
+								<key>DESCRIPTION</key>
+								<array>
+									<dict>
+										<key>LANGUAGE</key>
+										<string>English</string>
+										<key>VALUE</key>
+										<string>Automatically fixes issues you might have with your GPGTools installation.</string>
+									</dict>
+								</array>
+								<key>OPTIONS</key>
+								<dict>
+									<key>HIDDEN</key>
+									<false/>
+									<key>STATE</key>
+									<integer>1</integer>
+								</dict>
+								<key>PACKAGE_UUID</key>
+								<string>3D2F2B51-7B79-489F-AF7B-D3BBC584519A</string>
+								<key>REQUIREMENTS</key>
+								<array/>
+								<key>TITLE</key>
+								<array>
+									<dict>
+										<key>LANGUAGE</key>
+										<string>English</string>
+										<key>VALUE</key>
+										<string>GPGTools Autofix</string>
+									</dict>
+								</array>
+								<key>TOOLTIP</key>
+								<array/>
+								<key>TYPE</key>
+								<integer>0</integer>
+								<key>UUID</key>
+								<string>B1582981-1EE1-435D-BA22-98A79A4BC87E</string>
+							</dict>
+							<dict>
+								<key>DESCRIPTION</key>
+								<array>
+									<dict>
+										<key>LANGUAGE</key>
+										<string>English</string>
+										<key>VALUE</key>
+										<string>Adds the GPGTools public OpenPGP key to the keychain.</string>
+									</dict>
+								</array>
+								<key>OPTIONS</key>
+								<dict>
+									<key>HIDDEN</key>
+									<false/>
+									<key>STATE</key>
+									<integer>1</integer>
+								</dict>
+								<key>PACKAGE_UUID</key>
+								<string>CA49FA97-785C-4404-90A3-6B9ECBA67A27</string>
+								<key>REQUIREMENTS</key>
+								<array/>
+								<key>TITLE</key>
+								<array>
+									<dict>
+										<key>LANGUAGE</key>
+										<string>English</string>
+										<key>VALUE</key>
+										<string>GPGTools Public OpenPGP Key</string>
+									</dict>
+								</array>
+								<key>TOOLTIP</key>
+								<array/>
+								<key>TYPE</key>
+								<integer>0</integer>
+								<key>UUID</key>
+								<string>9C772B03-DB19-4E92-B70E-8A2853F86EDD</string>
 							</dict>
 						</array>
 						<key>REMOVED</key>
