@@ -122,7 +122,6 @@
 		8E472FE91361CED5009462E4 /* ShortcutHandlingFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShortcutHandlingFields.h; path = Source/ShortcutHandlingFields.h; sourceTree = "<group>"; };
 		8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShortcutHandlingFields.m; path = Source/ShortcutHandlingFields.m; sourceTree = "<group>"; };
 		8E4A7AF51328C9A5007953BE /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
-		8E6935EF13953BD0004DFAE5 /* Libmacgpg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Libmacgpg.framework; path = /Users/moritz/Development/GPGServices/Dependencies/libmacgpg/build/Debug/Libmacgpg.framework; sourceTree = "<absolute>"; };
 		8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Growl Registration Ticket.growlRegDict"; path = "Resources/Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		8E7341A21334BC1C003CBCEB /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Libmacgpg.xcodeproj; path = Dependencies/libmacgpg/Libmacgpg.xcodeproj; sourceTree = "<group>"; };
@@ -183,6 +182,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2226176E144ECFD500750926 /* Libmacgpg.framework */,
 				8E7341A21334BC1C003CBCEB /* Growl.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
@@ -219,9 +219,6 @@
 		29B97314FDCFA39411CA2CEA /* GPGServices */ = {
 			isa = PBXGroup;
 			children = (
-				22261772144ED07200750926 /* ServicesRestart */,
-				2226176E144ECFD500750926 /* Libmacgpg.framework */,
-				8E6935EF13953BD0004DFAE5 /* Libmacgpg.framework */,
 				22CA686C12DFD8B400ED919C /* Dependencies */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -244,6 +241,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				22261772144ED07200750926 /* ServicesRestart */,
 				3023EF271360788000CFC02F /* MainMenu.xib */,
 				3023EF291360788200CFC02F /* PrivateKeyChooserWindow.xib */,
 				3023EF251360787E00CFC02F /* RecipientWindow.xib */,
