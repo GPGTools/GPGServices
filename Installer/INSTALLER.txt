@@ -1,5 +1,5 @@
 GPGServices
-Version: 1.6
+Version: 1.7a1
 
 GPGServices is a plugin for the global OS X Services menu, which adds the ability to almost any application (e.g. Safari, Finder, or TextEdit) to use OpenPGP functionalities. In a nutshell:
 
