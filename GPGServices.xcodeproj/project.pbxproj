@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2226176F144ECFD500750926 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2226176E144ECFD500750926 /* Libmacgpg.framework */; };
+		22261771144ED03A00750926 /* Libmacgpg.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8E81D258139523890034B9D1 /* Libmacgpg.framework */; };
+		22261773144ED07200750926 /* ServicesRestart in Resources */ = {isa = PBXBuildFile; fileRef = 22261772144ED07200750926 /* ServicesRestart */; };
 		2260756D12EBA0B50026DBEA /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2260756C12EBA0B50026DBEA /* Icon.icns */; };
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
@@ -21,7 +24,6 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */; };
 		8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */; };
-		8E6935F013953BD1004DFAE5 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E6935EF13953BD0004DFAE5 /* Libmacgpg.framework */; };
 		8E7341A31334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */; };
 		8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
@@ -89,6 +91,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				22261771144ED03A00750926 /* Libmacgpg.framework in Copy Frameworks */,
 				2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */,
 				8EF7A61D1334C05300FD8C5B /* Growl.framework in Copy Frameworks */,
 			);
@@ -101,6 +104,8 @@
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		2226176E144ECFD500750926 /* Libmacgpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Libmacgpg.framework; path = Dependencies/libmacgpg/build/Release/Libmacgpg.framework; sourceTree = "<group>"; };
+		22261772144ED07200750926 /* ServicesRestart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = ServicesRestart; path = Dependencies/GPGTools_Core/bin/ServicesRestart; sourceTree = "<group>"; };
 		2260756C12EBA0B50026DBEA /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.icns; path = Resources/Images/Icon.icns; sourceTree = "<group>"; };
 		22D6D9C913267E0C00622189 /* RecipientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecipientWindowController.h; path = Source/RecipientWindowController.h; sourceTree = "<group>"; };
 		22D6D9CA13267E0C00622189 /* RecipientWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecipientWindowController.m; path = Source/RecipientWindowController.m; sourceTree = "<group>"; };
@@ -149,7 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E6935F013953BD1004DFAE5 /* Libmacgpg.framework in Frameworks */,
+				2226176F144ECFD500750926 /* Libmacgpg.framework in Frameworks */,
 				2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */,
@@ -214,6 +219,8 @@
 		29B97314FDCFA39411CA2CEA /* GPGServices */ = {
 			isa = PBXGroup;
 			children = (
+				22261772144ED07200750926 /* ServicesRestart */,
+				2226176E144ECFD500750926 /* Libmacgpg.framework */,
 				8E6935EF13953BD0004DFAE5 /* Libmacgpg.framework */,
 				22CA686C12DFD8B400ED919C /* Dependencies */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -397,6 +404,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22261773144ED07200750926 /* ServicesRestart in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				2260756D12EBA0B50026DBEA /* Icon.icns in Resources */,
 				3023EF261360787E00CFC02F /* RecipientWindow.xib in Resources */,
@@ -502,6 +510,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"$(SRCROOT)/Dependencies/libmacgpg/build/Debug",
+					"\"$(SRCROOT)/Dependencies/libmacgpg/build/Release\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
@@ -529,6 +538,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+					"\"$(SRCROOT)/Dependencies/libmacgpg/build/Release\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
