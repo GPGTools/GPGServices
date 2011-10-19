@@ -28,9 +28,13 @@ install: compile
 dmg: clean-gpgservices update compile
 	@./Dependencies/GPGTools_Core/scripts/create_dmg.sh
 
-test: compile
+auto-dmg: compile
 	@./Dependencies/GPGTools_Core/scripts/create_dmg.sh auto
+
+upload:
 	@./Dependencies/GPGTools_Core/scripts/upload.sh
+
+test: auto-dmg upload
 
 clean-gpgme:
 	rm -rf Dependencies/MacGPGME/build
