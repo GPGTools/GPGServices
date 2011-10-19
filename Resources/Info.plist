@@ -67,6 +67,8 @@
 	<string>ccsv</string>
 	<key>CFBundleURLTypes</key>
 	<array/>
+	<key>CFBundleShortVersionString</key>
+	<string>1.7a1</string>
 	<key>CFBundleVersion</key>
 	<string>1.7a1</string>
 	<key>NSMainNibFile</key>
