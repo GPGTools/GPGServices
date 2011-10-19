@@ -478,7 +478,7 @@
 				<key>POSTINSTALL_PATH</key>
 				<dict>
 					<key>PATH</key>
-					<string>postflight.sh</string>
+					<string>../Dependencies/GPGTools_Core/scripts/gpgservices-postinstall.sh</string>
 					<key>PATH_TYPE</key>
 					<integer>1</integer>
 				</dict>
