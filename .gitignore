@@ -1,6 +1,5 @@
 # Xcode
-build/*
-Dependencies/zipkit/build/*
+build/
 build.log
 *.pbxuser
 !default.pbxuser

@@ -502,13 +502,10 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/Dependencies/zipkit/build/Debug",
 					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
-					"$(SRCROOT)/Dependencies/libmacgpg/build/Debug",
-					"\"$(SRCROOT)/Dependencies/libmacgpg/build/Release\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
@@ -530,13 +527,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/Dependencies/libmacgpg/build/Debug",
-					"$(SRCROOT)/Dependencies/zipkit/build/Debug",
 					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
-					"\"$(SRCROOT)/Dependencies/libmacgpg/build/Release\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";

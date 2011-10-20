@@ -279,7 +279,7 @@
 	if(ret != 0) {
 		return nil;
 	} else {
-		NSData* inputData = [inputString gpgData];
+		NSData* inputData = [inputString UTF8Data];
 		BOOL sign = rcp.sign;
         NSArray* validRecipients = rcp.selectedKeys;
         GPGKey* privateKey = rcp.selectedPrivateKey;
@@ -353,7 +353,7 @@
     NSData* outputData = nil;
     
 	@try {
-        outputData = [ctx decryptData:[inputString gpgData]];
+        outputData = [ctx decryptData:[inputString UTF8Data]];
 	} @catch (NSException* localException) {
         [self displayOperationFailedNotificationWithTitle:[localException reason]
                                                   message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
@@ -370,7 +370,7 @@
 	GPGController* ctx = [GPGController gpgController];
     ctx.useArmor = YES;
 
-	NSData* inputData = [inputString gpgData];
+	NSData* inputData = [inputString UTF8Data];
     GPGKey* chosenKey = [GPGServices myPrivateKey];
     
     NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
@@ -440,8 +440,8 @@
     ctx.useArmor = YES;
     
 	@try {
-        //NSArray* sigs = [ctx verifySignature:[inputString gpgData] originalData:[NSData data]];
-        NSArray* sigs = [ctx verifySignature:[inputString gpgData] originalData:nil];
+        //NSArray* sigs = [ctx verifySignature:[inputString UTF8Data] originalData:[NSData data]];
+        NSArray* sigs = [ctx verifySignature:[inputString UTF8Data] originalData:nil];
 
         if([sigs count] > 0)
         {
