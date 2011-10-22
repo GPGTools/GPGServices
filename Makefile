@@ -25,10 +25,4 @@ install: compile
 	@./Dependencies/GPGTools_Core/bin/ServicesRestart
 	@echo "Go to 'Preferences>Keyboard>Shortcuts>Services>Text>..."
 
-auto-dmg: compile
-	@./Dependencies/GPGTools_Core/scripts/create_dmg.sh auto
-
-upload:
-	@./Dependencies/GPGTools_Core/scripts/upload.sh
-
-test: auto-dmg upload
+test: deploy
