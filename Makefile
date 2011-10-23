@@ -26,3 +26,9 @@ install: compile
 	@echo "Go to 'Preferences>Keyboard>Shortcuts>Services>Text>..."
 
 test: deploy
+
+compile:
+	@xcodebuild -project $(PROJECT).xcodeproj -target $(TARGET) -configuration $(CONFIG) build
+
+clean:
+	@xcodebuild -project $(PROJECT).xcodeproj -target $(TARGET) -configuration $(CONFIG) clean > /dev/null
