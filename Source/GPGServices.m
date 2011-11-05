@@ -453,8 +453,11 @@
             } else {
                 NSString* errorMessage = nil;
                 switch(status) {
-                        case GPGErrorBadSignature:
+                    case GPGErrorBadSignature:
                         errorMessage = [@"Bad signature by " stringByAppendingString:sig.userID]; break;
+                    default: 
+                        errorMessage = [NSString stringWithFormat:@"Unexpected gpg signature status %i", status ]; 
+                        break;  // I'm unsure if GPGErrorDescription should cover these signature errors
                 }
                 [self displayOperationFailedNotificationWithTitle:@"Verification FAILED."
                                                           message:errorMessage];
@@ -1123,7 +1126,7 @@
 {[self dealWithFilesPasteboard:pboard userData:userData mode:SignFileService error:error];}
 
 -(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
-{[self dealWithFilesPasteboard:pboard userData:userData mode:EncryptService error:error];}
+{[self dealWithFilesPasteboard:pboard userData:userData mode:EncryptFileService error:error];}
 
 -(void)decryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error 
 {[self dealWithFilesPasteboard:pboard userData:userData mode:DecryptFileService error:error];}
