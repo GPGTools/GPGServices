@@ -16,7 +16,6 @@
 
 @synthesize filesToVerify, verificationQueue;
 
-/*
 - (id)init {
     self = [super initWithWindowNibName:@"VerificationResultsWindow"];
     
@@ -56,6 +55,7 @@
 	[NSApp stopModalWithCode:0];
 }
 
+/*
 - (void)startVerification:(void(^)(NSArray*))callback {
     [self window]; //Load window to setup bindings
     

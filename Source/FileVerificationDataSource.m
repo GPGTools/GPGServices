@@ -15,7 +15,7 @@
 @implementation FileVerificationDataSource
 
 @synthesize isActive, verificationResults;
-/*
+
 - (id)init {
     self = [super init];
     
@@ -35,6 +35,7 @@
     [self didChangeValueForKey:@"verificationResults"];
 }
 
+/*
 - (void)addResultFromSig:(GPGSignature*)sig forFile:(NSString*)file {
     NSDictionary* result = nil;
     
@@ -101,4 +102,5 @@
     [self addResults:result];
 }
 */
+
 @end
