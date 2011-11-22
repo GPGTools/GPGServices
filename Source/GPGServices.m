@@ -572,7 +572,7 @@
         ctx.useArmor = YES;
 
         for(GPGKey* k in keys)
-            [ctx addSignerKey:k];
+            [ctx addSignerKey:[k description]];
 
         NSData* dataToSign = nil;
 
@@ -595,7 +595,7 @@
 
         NSString* sigFile = [file stringByAppendingPathExtension:@"sig"];
         sigFile = [self normalizedAndUniquifiedPathFromPath:sigFile];
-        [[signData data] writeToFile:sigFile atomically:YES];
+        [signData writeToFile:sigFile atomically:YES];
         
         return sigFile;
     } @catch (NSException* e) {
