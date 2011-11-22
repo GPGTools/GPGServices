@@ -66,7 +66,7 @@
 
 //Disable this for now. We need better handling of imports in libmacgpg.
 /*
-- (void)importKeyFromData:(NSData*)data {
+ - (void)importKeyFromData:(NSData*)data {
 	GPGController* ctx = [[[GPGController alloc] init] autorelease];
     
     NSString* importText = nil;
@@ -76,7 +76,7 @@
         [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
                                                   message:[ex description]];
         return;
-	} 
+	}
     
     [[NSAlert alertWithMessageText:@"Import result:"
                      defaultButton:@"Ok"
@@ -89,7 +89,7 @@
 - (void)importKey:(NSString *)inputString {
     [self importKeyFromData:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 }
- */
+*/
 
 + (NSSet*)myPrivateKeys {
     GPGController* context = [GPGController gpgController];
@@ -566,16 +566,16 @@
     return [NSNumber numberWithUnsignedLongLong:size];
 }
 
-/*
 - (NSString*)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys {
     @try {
-        //Generate .sig file
-        GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
-        [signContext setUsesArmor:YES];
+        GPGController* ctx = [GPGController gpgController];
+        ctx.useArmor = YES;
+
         for(GPGKey* k in keys)
-            [signContext addSignerKey:k];
-        
-        GPGData* dataToSign = nil;
+            [ctx addSignerKey:k];
+
+        NSData* dataToSign = nil;
+
         if([[self isDirectoryPredicate] evaluateWithObject:file]) {
             ZipOperation* zipOperation = [[[ZipOperation alloc] init] autorelease];
             zipOperation.filePath = file;
@@ -586,13 +586,13 @@
             if([zipOperation.zipData writeToFile:file atomically:YES] == NO)
                 return nil;
             
-            dataToSign = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+            dataToSign = [[[NSData alloc] initWithContentsOfFile:file] autorelease];
         } else {
-            dataToSign = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+            dataToSign = [[[NSData alloc] initWithContentsOfFile:file] autorelease];
         }
-        
-        GPGData* signData = [signContext signedData:dataToSign signatureMode:GPGSignatureModeDetach];
-        
+
+        NSData* signData = [ctx processData:dataToSign withEncryptSignMode:GPGDetachedSign recipients:nil hiddenRecipients:nil];
+
         NSString* sigFile = [file stringByAppendingPathExtension:@"sig"];
         sigFile = [self normalizedAndUniquifiedPathFromPath:sigFile];
         [[signData data] writeToFile:sigFile atomically:YES];
@@ -601,9 +601,9 @@
     } @catch (NSException* e) {
         if([GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
             [self displayOperationFailedNotificationWithTitle:@"Signing failed"
-                                                      message:[file lastPathComponent]];
+                                                      message:[file lastPathComponent]];  // no e.reason?
     }
-    
+
     return nil;
 }
 
@@ -657,6 +657,8 @@
     }
 }
 
+// Routine for signing encrypted data?  Non-functional relardless.
+/*
 - (GPGData*)signedGPGDataForGPGData:(GPGData*)dataToSign withKeys:(NSArray*)keys {
     @try {
         GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
@@ -670,7 +672,9 @@
     
     return nil;
 }
+*/
 
+/*
 - (void)encryptFiles:(NSArray*)files {
     BOOL trustAllKeys = YES;
     
@@ -888,9 +892,10 @@
     [fvc release];
 }
 
+//Skip fixing this for now. We need better handling of imports in libmacgpg.
 /*
 - (void)importFiles:(NSArray*)files {
-	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
+	// GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
     
     NSUInteger foundKeysCount = 0; //Track valid key-files
     NSUInteger importedKeyCount = 0;
@@ -904,9 +909,11 @@
                                                           message:[file lastPathComponent]];
             continue; //Shortcut all following code, go to next file
         }
+
+        // importKeyFromData ???
         
+        // begin trouble
         GPGData* inputData = [[[GPGData alloc] initWithDataNoCopy:[NSData dataWithContentsOfFile:file]] autorelease];
-        
         @try {
             NSDictionary* importResults = [aContext importKeyData:inputData];
             NSDictionary* changedKeys = [importResults valueForKey:GPGChangesKey];
@@ -920,13 +927,14 @@
             } else if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) { //This is in a loop, so only display Growl... 
                 [self displayOperationFailedNotificationWithTitle:@"No importable Keys found"
                                                           message:[file lastPathComponent]];
-            }    
+            }
         } @catch(NSException* localException) {
             if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
                 [self displayOperationFailedNotificationWithTitle:@"Import failed:"
                                                           message:GPGErrorDescription([[[localException userInfo] 
                                                                                         objectForKey:@"GPGErrorKey"]                                                              intValue])];
         }
+        // end trouble
     }
     
     //Don't show result window when there were no imported keys

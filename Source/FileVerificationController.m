@@ -55,7 +55,6 @@
 	[NSApp stopModalWithCode:0];
 }
 
-/*
 - (void)startVerification:(void(^)(NSArray*))callback {
     [self window]; //Load window to setup bindings
     
@@ -76,7 +75,7 @@
             if([filesInVerification containsObject:signatureFile]) {
                 continue;
             } else {
-                //Propably a problem with restarting of validation when files are missing
+                //Probably a problem with restarting of validation when files are missing
                 [filesInVerification addObject:signatureFile];
             }
         }
@@ -92,29 +91,28 @@
           
             if([fmgr fileExistsAtPath:signedFile] && [fmgr fileExistsAtPath:signatureFile]) {
                 @try {
-                    GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
-                    GPGData* fileData = [[[GPGData alloc] initWithContentsOfFile:signatureFile] autorelease];
-                    GPGData* signedData = [[[GPGData alloc] initWithContentsOfFile:signedFile] 
-                                           autorelease];
-                    sigs = [ctx verifySignatureData:fileData againstData:signedData];
+                    GPGController* ctx = [GPGController gpgController];
+                    NSData* signatureFileData = [[[NSData alloc] initWithContentsOfFile:signatureFile] autorelease];
+                    NSData* signedFileData = [[[NSData alloc] initWithContentsOfFile:signedFile] autorelease];
+                    sigs = [ctx verifySignature:signatureFileData originalData:signedFileData];
                 } @catch (NSException *exception) {
                     firstException = exception;
                     sigs = nil;
                 }
             }
-            
+
             //Try to verify the file itself without a detached sig
             if(sigs == nil || sigs.count == 0) {
                 @try {
-                    GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
-                    GPGData* serviceData = [[[GPGData alloc] initWithContentsOfFile:serviceFile] autorelease];
-                    sigs = [ctx verifySignedData:serviceData];
+                    GPGController* ctx = [GPGController gpgController];
+                    NSData* signedFileData = [[[NSData alloc] initWithContentsOfFile:serviceFile] autorelease];
+                    sigs = [ctx verifySignedData:signedFileData];
                 } @catch (NSException *exception) {
                     secondException = exception;
                     sigs = nil;
                 }
             }
-            
+
             if(sigs != nil) {
                 if(sigs.count == 0) {
                     id verificationResult = nil; //NSString or NSAttributedString
@@ -162,6 +160,8 @@
     }
 }
 
+// What dis this ever do?
+/*
 - (void)observeValueForKeyPath:(NSString *)keyPath 
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -171,9 +171,11 @@
             [indicator stopAnimation:self];
     }
 }
+*/
 
+// Is this supposed to do anything?  It did nothing in 1.6.
 - (void)doubleClickAction:(id)sender {
-	
+
 }
 
 
@@ -204,6 +206,5 @@
     
     return nil;
 }
-*/
 
 @end
