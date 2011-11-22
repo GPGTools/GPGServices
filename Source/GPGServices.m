@@ -124,19 +124,18 @@
 #pragma mark -
 #pragma mark Validators
 
-/*
 + (KeyValidatorT)canEncryptValidator {
     id block = ^(GPGKey* key) {
-        // A subkey can be expired, without the key being, thus making key useless because it has
-        // no other subkey...
+        // A subkey can be expired, without the key being, thus making key useless 
+        // because it has no other subkey...
         // We don't care about ownerTrust, validity
         
         for (GPGSubkey *aSubkey in [key subkeys]) {
             if ([aSubkey canEncrypt] && 
-                ![aSubkey hasKeyExpired] && 
-                ![aSubkey isKeyRevoked] &&
-                ![aSubkey isKeyInvalid] &&
-                ![aSubkey isKeyDisabled]) {
+                ![aSubkey expired] && 
+                ![aSubkey revoked] &&
+                ![aSubkey invalid] &&
+                ![aSubkey disabled]) {
                 return YES;
             }
         }
@@ -145,7 +144,6 @@
     
     return [[block copy] autorelease];
 }
-*/
 
 + (KeyValidatorT)canSignValidator {
     return [self isActiveValidator];
