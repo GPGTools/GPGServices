@@ -124,6 +124,7 @@
 #pragma mark -
 #pragma mark Validators
 
+// Shouldn't RecipientWindowController use canEncryptValidator somehow?
 + (KeyValidatorT)canEncryptValidator {
     id block = ^(GPGKey* key) {
         // A subkey can be expired, without the key being, thus making key useless 
@@ -273,70 +274,68 @@
     
 	RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
 	int ret = [rcp runModal];
-    [rcp release];
-	if(ret != 0) {
-		return nil;
-	} else {
-		NSData* inputData = [inputString UTF8Data];
-		BOOL sign = rcp.sign;
-        NSArray* validRecipients = rcp.selectedKeys;
-        GPGKey* privateKey = rcp.selectedPrivateKey;
-        
-        if(rcp.encryptForOwnKeyToo && privateKey) {
-            validRecipients = [[[NSSet setWithArray:validRecipients] 
-                                setByAddingObject:privateKey] 
-                               allObjects];
-        } else {
-            validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
-        }
-        
-        if(privateKey == nil) {
-            [self displayOperationFailedNotificationWithTitle:@"Encryption failed." 
-                                           message:@"No usable private key found"];
-            return nil;
-        }
-        
-        if(validRecipients.count == 0) {
-            [self displayOperationFailedNotificationWithTitle:@"Encryption failed."
-                                                      message:@"No valid recipients found"];
-            return nil;
-        }
-        
-		@try {
-            if(sign)
-                [ctx addSignerKey:[privateKey description]];
-            
-            GPGEncryptSignMode mode = sign ? GPGEncryptSign : GPGPublicKeyEncrypt;
-            NSData* outputData = [ctx processData:inputData 
-                              withEncryptSignMode:mode
-                                       recipients:validRecipients
-                                 hiddenRecipients:nil];
-            
-            return [outputData gpgString];
-            
-		} @catch(NSException* localException) {
-            [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
-                                                      message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
+    [rcp autorelease]; 
+	if(ret != 0)
+		return nil;  // User pressed 'cancel'
 
-            /*
-            switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
-            {
-                case GPGErrorNoData:
-                    [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
-                                                              message:@"No encryptable text was found within the selection."];
-                    break;
-                case GPGErrorCancelled:
-                    break;
-                default: {
-                    GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-                    [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
-                                                              message:GPGErrorDescription(error)];
-                }
+    NSData* inputData = [inputString UTF8Data];
+    GPGEncryptSignMode mode = rcp.sign ? GPGEncryptSign : GPGPublicKeyEncrypt;
+    NSArray* validRecipients = rcp.selectedKeys;
+    GPGKey* privateKey = rcp.selectedPrivateKey;
+    
+    if(rcp.encryptForOwnKeyToo && privateKey) {
+        validRecipients = [[[NSSet setWithArray:validRecipients] 
+                            setByAddingObject:privateKey] 
+                           allObjects];
+    } else {
+        validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
+    }
+    
+    if(privateKey == nil) {
+        [self displayOperationFailedNotificationWithTitle:@"Encryption failed." 
+                                                  message:@"No usable private key found"];
+        return nil;
+    }
+    
+    if(validRecipients.count == 0) {
+        [self displayOperationFailedNotificationWithTitle:@"Encryption failed."
+                                                  message:@"No valid recipients found"];
+        return nil;
+    }
+    
+    @try {
+        if(mode == GPGEncryptSign)
+            [ctx addSignerKey:[privateKey description]];
+        
+        NSData* outputData = [ctx processData:inputData 
+                          withEncryptSignMode:mode
+                                   recipients:validRecipients
+                             hiddenRecipients:nil];
+        
+        return [outputData gpgString];
+        
+    } @catch(NSException* localException) {
+        [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
+                                                  message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
+        /*
+        switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
+        {
+            case GPGErrorNoData:
+                [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
+                                                          message:@"No encryptable text was found within the selection."];
+                break;
+            case GPGErrorCancelled:
+                break;
+            default: {
+                GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
+                [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
+                                                          message:GPGErrorDescription(error)];
             }
-             */
-            return nil;
-		} 
-	}
+        }
+        */
+        return nil;
+    } 
+
     
 	return nil;
 }
@@ -390,11 +389,10 @@
         chosenKey = [availableKeys anyObject];
     }
     
-    if(chosenKey != nil) {
+    if(chosenKey != nil)
         [ctx addSignerKey:[chosenKey description]];
-    } else {
+    else
         return nil;
-    }
     
 	@try {
         NSData* outputData = [ctx processData:inputData withEncryptSignMode:GPGClearSign recipients:nil hiddenRecipients:nil];
@@ -672,7 +670,6 @@
 }
 */
 
-/*
 - (void)encryptFiles:(NSArray*)files {
     BOOL trustAllKeys = YES;
     
@@ -683,154 +680,154 @@
     
     RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
 	int ret = [rcp runModal];
-    [rcp release];
-	if(ret != 0) {
-        //User pressed 'cancel'
-		return;
-	} else {
-    	BOOL sign = rcp.sign;
-        NSArray* validRecipients = rcp.selectedKeys;
-        GPGKey* privateKey = rcp.selectedPrivateKey;
+    [rcp autorelease];
+	if(ret != 0)
+		return;  // User pressed 'cancel'
+
+    GPGEncryptSignMode mode = rcp.sign ? GPGEncryptSign : GPGPublicKeyEncrypt;
+    NSArray* validRecipients = rcp.selectedKeys;
+    GPGKey* privateKey = rcp.selectedPrivateKey;
+    
+    if(rcp.encryptForOwnKeyToo && privateKey) {
+        validRecipients = [[[NSSet setWithArray:validRecipients] 
+                            setByAddingObject:[privateKey primaryKey]] 
+                           allObjects];
+    } else {
+        validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
+    }
+    
+    long double megabytes = 0;
+    NSString* destination = nil;
+    
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    
+    typedef NSData*(^DataProvider)();
+    DataProvider dataProvider = nil;
+    
+    if(files.count == 1) {
+        NSString* file = [files objectAtIndex:0];
+        BOOL isDirectory = YES;
+        BOOL exists = [fmgr fileExistsAtPath:file isDirectory:&isDirectory];
         
-        if(rcp.encryptForOwnKeyToo && privateKey) {
-            validRecipients = [[[NSSet setWithArray:validRecipients] 
-                                setByAddingObject:[privateKey publicKey]] 
-                               allObjects];
-        } else {
-            validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
-        }
-        
-        //GPGData* gpgData = nil;
-        long double megabytes = 0;
-        NSString* destination = nil;
-        
-        NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
-        
-        typedef NSData*(^DataProvider)();
-        DataProvider dataProvider = nil;
-        
-        if(files.count == 1) {
-            NSString* file = [files objectAtIndex:0];
-            BOOL isDirectory = YES;
-            BOOL exists = [fmgr fileExistsAtPath:file isDirectory:&isDirectory];
-            
-            if(exists && isDirectory) {
-                NSString* filename = [NSString stringWithFormat:@"%@.zip.gpg", [file lastPathComponent]];
-                megabytes = [[self folderSize:file] unsignedLongLongValue] / 1048576.0;
-                destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
-                dataProvider = ^{
-                    ZipOperation* operation = [[[ZipOperation alloc] init] autorelease];
-                    operation.filePath = file;
-                    operation.delegate = self;
-                    [operation start];
-                    
-                    return operation.zipData;
-                };
-            } else if(exists) {
-                NSNumber* fileSize = [self sizeOfFiles:[NSArray arrayWithObject:file]];
-                megabytes = [fileSize unsignedLongLongValue] / 1048576;
-                destination = [file stringByAppendingString:@".gpg"];
-                dataProvider = ^{
-                    return (NSData*)[NSData dataWithContentsOfFile:file];
-                };
-            } else {    
-                [self displayOperationFailedNotificationWithTitle:@"File doesn't exist"
-                                                          message:@"Please try again"];
-                return;
-            }
-        } else if(files.count > 1) {
-            megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / 1048576.0;
-            destination = [[[files objectAtIndex:0] stringByDeletingLastPathComponent] 
-                           stringByAppendingPathComponent:@"Archive.zip.gpg"];
+        if(exists && isDirectory) {
+            NSString* filename = [NSString stringWithFormat:@"%@.zip.gpg", [file lastPathComponent]];
+            megabytes = [[self folderSize:file] unsignedLongLongValue] / 1048576.0;
+            destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
             dataProvider = ^{
                 ZipOperation* operation = [[[ZipOperation alloc] init] autorelease];
-                operation.files = files;
+                operation.filePath = file;
                 operation.delegate = self;
                 [operation start];
                 
                 return operation.zipData;
             };
+        } else if(exists) {
+            NSNumber* fileSize = [self sizeOfFiles:[NSArray arrayWithObject:file]];
+            megabytes = [fileSize unsignedLongLongValue] / 1048576;
+            destination = [file stringByAppendingString:@".gpg"];
+            dataProvider = ^{
+                return (NSData*)[NSData dataWithContentsOfFile:file];
+            };
+        } else {    
+            [self displayOperationFailedNotificationWithTitle:@"File doesn't exist"
+                                                      message:@"Please try again"];
+            return;
         }
-        
-        //Check if directory is writable and append i+1 if file already exists at destination
-        destination = [self normalizedAndUniquifiedPathFromPath:destination];
-        
-        NSLog(@"destination: %@", destination);
-        NSLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
-                                                                  numberStyle:NSNumberFormatterDecimalStyle]);        
-        
-        if(megabytes > SIZE_WARNING_LEVEL_IN_MB) {
-            int ret = [[NSAlert alertWithMessageText:@"Large File(s)"
-                                       defaultButton:@"Continue"
-                                     alternateButton:@"Cancel"
-                                         otherButton:nil
-                           informativeTextWithFormat:@"Encryption will take a long time.\nPress 'Cancel' to abort."] 
-                       runModal];
+    } else if(files.count > 1) {
+        megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / 1048576.0;
+        destination = [[[files objectAtIndex:0] stringByDeletingLastPathComponent] 
+                       stringByAppendingPathComponent:@"Archive.zip.gpg"];
+        dataProvider = ^{
+            ZipOperation* operation = [[[ZipOperation alloc] init] autorelease];
+            operation.files = files;
+            operation.delegate = self;
+            [operation start];
             
-            if(ret == NSAlertAlternateReturn)
-                return;
-        }
+            return operation.zipData;
+        };
+    }
+    
+    //Check if directory is writable and append i+1 if file already exists at destination
+    destination = [self normalizedAndUniquifiedPathFromPath:destination];
+    
+    NSLog(@"destination: %@", destination);
+    NSLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
+                                                              numberStyle:NSNumberFormatterDecimalStyle]);        
+    
+    if(megabytes > SIZE_WARNING_LEVEL_IN_MB) {
+        int ret = [[NSAlert alertWithMessageText:@"Large File(s)"
+                                   defaultButton:@"Continue"
+                                 alternateButton:@"Cancel"
+                                     otherButton:nil
+                       informativeTextWithFormat:@"Encryption will take a long time.\nPress 'Cancel' to abort."] 
+                   runModal];
         
-        NSAssert(dataProvider != nil, @"dataProvider can't be nil");
-        NSAssert(destination != nil, @"destination can't be nil");
-        
-        GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
-        GPGData* gpgData = nil;
-        if(dataProvider != nil) 
-            gpgData = [[[GPGData alloc] initWithData:dataProvider()] autorelease];
-        
-        GPGData* encrypted = nil;
-        if(sign == YES && privateKey != nil) {
-            [ctx addSignerKey:privateKey];
-            encrypted = [ctx encryptedSignedData:gpgData
-                                        withKeys:validRecipients 
-                                    trustAllKeys:trustAllKeys];
-        } else {
-            encrypted = [ctx encryptedData:gpgData 
-                                  withKeys:validRecipients
-                              trustAllKeys:trustAllKeys];
-        }
-        
-        if(encrypted == nil) {
-            [self displayOperationFailedNotificationWithTitle:@"Encryption failed" message:[destination lastPathComponent]];
-        } else {
-            [encrypted.data writeToFile:destination atomically:YES];
-            [self displayOperationFinishedNotificationWithTitle:@"Encryption finished" message:[destination lastPathComponent]];
-        }
+        if(ret == NSAlertAlternateReturn)
+            return;
+    }
+    
+    NSAssert(dataProvider != nil, @"dataProvider can't be nil");
+    NSAssert(destination != nil, @"destination can't be nil");
+    
+    GPGController* ctx = [GPGController gpgController];
+    NSData* gpgData = nil;
+    if(dataProvider != nil) 
+        gpgData = [[[NSData alloc] initWithData:dataProvider()] autorelease];
+    
+    NSData* encrypted = nil;
+    if(mode == GPGEncryptSign && privateKey != nil)
+        [ctx addSignerKey:[privateKey description]];
+    @try{ // Should we trap exceptions?
+        NSData* outputData = [ctx processData:gpgData 
+                          withEncryptSignMode:mode
+                                   recipients:validRecipients
+                             hiddenRecipients:nil];
+    } @catch(NSException* localException) {
+        [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
+                                message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
+        return;
+    }
+    
+    if(encrypted == nil) {
+        // We should probably show the file form the exception too.
+        [self displayOperationFailedNotificationWithTitle:@"Encryption failed" message:[destination lastPathComponent]];
+    } else {
+        [encrypted writeToFile:destination atomically:YES];
+        [self displayOperationFinishedNotificationWithTitle:@"Encryption finished" message:[destination lastPathComponent]];
     }
 }
 
-
 - (void)decryptFiles:(NSArray*)files {
-	GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
-    [aContext setPassphraseDelegate:self];
+    GPGController* ctx = [GPGController gpgController];
+    // [ctx setPassphraseDelegate:self];
     
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
     
     unsigned int decryptedFilesCount = 0;
     
     DummyVerificationController* dummyController = nil;
-    
+
     for(NSString* file in files) {
         BOOL isDirectory = NO;
         @try {
             if([fmgr fileExistsAtPath:file isDirectory:&isDirectory] &&
                isDirectory == NO) {                
-                GPGData* inputData = [[[GPGData alloc] initWithContentsOfFile:file] autorelease];
+                NSData* inputData = [[[NSData alloc] initWithContentsOfFile:file] autorelease];
                 NSLog(@"inputData.size: %lld", [inputData length]);
                 
-                NSArray* signatures = nil;
-                GPGData* outputData = [aContext decryptedData:inputData signatures:&signatures];
+                // NSArray* signatures = nil;
+                // GPGData* outputData = [aContext decryptedData:inputData signatures:&signatures];
+                NSData* outputData = [ctx decryptData:inputData];
                 NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
                 
                 NSError* error = nil;
-                [outputData.data writeToFile:outputFile options:NSDataWritingAtomic error:&error];
-                
+                [outputData writeToFile:outputFile options:NSDataWritingAtomic error:&error];
                 if(error != nil) 
                     NSLog(@"error while writing to output: %@", error);
                 else
                     decryptedFilesCount++;
-                
+
+                /*
                 if(signatures && signatures.count > 0) {
                     NSLog(@"found signatures: %@", signatures);
 
@@ -852,8 +849,10 @@
                                                  nil]];
                 
                 }
+                */
             }
         } @catch (NSException* localException) {
+            /*
             switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])) {
                 case GPGErrorNoData:
                     [self displayOperationFailedNotificationWithTitle:@"Decryption failed."
@@ -867,6 +866,7 @@
                                                               message:GPGErrorDescription(error)];
                 }
             }
+             */
         } 
     }
     
@@ -875,12 +875,10 @@
     if(decryptedFilesCount > 0)
         [self displayOperationFinishedNotificationWithTitle:@"Decryption finished" 
                                                     message:[NSString stringWithFormat:@"Finished decrypting %i file(s)", files.count]];
-    
+
     [dummyController runModal];
     [dummyController release];
 }
-
- */
  
 - (void)verifyFiles:(NSArray*)files {
     FileVerificationController* fvc = [[FileVerificationController alloc] init];
