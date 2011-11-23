@@ -815,8 +815,6 @@
                 NSData* inputData = [[[NSData alloc] initWithContentsOfFile:file] autorelease];
                 NSLog(@"inputData.size: %lld", [inputData length]);
                 
-                // NSArray* signatures = nil;
-                // GPGData* outputData = [aContext decryptedData:inputData signatures:&signatures];
                 NSData* outputData = [ctx decryptData:inputData];
                 NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
                 
@@ -827,9 +825,8 @@
                 else
                     decryptedFilesCount++;
 
-                /*
-                if(signatures && signatures.count > 0) {
-                    NSLog(@"found signatures: %@", signatures);
+                if(ctx.signatures && ctx.signatures.count > 0) {
+                    NSLog(@"found signatures: %@", ctx.signatures);
 
                     if(dummyController == nil) {
                         dummyController = [[DummyVerificationController alloc]
@@ -838,7 +835,7 @@
                         dummyController.isActive = YES;
                     }
                     
-                    for(GPGSignature* sig in signatures) {
+                    for(GPGSignature* sig in ctx.signatures) {
                         [dummyController addResultFromSig:sig forFile:file];
                     }
                 } else if(dummyController != nil) {
@@ -849,7 +846,6 @@
                                                  nil]];
                 
                 }
-                */
             }
         } @catch (NSException* localException) {
             /*
