@@ -671,8 +671,6 @@
 */
 
 - (void)encryptFiles:(NSArray*)files {
-    BOOL trustAllKeys = YES;
-    
     NSLog(@"encrypting file(s): %@...", [files componentsJoinedByString:@","]);
     
     if(files.count == 0)
@@ -778,7 +776,7 @@
     if(mode == GPGEncryptSign && privateKey != nil)
         [ctx addSignerKey:[privateKey description]];
     @try{ // Should we trap exceptions?
-        NSData* outputData = [ctx processData:gpgData 
+        encrypted = [ctx processData:gpgData 
                           withEncryptSignMode:mode
                                    recipients:validRecipients
                              hiddenRecipients:nil];
@@ -813,7 +811,7 @@
             if([fmgr fileExistsAtPath:file isDirectory:&isDirectory] &&
                isDirectory == NO) {                
                 NSData* inputData = [[[NSData alloc] initWithContentsOfFile:file] autorelease];
-                NSLog(@"inputData.size: %lld", [inputData length]);
+                NSLog(@"inputData.size: %lu", [inputData length]);
                 
                 NSData* outputData = [ctx decryptData:inputData];
                 NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
