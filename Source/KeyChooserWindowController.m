@@ -54,7 +54,8 @@
 }
 
 - (void)setKeyValidator:(KeyValidatorT)validator {
-    dataSource.keyValidator = validator;
+    dataSource.keyValidator = [validator copy];  // Broken 
+    NSLog(@"setKeyValidator validator=%@ dataSource.keyValidator=%@",validator,dataSource.keyValidator);
 }
 
 @end

@@ -160,8 +160,7 @@
     }
 }
 
-// What dis this ever do?
-/*
+// Who invokes this and what does it do?
 - (void)observeValueForKeyPath:(NSString *)keyPath 
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -171,7 +170,6 @@
             [indicator stopAnimation:self];
     }
 }
-*/
 
 // Is this supposed to do anything?  It did nothing in 1.6.
 - (void)doubleClickAction:(id)sender {

@@ -64,9 +64,9 @@
 #pragma mark -
 #pragma mark GPG-Helper
 
-//Disable this for now. We need better handling of imports in libmacgpg.
-/*
- - (void)importKeyFromData:(NSData*)data {
+// It appears that Moritz disabled this over how libmacgpg handles importing keys,
+// but apperently GPGAccess handles this identically.
+- (void)importKeyFromData:(NSData*)data {
 	GPGController* ctx = [[[GPGController alloc] init] autorelease];
     
     NSString* importText = nil;
@@ -89,7 +89,6 @@
 - (void)importKey:(NSString *)inputString {
     [self importKeyFromData:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
 }
-*/
 
 + (NSSet*)myPrivateKeys {
     GPGController* context = [GPGController gpgController];
@@ -155,7 +154,7 @@
         
         // Secret keys are never marked as revoked! Use public key
         key = [key primaryKey];
-        
+
         if (![key expired] && 
             ![key revoked] && 
             ![key invalid] && 
@@ -189,8 +188,9 @@
     }]];
 
     if(chosenKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
+        KeyChooserWindowController* wc = [KeyChooserWindowController alloc];
         [wc setKeyValidator:[GPGServices isActiveValidator]];
+        [wc init];
         
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
@@ -223,8 +223,9 @@
     }]];
 
     if(selectedPrivateKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
+        KeyChooserWindowController* wc = [KeyChooserWindowController alloc];
         [wc setKeyValidator:[GPGServices isActiveValidator]];
+        [wc init];
         
         if([wc runModal] == 0) 
             selectedPrivateKey = wc.selectedKey;
@@ -376,8 +377,9 @@
     }]];
     
     if(chosenKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
+        KeyChooserWindowController* wc = [KeyChooserWindowController alloc];
         [wc setKeyValidator:[GPGServices canSignValidator]];
+        [wc init];
         
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
@@ -626,9 +628,10 @@
     }]];
     
     if(chosenKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
+        KeyChooserWindowController* wc = [KeyChooserWindowController alloc];
         [wc setKeyValidator:[GPGServices canSignValidator]];
-        
+        [[wc init] autorelease];
+
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
         else

@@ -43,7 +43,7 @@
     
     self.availableKeys = [self getPrivateKeys];
     self.selectedKey = [self getDefaultKey];
-        
+
     if(self.selectedIndex == NSNotFound)
         self.selectedIndex = 0;
     
@@ -87,15 +87,17 @@
 
 - (NSArray*)getPrivateKeys {
     NSArray* keys = [[GPGServices myPrivateKeys] allObjects];
-    
+
     if(self.keyValidator) 
         return [keys filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
             if([evaluatedObject isKindOfClass:[GPGKey class]])
                 return self.keyValidator((GPGKey*)evaluatedObject);
             return NO;
         }]];
-    else
+    else {
+        NSLog(@"getPrivateKeys called with keyValidator=%@ using all private keys",self.keyValidator);        
         return keys;
+    }
 }
 
 - (GPGKey*)getDefaultKey {
