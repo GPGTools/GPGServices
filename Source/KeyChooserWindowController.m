@@ -29,6 +29,13 @@
     [super dealloc];
 }
 
+- (void)windowDidLoad {
+	[super windowDidLoad];
+	
+    dataSource.keyValidator = [GPGServices canSignValidator]; 
+    [dataSource update];
+}
+
 - (IBAction)chooseButtonClicked:(id)sender {
     [NSApp stopModalWithCode:0];
 }
@@ -52,10 +59,12 @@
 	return ret;
 }
 
+/*
 - (void)setKeyValidator:(KeyValidatorT)validator {
     dataSource.keyValidator = validator;  
     // [dataSource update];
     NSLog(@"setKeyValidator validator=%@ dataSource.keyValidator=%@ dataSource=%@",validator,dataSource.keyValidator,dataSource);
 }
-
+*/
+ 
 @end

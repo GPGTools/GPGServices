@@ -20,7 +20,7 @@
 @property(retain) GPGKey* selectedKey;
 
 - (NSInteger)runModal; //Returns 0 on success
-- (void)setKeyValidator:(KeyValidatorT)validator;
+// - (void)setKeyValidator:(KeyValidatorT)validator;
 
 - (IBAction)chooseButtonClicked:(id)sender;
 - (IBAction)cancelButtonClicked:(id)sender;

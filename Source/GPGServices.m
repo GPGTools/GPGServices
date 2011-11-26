@@ -145,6 +145,7 @@
     return [[block copy] autorelease];
 }
 
+// Warning : KeyChooserWindowController and RecipientWindowController assume canSignValidator = isActiveValidator
 + (KeyValidatorT)canSignValidator {
     return [self isActiveValidator];
 }
@@ -189,7 +190,7 @@
 
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
-        [wc setKeyValidator:[GPGServices isActiveValidator]];
+        // [wc setKeyValidator:[GPGServices isActiveValidator]];
         
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
@@ -223,7 +224,7 @@
 
     if(selectedPrivateKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
-        [wc setKeyValidator:[GPGServices isActiveValidator]];
+        // [wc setKeyValidator:[GPGServices isActiveValidator]];
         
         if([wc runModal] == 0) 
             selectedPrivateKey = wc.selectedKey;
@@ -376,7 +377,7 @@
     
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
-        [wc setKeyValidator:[GPGServices canSignValidator]];
+        // [wc setKeyValidator:[GPGServices canSignValidator]];
         
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
@@ -626,7 +627,7 @@
     
     if(chosenKey == nil || availableKeys.count > 1) {
         KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
-        [wc setKeyValidator:[GPGServices canSignValidator]];
+        // [wc setKeyValidator:[GPGServices canSignValidator]];
 
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
