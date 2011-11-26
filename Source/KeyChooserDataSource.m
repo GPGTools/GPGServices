@@ -111,5 +111,15 @@
         return nil;
 }
 
+- (void)update {
+    self.availableKeys = [self getPrivateKeys];
+    self.selectedKey = [self getDefaultKey];
+    
+    if(self.selectedIndex == NSNotFound)
+        self.selectedIndex = 0;
+    
+    [self updateDescriptions];
+}
+
 
 @end

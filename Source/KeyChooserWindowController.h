@@ -14,7 +14,6 @@
 
 @interface KeyChooserWindowController : NSWindowController {
     IBOutlet KeyChooserDataSource* dataSource;
-    
     IBOutlet NSPopUpButton* popupButton;
 }
 

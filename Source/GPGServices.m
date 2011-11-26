@@ -64,7 +64,7 @@
 #pragma mark -
 #pragma mark GPG-Helper
 
-// It appears that Moritz disabled this over how libmacgpg handles importing keys,
+// It appears all importKey.. functions were disabled over how libmacgpg handles importing,
 // but apperently GPGAccess handles this identically.
 - (void)importKeyFromData:(NSData*)data {
 	GPGController* ctx = [[[GPGController alloc] init] autorelease];
@@ -188,9 +188,8 @@
     }]];
 
     if(chosenKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [KeyChooserWindowController alloc];
+        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices isActiveValidator]];
-        [wc init];
         
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
@@ -223,9 +222,8 @@
     }]];
 
     if(selectedPrivateKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [KeyChooserWindowController alloc];
+        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices isActiveValidator]];
-        [wc init];
         
         if([wc runModal] == 0) 
             selectedPrivateKey = wc.selectedKey;
@@ -377,9 +375,8 @@
     }]];
     
     if(chosenKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [KeyChooserWindowController alloc];
+        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
         [wc setKeyValidator:[GPGServices canSignValidator]];
-        [wc init];
         
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
@@ -628,9 +625,8 @@
     }]];
     
     if(chosenKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [KeyChooserWindowController alloc];
+        KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
         [wc setKeyValidator:[GPGServices canSignValidator]];
-        [[wc init] autorelease];
 
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
@@ -885,10 +881,33 @@
     [fvc release];
 }
 
+
 //Skip fixing this for now. We need better handling of imports in libmacgpg.
 /*
+- (void)importKeyFromData:(NSData*)data {
+	GPGController* ctx = [[[GPGController alloc] init] autorelease];
+    
+    NSString* importText = nil;
+	@try {
+        importText = [ctx importFromData:data fullImport:NO];
+	} @catch(GPGException* ex) {
+        [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
+                                                  message:[ex description]];
+        return;
+	}
+    
+    [[NSAlert alertWithMessageText:@"Import result:"
+                     defaultButton:@"Ok"
+                   alternateButton:nil
+                       otherButton:nil
+         informativeTextWithFormat:importText]
+     runModal];
+}
+*/
+
+ 
 - (void)importFiles:(NSArray*)files {
-	// GPGContext *aContext = [[[GPGContext alloc] init] autorelease];
+	GPGController* ctx = [[[GPGController alloc] init] autorelease];
     
     NSUInteger foundKeysCount = 0; //Track valid key-files
     NSUInteger importedKeyCount = 0;
@@ -902,15 +921,13 @@
                                                           message:[file lastPathComponent]];
             continue; //Shortcut all following code, go to next file
         }
-
-        // importKeyFromData ???
         
         // begin trouble
-        GPGData* inputData = [[[GPGData alloc] initWithDataNoCopy:[NSData dataWithContentsOfFile:file]] autorelease];
+        NSData* inputData = [[[NSData alloc] initWithDataNoCopy:[NSData dataWithContentsOfFile:file]] autorelease];
         @try {
-            NSDictionary* importResults = [aContext importKeyData:inputData];
+            NSDictionary* importResults = [ctx importFromData:inputData fullImport:NO];
+            /*
             NSDictionary* changedKeys = [importResults valueForKey:GPGChangesKey];
-            
             if(changedKeys.count > 0) {
                 ++foundKeysCount;
                 
@@ -921,13 +938,13 @@
                 [self displayOperationFailedNotificationWithTitle:@"No importable Keys found"
                                                           message:[file lastPathComponent]];
             }
-        } @catch(NSException* localException) {
+             */
+        } @catch(NSException* ex) {
             if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
-                [self displayOperationFailedNotificationWithTitle:@"Import failed:"
-                                                          message:GPGErrorDescription([[[localException userInfo] 
-                                                                                        objectForKey:@"GPGErrorKey"]                                                              intValue])];
+                [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
+                                                          message:[ex description]];
+            return;
         }
-        // end trouble
     }
     
     //Don't show result window when there were no imported keys
@@ -943,7 +960,6 @@
          runModal];     
     }
 }
-*/
 
 #pragma mark - NSPredicates for filtering file arrays
 
