@@ -923,10 +923,11 @@
         }
         
         // begin trouble
-        NSData* inputData = [[[NSData alloc] initWithDataNoCopy:[NSData dataWithContentsOfFile:file]] autorelease];
+        NSData* inputData = [[[NSData alloc] dataWithContentsOfFile:file] autorelease];
         @try {
-            NSDictionary* importResults = [ctx importFromData:inputData fullImport:NO];
+            NSString* inputText = [ctx importFromData:inputData fullImport:NO];
             /*
+            NSDictionary* importResults
             NSDictionary* changedKeys = [importResults valueForKey:GPGChangesKey];
             if(changedKeys.count > 0) {
                 ++foundKeysCount;

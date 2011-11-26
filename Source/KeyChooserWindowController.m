@@ -54,7 +54,8 @@
 
 - (void)setKeyValidator:(KeyValidatorT)validator {
     dataSource.keyValidator = validator;  
-    [dataSource update];
+    // [dataSource update];
+    NSLog(@"setKeyValidator validator=%@ dataSource.keyValidator=%@ dataSource=%@",validator,dataSource.keyValidator,dataSource);
 }
 
 @end
