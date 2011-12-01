@@ -31,5 +31,6 @@
 - (void)updateDescriptions;
 - (NSArray*)getPrivateKeys;
 - (GPGKey*)getDefaultKey;
+- (void)update;
 
 @end
