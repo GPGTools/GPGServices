@@ -77,8 +77,10 @@
 - (void)updateDescriptions {
     NSMutableArray* arr = [NSMutableArray arrayWithCapacity:self.availableKeys.count];
     for(GPGKey* k in self.availableKeys) {
-        [arr addObject:[NSString stringWithFormat:@"%@ - %@ (%@) <%@>",
-                        [k shortKeyID], [k name], [k comment], [k email]]];
+        NSString* c = [k comment];
+        c = c ? [NSString stringWithFormat:@"(%@) ", c] : @"";
+        [arr addObject:[NSString stringWithFormat:@"%@ - %@ %@<%@>",
+                        [k shortKeyID], [k name], c, [k email]]];
 
     }
     
