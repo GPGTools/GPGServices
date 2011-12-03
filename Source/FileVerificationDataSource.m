@@ -15,7 +15,7 @@
 @implementation FileVerificationDataSource
 
 @synthesize isActive, verificationResults;
-/*
+
 - (id)init {
     self = [super init];
     
@@ -41,28 +41,41 @@
     id verificationResult = nil;
     NSColor* bgColor = nil;
     
-    if(GPGErrorCodeFromError([sig status]) == GPGErrorNoError) {
-        GPGContext* ctx = [[[GPGContext alloc] init] autorelease];
-        NSString* userID = [[ctx keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
-        GPGValidity validity = [sig validity];
-        NSString* validityDesc = [sig validityDescription];
-        
+    if([sig status] == GPGErrorNoError) {
+        GPGValidity validity = [sig trust]; 
+        NSString* validityDesc = nil;
+        // We should have a validity description method, like [sig validityDescription]
+
         switch(validity) {
+            case GPGValidityUnknown:
+                bgColor = [NSColor clearColor];
+                validityDesc = @"unknown";
+                break;
+            case GPGValidityUndefined:
+                bgColor = [NSColor clearColor];
+                validityDesc = @"undefined";
+                break;
             case GPGValidityNever:
                 bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
+                validityDesc = @"never";
                 break;
             case GPGValidityMarginal: 
                 bgColor = [NSColor colorWithCalibratedRed:0.9 green:0.8 blue:0.0 alpha:1.0];
+                validityDesc = @"marginal";
                 break;
             case GPGValidityFull:
+                bgColor = [NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0];
+                validityDesc = @"full";
+                break;
             case GPGValidityUltimate:
                 bgColor = [NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0];
+                validityDesc = @"ultimate";
                 break;
             default:
                 bgColor = [NSColor clearColor];
         }
         
-        verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", userID, validityDesc];                         
+        verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", [sig userID], validityDesc];                         
         NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
                                                                                  attributes:nil] autorelease];
         NSRange range = [verificationResult rangeOfString:[NSString stringWithFormat:@"(%@ trust)", validityDesc]];
@@ -77,7 +90,8 @@
     } else {
         bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
         
-        verificationResult = [NSString stringWithFormat:@"Verification FAILED: %@", GPGErrorDescription([sig status])];
+        // Should really call GPGErrorDescription but Libmacgpg nolonger offer that.
+        verificationResult = [NSString stringWithFormat:@"Verification FAILED: %d", [sig status]];
         NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
                                                                                  attributes:nil] autorelease];
         NSRange range = [verificationResult rangeOfString:@"FAILED"];
@@ -100,5 +114,5 @@
     
     [self addResults:result];
 }
-*/
+
 @end

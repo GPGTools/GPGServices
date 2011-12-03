@@ -43,7 +43,7 @@
     
     self.availableKeys = [self getPrivateKeys];
     self.selectedKey = [self getDefaultKey];
-        
+
     if(self.selectedIndex == NSNotFound)
         self.selectedIndex = 0;
     
@@ -77,8 +77,10 @@
 - (void)updateDescriptions {
     NSMutableArray* arr = [NSMutableArray arrayWithCapacity:self.availableKeys.count];
     for(GPGKey* k in self.availableKeys) {
-        [arr addObject:[NSString stringWithFormat:@"%@ - %@ (%@) <%@>",
-                        [k shortKeyID], [k name], [k comment], [k email]]];
+        NSString* c = [k comment];
+        c = c ? [NSString stringWithFormat:@"(%@) ", c] : @"";
+        [arr addObject:[NSString stringWithFormat:@"%@ - %@ %@<%@>",
+                        [k shortKeyID], [k name], c, [k email]]];
 
     }
     
@@ -87,15 +89,17 @@
 
 - (NSArray*)getPrivateKeys {
     NSArray* keys = [[GPGServices myPrivateKeys] allObjects];
-    
+
     if(self.keyValidator) 
         return [keys filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
             if([evaluatedObject isKindOfClass:[GPGKey class]])
                 return self.keyValidator((GPGKey*)evaluatedObject);
             return NO;
         }]];
-    else
+    else {
+        NSLog(@"getPrivateKeys called with keyValidator=%@ using all private keys",self.keyValidator);        
         return keys;
+    }
 }
 
 - (GPGKey*)getDefaultKey {
@@ -107,6 +111,16 @@
         return [self.availableKeys objectAtIndex:0];
     else
         return nil;
+}
+
+- (void)update {
+    self.availableKeys = [self getPrivateKeys];
+    self.selectedKey = [self getDefaultKey];
+    
+    if(self.selectedIndex == NSNotFound)
+        self.selectedIndex = 0;
+    
+    [self updateDescriptions];
 }
 
 

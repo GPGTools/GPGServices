@@ -22,12 +22,18 @@
 
 - (id)init {
     self = [super initWithWindowNibName:@"PrivateKeyChooserWindow"];
-    
     return self;
 }
 
 - (void)dealloc {    
     [super dealloc];
+}
+
+- (void)windowDidLoad {
+	[super windowDidLoad];
+	
+    dataSource.keyValidator = [GPGServices canSignValidator]; 
+    [dataSource update];
 }
 
 - (IBAction)chooseButtonClicked:(id)sender {
@@ -53,8 +59,12 @@
 	return ret;
 }
 
+/*
 - (void)setKeyValidator:(KeyValidatorT)validator {
-    dataSource.keyValidator = validator;
+    dataSource.keyValidator = validator;  
+    // [dataSource update];
+    NSLog(@"setKeyValidator validator=%@ dataSource.keyValidator=%@ dataSource=%@",validator,dataSource.keyValidator,dataSource);
 }
-
+*/
+ 
 @end

@@ -40,7 +40,7 @@
             usingResourceFork:YES];
     }
     
-    NSLog(@"made zip data with size: %i", [[archive data] length]);
+    NSLog(@"made zip data with size: %lu", [[archive data] length]);
 }
 
 @end
