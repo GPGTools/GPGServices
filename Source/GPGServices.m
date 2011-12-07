@@ -705,9 +705,13 @@
     if(files.count == 1) {
         NSString* file = [files objectAtIndex:0];
         BOOL isDirectory = YES;
-        BOOL exists = [fmgr fileExistsAtPath:file isDirectory:&isDirectory];
         
-        if(exists && isDirectory) {
+        if (! [fmgr fileExistsAtPath:file isDirectory:&isDirectory]) {    
+            [self displayOperationFailedNotificationWithTitle:@"File doesn't exist"
+                                                      message:@"Please try again"];
+            return;
+        }
+        if(isDirectory) {
             NSString* filename = [NSString stringWithFormat:@"%@.zip.gpg", [file lastPathComponent]];
             megabytes = [[self folderSize:file] unsignedLongLongValue] / 1048576.0;
             destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
@@ -719,18 +723,14 @@
                 
                 return operation.zipData;
             };
-        } else if(exists) {
+        } else {
             NSNumber* fileSize = [self sizeOfFiles:[NSArray arrayWithObject:file]];
             megabytes = [fileSize unsignedLongLongValue] / 1048576;
             destination = [file stringByAppendingString:@".gpg"];
             dataProvider = ^{
                 return (NSData*)[NSData dataWithContentsOfFile:file];
             };
-        } else {    
-            [self displayOperationFailedNotificationWithTitle:@"File doesn't exist"
-                                                      message:@"Please try again"];
-            return;
-        }
+        }  
     } else if(files.count > 1) {
         megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / 1048576.0;
         destination = [[[files objectAtIndex:0] stringByDeletingLastPathComponent] 
@@ -768,10 +768,11 @@
     NSAssert(destination != nil, @"destination can't be nil");
     
     GPGController* ctx = [GPGController gpgController];
+    // ctx.verbose = YES;
     NSData* gpgData = nil;
-    if(dataProvider != nil) 
+    if(dataProvider != nil)
         gpgData = [[[NSData alloc] initWithData:dataProvider()] autorelease];
-    
+
     NSData* encrypted = nil;
     if(mode == GPGEncryptSign && privateKey != nil)
         [ctx addSignerKey:[privateKey description]];
@@ -785,14 +786,13 @@
                                 message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
         return;
     }
-    
     if(encrypted == nil) {
-        // We should probably show the file form the exception too.
+        // We should probably show the file from the exception too.
         [self displayOperationFailedNotificationWithTitle:@"Encryption failed" message:[destination lastPathComponent]];
-    } else {
-        [encrypted writeToFile:destination atomically:YES];
-        [self displayOperationFinishedNotificationWithTitle:@"Encryption finished" message:[destination lastPathComponent]];
+        return;
     }
+    [encrypted writeToFile:destination atomically:YES];
+    [self displayOperationFinishedNotificationWithTitle:@"Encryption finished" message:[destination lastPathComponent]];
 }
 
 - (void)decryptFiles:(NSArray*)files {
@@ -923,7 +923,6 @@
             continue; //Shortcut all following code, go to next file
         }
         
-        // begin trouble
         NSData* inputData = [[[NSData alloc] dataWithContentsOfFile:file] autorelease];
         @try {
             NSString* inputText = [ctx importFromData:inputData fullImport:NO];

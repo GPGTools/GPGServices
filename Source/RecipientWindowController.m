@@ -33,7 +33,7 @@
     
 	gpgController = [[GPGController gpgController] retain];
     encryptPredicate = [[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [GPGServices canSignValidator]((GPGKey*)evaluatedObject);
+        return [GPGServices canEncryptValidator]((GPGKey*)evaluatedObject);
     }] retain];
 	
     availableKeys = [[[[gpgController allKeys] filteredSetUsingPredicate:[self validationPredicate]] 
