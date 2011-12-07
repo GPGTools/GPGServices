@@ -8,3 +8,4 @@ cd GPGServices
 make
 # now logout and login again
 # then have a look at System Preferences > Keyboard > Keyboard Shortcuts > Services > Text > Import Key ..."
+
