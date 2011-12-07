@@ -768,7 +768,7 @@
     NSAssert(destination != nil, @"destination can't be nil");
     
     GPGController* ctx = [GPGController gpgController];
-    // ctx.verbose = YES;
+    ctx.verbose = YES;
     NSData* gpgData = nil;
     if(dataProvider != nil)
         gpgData = [[[NSData alloc] initWithData:dataProvider()] autorelease];
@@ -776,7 +776,7 @@
     NSData* encrypted = nil;
     if(mode == GPGEncryptSign && privateKey != nil)
         [ctx addSignerKey:[privateKey description]];
-    @try{ // Should we trap exceptions?
+    @try{
         encrypted = [ctx processData:gpgData 
                           withEncryptSignMode:mode
                                    recipients:validRecipients

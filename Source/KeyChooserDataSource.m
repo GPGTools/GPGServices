@@ -41,7 +41,7 @@
               options:NSKeyValueObservingOptionNew
               context:nil];
     
-    self.availableKeys = [self getPrivateKeys];
+    // self.availableKeys = [self getPrivateKeys];
     self.selectedKey = [self getDefaultKey];
 
     if(self.selectedIndex == NSNotFound)
