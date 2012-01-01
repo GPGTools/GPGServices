@@ -783,12 +783,13 @@
                              hiddenRecipients:nil];
     } @catch(NSException* localException) {
         [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
-                                message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
+                        message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
         return;
     }
     if(encrypted == nil) {
         // We should probably show the file from the exception too.
-        [self displayOperationFailedNotificationWithTitle:@"Encryption failed" message:[destination lastPathComponent]];
+        [self displayOperationFailedNotificationWithTitle:@"Encryption failed"
+                        message:[destination lastPathComponent]];
         return;
     }
     [encrypted writeToFile:destination atomically:YES];
