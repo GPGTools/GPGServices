@@ -67,11 +67,11 @@
 // It appears all importKey.. functions were disabled over how libmacgpg handles importing,
 // but apperently GPGAccess handles this identically.
 - (void)importKeyFromData:(NSData*)data {
-	GPGController* ctx = [[[GPGController alloc] init] autorelease];
+	GPGController* gpgc = [[[GPGController alloc] init] autorelease];
     
     NSString* importText = nil;
 	@try {
-        importText = [ctx importFromData:data fullImport:NO];
+        importText = [gpgc importFromData:data fullImport:NO];
 	} @catch(GPGException* ex) {
         [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
                                                   message:[ex description]];
@@ -909,8 +909,10 @@
 
  
 - (void)importFiles:(NSArray*)files {
-	GPGController* ctx = [[[GPGController alloc] init] autorelease];
-    
+	GPGController* gpgc = [[GPGController alloc] init];
+
+    // gpgc.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:1 /* ShowResultAction */], @"action", nil];
+
     NSUInteger foundKeysCount = 0; //Track valid key-files
     NSUInteger importedKeyCount = 0;
     NSUInteger importedSecretKeyCount = 0;
@@ -921,13 +923,12 @@
             if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
                 [self displayOperationFailedNotificationWithTitle:@"Can't import keys from directory"
                                                           message:[file lastPathComponent]];
-            continue; //Shortcut all following code, go to next file
+            continue; 
         }
-        
-        NSData* inputData = [[[NSData alloc] dataWithContentsOfFile:file] autorelease];
+        NSData* data = [NSData dataWithContentsOfFile:file];
         @try {
-            NSString* inputText = [ctx importFromData:inputData fullImport:NO];
-            /*
+            NSString* inputText = [gpgc importFromData:data fullImport:NO];
+            /* 
             NSDictionary* importResults
             NSDictionary* changedKeys = [importResults valueForKey:GPGChangesKey];
             if(changedKeys.count > 0) {
@@ -945,9 +946,11 @@
             if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
                 [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
                                                           message:[ex description]];
+            [gpgc release];
             return;
         }
     }
+    [gpgc release];
     
     //Don't show result window when there were no imported keys
     if(foundKeysCount > 0) {
