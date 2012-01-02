@@ -436,11 +436,17 @@
     ctx.useArmor = YES;
     
 	@try {
-        //NSArray* sigs = [ctx verifySignature:[inputString UTF8Data] originalData:[NSData data]];
         NSArray* sigs = [ctx verifySignature:[inputString UTF8Data] originalData:nil];
 
-        if([sigs count] > 0)
-        {
+        if([sigs count] == 0) {
+            NSString *retry1 = [inputString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+            sigs = [ctx verifySignature:[retry1 UTF8Data] originalData:nil];
+            if([sigs count] == 0) {
+                NSString *retry2 = [inputString stringByReplacingOccurrencesOfString:@"\n" withString:@"\r\n"];
+                sigs = [ctx verifySignature:[retry2 UTF8Data] originalData:nil];
+            }
+        }
+        if([sigs count] > 0) {
             GPGSignature* sig = [sigs objectAtIndex:0];
             GPGErrorCode status = sig.status;
             NSLog(@"sig.status: %i", status);
@@ -460,9 +466,6 @@
             }
         } else {
             //Looks like sigs.count == 0 when we have encrypted text but no signature
-            //[self displayMessageWindowWithTitleText:@"Verification error."
-            //                               bodyText:@"Unable to verify due to an internal error"];
-            
             [self displayOperationFailedNotificationWithTitle:@"Verification failed." 
                                                       message:@"No signatures found within the selection."];
         }
