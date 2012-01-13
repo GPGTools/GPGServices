@@ -16,9 +16,7 @@
 	IBOutlet NSTableView* keyTableView;
 	IBOutlet NSSearchField* searchField;
     IBOutlet KeyChooserDataSource* privateKeyDataSource;
-	
-	GPGController* gpgController;
-	
+		
 	NSArray* availableKeys;
 	NSArray* keysMatchingSearch;
     

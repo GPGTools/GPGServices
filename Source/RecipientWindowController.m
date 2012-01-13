@@ -30,16 +30,17 @@
 
 - (id)init {
 	self = [super initWithWindowNibName:@"RecipientWindow"];
-    
-	gpgController = [[GPGController gpgController] retain];
+
     encryptPredicate = [[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         return [GPGServices canEncryptValidator]((GPGKey*)evaluatedObject);
     }] retain];
-	
+
+	GPGController* gpgController = [[GPGController gpgController] retain];
     availableKeys = [[[[gpgController allKeys] filteredSetUsingPredicate:[self validationPredicate]] 
                       sortedArrayUsingDescriptors:[keyTableView sortDescriptors]] retain];
+	[gpgController release];
 	keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
-    
+
     selectedKeys = [[NSMutableArray alloc] init];
 	
     self.encryptForOwnKeyToo = YES;
@@ -73,7 +74,6 @@
     keyTableView.dataSource = nil;
     searchField.delegate = nil;
     
-	[gpgController release];
 	[availableKeys release];
 	[keysMatchingSearch release];
 	
@@ -196,8 +196,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
             if([[k textForFilter] rangeOfString:searchString].location != NSNotFound)
                 [newFilteredArray addObject:k];
 		}];
-		
-        
+
 		[keysMatchingSearch release];
 		keysMatchingSearch = [newFilteredArray retain];
 	}
