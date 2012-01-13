@@ -183,24 +183,20 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (void)displayItemsMatchingString:(NSString*)searchString {    
-	if(searchString == nil ||
-	   [searchString isEqualToString:@""]) {
+	if(searchString.length == 0) {
 		[keysMatchingSearch release];		
 		keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
-	} else {
-        searchString = [searchString lowercaseString];
-        
-		NSMutableArray* newFilteredArray = [NSMutableArray array];
+	} else {        
+		NSMutableArray* newFilteredArray = [[NSMutableArray alloc] init];		
 		[availableKeys enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-			GPGKey* k = (GPGKey*)obj;
-            if([[k textForFilter] rangeOfString:searchString].location != NSNotFound)
-                [newFilteredArray addObject:k];
+            if([[(GPGKey *)obj textForFilter] rangeOfString:searchString options:NSCaseInsensitiveSearch].length > 0) {
+                [newFilteredArray addObject:obj];
+			}
 		}];
 
 		[keysMatchingSearch release];
-		keysMatchingSearch = [newFilteredArray retain];
+		keysMatchingSearch = newFilteredArray;
 	}
-
     [keyTableView reloadData];
 }
 
