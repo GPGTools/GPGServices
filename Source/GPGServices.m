@@ -1065,7 +1065,8 @@
     
 	if(newString!=nil)
 	{
-		[pboard declareTypes:[NSArray arrayWithObjects:NSPasteboardTypeString,NSPasteboardTypeRTF,nil] owner:nil];
+		[pboard declareTypes:[NSArray arrayWithObjects:NSPasteboardTypeHTML, NSPasteboardTypeString, NSPasteboardTypeRTF, nil] owner:nil];
+		[pboard setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"] forType:NSPasteboardTypeHTML];
 		[pboard setString:newString forType:NSPasteboardTypeString];
    		[pboard setString:newString forType:NSPasteboardTypeRTF];
 	}
