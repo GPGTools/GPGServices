@@ -1,0 +1,150 @@
+﻿/* alert-box informative */
+"%i key(s), %i secret key(s), %i revocation(s)" = "%1$i chiave/i, %2$i chiave/i segreta/e, %3$i revoche";
+
+/* operation failed title */
+"Can't import keys from directory" = "Non è stato possibile importare chiavi dalla cartella";
+
+/* No comment provided by engineer. */
+"Cancel" = "Annulla";
+
+/* save-panel title */
+"Choose Destination" = "Scegliere destinazione";
+
+/* No comment provided by engineer. */
+"Continue" = "Continua";
+
+/* export key alert box informative text */
+"Could not export key %@" = "Impossibile esportare la chiave %@";
+
+/* operation failed title */
+"Decryption failed." = "Decrittaggio fallito.";
+
+/* operation failed title */
+"Decryption finished" = "Decrittaggio finito";
+
+/* operation failed title */
+"Encryption failed" = "Crittaggio fallito";
+
+/* operation failed title */
+"Encryption failed." = "Crittaggio fallito.";
+
+/* operation finished title */
+"Encryption finished" = "Crittaggio finito";
+
+/* alert box informative text */
+"Encryption will take a long time.\nPress 'Cancel' to abort." = "Per il crittaggio sarà necessario molto tempo.\nPremere 'Annulla' per interrompere.";
+
+/* pasteboard error string */
+"Error: Could not perform GPG operation." = "Errore: Impossibile eseguire l'operazione GPG.";
+
+/* pasteboard error string */
+"Error: Could not perform GPG operation. Pasteboard could not supply text string." = "Errore: Impossibile eseguire l'operazione GPG. La pasteboard non ha potuto fornire la stringa di testo.";
+
+/* key export failed title */
+"Exporting key failed" = "Esportazione chiave non riuscita";
+
+/* exporting key error message text */
+"Exporting key failed." = "Esportazione chiave non riuscita.";
+
+/* operation failed title */
+"File doesn't exist" = "Il file non esiste";
+
+/* operation finished message */
+"Finished decrypting %i file(s)" = "Finito di decrittare %i file";
+
+/* operation finished message */
+"Finished signing %i file(s)" = "Finito di firmare %i file";
+
+/* alert-box informative */
+"Good signature (%@ trust):\n\"%@\"" = "Firma buona (fiducia %1$@):\n\"%2$@\"";
+
+/* No comment provided by engineer. */
+"Help" = "Aiuto";
+
+/* URL to a good tutorial about generating keys */
+"https://github.com/GPGTools/GPGKeychainAccess/wiki/Getting-started" = "https://github.com/GPGTools/GPGKeychainAccess/wiki/Getting-started";
+
+/* operation failed title */
+"Import failed:" = "Importazione non riuscita:";
+
+/* Alert box import result message text */
+"Import result:" = "Risultato importazione:";
+
+/* alert-box message text */
+"Large File(s)" = "File grande/i";
+
+/* operation failed message */
+"No decryptable data was found." = "Non sono stati trovati dati da decrittare.";
+
+/* operation failed message */
+"No decryptable text was found within the selection." = "Nella selezione non è stato trovato testo da decrittare.";
+
+/* operation failed message */
+"No encryptable text was found within the selection." = "Nella selezione non è stato trovato testo da crittare.";
+
+/* operation failed title */
+"No importable Keys found" = "Non sono state trovate chiavi da importare";
+
+/* alert-box message text */
+"No Private-Key found" = "Non sono state trovate chiavi private";
+
+/* alert-box informative */
+"No private-key found on your system.\nClick 'Help' to open a web-browser with a tutorial." = "Non sono state trovate chiavi private sul vostro sistema.\nCliccare 'Aiuto' per aprire un web-browser con un tutorial.";
+
+/* operation failed message */
+"No signable text was found within the selection." = "Nella selezione non è stato trovato testo da firmare.";
+
+/* verficiation result */
+"No signatures found" = "Nessuna firma trovata";
+
+/* operation failed message */
+"No signatures found within the selection." = "Nella selezione non sono state trovate firme.";
+
+/* operation failed message */
+"No valid recipients found" = "Nessun destinatario valido trovato.";
+
+/* verification window no data found result */
+"No verifiable data found" = "Non sono stati trovati dati da verificare";
+
+/* operation failed message */
+"No verifiable text was found within the selection" = "Nella selezione non è stato trovato testo da verificare";
+
+/* No comment provided by engineer. */
+"Ok" = "Ok";
+
+/* operation failed message */
+"Please try again" = "Riprova";
+
+/* 'signer name and trust */
+"Signed by: %@ (%@ trust)" = "Firmato da: %1$@ (fiducia %2$@)";
+
+/* operation failed title */
+"Signing failed" = "Firma non riuscita";
+
+/* operation failed title */
+"Signing failed." = "Firma non riuscita.";
+
+/* operation finished title */
+"Signing finished" = "Operazione di firma terminata";
+
+/* operation failed message */
+"The default secret key is unusable." = "La chiave segreta predefinita è inutilizzabile.";
+
+/* operation failed message */
+"The passphrase is incorrect." = "La passphrase non è corretta.";
+
+/* operation failed title */
+"Verification %@." = "Verifica %@.";
+
+/* Verification failed message */
+"Verification FAILED: %@" = "Verifica FALLITA: %1$@";
+
+/* verification window no signatures result */
+"Verification %@: No signatures found" = "Verifica %@: Nessuna firma trovata";
+
+/* operation failed title */
+"Verification failed." = "Verifica non riuscita.";
+
+/* alert-box message text */
+"Verification successful." = "Verifica riuscita.";
+
