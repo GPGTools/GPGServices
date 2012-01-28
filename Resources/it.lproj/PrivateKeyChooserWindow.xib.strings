@@ -1,0 +1,21 @@
+﻿
+/* Class = "NSWindow"; title = "Select Private-Key - GPGServices"; ObjectID = "1"; */
+"1.title" = "Seleziona chiave privata - ServiziGPG";
+
+/* Class = "NSButtonCell"; title = "Choose Private-Key"; ObjectID = "4"; */
+"4.title" = "Scegli chiave privata";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "6"; */
+"6.title" = "Annulla";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "24"; */
+"24.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Item 1"; ObjectID = "25"; */
+"25.title" = "Elemento 1";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "26"; */
+"26.title" = "Elemento 2";
+
+/* Class = "NSMenuItem"; title = "Item 3"; ObjectID = "27"; */
+"27.title" = "Elemento 3";

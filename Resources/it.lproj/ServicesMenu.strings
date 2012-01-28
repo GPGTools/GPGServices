@@ -1,0 +1,20 @@
+﻿/* Localized versions of Service menu items */
+
+"OpenPGP: Verify" = "OpenPGP: Verifica";
+"OpenPGP: Import key" = "OpenPGP: Importa chiave";
+"OpenPGP: Sign" = "OpenPGP: Firma";
+"OpenPGP: Sign and show Result" = "OpenPGP: Firma e mostra Risultato";
+"OpenPGP: Insert my fingerprint" = "OpenPGP: Inserisci la mia impronta";
+"OpenPGP: Insert my key" = "OpenPGP: Inserisci la mia chiave";
+"OpenPGP: Decrypt" = "OpenPGP: Decritta";
+"OpenPGP: Decrypt and show Result" = "OpenPGP: Decritta e mostra Risultato";
+"OpenPGP: Encrypt" = "OpenPGP: Critta";
+"OpenPGP: Encrypt and show Result" = "OpenPGP: Critta e mostra Risultato";
+"OpenPGP: Import" = "OpenPGP: Importa";
+"OpenPGP: Validate" = "OpenPGP: Valida";
+
+"OpenPGP: Decrypt File" = "OpenPGP: Decritta File";
+"OpenPGP: Encrypt File" = "OpenPGP: Critta File";
+"OpenPGP: Import File" = "OpenPGP: Importa File";
+"OpenPGP: Sign File" = "OpenPGP: Firma File";
+"OpenPGP: Validate File" = "OpenPGP: Valida File";
