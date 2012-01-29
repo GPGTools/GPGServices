@@ -85,7 +85,6 @@ typedef enum {
 
 - (NSString*)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys;
 - (void)signFiles:(NSArray*)files;
-- (NSData*)signedGPGDataForGPGData:(NSData*)dataToSign withKeys:(NSArray*)keys;
 - (void)encryptFiles:(NSArray*)files;
 - (void)decryptFiles:(NSArray*)files; 
 - (void)verifyFiles:(NSArray*)files;

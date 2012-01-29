@@ -656,22 +656,6 @@
     }
 }
 
-// Routine for signing encrypted data?  Non-functional relardless.
-/*
-- (GPGData*)signedGPGDataForGPGData:(GPGData*)dataToSign withKeys:(NSArray*)keys {
-    @try {
-        GPGContext* signContext = [[[GPGContext alloc] init] autorelease];
-        for(GPGKey* k in keys)
-            [signContext addSignerKey:k];
-        
-        return [signContext signedData:dataToSign signatureMode:GPGSignatureModeNormal];
-    } @catch (NSException* e) {
-        NSLog(@"error in signedGPGDataForGPGData: %@", [e description]);
-    }
-    
-    return nil;
-}
-*/
 
 - (void)encryptFiles:(NSArray*)files {
     NSLog(@"encrypting file(s): %@...", [files componentsJoinedByString:@","]);
