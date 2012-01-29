@@ -9,7 +9,7 @@ all: compile
 update-core:
 	@cd Dependencies/GPGTools_Core; git pull origin master; cd -
 update-libmac:
-	@cd Dependencies/Libmacgpg; git pull origin lion; cd -
+	@cd Dependencies/Libmacgpg; git pull origin master; cd -
 update-me:
 	@git pull
 
