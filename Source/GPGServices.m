@@ -111,9 +111,11 @@
     GPGController* controller = [GPGController gpgController];
     
 	@try {
-        GPGKey* key = [[controller keysForSearchPattern:keyID] anyObject];
-        NSAssert(key.secret == YES, @"myPrivateKey must return a secret key");
-        return key;
+        // User's configuration may contain a readable fingerprint containing spaces 
+        // (e.g., from gpg --fingerprint), but we must match GPGKey without spaces
+        NSString *condensedKey = [keyID stringByReplacingOccurrencesOfString:@" " withString:@""];
+        GPGKey* key = [[controller keysForSearchPattern:condensedKey] anyObject];
+        return (key && key.secret == YES) ? key : nil;
     } @catch (NSException* s) {
     }
     

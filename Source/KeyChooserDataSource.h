@@ -16,7 +16,7 @@
 @private
     NSArray* availableKeys;
     GPGKey* selectedKey;
-    NSUInteger selectedIndex;
+    NSInteger selectedIndex_;
     NSArray* keyDescriptions;
     
     KeyValidatorT keyValidator;
@@ -24,7 +24,7 @@
 
 @property(retain) NSArray* availableKeys;
 @property(retain) GPGKey* selectedKey;
-@property(assign) NSUInteger selectedIndex;
+@property(assign) NSInteger selectedIndex;
 @property(retain) NSArray* keyDescriptions;
 @property(retain) KeyValidatorT keyValidator;
 
