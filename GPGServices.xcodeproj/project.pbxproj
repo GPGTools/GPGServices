@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2226176F144ECFD500750926 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2226176E144ECFD500750926 /* Libmacgpg.framework */; };
 		22261771144ED03A00750926 /* Libmacgpg.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8E81D258139523890034B9D1 /* Libmacgpg.framework */; };
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
@@ -22,7 +23,6 @@
 		30B2057714D56F2A00AE9583 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
 		30B2057814D56F2A00AE9583 /* lock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990C135CAB60004C89D5 /* lock.icns */; };
 		30B2057914D56F2A00AE9583 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
-		45B15E0C14FDCA6500E79EE7 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E81D258139523890034B9D1 /* Libmacgpg.framework */; };
 		4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1908C00A4CBF0B00052798 /* GPGServices.m */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -103,6 +103,7 @@
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		2226176E144ECFD500750926 /* Libmacgpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Libmacgpg.framework; path = Dependencies/Libmacgpg/build/Release/Libmacgpg.framework; sourceTree = "<group>"; };
 		22261772144ED07200750926 /* ServicesRestart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = ServicesRestart; path = Dependencies/GPGTools_Core/bin/ServicesRestart; sourceTree = SOURCE_ROOT; };
 		2260756C12EBA0B50026DBEA /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		22D6D9C913267E0C00622189 /* RecipientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecipientWindowController.h; path = Source/RecipientWindowController.h; sourceTree = "<group>"; };
@@ -174,10 +175,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2226176F144ECFD500750926 /* Libmacgpg.framework in Frameworks */,
 				2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */,
-				45B15E0C14FDCA6500E79EE7 /* Libmacgpg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +204,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2226176E144ECFD500750926 /* Libmacgpg.framework */,
 				8E7341A21334BC1C003CBCEB /* Growl.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
@@ -365,7 +367,6 @@
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				4B1906FF0A4CBD8A00052798 /* Copy Frameworks */,
 				30B2052714D56D5200AE9583 /* Localize XIBs */,
-				45B15E0D14FDD7A300E79EE7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -485,19 +486,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "pushd \"$SRCROOT\" > /dev/null\nalias localizeXIB=Dependencies/GPGTools_Core/bin/localizeXIB\n\nlocalizeXIB Resources/en.lproj/MainMenu.xib                   de it\nlocalizeXIB Resources/en.lproj/PrivateKeyChooserWindow.xib    de it\nlocalizeXIB Resources/en.lproj/RecipientWindow.xib            de it\nlocalizeXIB Resources/en.lproj/VerificationResultsWindow.xib  de it\n\npopd > /dev/null\n";
-		};
-		45B15E0D14FDD7A300E79EE7 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ \"0$SYMLINK_GPGSERVICES\" -eq 1 ] ;then\n  # Create a symbolic link\n  mkdir -p ~/Library/Services/\n  ln -Ffs \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" ~/Library/Services/\n  \"$PROJECT_DIR/Dependencies/GPGTools_Core/bin/ServicesRestart\"\n  echo \"ServicesRestart: \"$?\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -641,6 +629,8 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/Dependencies/Libmacgpg/build/$CONFIGURATION\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -649,7 +639,6 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = GPGServices;
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SYMLINK_GPGSERVICES = 1;
 				WRAPPER_EXTENSION = service;
 				ZERO_LINK = YES;
 			};
@@ -665,6 +654,8 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/Dependencies/Libmacgpg/build/$CONFIGURATION\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -672,7 +663,6 @@
 				INSTALL_PATH = /Library/Services;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../";
 				PRODUCT_NAME = GPGServices;
-				SYMLINK_GPGSERVICES = 1;
 				WRAPPER_EXTENSION = service;
 			};
 			name = Release;
