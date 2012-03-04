@@ -96,6 +96,7 @@
 			<array/>
 			<key>NSSendTypes</key>
 			<array>
+				<string>public.plain-text</string>
 				<string>NSStringPboardType</string>
 				<string>NSRTFPboardType</string>
 			</array>
@@ -121,6 +122,7 @@
 			</array>
 			<key>NSSendTypes</key>
 			<array>
+				<string>public.plain-text</string>
 				<string>NSStringPboardType</string>
 				<string>NSRTFPboardType</string>
 			</array>
@@ -176,6 +178,7 @@
 			</array>
 			<key>NSSendTypes</key>
 			<array>
+				<string>public.plain-text</string>
 				<string>NSStringPboardType</string>
 				<string>NSRTFPboardType</string>
 			</array>
@@ -249,6 +252,7 @@
 			<array/>
 			<key>NSSendTypes</key>
 			<array>
+				<string>public.plain-text</string>
 				<string>NSStringPboardType</string>
 				<string>NSRTFPboardType</string>
 			</array>
@@ -259,7 +263,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Sign</string>
+				<string>OpenPGP: Sign File</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>signFile</string>
@@ -282,7 +286,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Encrypt</string>
+				<string>OpenPGP: Encrypt File</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>encryptFile</string>
@@ -295,6 +299,7 @@
 			</dict>
 			<key>NSSendTypes</key>
 			<array>
+				<string>public.plain-text</string>
 				<string>NSFilenamesPboardType</string>
 			</array>
 			<key>NSTimeout</key>
@@ -304,7 +309,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Decrypt</string>
+				<string>OpenPGP: Decrypt File</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>decryptFile</string>
@@ -325,7 +330,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>OpenPGP: Validate</string>
+				<string>OpenPGP: Verify File</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>validateFile</string>
