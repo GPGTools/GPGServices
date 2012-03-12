@@ -1051,10 +1051,19 @@
     
 	if(newString!=nil)
 	{
-		[pboard declareTypes:[NSArray arrayWithObjects:NSPasteboardTypeHTML, NSPasteboardTypeString, NSPasteboardTypeRTF, nil] owner:nil];
-		[pboard setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"] forType:NSPasteboardTypeHTML];
-		[pboard setString:newString forType:NSPasteboardTypeString];
-   		[pboard setString:newString forType:NSPasteboardTypeRTF];
+        [pboard clearContents];
+
+        NSPasteboardItem *stringItem = [[[NSPasteboardItem alloc] init] autorelease];
+        [stringItem setString:newString forType:NSPasteboardTypeString];
+
+        NSPasteboardItem *htmlItem = [[[NSPasteboardItem alloc] init] autorelease];
+        [htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"] 
+                    forType:NSPasteboardTypeHTML];
+
+        NSPasteboardItem *rtfItem = [[[NSPasteboardItem alloc] init] autorelease];
+        [rtfItem setString:newString forType:NSPasteboardTypeRTF];
+
+        [pboard writeObjects:[NSArray arrayWithObjects:stringItem, htmlItem, rtfItem, nil]];
 	}
     
     [pool release];
