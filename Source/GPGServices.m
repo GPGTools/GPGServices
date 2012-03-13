@@ -72,8 +72,15 @@
     NSString* importText = nil;
 	@try {
         importText = [gpgc importFromData:data fullImport:NO];
+        
+        if (gpgc.error)
+            @throw gpgc.error;
 	} @catch(GPGException* ex) {
-        [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
+        [self displayOperationFailedNotificationWithTitle:[ex reason] 
+                                                  message:[ex description]];
+        return;
+	} @catch(NSException* ex) {
+        [self displayOperationFailedNotificationWithTitle:@"Import failed." 
                                                   message:[ex description]];
         return;
 	}
@@ -293,9 +300,14 @@
         validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
     }
     
-    if(privateKey == nil) {
-        [self displayOperationFailedNotificationWithTitle:@"Encryption failed." 
-                                                  message:@"No usable private key found"];
+    if(rcp.encryptForOwnKeyToo && !privateKey) {
+        [self displayOperationFailedNotificationWithTitle:@"Encryption canceled." 
+                                                  message:@"No private key selected to add to recipients"];
+        return nil;
+    }
+    if(rcp.sign && !privateKey) {
+        [self displayOperationFailedNotificationWithTitle:@"Encryption canceled." 
+                                                  message:@"No private key selected for signing"];
         return nil;
     }
     
@@ -313,9 +325,16 @@
                           withEncryptSignMode:mode
                                    recipients:validRecipients
                              hiddenRecipients:nil];
-        
+
+        if (ctx.error) 
+			@throw ctx.error;
+
         return [outputData gpgString];
         
+    } @catch(GPGException* localException) {
+        [self displayOperationFailedNotificationWithTitle:[localException reason]  
+                                                  message:[localException description]];
+        return nil;
     } @catch(NSException* localException) {
         [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
                                                   message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
@@ -353,6 +372,14 @@
     
 	@try {
         outputData = [ctx decryptData:[inputString UTF8Data]];
+
+        if (ctx.error) 
+			@throw ctx.error;
+	} @catch (GPGException* localException) {
+        [self displayOperationFailedNotificationWithTitle:[localException reason]
+                                                  message:[localException description]];
+        
+        return nil;
 	} @catch (NSException* localException) {
         [self displayOperationFailedNotificationWithTitle:[localException reason]
                                                   message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
@@ -398,7 +425,15 @@
     
 	@try {
         NSData* outputData = [ctx processData:inputData withEncryptSignMode:GPGClearSign recipients:nil hiddenRecipients:nil];
+
+        if (ctx.error) 
+			@throw ctx.error;
+
         return [outputData gpgString];
+	} @catch(GPGException* localException) {
+        [self displayOperationFailedNotificationWithTitle:[localException reason]
+                                                  message:[localException description]];
+        return nil;
 	} @catch(NSException* localException) {
         /*
         NSString* errorMessage = nil;
@@ -594,14 +629,22 @@
 
         NSData* signData = [ctx processData:dataToSign withEncryptSignMode:GPGDetachedSign recipients:nil hiddenRecipients:nil];
 
+        if (ctx.error) 
+			@throw ctx.error;
+
         NSString* sigFile = [file stringByAppendingPathExtension:@"sig"];
         sigFile = [self normalizedAndUniquifiedPathFromPath:sigFile];
         [signData writeToFile:sigFile atomically:YES];
         
         return sigFile;
+    } @catch (GPGException* e) {
+        if([GrowlApplicationBridge isGrowlRunning]) {//This is in a loop, so only display Growl...
+            NSString *msg = [NSString stringWithFormat:@"%@\n\n%@", [file lastPathComponent], e];
+            [self displayOperationFailedNotificationWithTitle:[e reason] message:msg];
+        }
     } @catch (NSException* e) {
         if([GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
-            [self displayOperationFailedNotificationWithTitle:@"Signing failed"
+            [self displayOperationFailedNotificationWithTitle:@"Signing failed."
                                                       message:[file lastPathComponent]];  // no e.reason?
     }
 
@@ -675,6 +718,17 @@
     NSArray* validRecipients = rcp.selectedKeys;
     GPGKey* privateKey = rcp.selectedPrivateKey;
     
+    if(rcp.encryptForOwnKeyToo && !privateKey) {
+        [self displayOperationFailedNotificationWithTitle:@"Encryption canceled." 
+                                                  message:@"No private key selected to add to recipients"];
+        return;
+    }
+    if(rcp.sign && !privateKey) {
+        [self displayOperationFailedNotificationWithTitle:@"Encryption canceled." 
+                                                  message:@"No private key selected for signing"];
+        return;
+    }
+    
     if(rcp.encryptForOwnKeyToo && privateKey) {
         validRecipients = [[[NSSet setWithArray:validRecipients] 
                             setByAddingObject:[privateKey primaryKey]] 
@@ -682,7 +736,7 @@
     } else {
         validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
     }
-    
+
     long double megabytes = 0;
     NSString* destination = nil;
     
@@ -770,6 +824,14 @@
                           withEncryptSignMode:mode
                                    recipients:validRecipients
                              hiddenRecipients:nil];
+
+        if (ctx.error) 
+			@throw ctx.error;
+        
+    } @catch(GPGException* localException) {
+        [self displayOperationFailedNotificationWithTitle:[localException reason]  
+                                                  message:[localException description]];
+        return;
     } @catch(NSException* localException) {
         [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
                         message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
@@ -777,12 +839,12 @@
     }
     if(encrypted == nil) {
         // We should probably show the file from the exception too.
-        [self displayOperationFailedNotificationWithTitle:@"Encryption failed"
+        [self displayOperationFailedNotificationWithTitle:@"Encryption failed."
                         message:[destination lastPathComponent]];
         return;
     }
     [encrypted writeToFile:destination atomically:YES];
-    [self displayOperationFinishedNotificationWithTitle:@"Encryption finished" message:[destination lastPathComponent]];
+    [self displayOperationFinishedNotificationWithTitle:@"Encryption finished." message:[destination lastPathComponent]];
 }
 
 - (void)decryptFiles:(NSArray*)files {
@@ -804,6 +866,10 @@
                 NSLog(@"inputData.size: %lu", [inputData length]);
                 
                 NSData* outputData = [ctx decryptData:inputData];
+
+                if (ctx.error) 
+                    @throw ctx.error;
+                
                 NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
                 
                 NSError* error = nil;
@@ -835,6 +901,11 @@
                 
                 }
             }
+        } @catch(GPGException* ex) {
+            if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) {//This is in a loop, so only display Growl...
+                NSString *msg = [NSString stringWithFormat:@"%@\n\n%@", [file lastPathComponent], ex];
+                [self displayOperationFailedNotificationWithTitle:[ex reason] message:msg];
+            }
         } @catch (NSException* localException) {
             /*
             switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])) {
@@ -857,8 +928,8 @@
     dummyController.isActive = NO;
     
     if(decryptedFilesCount > 0)
-        [self displayOperationFinishedNotificationWithTitle:@"Decryption finished" 
-                                                    message:[NSString stringWithFormat:@"Finished decrypting %i file(s)", files.count]];
+        [self displayOperationFinishedNotificationWithTitle:@"Decryption finished." 
+                                                    message:[NSString stringWithFormat:@"Finished decrypting %i file(s)", decryptedFilesCount]];
 
     [dummyController runModal];
     [dummyController release];
@@ -882,7 +953,7 @@
 	@try {
         importText = [ctx importFromData:data fullImport:NO];
 	} @catch(GPGException* ex) {
-        [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
+        [self displayOperationFailedNotificationWithTitle:[ex reason] 
                                                   message:[ex description]];
         return;
 	}
@@ -917,6 +988,10 @@
         NSData* data = [NSData dataWithContentsOfFile:file];
         @try {
             NSString* inputText = [gpgc importFromData:data fullImport:NO];
+
+            if (gpgc.error) 
+                @throw gpgc.error;
+
             /* 
             NSDictionary* importResults
             NSDictionary* changedKeys = [importResults valueForKey:GPGChangesKey];
@@ -931,16 +1006,22 @@
                                                           message:[file lastPathComponent]];
             }
              */
+        } @catch(GPGException* ex) {
+            if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) {//This is in a loop, so only display Growl...
+                NSString *msg = [NSString stringWithFormat:@"%@\n\n%@", [file lastPathComponent], ex];
+                [self displayOperationFailedNotificationWithTitle:[ex reason] message:msg];
+            }
         } @catch(NSException* ex) {
-            if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
-                [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
-                                                          message:[ex description]];
-            [gpgc release];
-            return;
+            if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) {//This is in a loop, so only display Growl...
+                NSString *msg = [NSString stringWithFormat:@"%@\n\n%@", [file lastPathComponent], ex];
+                [self displayOperationFailedNotificationWithTitle:@"Import failed." 
+                                                          message:msg];
+            }
         }
     }
     [gpgc release];
-    
+
+#warning TODO - get informative counts from GPGController to reactivate import results alert.
     //Don't show result window when there were no imported keys
     if(foundKeysCount > 0) {
         [[NSAlert alertWithMessageText:@"Import result:"
