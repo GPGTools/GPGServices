@@ -72,8 +72,15 @@
     NSString* importText = nil;
 	@try {
         importText = [gpgc importFromData:data fullImport:NO];
+        
+        if (gpgc.error)
+            @throw gpgc.error;
 	} @catch(GPGException* ex) {
-        [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
+        [self displayOperationFailedNotificationWithTitle:[ex reason] 
+                                                  message:[ex description]];
+        return;
+	} @catch(NSException* ex) {
+        [self displayOperationFailedNotificationWithTitle:@"Import failed." 
                                                   message:[ex description]];
         return;
 	}
@@ -325,7 +332,7 @@
         return [outputData gpgString];
         
     } @catch(GPGException* localException) {
-        [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
+        [self displayOperationFailedNotificationWithTitle:[localException reason]  
                                                   message:[localException description]];
         return nil;
     } @catch(NSException* localException) {
@@ -369,7 +376,7 @@
         if (ctx.error) 
 			@throw ctx.error;
 	} @catch (GPGException* localException) {
-        [self displayOperationFailedNotificationWithTitle:@"Decryption failed."
+        [self displayOperationFailedNotificationWithTitle:[localException reason]
                                                   message:[localException description]];
         
         return nil;
@@ -424,7 +431,7 @@
 
         return [outputData gpgString];
 	} @catch(GPGException* localException) {
-        [self displayOperationFailedNotificationWithTitle:@"Signing failed."
+        [self displayOperationFailedNotificationWithTitle:[localException reason]
                                                   message:[localException description]];
         return nil;
 	} @catch(NSException* localException) {
@@ -633,8 +640,7 @@
     } @catch (GPGException* e) {
         if([GrowlApplicationBridge isGrowlRunning]) {//This is in a loop, so only display Growl...
             NSString *msg = [NSString stringWithFormat:@"%@\n\n%@", [file lastPathComponent], e];
-            [self displayOperationFailedNotificationWithTitle:@"Signing failed."
-                                                      message:msg];
+            [self displayOperationFailedNotificationWithTitle:[e reason] message:msg];
         }
     } @catch (NSException* e) {
         if([GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
@@ -823,7 +829,7 @@
 			@throw ctx.error;
         
     } @catch(GPGException* localException) {
-        [self displayOperationFailedNotificationWithTitle:@"Encryption failed."  
+        [self displayOperationFailedNotificationWithTitle:[localException reason]  
                                                   message:[localException description]];
         return;
     } @catch(NSException* localException) {
@@ -898,8 +904,7 @@
         } @catch(GPGException* ex) {
             if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) {//This is in a loop, so only display Growl...
                 NSString *msg = [NSString stringWithFormat:@"%@\n\n%@", [file lastPathComponent], ex];
-                [self displayOperationFailedNotificationWithTitle:@"Decryption failed." 
-                                                          message:msg];
+                [self displayOperationFailedNotificationWithTitle:[ex reason] message:msg];
             }
         } @catch (NSException* localException) {
             /*
@@ -948,7 +953,7 @@
 	@try {
         importText = [ctx importFromData:data fullImport:NO];
 	} @catch(GPGException* ex) {
-        [self displayOperationFailedNotificationWithTitle:@"Import failed:" 
+        [self displayOperationFailedNotificationWithTitle:[ex reason] 
                                                   message:[ex description]];
         return;
 	}
@@ -1001,6 +1006,11 @@
                                                           message:[file lastPathComponent]];
             }
              */
+        } @catch(GPGException* ex) {
+            if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) {//This is in a loop, so only display Growl...
+                NSString *msg = [NSString stringWithFormat:@"%@\n\n%@", [file lastPathComponent], ex];
+                [self displayOperationFailedNotificationWithTitle:[ex reason] message:msg];
+            }
         } @catch(NSException* ex) {
             if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) {//This is in a loop, so only display Growl...
                 NSString *msg = [NSString stringWithFormat:@"%@\n\n%@", [file lastPathComponent], ex];
