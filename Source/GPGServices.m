@@ -17,8 +17,21 @@
 #import "ZipKit/ZKArchive.h"
 #import "NSPredicate+negate.h"
 #import "GPGKey+utils.h"
+#import "RegexKitLite.h"
 
 #define SIZE_WARNING_LEVEL_IN_MB 10
+
+@interface NSString (GPGServices)
+- (NSString *)noMacOSCR;
+@end
+
+@implementation NSString (GPGServices)
+
+- (NSString *)noMacOSCR {
+    return [self stringByReplacingOccurrencesOfRegex:@"\\r(?!\\n)" withString:@"\n"];
+}
+
+@end
 
 @implementation GPGServices
 
@@ -94,7 +107,7 @@
 }
 
 - (void)importKey:(NSString *)inputString {
-    [self importKeyFromData:[inputString dataUsingEncoding:NSUTF8StringEncoding]];
+    [self importKeyFromData:[[inputString noMacOSCR] dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
 + (NSSet*)myPrivateKeys {
@@ -371,7 +384,7 @@
     NSData* outputData = nil;
     
 	@try {
-        outputData = [ctx decryptData:[inputString UTF8Data]];
+        outputData = [ctx decryptData:[[inputString noMacOSCR] UTF8Data]];
 
         if (ctx.error) 
 			@throw ctx.error;
@@ -473,7 +486,7 @@
     ctx.useArmor = YES;
     
 	@try {
-        NSArray* sigs = [ctx verifySignature:[inputString UTF8Data] originalData:nil];
+        NSArray* sigs = [ctx verifySignature:[[inputString noMacOSCR] UTF8Data] originalData:nil];
 
         if([sigs count] == 0) {
             NSString *retry1 = [inputString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
