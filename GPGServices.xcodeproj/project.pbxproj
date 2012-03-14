@@ -23,7 +23,6 @@
 		30B2057714D56F2A00AE9583 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
 		30B2057814D56F2A00AE9583 /* lock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990C135CAB60004C89D5 /* lock.icns */; };
 		30B2057914D56F2A00AE9583 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
-		45A0BB45150FF8C9005C15B2 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A0BB44150FF8C9005C15B2 /* RegexKitLite.m */; };
 		45D73FE01503C266007E0838 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45D73FDF1503C266007E0838 /* ServicesMenu.strings */; };
 		4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1908C00A4CBF0B00052798 /* GPGServices.m */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -141,8 +140,6 @@
 		30B2055D14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
 		30B2055E14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* GPGServices_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGServices_Prefix.pch; path = Source/GPGServices_Prefix.pch; sourceTree = "<group>"; };
-		45A0BB43150FF8C9005C15B2 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
-		45A0BB44150FF8C9005C15B2 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		45D73FDF1503C266007E0838 /* ServicesMenu.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = ServicesMenu.strings; sourceTree = "<group>"; };
 		4B1908BF0A4CBF0B00052798 /* GPGServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGServices.h; path = Source/GPGServices.h; sourceTree = "<group>"; };
 		4B1908C00A4CBF0B00052798 /* GPGServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GPGServices.m; path = Source/GPGServices.m; sourceTree = "<group>"; };
@@ -219,7 +216,6 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				45A0BB42150FF897005C15B2 /* RegexKitLite */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
@@ -321,16 +317,6 @@
 				3058B7D114D56C6700AA8881 /* VerificationResultsWindow.xib */,
 			);
 			name = XIBs;
-			sourceTree = "<group>";
-		};
-		45A0BB42150FF897005C15B2 /* RegexKitLite */ = {
-			isa = PBXGroup;
-			children = (
-				45A0BB43150FF8C9005C15B2 /* RegexKitLite.h */,
-				45A0BB44150FF8C9005C15B2 /* RegexKitLite.m */,
-			);
-			name = RegexKitLite;
-			path = Frameworks/RegexKitLite;
 			sourceTree = "<group>";
 		};
 		8E1BC3D6134B977500C1BFD6 /* UI Classes */ = {
@@ -524,7 +510,6 @@
 				8EFFC2271360FBAC00712940 /* FileVerificationDataSource.m in Sources */,
 				8EFFC22A1361009400712940 /* DummyVerificationController.m in Sources */,
 				8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */,
-				45A0BB45150FF8C9005C15B2 /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,7 +631,6 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
-					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
@@ -657,7 +641,6 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = GPGServices;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = service;
@@ -673,7 +656,6 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
-					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION\"";
@@ -684,7 +666,6 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = /Library/Services;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../";
-				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = GPGServices;
 				WRAPPER_EXTENSION = service;
 			};
