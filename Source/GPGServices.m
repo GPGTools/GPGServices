@@ -132,31 +132,24 @@
 #pragma mark -
 #pragma mark Validators
 
-// Shouldn't RecipientWindowController use canEncryptValidator somehow?
 + (KeyValidatorT)canEncryptValidator {
-    id block = ^(GPGKey* key) {
-        // A subkey can be expired, without the key being, thus making key useless 
-        // because it has no other subkey...
-        // We don't care about ownerTrust, validity
-        
-        for (GPGSubkey *aSubkey in [key subkeys]) {
-            if ([aSubkey canEncrypt] && 
-                ![aSubkey expired] && 
-                ![aSubkey revoked] &&
-                ![aSubkey invalid] &&
-                ![aSubkey disabled]) {
-                return YES;
-            }
-        }
+    KeyValidatorT block = ^(GPGKey* key) {
+        if ([key canAnyEncrypt] && key.status < GPGKeyStatus_Invalid)
+            return YES;
         return NO;
     };
     
     return [[block copy] autorelease];
 }
 
-// Warning : KeyChooserWindowController and RecipientWindowController assume canSignValidator = isActiveValidator
 + (KeyValidatorT)canSignValidator {
-    return [self isActiveValidator];
+    KeyValidatorT block = ^(GPGKey* key) {
+        if ([key canAnySign] && key.status < GPGKeyStatus_Invalid)
+            return YES;
+        return NO;
+    };
+    
+    return [[block copy] autorelease];
 }
 
 + (KeyValidatorT)isActiveValidator {
