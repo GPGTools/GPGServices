@@ -32,7 +32,7 @@
 - (void)windowDidLoad {
 	[super windowDidLoad];
 	
-    dataSource.keyValidator = [GPGServices canSignValidator]; 
+    dataSource.keyValidator = [GPGServices isActiveValidator]; 
     [dataSource update];
 }
 

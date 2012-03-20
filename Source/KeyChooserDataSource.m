@@ -82,10 +82,12 @@
                         change:(NSDictionary *)change
                        context:(void *)context {    
     
-    if([keyPath isEqualToString:@"keyValidator"])
-        self.availableKeys = [self getPrivateKeys];
-    
-    [self updateDescriptions];
+    if([keyPath isEqualToString:@"keyValidator"]) {
+        [self update];
+    }
+    else {
+        [self updateDescriptions];
+    }
 }
 
 - (void)updateDescriptions {
@@ -124,11 +126,10 @@
         self.selectedKey = nil;
     self.availableKeys = nowAvailableKeys;
 
-    GPGKey *nowDefaultKey = [self getDefaultKey];
-    if (!nowDefaultKey)
-        self.selectedKey = nil;
-    else if ([nowAvailableKeys containsObject:nowDefaultKey])
-        self.selectedKey = nowDefaultKey;
+    GPGKey *nowSelected = self.selectedKey;
+    if (!nowSelected)
+        nowSelected = [self getDefaultKey];
+    self.selectedIndex = [self.availableKeys indexOfObject:nowSelected];
 
     [self updateDescriptions];
 }
