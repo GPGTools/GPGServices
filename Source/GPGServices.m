@@ -1061,15 +1061,15 @@
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     
     
-    NSString *pboardString = nil;
+    NSString *pboardString = nil, *pbtype = nil;
 	if(mode!=MyKeyService && mode!=MyFingerprintService)
 	{
-		NSString* type = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
+		pbtype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
                                                          NSPasteboardTypeString, 
                                                          NSPasteboardTypeRTF,
                                                          nil]];
         
-        if([type isEqualToString:NSPasteboardTypeString])
+        if([pbtype isEqualToString:NSPasteboardTypeString])
 		{
 			if(!(pboardString = [pboard stringForType:NSPasteboardTypeString]))
 			{
@@ -1078,7 +1078,7 @@
 				return;
 			}
 		}
-		else if([type isEqualToString:NSPasteboardTypeRTF])
+		else if([pbtype isEqualToString:NSPasteboardTypeRTF])
 		{
 			if(!(pboardString = [pboard stringForType:NSPasteboardTypeString]))
 			{
@@ -1126,18 +1126,26 @@
 	if(newString!=nil)
 	{
         [pboard clearContents];
+        NSMutableArray *pbitems = [NSMutableArray array];
 
-        NSPasteboardItem *stringItem = [[[NSPasteboardItem alloc] init] autorelease];
-        [stringItem setString:newString forType:NSPasteboardTypeString];
+        if ([pbtype isEqualToString:NSPasteboardTypeHTML]) {        
+            NSPasteboardItem *htmlItem = [[[NSPasteboardItem alloc] init] autorelease];
+            [htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"] 
+                        forType:NSPasteboardTypeHTML];
+            [pbitems addObject:htmlItem];
+        }
+        else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {        
+            NSPasteboardItem *rtfItem = [[[NSPasteboardItem alloc] init] autorelease];
+            [rtfItem setString:newString forType:NSPasteboardTypeRTF];
+            [pbitems addObject:rtfItem];
+        }
+        else {
+            NSPasteboardItem *stringItem = [[[NSPasteboardItem alloc] init] autorelease];
+            [stringItem setString:newString forType:NSPasteboardTypeString];            
+            [pbitems addObject:stringItem];
+        }
 
-        NSPasteboardItem *htmlItem = [[[NSPasteboardItem alloc] init] autorelease];
-        [htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"] 
-                    forType:NSPasteboardTypeHTML];
-
-        NSPasteboardItem *rtfItem = [[[NSPasteboardItem alloc] init] autorelease];
-        [rtfItem setString:newString forType:NSPasteboardTypeRTF];
-
-        [pboard writeObjects:[NSArray arrayWithObjects:stringItem, htmlItem, rtfItem, nil]];
+        [pboard writeObjects:pbitems];
 	}
     
     [pool release];
