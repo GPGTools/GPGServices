@@ -109,9 +109,13 @@
     return keySet;
 }
 
++ (NSString *)myPrivateFingerprint {
+    return [[GPGOptions sharedOptions] valueInGPGConfForKey:@"default-key"];
+}
+
 + (GPGKey*)myPrivateKey {
 	
-    NSString* keyID = [[GPGOptions sharedOptions] valueInGPGConfForKey:@"default-key"];
+    NSString* keyID = [GPGServices myPrivateFingerprint];
 	if(keyID == nil)
         return nil;
     
@@ -183,23 +187,15 @@
 #pragma mark Text Stuff
 
 -(NSString *)myFingerprint {
-    GPGKey* chosenKey = [GPGServices myPrivateKey];
+    KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
+    GPGKey* chosenKey = wc.selectedKey;
     
-    NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
-                            [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [GPGServices isActiveValidator]((GPGKey*)evaluatedObject);
-    }]];
-
-    if(chosenKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
-        // [wc setKeyValidator:[GPGServices isActiveValidator]];
-        
+    if(chosenKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
         else
             chosenKey = nil;
         
-        [wc release];
     }
     
     if(chosenKey != nil) {
@@ -217,23 +213,16 @@
 
 
 -(NSString *)myKey {
-    GPGKey* selectedPrivateKey = [GPGServices myPrivateKey];
+    KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
+    GPGKey* selectedPrivateKey = wc.selectedKey;
     
-    NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
-                            [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [GPGServices isActiveValidator]((GPGKey*)evaluatedObject);
-    }]];
-
-    if(selectedPrivateKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
-        // [wc setKeyValidator:[GPGServices isActiveValidator]];
+    if(selectedPrivateKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
         
         if([wc runModal] == 0) 
             selectedPrivateKey = wc.selectedKey;
         else
             selectedPrivateKey = nil;
         
-        [wc release];
     }
     
     if(selectedPrivateKey == nil)
@@ -390,27 +379,18 @@
     ctx.useArmor = YES;
 
 	NSData* inputData = [inputString UTF8Data];
-    GPGKey* chosenKey = [GPGServices myPrivateKey];
+
+    KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
+    GPGKey* chosenKey = wc.selectedKey;
     
-    NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
-                            [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [GPGServices canSignValidator]((GPGKey*)evaluatedObject);
-    }]];
-    
-    if(chosenKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [[KeyChooserWindowController alloc] init];
-        // [wc setKeyValidator:[GPGServices canSignValidator]];
-        
+    if(chosenKey == nil || [wc.dataSource.keyDescriptions count] > 1) {        
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
         else
             chosenKey = nil;
         
-        [wc release];
-    } else if(availableKeys.count == 1) {
-        chosenKey = [availableKeys anyObject];
-    }
-    
+    } 
+
     if(chosenKey != nil)
         [ctx addSignerKey:[chosenKey description]];
     else
@@ -659,24 +639,15 @@
             return;
     }
     
-    GPGKey* chosenKey = [GPGServices myPrivateKey];
-    
-    NSSet* availableKeys = [[GPGServices myPrivateKeys] filteredSetUsingPredicate:
-                            [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [GPGServices canSignValidator]((GPGKey*)evaluatedObject);
-    }]];
-    
-    if(chosenKey == nil || availableKeys.count > 1) {
-        KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
-        // [wc setKeyValidator:[GPGServices canSignValidator]];
-
+    KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
+    GPGKey* chosenKey = wc.selectedKey;
+        
+    if(chosenKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
         if([wc runModal] == 0) 
             chosenKey = wc.selectedKey;
         else
             return;
-    } else if(availableKeys.count == 1) {
-        chosenKey = [availableKeys anyObject];
-    }
+    } 
     
     unsigned int signedFilesCount = 0;
     if(chosenKey != nil) {

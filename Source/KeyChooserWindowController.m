@@ -11,29 +11,36 @@
 
 @implementation KeyChooserWindowController
 
+@synthesize dataSource = _dataSource;
+
 @dynamic selectedKey;
 - (void)setSelectedKey:(GPGKey *)selectedKey {
-    dataSource.selectedKey = selectedKey;
+    self.dataSource.selectedKey = selectedKey;
 }
 
 - (GPGKey*)selectedKey {
-    return dataSource.selectedKey;
+    if (!_firstUpdated) {
+        [self.dataSource update];
+        _firstUpdated = TRUE;
+    }
+    return self.dataSource.selectedKey;
 }
 
 - (id)init {
     self = [super initWithWindowNibName:@"PrivateKeyChooserWindow"];
+    _firstUpdated = FALSE;
+    _dataSource = [[KeyChooserDataSource alloc] initWithValidator:[GPGServices isActiveValidator]];
     return self;
 }
 
-- (void)dealloc {    
+- (void)dealloc {
+    [_dataSource release];
     [super dealloc];
 }
 
 - (void)windowDidLoad {
 	[super windowDidLoad];
-	
-    dataSource.keyValidator = [GPGServices isActiveValidator]; 
-    [dataSource update];
+    [self selectedKey]; // call for _firstUpdate handling
 }
 
 - (IBAction)chooseButtonClicked:(id)sender {
