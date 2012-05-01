@@ -15,6 +15,7 @@
 @interface KeyChooserWindowController : NSWindowController {
     IBOutlet NSPopUpButton* popupButton;
     BOOL _firstUpdated;
+	KeyChooserDataSource *dataSource;
 }
 
 @property(retain) GPGKey* selectedKey;
