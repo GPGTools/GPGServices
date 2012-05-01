@@ -57,6 +57,7 @@ typedef enum {
 - (void)importKey:(NSString *)inputString;
 + (NSSet*)myPrivateKeys;
 + (GPGKey*)myPrivateKey;
++ (NSString *)myPrivateFingerprint;
 
 #pragma mark -
 #pragma mark Validators

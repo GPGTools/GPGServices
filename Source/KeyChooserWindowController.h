@@ -13,11 +13,12 @@
 #import "KeyChooserDataSource.h"
 
 @interface KeyChooserWindowController : NSWindowController {
-    IBOutlet KeyChooserDataSource* dataSource;
     IBOutlet NSPopUpButton* popupButton;
+    BOOL _firstUpdated;
 }
 
 @property(retain) GPGKey* selectedKey;
+@property (readonly) KeyChooserDataSource *dataSource;
 
 - (NSInteger)runModal; //Returns 0 on success
 // - (void)setKeyValidator:(KeyValidatorT)validator;

@@ -48,21 +48,25 @@
 }
 
 - (id)init {
-    self = [super init];
- 
-    [self addObserver:self 
-           forKeyPath:@"availableKeys"
-              options:NSKeyValueObservingOptionNew
-              context:nil];
-    [self addObserver:self 
-           forKeyPath:@"keyValidator"
-              options:NSKeyValueObservingOptionNew
-              context:nil];
+    return [self initWithValidator:nil];
+}
 
-    selectedIndex_ = -1;
-    self->selectedKey = nil;
-    [self update];
-    
+- (id)initWithValidator:(KeyValidatorT)validator {
+    if (self = [super init]) { 
+        keyValidator = validator;
+
+        [self addObserver:self 
+               forKeyPath:@"availableKeys"
+                  options:NSKeyValueObservingOptionNew
+                  context:nil];
+        [self addObserver:self 
+               forKeyPath:@"keyValidator"
+                  options:NSKeyValueObservingOptionNew
+                  context:nil];
+        
+        selectedIndex_ = -1;
+        self->selectedKey = nil;
+    }
     return self;
 }
 
@@ -127,8 +131,21 @@
     self.availableKeys = nowAvailableKeys;
 
     GPGKey *nowSelected = self.selectedKey;
-    if (!nowSelected)
-        nowSelected = [self getDefaultKey];
+    if (!nowSelected) {
+        NSString *privFingerprint = [GPGServices myPrivateFingerprint];
+        if (privFingerprint) {
+            for (GPGKey *key in self.availableKeys) {
+                NSRange rmatch = [key.allFingerprints rangeOfString:privFingerprint];
+                if (rmatch.location != NSNotFound) {
+                    nowSelected = key;
+                    break;
+                }
+            }
+        }
+        else if ([self.availableKeys count] == 1) {
+            nowSelected = [self.availableKeys objectAtIndex:0];
+        }
+    }
     self.selectedIndex = [self.availableKeys indexOfObject:nowSelected];
 
     [self updateDescriptions];
