@@ -672,6 +672,9 @@
     if(files.count == 0)
         return;
     
+    BOOL useASCII = [[[GPGOptions sharedOptions] valueForKey:@"UseASCIIOutput"] boolValue];
+    NSLog(@"Output as ASCII: %@", useASCII ? @"YES" : @"NO");
+    NSString *fileExtension = useASCII ? @"asc" : @"gpg";
     RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
 	int ret = [rcp runModal];
     [rcp autorelease];
@@ -733,7 +736,7 @@
         } else {
             NSNumber* fileSize = [self sizeOfFiles:[NSArray arrayWithObject:file]];
             megabytes = [fileSize unsignedLongLongValue] / 1048576;
-            destination = [file stringByAppendingString:@".gpg"];
+            destination = [file stringByAppendingFormat:@".%@", fileExtension];
             dataProvider = ^{
                 return (NSData*)[NSData dataWithContentsOfFile:file];
             };
@@ -776,6 +779,8 @@
     
     GPGController* ctx = [GPGController gpgController];
     ctx.verbose = YES;
+    // Only use armor for single files. otherwise it doesn't make much sense.
+    ctx.useArmor = useASCII && [destination rangeOfString:@".asc"].location != NSNotFound;
     NSData* gpgData = nil;
     if(dataProvider != nil)
         gpgData = [[[NSData alloc] initWithData:dataProvider()] autorelease];
