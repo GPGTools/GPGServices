@@ -28,14 +28,16 @@
     
     BOOL okEnabled;
     BOOL _firstUpdate;
+	
+	KeyChooserDataSource *dataSource;
 }
 
 @property (readonly) KeyChooserDataSource *dataSource;
-@property(readonly) NSMutableArray* selectedKeys;
-@property(readonly) GPGKey* selectedPrivateKey;
-@property(assign) BOOL sign;
-@property(assign) BOOL encryptForOwnKeyToo;
-@property(assign) BOOL okEnabled;
+@property (readonly) NSMutableArray* selectedKeys;
+@property (readonly) GPGKey* selectedPrivateKey;
+@property (assign) BOOL sign;
+@property (assign) BOOL encryptForOwnKeyToo;
+@property (assign) BOOL okEnabled;
 
 - (NSPredicate*)validationPredicate;
 - (void)displayItemsMatchingString:(NSString*)s;
