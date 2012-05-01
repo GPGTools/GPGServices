@@ -28,6 +28,7 @@
 @property(retain) NSArray* keyDescriptions;
 @property(retain) KeyValidatorT keyValidator;
 
+- (id)initWithValidator:(KeyValidatorT)validator;
 - (void)updateDescriptions;
 - (NSArray*)getPrivateKeys;
 - (GPGKey*)getDefaultKey;

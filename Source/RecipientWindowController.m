@@ -13,10 +13,15 @@
 
 @implementation RecipientWindowController
 
+@synthesize dataSource;
 @synthesize okEnabled, selectedKeys, sign;
 
 - (GPGKey*)selectedPrivateKey {
-    return privateKeyDataSource.selectedKey;
+    if (!_firstUpdate) {
+        [dataSource update];
+        _firstUpdate = TRUE;
+    }
+    return dataSource.selectedKey;
 }
 
 - (void)setEncryptForOwnKeyToo:(BOOL)value {
@@ -30,6 +35,8 @@
 
 - (id)init {
 	self = [super initWithWindowNibName:@"RecipientWindow"];
+
+    dataSource = [[KeyChooserDataSource alloc] initWithValidator:[GPGServices canSignValidator]];
 
     encryptPredicate = [[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         return [GPGServices canEncryptValidator]((GPGKey*)evaluatedObject);
@@ -50,8 +57,8 @@
 
 - (void)windowDidLoad {
 	[super windowDidLoad];
-	
-    privateKeyDataSource.keyValidator = [GPGServices canSignValidator];
+
+    [self selectedPrivateKey]; // call for _firstUpdate handling
     
 	[keyTableView setDoubleAction:@selector(doubleClickAction:)];
 	[keyTableView setTarget:self];
@@ -70,6 +77,7 @@
 }
 
 - (void)dealloc {
+    [dataSource release];
     keyTableView.delegate = nil;
     keyTableView.dataSource = nil;
     searchField.delegate = nil;

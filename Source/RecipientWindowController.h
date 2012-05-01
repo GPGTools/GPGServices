@@ -15,7 +15,6 @@
 @interface RecipientWindowController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource, NSWindowDelegate> {
 	IBOutlet NSTableView* keyTableView;
 	IBOutlet NSSearchField* searchField;
-    IBOutlet KeyChooserDataSource* privateKeyDataSource;
 		
 	NSArray* availableKeys;
 	NSArray* keysMatchingSearch;
@@ -28,8 +27,10 @@
     BOOL encryptForOwnKeyToo;
     
     BOOL okEnabled;
+    BOOL _firstUpdate;
 }
 
+@property (readonly) KeyChooserDataSource *dataSource;
 @property(readonly) NSMutableArray* selectedKeys;
 @property(readonly) GPGKey* selectedPrivateKey;
 @property(assign) BOOL sign;

@@ -143,10 +143,10 @@
 												<int key="NSvFlags">256</int>
 												<string key="NSFrameSize">{725, 17}</string>
 												<reference key="NSSuperview" ref="503892656"/>
-												<reference key="NSNextKeyView" ref="880498251"/>
+												<reference key="NSNextKeyView" ref="373712892"/>
 												<reference key="NSTableView" ref="1027869562"/>
 											</object>
-											<object class="_NSCornerView" key="NSCornerView" id="880498251">
+											<object class="_NSCornerView" key="NSCornerView">
 												<nil key="NSNextResponder"/>
 												<int key="NSvFlags">-2147483392</int>
 												<string key="NSFrame">{{224, 0}, {16, 17}}</string>
@@ -1043,13 +1043,10 @@
 					<string key="NSFrameSize">{690, 290}</string>
 					<reference key="NSNextKeyView" ref="1057667522"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{690, 312}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
-			</object>
-			<object class="NSCustomObject" id="5641605">
-				<string key="NSClassName">KeyChooserDataSource</string>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -1078,14 +1075,6 @@
 						<reference key="destination" ref="383858027"/>
 					</object>
 					<int key="connectionID">64</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">privateKeyDataSource</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="5641605"/>
-					</object>
-					<int key="connectionID">94</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1216,45 +1205,45 @@
 					<int key="connectionID">124</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentValues: self.keyDescriptions</string>
-						<reference key="source" ref="1183693"/>
-						<reference key="destination" ref="5641605"/>
-						<object class="NSNibBindingConnector" key="connector" id="316280610">
-							<reference key="NSSource" ref="1183693"/>
-							<reference key="NSDestination" ref="5641605"/>
-							<string key="NSLabel">contentValues: self.keyDescriptions</string>
-							<string key="NSBinding">contentValues</string>
-							<string key="NSKeyPath">self.keyDescriptions</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">92</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedIndex: self.selectedIndex</string>
-						<reference key="source" ref="1183693"/>
-						<reference key="destination" ref="5641605"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1183693"/>
-							<reference key="NSDestination" ref="5641605"/>
-							<string key="NSLabel">selectedIndex: self.selectedIndex</string>
-							<string key="NSBinding">selectedIndex</string>
-							<string key="NSKeyPath">self.selectedIndex</string>
-							<reference key="NSPreviousConnector" ref="316280610"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">93</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">nextKeyView</string>
 						<reference key="source" ref="1183693"/>
 						<reference key="destination" ref="137209181"/>
 					</object>
 					<int key="connectionID">125</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">contentValues: self.dataSource.keyDescriptions</string>
+						<reference key="source" ref="1183693"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector" id="759407055">
+							<reference key="NSSource" ref="1183693"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">contentValues: self.dataSource.keyDescriptions</string>
+							<string key="NSBinding">contentValues</string>
+							<string key="NSKeyPath">self.dataSource.keyDescriptions</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">176</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedIndex: self.dataSource.selectedIndex</string>
+						<reference key="source" ref="1183693"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1183693"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">selectedIndex: self.dataSource.selectedIndex</string>
+							<string key="NSBinding">selectedIndex</string>
+							<string key="NSKeyPath">self.dataSource.selectedIndex</string>
+							<reference key="NSPreviousConnector" ref="759407055"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">177</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1642,11 +1631,6 @@
 						<reference key="parent" ref="155691048"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">91</int>
-						<reference key="object" ref="5641605"/>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">104</int>
 						<reference key="object" ref="786905892"/>
 						<reference key="parent" ref="889398207"/>
@@ -1844,7 +1828,6 @@
 					<string>79.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
 					<string>9.IBPluginDependency</string>
-					<string>91.IBPluginDependency</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1918,7 +1901,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -1933,7 +1915,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">168</int>
+			<int key="maxID">177</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
