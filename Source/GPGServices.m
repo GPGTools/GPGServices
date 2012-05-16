@@ -823,6 +823,8 @@
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
     
     unsigned int decryptedFilesCount = 0;
+    NSUInteger errorCount = 0;
+    NSMutableString *errorMsgs = [NSMutableString string];
     
     DummyVerificationController* dummyController = nil;
 
@@ -835,18 +837,18 @@
                 NSLog(@"inputData.size: %lu", [inputData length]);
                 
                 NSData* outputData = [ctx decryptData:inputData];
+                if (outputData) {
+                    NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
+                    NSError* error = nil;
+                    [outputData writeToFile:outputFile options:NSDataWritingAtomic error:&error];
+                    if(error != nil) 
+                        NSLog(@"error while writing to output: %@", error);
+                    else
+                        decryptedFilesCount++;
+                }
 
                 if (ctx.error) 
                     @throw ctx.error;
-                
-                NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
-                
-                NSError* error = nil;
-                [outputData writeToFile:outputFile options:NSDataWritingAtomic error:&error];
-                if(error != nil) 
-                    NSLog(@"error while writing to output: %@", error);
-                else
-                    decryptedFilesCount++;
 
                 if(ctx.signatures && ctx.signatures.count > 0) {
                     NSLog(@"found signatures: %@", ctx.signatures);
@@ -870,35 +872,50 @@
                 
                 }
             }
-        } @catch(GPGException* ex) {
+        } @catch(NSException* ex) {
+            ++errorCount;
+            NSString *title, *msg;
+            if ([ex isKindOfClass:[GPGException class]]) {
+                title = [ex reason];
+                msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent], ex];
+            }
+            else {
+                title = @"Decryption error";
+                msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent], 
+                       @"An unexpected error occurred while decrypting."];
+                NSLog(@"decryptData ex: %@", ex);
+            }
+            
             if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) {//This is in a loop, so only display Growl...
-                NSString *msg = [NSString stringWithFormat:@"%@\n\n%@", [file lastPathComponent], ex];
-                [self displayOperationFailedNotificationWithTitle:[ex reason] message:msg];
+                [self displayOperationFailedNotificationWithTitle:title message:msg];
             }
-        } @catch (NSException* localException) {
-            /*
-            switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])) {
-                case GPGErrorNoData:
-                    [self displayOperationFailedNotificationWithTitle:@"Decryption failed."
-                                                              message:@"No decryptable data was found."];
-                    break;
-                case GPGErrorCancelled:
-                    break;
-                default: {
-                    GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-                    [self displayOperationFailedNotificationWithTitle:@"Decryption failed." 
-                                                              message:GPGErrorDescription(error)];
-                }
+            else {
+                if ([errorMsgs length] > 0)
+                    [errorMsgs appendString:@"\n"];
+                [errorMsgs appendString:msg];
             }
-             */
         } 
     }
     
     dummyController.isActive = NO;
     
-    if(decryptedFilesCount > 0)
-        [self displayOperationFinishedNotificationWithTitle:@"Decryption finished." 
-                                                    message:[NSString stringWithFormat:@"Finished decrypting %i file(s)", decryptedFilesCount]];
+    if(decryptedFilesCount > 0 || errorCount > 0) {
+        NSMutableString *summary = [NSMutableString string];
+        if (decryptedFilesCount > 0 || errorCount < 1) {
+            [summary appendFormat:@"Decrypted %i file(s).", decryptedFilesCount];
+        }
+        if (errorCount > 0) {
+            if ([summary length] > 0)
+                [summary appendString:@"\n"];
+            [summary appendFormat:@"Problems with %i file(s).", errorCount];
+            if ([errorMsgs length] > 0) {
+                [summary appendString:@"\n\n"];
+                [summary appendString:errorMsgs];
+            }
+        }
+        
+        [self displayOperationFinishedNotificationWithTitle:@"Decryption finished." message:summary];
+    }
 
     [dummyController runModal];
     [dummyController release];
