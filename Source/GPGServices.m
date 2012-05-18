@@ -1561,7 +1561,7 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 
 -(void)selfQuit:(NSTimer *)timer
 {
-    if ([[_inProgressCtlr.collectionView content] count] < 1) {
+    if ([_inProgressCtlr.serviceWorkerArray count] < 1) {
         [self cancelTerminateTimer];
         [NSApp terminate:self];
     }
