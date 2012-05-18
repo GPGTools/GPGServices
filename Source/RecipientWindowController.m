@@ -11,6 +11,17 @@
 
 #import "GPGKey+utils.h"
 
+@interface RecipientWindowController ()
+
+- (void)displayItemsMatchingString:(NSString*)s;
+- (NSPredicate*)validationPredicate;
+- (void)generateContextMenuForTable:(NSTableView *)table;
+- (void)selectHeaderVisibility:(NSMenuItem *)sender;
+
+- (void)runModalOnMain:(NSMutableArray *)resHolder;
+
+@end
+
 @implementation RecipientWindowController
 
 @synthesize dataSource;
@@ -261,7 +272,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	}
 }
 
-- (IBAction)selectHeaderVisibility:(NSMenuItem *)sender {
+- (void)selectHeaderVisibility:(NSMenuItem *)sender {
 	[[sender representedObject] setHidden:sender.state];
 	sender.state = !sender.state;
 }
@@ -294,11 +305,20 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (NSInteger)runModal {
+    NSMutableArray *resHolder = [NSMutableArray arrayWithCapacity:1];
+    [self performSelectorOnMainThread:@selector(runModalOnMain:) 
+                           withObject:resHolder 
+                        waitUntilDone:YES];
+    return [[resHolder lastObject] integerValue];
+}
+
+// called by runModal
+- (void)runModalOnMain:(NSMutableArray *)resHolder {
     [NSApp activateIgnoringOtherApps:YES];
 	[self showWindow:self];
 	NSInteger ret = [NSApp runModalForWindow:self.window];
 	[self.window close];
-	return ret;
+    [resHolder addObject:[NSNumber numberWithInteger:ret]];
 }
 
 - (IBAction)okClicked:(id)sender {

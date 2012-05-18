@@ -56,9 +56,9 @@
 }
 
 - (void)startVerification:(void(^)(NSArray*))callback {
-    [self window]; //Load window to setup bindings
-    
-    [indicator startAnimation:self];
+    //Load window to setup bindings
+    [self performSelectorOnMainThread:@selector(window) withObject:nil waitUntilDone:NO];
+    [indicator performSelectorOnMainThread:@selector(startAnimation:) withObject:self waitUntilDone:NO];
     
     for(NSString* serviceFile in self.filesToVerify) {
 
@@ -135,24 +135,17 @@
                                             [signedFile lastPathComponent], @"filename",
                                             verificationResult, @"verificationResult", 
                                             nil];
-                    
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
-                        [dataSource addResults:result];
-                    }];
+                    [dataSource addResults:result];
                 } else if(sigs.count > 0) {
                     for(GPGSignature* sig in sigs) {
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
-                            [dataSource addResultFromSig:sig forFile:signedFile];
-                        }];
+                        [dataSource addResultFromSig:sig forFile:signedFile];
                     }
                 }         
             } else {
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
-                    [dataSource addResults:[NSDictionary dictionaryWithObjectsAndKeys:
-                                            [signedFile lastPathComponent], @"filename",
-                                            @"No verifiable data found", @"verificationResult",
-                                            nil]]; 
-                }];
+                [dataSource addResults:[NSDictionary dictionaryWithObjectsAndKeys:
+                                        [signedFile lastPathComponent], @"filename",
+                                        @"No verifiable data found", @"verificationResult",
+                                        nil]];
             }
             
             [pool release];

@@ -39,13 +39,10 @@
 @property (assign) BOOL encryptForOwnKeyToo;
 @property (assign) BOOL okEnabled;
 
-- (NSPredicate*)validationPredicate;
-- (void)displayItemsMatchingString:(NSString*)s;
+// thread-safe
 - (NSInteger)runModal;
+
 - (IBAction)okClicked:(id)sender;
 - (IBAction)cancelClicked:(id)sender;
-
-- (void)generateContextMenuForTable:(NSTableView *)table;
-- (IBAction)selectHeaderVisibility:(NSMenuItem *)sender;
 
 @end

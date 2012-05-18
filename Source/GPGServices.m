@@ -12,13 +12,43 @@
 #import "KeyChooserWindowController.h"
 #import "FileVerificationController.h"
 #import "DummyVerificationController.h"
+#import "InProgressWindowController.h"
+#import "ServiceWorker.h"
+#import "ServiceWorkerDelegate.h"
+#import "ServiceWrappedArgs.h"
 
 #import "ZipOperation.h"
 #import "ZipKit/ZKArchive.h"
 #import "NSPredicate+negate.h"
 #import "GPGKey+utils.h"
+#import "NSAlert+ThreadSafety.h"
 
 #define SIZE_WARNING_LEVEL_IN_MB 10
+static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
+
+@interface GPGServices ()
+- (void)removeWorker:(id)worker;
+- (void)displayOperationFinishedNotificationWithTitleOnMain:(NSArray *)args;
+- (void)displayOperationFailedNotificationWithTitleOnMain:(NSArray *)args;
+- (void)displaySignatureVerificationForSigOnMain:(GPGSignature*)sig;
+
+// expected count = 1; quote lastPathComponent
+- (NSString *)quoteOneFilesName:(NSArray *)files;
+
+- (void)signFilesSync:(ServiceWrappedArgs *)wrappedArgs;
+- (void)decryptFilesSync:(ServiceWrappedArgs *)wrappedArgs;
+- (void)encryptFilesSync:(ServiceWrappedArgs *)wrappedArgs;
+- (void)verifyFilesSync:(ServiceWrappedArgs *)wrappedArgs;
+- (void)importFilesSync:(ServiceWrappedArgs *)wrappedArgs;
+
+// to allow easily putting under a new NSAutoreleasePool
+
+- (void)signFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
+- (void)encryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
+- (void)decryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs; 
+- (void)verifyFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
+- (void)importFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
+@end
 
 @implementation GPGServices
 
@@ -29,23 +59,18 @@
 	currentTerminateTimer=nil;
     
     [GrowlApplicationBridge setGrowlDelegate:self];
+    _inProgressCtlr = [[InProgressWindowController alloc] init];
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
     if([[filename pathExtension] isEqualToString:@"gpg"]) {
-        NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-        
         [self decryptFiles:[NSArray arrayWithObject:filename]];
-        
-        [pool release];
     }
     
 	return NO;
 }
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    
     NSArray* encs = [filenames pathsMatchingExtensions:[NSArray arrayWithObject:@"gpg"]];
     NSArray* sigs = [filenames pathsMatchingExtensions:[NSArray arrayWithObjects:@"sig", @"asc", nil]];
     
@@ -56,8 +81,6 @@
         [self verifyFiles:sigs];
     
     [NSApp replyToOpenOrPrint:NSApplicationDelegateReplySuccess];
-    
-    [pool release];
 }
 
 
@@ -459,7 +482,7 @@
         if([sigs count] > 0) {
             GPGSignature* sig = [sigs objectAtIndex:0];
             GPGErrorCode status = sig.status;
-            NSLog(@"sig.status: %i", status);
+            GPGDebugLog(@"sig.status: %i", status);
             if([sig status] == GPGErrorNoError) {
                 [self displaySignatureVerificationForSig:sig];
             } else {
@@ -503,6 +526,11 @@
 
 #pragma mark -
 #pragma mark File Stuff
+
+- (NSString *)quoteOneFilesName:(NSArray *)files {
+    return [NSString stringWithFormat:@"'%@'",
+            [[[files lastObject] lastPathComponent] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"]];
+}
 
 - (NSString*)normalizedAndUniquifiedPathFromPath:(NSString*)path {
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
@@ -624,26 +652,53 @@
     return nil;
 }
 
-- (void)signFiles:(NSArray*)files {     
-    long double megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / 1048576.0;
+- (void)signFiles:(NSArray *)files
+{
+    ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(signFilesSync:)];
+    worker.delegate = self;
+    worker.workerDescription = ([files count] == 1 
+                                ? [NSString stringWithFormat:@"Signing %@", [self quoteOneFilesName:files]]
+                                : [NSString stringWithFormat:@"Signing %i files", [files count]]);
+    
+    [_inProgressCtlr addObjectToServiceWorkerArray:worker];
+    [_inProgressCtlr showWindow:nil];
+    [worker start:files];
+}
+
+- (void)signFilesSync:(ServiceWrappedArgs *)wrappedArgs {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [self signFilesWrapped:wrappedArgs];
+    [pool release];
+}
+
+- (void)signFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
+    // files, though autoreleased, is safe here even when called async 
+    // because it's retained by ServiceWrappedArgs
+    NSArray *files = wrappedArgs.arg1;
+
+    long double megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / kBytesInMB;
     
     if(megabytes > SIZE_WARNING_LEVEL_IN_MB) {
         int ret = [[NSAlert alertWithMessageText:@"Large File(s)"
                                    defaultButton:@"Continue"
                                  alternateButton:@"Cancel"
                                      otherButton:nil
-                       informativeTextWithFormat:@"Encryption will take a long time.\nPress 'Cancel' to abort."] 
-                   runModal];
+                       informativeTextWithFormat:@"Encryption may take a longer time.\nPress 'Cancel' to abort."] 
+                   runModalOnMain];
         
         if(ret == NSAlertAlternateReturn)
             return;
     }
-    
+
+    // check before starting an operation
+    if (wrappedArgs.worker.amCanceling)
+        return;
+
     KeyChooserWindowController* wc = [[[KeyChooserWindowController alloc] init] autorelease];
     GPGKey* chosenKey = wc.selectedKey;
         
     if(chosenKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
-        if([wc runModal] == 0) 
+        if([wc runModal] == 0) // thread-safe
             chosenKey = wc.selectedKey;
         else
             return;
@@ -652,7 +707,16 @@
     unsigned int signedFilesCount = 0;
     if(chosenKey != nil) {
         for(NSString* file in files) {
+            // check before starting an operation
+            if (wrappedArgs.worker.amCanceling)
+                return;
+
             NSString* sigFile = [self detachedSignFile:file withKeys:[NSArray arrayWithObject:chosenKey]];
+
+            // check after an operation
+            if (wrappedArgs.worker.amCanceling)
+                return;
+
             if(sigFile != nil)
                 signedFilesCount++;
         }
@@ -665,19 +729,40 @@
     }
 }
 
+- (void)encryptFiles:(NSArray *)files
+{
+    ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(encryptFilesSync:)];
+    worker.delegate = self;
+    worker.workerDescription = ([files count] == 1 
+                                ? [NSString stringWithFormat:@"Encrypting %@", [self quoteOneFilesName:files]]
+                                : [NSString stringWithFormat:@"Encrypting %i files", [files count]]);
+    
+    [_inProgressCtlr addObjectToServiceWorkerArray:worker];
+    [_inProgressCtlr showWindow:nil];
+    [worker start:files];
+}
 
-- (void)encryptFiles:(NSArray*)files {
-    NSLog(@"encrypting file(s): %@...", [files componentsJoinedByString:@","]);
+- (void)encryptFilesSync:(ServiceWrappedArgs *)wrappedArgs {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [self encryptFilesWrapped:wrappedArgs];
+    [pool release];
+}
+
+- (void)encryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
+    // files, though autoreleased, is safe here even when called async 
+    // because it's retained by ServiceWrappedArgs
+    NSArray *files = wrappedArgs.arg1;
+
+    GPGDebugLog(@"encrypting file(s): %@...", [files componentsJoinedByString:@","]);
     
     if(files.count == 0)
         return;
     
     BOOL useASCII = [[[GPGOptions sharedOptions] valueForKey:@"UseASCIIOutput"] boolValue];
-    NSLog(@"Output as ASCII: %@", useASCII ? @"YES" : @"NO");
+    GPGDebugLog(@"Output as ASCII: %@", useASCII ? @"YES" : @"NO");
     NSString *fileExtension = useASCII ? @"asc" : @"gpg";
-    RecipientWindowController* rcp = [[RecipientWindowController alloc] init];
-	int ret = [rcp runModal];
-    [rcp autorelease];
+    RecipientWindowController* rcp = [[[RecipientWindowController alloc] init] autorelease];
+	int ret = [rcp runModal]; // thread-safe
 	if(ret != 0)
 		return;  // User pressed 'cancel'
 
@@ -704,6 +789,10 @@
         validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
     }
 
+    // check before starting an operation
+    if (wrappedArgs.worker.amCanceling)
+        return;
+
     long double megabytes = 0;
     NSString* destination = nil;
     
@@ -723,7 +812,7 @@
         }
         if(isDirectory) {
             NSString* filename = [NSString stringWithFormat:@"%@.zip.gpg", [file lastPathComponent]];
-            megabytes = [[self folderSize:file] unsignedLongLongValue] / 1048576.0;
+            megabytes = [[self folderSize:file] unsignedLongLongValue] / kBytesInMB;
             destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
             dataProvider = ^{
                 ZipOperation* operation = [[[ZipOperation alloc] init] autorelease];
@@ -735,14 +824,14 @@
             };
         } else {
             NSNumber* fileSize = [self sizeOfFiles:[NSArray arrayWithObject:file]];
-            megabytes = [fileSize unsignedLongLongValue] / 1048576;
+            megabytes = [fileSize unsignedLongLongValue] / kBytesInMB;
             destination = [file stringByAppendingFormat:@".%@", fileExtension];
             dataProvider = ^{
                 return (NSData*)[NSData dataWithContentsOfFile:file];
             };
         }  
     } else if(files.count > 1) {
-        megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / 1048576.0;
+        megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / kBytesInMB;
         destination = [[[files objectAtIndex:0] stringByDeletingLastPathComponent] 
                        stringByAppendingPathComponent:@"Archive.zip.gpg"];
         dataProvider = ^{
@@ -758,8 +847,8 @@
     //Check if directory is writable and append i+1 if file already exists at destination
     destination = [self normalizedAndUniquifiedPathFromPath:destination];
     
-    NSLog(@"destination: %@", destination);
-    NSLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
+    GPGDebugLog(@"destination: %@", destination);
+    GPGDebugLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
                                                               numberStyle:NSNumberFormatterDecimalStyle]);        
     
     if(megabytes > SIZE_WARNING_LEVEL_IN_MB) {
@@ -767,8 +856,8 @@
                                    defaultButton:@"Continue"
                                  alternateButton:@"Cancel"
                                      otherButton:nil
-                       informativeTextWithFormat:@"Encryption will take a long time.\nPress 'Cancel' to abort."] 
-                   runModal];
+                       informativeTextWithFormat:@"Encryption may take a longer time.\nPress 'Cancel' to abort."] 
+                   runModalOnMain];
         
         if(ret == NSAlertAlternateReturn)
             return;
@@ -777,8 +866,11 @@
     NSAssert(dataProvider != nil, @"dataProvider can't be nil");
     NSAssert(destination != nil, @"destination can't be nil");
     
+    // check before starting an operation
+    if (wrappedArgs.worker.amCanceling)
+        return;
+
     GPGController* ctx = [GPGController gpgController];
-    ctx.verbose = YES;
     // Only use armor for single files. otherwise it doesn't make much sense.
     ctx.useArmor = useASCII && [destination rangeOfString:@".asc"].location != NSNotFound;
     NSData* gpgData = nil;
@@ -794,6 +886,10 @@
                                    recipients:validRecipients
                              hiddenRecipients:nil];
 
+        // check after a lengthy operation
+        if (wrappedArgs.worker.amCanceling)
+            return;
+        
         if (ctx.error) 
 			@throw ctx.error;
         
@@ -806,6 +902,7 @@
                         message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
         return;
     }
+
     if(encrypted == nil) {
         // We should probably show the file from the exception too.
         [self displayOperationFailedNotificationWithTitle:@"Encryption failed."
@@ -816,7 +913,30 @@
     [self displayOperationFinishedNotificationWithTitle:@"Encryption finished." message:[destination lastPathComponent]];
 }
 
-- (void)decryptFiles:(NSArray*)files {
+- (void)decryptFiles:(NSArray *)files
+{
+    ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(decryptFilesSync:)];
+    worker.delegate = self;
+    worker.workerDescription = ([files count] == 1 
+                                ? [NSString stringWithFormat:@"Decrypting %@", [self quoteOneFilesName:files]]
+                                : [NSString stringWithFormat:@"Decrypting %i files", [files count]]);
+    
+    [_inProgressCtlr addObjectToServiceWorkerArray:worker];
+    [_inProgressCtlr showWindow:nil];
+    [worker start:files];
+}
+
+- (void)decryptFilesSync:(ServiceWrappedArgs *)wrappedArgs {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [self decryptFilesWrapped:wrappedArgs];
+    [pool release];
+}
+
+- (void)decryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
+    // files, though autoreleased, is safe here even when called async 
+    // because it's retained by ServiceWrappedArgs
+    NSArray *files = wrappedArgs.arg1;
+
     GPGController* ctx = [GPGController gpgController];
     // [ctx setPassphraseDelegate:self];
     
@@ -825,19 +945,29 @@
     unsigned int decryptedFilesCount = 0;
     NSUInteger errorCount = 0;
     NSMutableString *errorMsgs = [NSMutableString string];
-    
+
+    // has thread-safe methods as used here
     DummyVerificationController* dummyController = nil;
 
     for(NSString* file in files) {
+        // check before starting an operation
+        if (wrappedArgs.worker.amCanceling)
+            return;
+
         BOOL isDirectory = NO;
         @try {
             if([fmgr fileExistsAtPath:file isDirectory:&isDirectory] &&
                isDirectory == NO) {                
                 NSData* inputData = [[[NSData alloc] initWithContentsOfFile:file] autorelease];
-                NSLog(@"inputData.size: %lu", [inputData length]);
+                GPGDebugLog(@"inputData.size: %lu", [inputData length]);
                 
                 NSData* outputData = [ctx decryptData:inputData];
-                if (outputData) {
+
+                // check again after a potentially long operation
+                if (wrappedArgs.worker.amCanceling)
+                    return;
+                
+                if (outputData && [outputData length]) {
                     NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
                     NSError* error = nil;
                     [outputData writeToFile:outputFile options:NSDataWritingAtomic error:&error];
@@ -851,12 +981,12 @@
                     @throw ctx.error;
 
                 if(ctx.signatures && ctx.signatures.count > 0) {
-                    NSLog(@"found signatures: %@", ctx.signatures);
+                    GPGDebugLog(@"found signatures: %@", ctx.signatures);
 
                     if(dummyController == nil) {
                         dummyController = [[DummyVerificationController alloc]
                                            initWithWindowNibName:@"VerificationResultsWindow"];
-                        [dummyController showWindow:self];
+                        [dummyController showWindow:self]; // now thread-safe
                         dummyController.isActive = YES;
                     }
                     
@@ -917,11 +1047,35 @@
         [self displayOperationFinishedNotificationWithTitle:@"Decryption finished." message:summary];
     }
 
-    [dummyController runModal];
+    [dummyController runModal]; // thread-safe
     [dummyController release];
 }
  
-- (void)verifyFiles:(NSArray*)files {
+- (void)verifyFiles:(NSArray *)files
+{
+    ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(verifyFilesSync:)];
+    worker.delegate = self;
+    worker.workerDescription = ([files count] == 1 
+                                ? [NSString stringWithFormat:@"Verifying signature of %@", [self quoteOneFilesName:files]]
+                                : [NSString stringWithFormat:@"Verifying signatures of %i files", [files count]]);
+    
+    [_inProgressCtlr addObjectToServiceWorkerArray:worker];
+    [_inProgressCtlr showWindow:nil];
+    [worker start:files];
+}
+
+- (void)verifyFilesSync:(ServiceWrappedArgs *)wrappedArgs {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [self verifyFilesWrapped:wrappedArgs];
+    [pool release];
+}
+
+- (void)verifyFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
+    // files, though autoreleased, is safe here even when called async 
+    // because it's retained by NSOperation that is wrapping the process
+    NSArray *files = wrappedArgs.arg1;
+
+    // all thread-safe
     FileVerificationController* fvc = [[FileVerificationController alloc] init];
     fvc.filesToVerify = files;
     [fvc startVerification:nil];
@@ -954,8 +1108,31 @@
 */
 
  
-- (void)importFiles:(NSArray*)files {
-	GPGController* gpgc = [[GPGController alloc] init];
+- (void)importFiles:(NSArray *)files
+{
+    ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(importFilesSync:)];
+    worker.delegate = self;
+    worker.workerDescription = ([files count] == 1 
+                                ? [NSString stringWithFormat:@"Importing %@", [self quoteOneFilesName:files]]
+                                : [NSString stringWithFormat:@"Importing of %i files", [files count]]);
+    
+    [_inProgressCtlr addObjectToServiceWorkerArray:worker];
+    [_inProgressCtlr showWindow:nil];
+    [worker start:files];
+}
+
+- (void)importFilesSync:(ServiceWrappedArgs *)wrappedArgs {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [self importFilesWrapped:wrappedArgs];
+    [pool release];
+}
+
+- (void)importFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
+    // files, though autoreleased, is safe here even when called async 
+    // because it's retained by ServiceWrappedArgs
+    NSArray *files = wrappedArgs.arg1;
+
+	GPGController* gpgc = [GPGController gpgController];
 
     // gpgc.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:1 /* ShowResultAction */], @"action", nil];
 
@@ -965,6 +1142,10 @@
     NSUInteger newRevocationCount = 0;
     
     for(NSString* file in files) {
+        // check before starting an operation
+        if (wrappedArgs.worker.amCanceling)
+            return;
+
         if([[self isDirectoryPredicate] evaluateWithObject:file] == YES) {
             if(files.count == 1 || [GrowlApplicationBridge isGrowlRunning]) //This is in a loop, so only display Growl...
                 [self displayOperationFailedNotificationWithTitle:@"Can't import keys from directory"
@@ -973,7 +1154,11 @@
         }
         NSData* data = [NSData dataWithContentsOfFile:file];
         @try {
-            NSString* inputText = [gpgc importFromData:data fullImport:NO];
+            /*NSString* inputText = */[gpgc importFromData:data fullImport:NO];
+
+            // check after an operation
+            if (wrappedArgs.worker.amCanceling)
+                return;
 
             if (gpgc.error) 
                 @throw gpgc.error;
@@ -1005,7 +1190,6 @@
             }
         }
     }
-    [gpgc release];
 
 #warning TODO - get informative counts from GPGController to reactivate import results alert.
     //Don't show result window when there were no imported keys
@@ -1022,6 +1206,23 @@
     }
 }
 
+#pragma mark - ServiceWorkerDelegate
+
+- (void)workerWasCanceled:(id)worker {
+    [self performSelectorOnMainThread:@selector(removeWorker:) withObject:worker waitUntilDone:YES];
+}
+
+- (void)workerDidFinish:(id)worker {    
+    [self performSelectorOnMainThread:@selector(removeWorker:) withObject:worker waitUntilDone:YES];
+}
+
+- (void)removeWorker:(id)worker 
+{
+    [_inProgressCtlr removeObjectFromServiceWorkerArray:worker];
+    if ([_inProgressCtlr.serviceWorkerArray count] < 1)
+        [_inProgressCtlr.window orderOut:nil];
+}
+     
 #pragma mark - NSPredicates for filtering file arrays
 
 - (NSPredicate*)fileExistsPredicate {
@@ -1050,9 +1251,6 @@
                     error:(NSString **)error {
 	[self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
-        
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    
     
     NSString *pboardString = nil, *pbtype = nil;
 	if(mode!=MyKeyService && mode!=MyFingerprintService)
@@ -1141,8 +1339,6 @@
         [pboard writeObjects:pbitems];
 	}
     
-    [pool release];
-    
 	[self exitServiceRequest];
 }
 
@@ -1152,8 +1348,6 @@
                          error:(NSString **)error {
     [self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
-    
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     
     NSData *data = [pboard dataForType:NSFilenamesPboardType];
     
@@ -1185,8 +1379,6 @@
                 break;
         }
     }
-    
-    [pool release];
     
     [self exitServiceRequest];
 }
@@ -1259,10 +1451,19 @@
                      defaultButton:@"Ok"
                    alternateButton:nil
                        otherButton:nil
-         informativeTextWithFormat:[NSString stringWithFormat:@"%@", body]] runModal];
+         informativeTextWithFormat:[NSString stringWithFormat:@"%@", body]] runModalOnMain];
 }
 
 - (void)displayOperationFinishedNotificationWithTitle:(NSString*)title message:(NSString*)body {
+    [self performSelectorOnMainThread:@selector(displayOperationFinishedNotificationWithTitleOnMain:) 
+                           withObject:[NSArray arrayWithObjects:title, body, nil] 
+                        waitUntilDone:NO];
+}
+
+// called by displayOperationFinishedNotificationWithTitle:message:
+- (void)displayOperationFinishedNotificationWithTitleOnMain:(NSArray *)args {
+    NSString *title = [args objectAtIndex:0]; 
+    NSString *body = [args objectAtIndex:1];
     if([GrowlApplicationBridge isGrowlRunning]) {
         [GrowlApplicationBridge notifyWithTitle:title
                                     description:body
@@ -1277,6 +1478,15 @@
 }
 
 - (void)displayOperationFailedNotificationWithTitle:(NSString*)title message:(NSString*)body {
+    [self performSelectorOnMainThread:@selector(displayOperationFailedNotificationWithTitleOnMain:)
+                           withObject:[NSArray arrayWithObjects:title, body, nil]
+                        waitUntilDone:NO];
+}
+
+// called by displayOperationFailedNotificationWithTitle:message:
+- (void)displayOperationFailedNotificationWithTitleOnMain:(NSArray *)args {
+    NSString *title = [args objectAtIndex:0]; 
+    NSString *body = [args objectAtIndex:1];
     if([GrowlApplicationBridge isGrowlRunning]) {
         [GrowlApplicationBridge notifyWithTitle:title
                                     description:body
@@ -1291,6 +1501,13 @@
 }
 
 - (void)displaySignatureVerificationForSig:(GPGSignature*)sig {
+    [self performSelectorOnMainThread:@selector(displaySignatureVerificationForSigOnMain:) 
+                           withObject:sig 
+                        waitUntilDone:NO];
+}
+
+// called by displaySignatureVerificationForSig:
+- (void)displaySignatureVerificationForSigOnMain:(GPGSignature*)sig {
     /*
     GPGContext* aContext = [[[GPGContext alloc] init] autorelease];
     NSString* userID = [[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
@@ -1339,12 +1556,15 @@
 {
 	if(currentTerminateTimer!=nil)
 		[self cancelTerminateTimer];
-	currentTerminateTimer=[NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(selfQuit:) userInfo:nil repeats:NO];
+	currentTerminateTimer=[NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(selfQuit:) userInfo:nil repeats:YES];
 }
 
 -(void)selfQuit:(NSTimer *)timer
 {
-	[NSApp terminate:self];
+    if ([[_inProgressCtlr.collectionView content] count] < 1) {
+        [self cancelTerminateTimer];
+        [NSApp terminate:self];
+    }
 }
 
 @end

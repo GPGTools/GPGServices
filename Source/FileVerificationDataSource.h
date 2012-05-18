@@ -18,7 +18,9 @@
 @property(readonly) NSArray* verificationResults;
 @property(assign) BOOL isActive;
 
+// thread-safe
 - (void)addResults:(NSDictionary*)results;
+// thread-safe
 - (void)addResultFromSig:(GPGSignature*)sig forFile:(NSString*)file;
 
 @end

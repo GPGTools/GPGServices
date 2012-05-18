@@ -22,10 +22,15 @@
 
 @property(assign) BOOL isActive;
 
+// thread-safe
+- (void)showWindow:(id)sender;
+// thread-safe
 - (void)addResults:(NSDictionary*)results;
+// thread-safe
 - (void)addResultFromSig:(GPGSignature*)sig forFile:(NSString*)file;
-
+// thread-safe
 - (NSInteger)runModal;
+
 - (IBAction)okClicked:(id)sender;
 
 @end
