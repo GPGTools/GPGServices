@@ -35,9 +35,11 @@
 
 - (void)main
 {
+    // do the user-specified operation
     [_operation start];
     [_operation waitUntilFinished];
     if (![_operation isCancelled])
+        // then do a callback operation
         [_callbackTarget performSelector:_callbackAction withObject:self];
 }
 

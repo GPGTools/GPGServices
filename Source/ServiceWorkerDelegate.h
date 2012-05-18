@@ -1,5 +1,5 @@
 //
-//  GPGWorkerDelegate.h
+//  ServiceWorkerDelegate.h
 //  GPGServices
 //
 //  Created by Chris Fraire on 5/17/12.

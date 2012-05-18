@@ -53,9 +53,11 @@
         return;
 
     _queue = [[NSOperationQueue alloc] init];
+    // built an invocation operation for the user-specified target/action
     ServiceWrappedArgs *wrappedArgs = [ServiceWrappedArgs wrappedArgsForWorker:self arg1:args];
     NSInvocationOperation *op = [[[NSInvocationOperation alloc] 
                                   initWithTarget:_target selector:_action object:wrappedArgs] autorelease];
+    // wrap it in our operation so we can get a callback
     ServiceWrappedOperation *wrapped = [ServiceWrappedOperation wrappedOperation:op 
                                                           callbackTarget:self action:@selector(finishWork:)];
     [_queue addOperation:wrapped];

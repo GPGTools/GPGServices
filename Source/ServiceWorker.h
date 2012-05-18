@@ -1,5 +1,5 @@
 //
-//  GPGServOperation.h
+//  ServiceWorker.h
 //  GPGServices
 //
 //  Created by Chris Fraire on 5/17/12.
@@ -28,6 +28,8 @@
 
 - (void)setTarget:(id)target andAction:(SEL)action;
 
+// start an async invoke operation for target/action;
+// target/action will be passed a ServiceWrappedArgs instance
 - (void)start:(id)args;
 - (void)cancel;
 

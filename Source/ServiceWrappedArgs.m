@@ -1,5 +1,5 @@
 //
-//  ServiceWorkerArgs.m
+//  ServiceWrappedArgs.m
 //  GPGServices
 //
 //  Created by Chris Fraire on 5/18/12.
