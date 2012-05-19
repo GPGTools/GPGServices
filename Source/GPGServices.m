@@ -32,8 +32,14 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 - (void)displayOperationFailedNotificationWithTitleOnMain:(NSArray *)args;
 - (void)displaySignatureVerificationForSigOnMain:(GPGSignature*)sig;
 
-// expected count = 1; quote lastPathComponent
-- (NSString *)quoteOneFilesName:(NSArray *)files;
+// Pass in an array of files. 
+// singleFmt should include %@ for the file name (e.g., "Decrypting %@");
+// pluralFmt should include %i for the file count (e.g., "Decrypting %i files");
+//
+// (pluralFmt also used for zero count array);
+- (NSString *)describeOperationForFiles:(NSArray *)files 
+                          singleFileFmt:(NSString *)singleFmt
+                         pluralFilesFmt:(NSString *)pluralFmt;
 
 - (void)signFilesSync:(ServiceWrappedArgs *)wrappedArgs;
 - (void)decryptFilesSync:(ServiceWrappedArgs *)wrappedArgs;
@@ -531,9 +537,20 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 #pragma mark -
 #pragma mark File Stuff
 
-- (NSString *)quoteOneFilesName:(NSArray *)files {
-    return [NSString stringWithFormat:@"'%@'",
-            [[[files lastObject] lastPathComponent] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"]];
+- (NSString *)describeOperationForFiles:(NSArray *)files 
+                          singleFileFmt:(NSString *)singleFmt 
+                         pluralFilesFmt:(NSString *)pluralFmt 
+{
+    NSUInteger fcount = [files count];
+    if (fcount == 1) {
+        NSString *quotedName = [NSString stringWithFormat:@"'%@'",
+                                [[[files lastObject] lastPathComponent] 
+                                 stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"]];
+        return [NSString stringWithFormat:singleFmt, quotedName];
+    }
+    else {
+        return [NSString stringWithFormat:pluralFmt, fcount];
+    }
 }
 
 - (NSString*)normalizedAndUniquifiedPathFromPath:(NSString*)path {
@@ -660,10 +677,9 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 {
     ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(signFilesSync:)];
     worker.delegate = self;
-    worker.workerDescription = ([files count] == 1 
-                                ? [NSString stringWithFormat:@"Signing %@", [self quoteOneFilesName:files]]
-                                : [NSString stringWithFormat:@"Signing %i files", [files count]]);
-    
+    worker.workerDescription = [self describeOperationForFiles:files 
+                                                 singleFileFmt:@"Signing %@" 
+                                                pluralFilesFmt:@"Signing %i files"];
     [_inProgressCtlr addObjectToServiceWorkerArray:worker];
     [_inProgressCtlr showWindow:nil];
     [worker start:files];
@@ -679,20 +695,6 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
     // files, though autoreleased, is safe here even when called async 
     // because it's retained by ServiceWrappedArgs
     NSArray *files = wrappedArgs.arg1;
-
-    long double megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / kBytesInMB;
-    
-    if(megabytes > SIZE_WARNING_LEVEL_IN_MB) {
-        int ret = [[NSAlert alertWithMessageText:@"Large File(s)"
-                                   defaultButton:@"Continue"
-                                 alternateButton:@"Cancel"
-                                     otherButton:nil
-                       informativeTextWithFormat:@"Encryption may take a longer time.\nPress 'Cancel' to abort."] 
-                   runModalOnMain];
-        
-        if(ret == NSAlertAlternateReturn)
-            return;
-    }
 
     // check before starting an operation
     if (wrappedArgs.worker.amCanceling)
@@ -737,10 +739,9 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 {
     ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(encryptFilesSync:)];
     worker.delegate = self;
-    worker.workerDescription = ([files count] == 1 
-                                ? [NSString stringWithFormat:@"Encrypting %@", [self quoteOneFilesName:files]]
-                                : [NSString stringWithFormat:@"Encrypting %i files", [files count]]);
-    
+    worker.workerDescription = [self describeOperationForFiles:files 
+                                                 singleFileFmt:@"Encrypting %@" 
+                                                pluralFilesFmt:@"Encrypting %i files"];    
     [_inProgressCtlr addObjectToServiceWorkerArray:worker];
     [_inProgressCtlr showWindow:nil];
     [worker start:files];
@@ -855,18 +856,6 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
     GPGDebugLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
                                                               numberStyle:NSNumberFormatterDecimalStyle]);        
     
-    if(megabytes > SIZE_WARNING_LEVEL_IN_MB) {
-        int ret = [[NSAlert alertWithMessageText:@"Large File(s)"
-                                   defaultButton:@"Continue"
-                                 alternateButton:@"Cancel"
-                                     otherButton:nil
-                       informativeTextWithFormat:@"Encryption may take a longer time.\nPress 'Cancel' to abort."] 
-                   runModalOnMain];
-        
-        if(ret == NSAlertAlternateReturn)
-            return;
-    }
-    
     NSAssert(dataProvider != nil, @"dataProvider can't be nil");
     NSAssert(destination != nil, @"destination can't be nil");
     
@@ -921,10 +910,9 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 {
     ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(decryptFilesSync:)];
     worker.delegate = self;
-    worker.workerDescription = ([files count] == 1 
-                                ? [NSString stringWithFormat:@"Decrypting %@", [self quoteOneFilesName:files]]
-                                : [NSString stringWithFormat:@"Decrypting %i files", [files count]]);
-    
+    worker.workerDescription = [self describeOperationForFiles:files 
+                                                 singleFileFmt:@"Decrypting %@" 
+                                                pluralFilesFmt:@"Decrypting %i files"];    
     [_inProgressCtlr addObjectToServiceWorkerArray:worker];
     [_inProgressCtlr showWindow:nil];
     [worker start:files];
@@ -1066,10 +1054,9 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 {
     ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(verifyFilesSync:)];
     worker.delegate = self;
-    worker.workerDescription = ([files count] == 1 
-                                ? [NSString stringWithFormat:@"Verifying signature of %@", [self quoteOneFilesName:files]]
-                                : [NSString stringWithFormat:@"Verifying signatures of %i files", [files count]]);
-    
+    worker.workerDescription = [self describeOperationForFiles:files 
+                                                 singleFileFmt:@"Verifying signature of %@" 
+                                                pluralFilesFmt:@"Verifying signatures of %i files"];
     [_inProgressCtlr addObjectToServiceWorkerArray:worker];
     [_inProgressCtlr showWindow:nil];
     [worker start:files];
@@ -1205,9 +1192,9 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
     if ([GrowlApplicationBridge isGrowlRunning] != YES)
         return;
 
-    NSString *title = [NSString stringWithFormat:@"Verification for %@", 
-                       [self quoteOneFilesName:[NSArray arrayWithObject:file]]];
-    
+    NSString *title = [self describeOperationForFiles:[NSArray arrayWithObject:file] 
+                                        singleFileFmt:@"Verification for %@" 
+                                       pluralFilesFmt:@"Verification for %i files"];
     NSMutableString *summary = [NSMutableString string];
     if ([signatures count] > 0) {
         for (GPGSignature *gpgSig in signatures) {
@@ -1249,10 +1236,9 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 {
     ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(importFilesSync:)];
     worker.delegate = self;
-    worker.workerDescription = ([files count] == 1 
-                                ? [NSString stringWithFormat:@"Importing %@", [self quoteOneFilesName:files]]
-                                : [NSString stringWithFormat:@"Importing of %i files", [files count]]);
-    
+    worker.workerDescription = [self describeOperationForFiles:files 
+                                                 singleFileFmt:@"Importing %@" 
+                                                pluralFilesFmt:@"Importing %i files"];
     [_inProgressCtlr addObjectToServiceWorkerArray:worker];
     [_inProgressCtlr showWindow:nil];
     [worker start:files];
