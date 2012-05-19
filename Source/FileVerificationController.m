@@ -12,6 +12,12 @@
 
 #import "FileVerificationDataSource.h"
 
+@interface FileVerificationController ()
+
+- (void)runModalOnMain:(NSMutableArray *)resHolder;
+
+@end
+
 @implementation FileVerificationController
 
 @synthesize filesToVerify, verificationQueue;
@@ -44,120 +50,21 @@
 }
 
 - (NSInteger)runModal {
+    NSMutableArray *resHolder = [NSMutableArray arrayWithCapacity:1];
+    [self performSelectorOnMainThread:@selector(runModalOnMain:) withObject:resHolder waitUntilDone:YES];
+    return [[resHolder lastObject] integerValue];
+}
+
+- (void)runModalOnMain:(NSMutableArray *)resHolder {
     [NSApp activateIgnoringOtherApps:YES];
-	[self showWindow:self];
+	[self showWindow:nil];
 	NSInteger ret = [NSApp runModalForWindow:self.window];
 	[self.window close];
-	return ret;
+    [resHolder addObject:[NSNumber numberWithInteger:ret]];
 }
 
 - (IBAction)okClicked:(id)sender {
 	[NSApp stopModalWithCode:0];
-}
-
-- (void)startVerification:(void(^)(NSArray*))callback {
-    [self window]; //Load window to setup bindings
-    
-    [indicator startAnimation:self];
-    
-    for(NSString* serviceFile in self.filesToVerify) {
-
-        //Do the file stuff here to be able to check if file is already in verification
-        NSString* signatureFile = serviceFile;
-        NSString* signedFile = [self searchFileForSignatureFile:signatureFile];
-        if(signedFile == nil) {
-            NSString* tmp = [self searchSignatureFileForFile:signatureFile];
-            signedFile = signatureFile;
-            signatureFile = tmp;
-        }
-        
-        if(signatureFile != nil) {
-            if([filesInVerification containsObject:signatureFile]) {
-                continue;
-            } else {
-                //Probably a problem with restarting of validation when files are missing
-                [filesInVerification addObject:signatureFile];
-            }
-        }
-        
-        [verificationQueue addOperationWithBlock:^(void) {
-            NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-            NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
-            
-            NSException* firstException = nil;
-            NSException* secondException = nil;
-            
-            NSArray* sigs = nil;
-          
-            if([fmgr fileExistsAtPath:signedFile] && [fmgr fileExistsAtPath:signatureFile]) {
-                @try {
-                    GPGController* ctx = [GPGController gpgController];
-                    NSData* signatureFileData = [[[NSData alloc] initWithContentsOfFile:signatureFile] autorelease];
-                    NSData* signedFileData = [[[NSData alloc] initWithContentsOfFile:signedFile] autorelease];
-                    sigs = [ctx verifySignature:signatureFileData originalData:signedFileData];
-                } @catch (NSException *exception) {
-                    firstException = exception;
-                    sigs = nil;
-                }
-            }
-
-            //Try to verify the file itself without a detached sig
-            if(sigs == nil || sigs.count == 0) {
-                @try {
-                    GPGController* ctx = [GPGController gpgController];
-                    NSData* signedFileData = [[[NSData alloc] initWithContentsOfFile:serviceFile] autorelease];
-                    sigs = [ctx verifySignedData:signedFileData];
-                } @catch (NSException *exception) {
-                    secondException = exception;
-                    sigs = nil;
-                }
-            }
-
-            if(sigs != nil) {
-                if(sigs.count == 0) {
-                    id verificationResult = nil; //NSString or NSAttributedString
-                    verificationResult = @"Verification FAILED: No signatures found";
-                    
-                    NSColor* bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
-                    
-                    NSRange range = [verificationResult rangeOfString:@"FAILED"];
-                    verificationResult = [[NSMutableAttributedString alloc] 
-                                          initWithString:verificationResult];
-                    
-                    [verificationResult addAttribute:NSFontAttributeName 
-                                               value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
-                                               range:range];
-                    [verificationResult addAttribute:NSBackgroundColorAttributeName 
-                                               value:bgColor
-                                               range:range];
-                    
-                    NSDictionary* result = [NSDictionary dictionaryWithObjectsAndKeys:
-                                            [signedFile lastPathComponent], @"filename",
-                                            verificationResult, @"verificationResult", 
-                                            nil];
-                    
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
-                        [dataSource addResults:result];
-                    }];
-                } else if(sigs.count > 0) {
-                    for(GPGSignature* sig in sigs) {
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
-                            [dataSource addResultFromSig:sig forFile:signedFile];
-                        }];
-                    }
-                }         
-            } else {
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
-                    [dataSource addResults:[NSDictionary dictionaryWithObjectsAndKeys:
-                                            [signedFile lastPathComponent], @"filename",
-                                            @"No verifiable data found", @"verificationResult",
-                                            nil]]; 
-                }];
-            }
-            
-            [pool release];
-        }];
-    }
 }
 
 // Who invokes this and what does it do?
@@ -166,8 +73,10 @@
                         change:(NSDictionary *)change
                        context:(void *)context {    
     if([keyPath isEqualToString:@"operationCount"]) {
-        if([object operationCount] == 0) 
-            [indicator stopAnimation:self];
+        if([object operationCount] == 0) {
+            [indicator performSelectorOnMainThread:@selector(stopAnimation:) 
+                                        withObject:self waitUntilDone:NO];
+        }
     }
 }
 
@@ -179,7 +88,7 @@
 
 #pragma mark - Helper Methods
 
-- (NSString*)searchFileForSignatureFile:(NSString*)sigFile {
++ (NSString*)searchFileForSignatureFile:(NSString*)sigFile {
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
     
     NSString* file = [sigFile stringByDeletingPathExtension];
@@ -190,7 +99,7 @@
         return nil;
 }
 
-- (NSString*)searchSignatureFileForFile:(NSString*)sigFile {
++ (NSString*)searchSignatureFileForFile:(NSString*)sigFile {
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
     
     NSSet* exts = [NSSet setWithObjects:@".sig", @".asc", nil];

@@ -12,6 +12,13 @@
 
 #import "FileVerificationDataSource.h"
 
+@interface FileVerificationDataSource ()
+
+- (void)addResultsOnMain:(NSDictionary*)results;
+- (void)addResultFromSigOnMain:(NSArray *)args;
+
+@end
+
 @implementation FileVerificationDataSource
 
 @synthesize isActive, verificationResults;
@@ -30,12 +37,25 @@
 }
 
 - (void)addResults:(NSDictionary*)results {
+    [self performSelectorOnMainThread:@selector(addResultsOnMain:) withObject:results waitUntilDone:NO];
+}
+
+// called by addResults:
+- (void)addResultsOnMain:(NSDictionary*)results {
     [self willChangeValueForKey:@"verificationResults"];
     [verificationResults addObject:results];
     [self didChangeValueForKey:@"verificationResults"];
 }
 
 - (void)addResultFromSig:(GPGSignature*)sig forFile:(NSString*)file {
+    [self performSelectorOnMainThread:@selector(addResultFromSigOnMain:) 
+                           withObject:[NSArray arrayWithObjects:sig, file, nil] 
+                        waitUntilDone:NO];
+}
+
+- (void)addResultFromSigOnMain:(NSArray *)args {
+    GPGSignature *sig = [args objectAtIndex:0];
+    NSString *file = [args objectAtIndex:1];
     NSDictionary* result = nil;
     
     id verificationResult = nil;
