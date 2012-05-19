@@ -17,10 +17,11 @@
     IBOutlet NSProgressIndicator* indicator;
     IBOutlet FileVerificationDataSource* dataSource;
     
-    BOOL isActive;
+    BOOL _isActive;
 }
 
-@property(assign) BOOL isActive;
+// thread-safe
+@property (assign, nonatomic) BOOL isActive;
 
 // thread-safe
 - (void)showWindow:(id)sender;

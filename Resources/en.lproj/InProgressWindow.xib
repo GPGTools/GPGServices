@@ -216,7 +216,7 @@
 					<object class="NSButton" id="152201074">
 						<reference key="NSNextResponder" ref="292058056"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{434, 8}, {26, 32}}</string>
+						<string key="NSFrame">{{434, 13}, {26, 20}}</string>
 						<reference key="NSSuperview" ref="292058056"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -233,13 +233,12 @@
 							</object>
 							<string key="NSCellIdentifier">_NS:9</string>
 							<reference key="NSControlView" ref="152201074"/>
-							<int key="NSButtonFlags">-933478145</int>
+							<int key="NSButtonFlags">106709247</int>
 							<int key="NSButtonFlags2">34</int>
-							<object class="NSCustomResource" key="NSNormalImage" id="499478659">
+							<object class="NSCustomResource" key="NSNormalImage">
 								<string key="NSClassName">NSImage</string>
 								<string key="NSResourceName">NSStopProgressTemplate</string>
 							</object>
-							<reference key="NSAlternateImage" ref="499478659"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
 							<int key="NSPeriodicDelay">400</int>

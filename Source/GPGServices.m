@@ -48,6 +48,10 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 - (void)decryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs; 
 - (void)verifyFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
 - (void)importFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
+
+// If growl is active, produce one for a file's signatures
+- (void)growlVerificationResultsFor:(NSString *)file signatures:(NSArray *)signatures;
+
 @end
 
 @implementation GPGServices
@@ -980,14 +984,21 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
                 if (ctx.error) 
                     @throw ctx.error;
 
-                if(ctx.signatures && ctx.signatures.count > 0) {
+                //
+                // Show any signatures encountered
+                //
+                if ([GrowlApplicationBridge isGrowlRunning]) {
+                    if ([ctx.signatures count] > 0)
+                        [self growlVerificationResultsFor:file signatures:ctx.signatures];
+                }
+                else if(ctx.signatures && ctx.signatures.count > 0) {
                     GPGDebugLog(@"found signatures: %@", ctx.signatures);
 
                     if(dummyController == nil) {
                         dummyController = [[DummyVerificationController alloc]
                                            initWithWindowNibName:@"VerificationResultsWindow"];
                         [dummyController showWindow:self]; // now thread-safe
-                        dummyController.isActive = YES;
+                        dummyController.isActive = YES; // now thread-safe
                     }
                     
                     for(GPGSignature* sig in ctx.signatures) {
@@ -1075,14 +1086,140 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
     // because it's retained by NSOperation that is wrapping the process
     NSArray *files = wrappedArgs.arg1;
 
-    // all thread-safe
-    FileVerificationController* fvc = [[FileVerificationController alloc] init];
-    fvc.filesToVerify = files;
-    [fvc startVerification:nil];
-    [fvc runModal];
-    [fvc release];
+    NSMutableSet *filesInVerification = [NSMutableSet set];
+    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+
+    // has thread-safe methods as used here
+    DummyVerificationController* fvc = nil;
+    if ([GrowlApplicationBridge isGrowlRunning] == NO) {
+        fvc = [[[DummyVerificationController alloc]
+                initWithWindowNibName:@"VerificationResultsWindow"] autorelease];
+        [fvc showWindow:self]; // now thread-safe
+        fvc.isActive = YES; // now thread-safe
+    }
+    
+    for (NSString* serviceFile in files) {
+        // check before operation
+        if (wrappedArgs.worker.amCanceling)
+            return;
+        
+        //Do the file stuff here to be able to check if file is already in verification
+        NSString* signatureFile = serviceFile;
+        NSString* signedFile = [FileVerificationController searchFileForSignatureFile:signatureFile];
+        if(signedFile == nil) {
+            NSString* tmp = [FileVerificationController searchSignatureFileForFile:signatureFile];
+            signedFile = signatureFile;
+            signatureFile = tmp;
+        }
+        
+        if(signatureFile != nil) {
+            if([filesInVerification containsObject:signatureFile]) 
+                continue;
+
+            //Probably a problem with restarting of validation when files are missing
+            [filesInVerification addObject:signatureFile];
+        }
+        
+        NSException* firstException = nil;
+        NSException* secondException = nil;
+        
+        NSArray* sigs = nil;
+        
+        if([fmgr fileExistsAtPath:signedFile] && [fmgr fileExistsAtPath:signatureFile]) {
+            @try {
+                GPGController* ctx = [GPGController gpgController];
+                NSData* signatureFileData = [[[NSData alloc] initWithContentsOfFile:signatureFile] autorelease];
+                NSData* signedFileData = [[[NSData alloc] initWithContentsOfFile:signedFile] autorelease];
+                sigs = [ctx verifySignature:signatureFileData originalData:signedFileData];
+            } @catch (NSException *exception) {
+                firstException = exception;
+                sigs = nil;
+            }
+
+            // check after operation
+            if (wrappedArgs.worker.amCanceling)
+                return;
+        }
+        
+        //Try to verify the file itself without a detached sig
+        if(sigs == nil || sigs.count == 0) {
+            @try {
+                GPGController* ctx = [GPGController gpgController];
+                NSData* signedFileData = [[[NSData alloc] initWithContentsOfFile:serviceFile] autorelease];
+                sigs = [ctx verifySignedData:signedFileData];
+
+            } @catch (NSException *exception) {
+                secondException = exception;
+                sigs = nil;
+            }
+
+            // check after operation
+            if (wrappedArgs.worker.amCanceling)
+                return;
+        }
+
+        if ([GrowlApplicationBridge isGrowlRunning]) {
+            [self growlVerificationResultsFor:serviceFile signatures:sigs];
+        }
+        else if(sigs != nil) {
+            if(sigs.count == 0) {
+                id verificationResult = nil; //NSString or NSAttributedString
+                verificationResult = @"Verification FAILED: No signatures found";
+                
+                NSColor* bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
+                
+                NSRange range = [verificationResult rangeOfString:@"FAILED"];
+                verificationResult = [[NSMutableAttributedString alloc] 
+                                      initWithString:verificationResult];
+                
+                [verificationResult addAttribute:NSFontAttributeName 
+                                           value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
+                                           range:range];
+                [verificationResult addAttribute:NSBackgroundColorAttributeName 
+                                           value:bgColor
+                                           range:range];
+                
+                NSDictionary* result = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [signedFile lastPathComponent], @"filename",
+                                        verificationResult, @"verificationResult", 
+                                        nil];
+                [fvc addResults:result];
+            } else if(sigs.count > 0) {
+                for(GPGSignature* sig in sigs) {
+                    [fvc addResultFromSig:sig forFile:signedFile];
+                }
+            }
+        } else {
+            [fvc addResults:[NSDictionary dictionaryWithObjectsAndKeys:
+                             [signedFile lastPathComponent], @"filename",
+                             @"No verifiable data found", @"verificationResult",
+                             nil]];
+        }
+    }
+
+    [fvc runModal]; // thread-safe
 }
 
+- (void)growlVerificationResultsFor:(NSString *)file signatures:(NSArray *)signatures 
+{
+    if ([GrowlApplicationBridge isGrowlRunning] != YES)
+        return;
+
+    NSString *title = [NSString stringWithFormat:@"Verification for %@", 
+                       [self quoteOneFilesName:[NSArray arrayWithObject:file]]];
+    
+    NSMutableString *summary = [NSMutableString string];
+    if ([signatures count] > 0) {
+        for (GPGSignature *gpgSig in signatures) {
+            [summary appendFormat:@"%@\n", [gpgSig humanReadableDescription]];
+        }
+    }
+    else {
+        [summary appendString:@"No signatures found"];
+    }
+    
+    [self displayOperationFinishedNotificationWithTitle:title message:summary];
+}
 
 //Skip fixing this for now. We need better handling of imports in libmacgpg.
 /*
@@ -1468,7 +1605,7 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         [GrowlApplicationBridge notifyWithTitle:title
                                     description:body
                                notificationName:gpgGrowlOperationSucceededName
-                                       iconData:[NSData data]
+                                       iconData:nil
                                        priority:0
                                        isSticky:NO
                                    clickContext:NULL];
@@ -1491,7 +1628,7 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         [GrowlApplicationBridge notifyWithTitle:title
                                     description:body
                                notificationName:gpgGrowlOperationFailedName
-                                       iconData:[NSData data]
+                                       iconData:nil
                                        priority:0
                                        isSticky:NO
                                    clickContext:NULL];

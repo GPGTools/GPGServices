@@ -25,14 +25,13 @@
 @property(retain) NSArray* filesToVerify;
 @property(readonly) NSOperationQueue* verificationQueue;
 
+// threadSafe
 - (NSInteger)runModal;
+
 - (IBAction)okClicked:(id)sender;
 
-//Callback contains all successfully checked files
-- (void)startVerification:(void(^)(NSArray*))callback;
-
 #pragma mark - Helper Methods
-- (NSString*)searchFileForSignatureFile:(NSString*)file;
-- (NSString*)searchSignatureFileForFile:(NSString*)sigFile;
++ (NSString*)searchFileForSignatureFile:(NSString*)file;
++ (NSString*)searchSignatureFileForFile:(NSString*)sigFile;
 
 @end

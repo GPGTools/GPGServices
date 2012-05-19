@@ -11,6 +11,7 @@
 
 @interface DummyVerificationController (ThreadSafety)
 
+- (void)setIsActiveOnMain:(NSNumber *)isActive;
 - (void)showWindowOnMain:(id)sender;
 - (void)addResultsOnMain:(NSDictionary *)results;
 - (void)addResultFromSigOnMain:(NSArray *)args;
@@ -20,12 +21,24 @@
 
 @implementation DummyVerificationController
 
-@synthesize isActive;
+@synthesize isActive = _isActive;
 
 - (id)initWithWindowNibName:(NSString *)windowNibName {
     self = [super initWithWindowNibName:windowNibName];
         
     return self;
+}
+
+- (void)setIsActive:(BOOL)isActive {
+    [self performSelectorOnMainThread:@selector(setIsActiveOnMain:) 
+                           withObject:[NSNumber numberWithBool:isActive] waitUntilDone:NO];
+}
+
+// called by setIsActive
+- (void)setIsActiveOnMain:(NSNumber *)isActive {
+    [self willChangeValueForKey:@"isActive"];
+    _isActive = [isActive boolValue];
+    [self didChangeValueForKey:@"isActive"];
 }
 
 - (void)windowDidLoad {
