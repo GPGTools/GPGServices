@@ -10,6 +10,7 @@
 //#import <MacGPGME/MacGPGME.h>
 #import "Libmacgpg/Libmacgpg.h"
 #import <Growl/Growl.h>
+#import "ServiceWorkerDelegate.h"
 
 typedef BOOL(^KeyValidatorT)(GPGKey* key);
 
@@ -37,7 +38,9 @@ typedef enum {
 #define gpgGrowlOperationSucceededName (@"Operation Succeeded")
 #define gpgGrowlOperationFailedName (@"Operation Failed")
 
-@interface GPGServices : NSObject <GrowlApplicationBridgeDelegate>
+@class InProgressWindowController;
+
+@interface GPGServices : NSObject <NSApplicationDelegate, ServiceWorkerDelegate, GrowlApplicationBridgeDelegate>
 {
 	IBOutlet NSWindow *recipientWindow;
 	
@@ -45,6 +48,8 @@ typedef enum {
 	IBOutlet NSSecureTextField *passphraseText;
 	
 	NSTimer *currentTerminateTimer;
+
+    InProgressWindowController *_inProgressCtlr;
 }
 
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification;

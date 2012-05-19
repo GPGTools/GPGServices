@@ -9,6 +9,12 @@
 #import "KeyChooserWindowController.h"
 #import "GPGServices.h"
 
+@interface KeyChooserWindowController ()
+
+- (void)runModalOnMain:(NSMutableArray *)resHolder;
+
+@end
+
 @implementation KeyChooserWindowController
 
 @synthesize dataSource;
@@ -58,11 +64,20 @@
 }
 
 - (NSInteger)runModal {
+    NSMutableArray *resHolder = [NSMutableArray arrayWithCapacity:1];
+    [self performSelectorOnMainThread:@selector(runModalOnMain:) 
+                           withObject:resHolder 
+                        waitUntilDone:YES];
+    return [[resHolder lastObject] integerValue];
+}
+
+// called by runModal
+- (void)runModalOnMain:(NSMutableArray *)resHolder {
     [NSApp activateIgnoringOtherApps:YES];
     [self showWindow:self];
 	NSInteger ret = [NSApp runModalForWindow:self.window];
 	[self.window close];
-	return ret;
+    [resHolder addObject:[NSNumber numberWithInteger:ret]];
 }
 
 /*
