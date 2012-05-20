@@ -25,6 +25,7 @@
 		30B2057914D56F2A00AE9583 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
 		45C2B9E31565AEC300B3571A /* WorkerProgressViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */; };
 		45C2B9EA1565DD6600B3571A /* NSAlert+ThreadSafety.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2B9E91565DD6600B3571A /* NSAlert+ThreadSafety.m */; };
+		45CC89011569365300928F5B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45CC88FF1569365300928F5B /* Localizable.strings */; };
 		45D73FE01503C266007E0838 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45D73FDF1503C266007E0838 /* ServicesMenu.strings */; };
 		45DD3DD7156571B400C9A4C1 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45DD3DD5156571B400C9A4C1 /* InProgressWindow.xib */; };
 		45DD3DDA1565729000C9A4C1 /* InProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DD3DD91565729000C9A4C1 /* InProgressWindowController.m */; };
@@ -151,6 +152,7 @@
 		45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WorkerProgressViewItem.m; path = Source/WorkerProgressViewItem.m; sourceTree = "<group>"; };
 		45C2B9E81565DD6600B3571A /* NSAlert+ThreadSafety.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAlert+ThreadSafety.h"; path = "Source/NSAlert+ThreadSafety.h"; sourceTree = "<group>"; };
 		45C2B9E91565DD6600B3571A /* NSAlert+ThreadSafety.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAlert+ThreadSafety.m"; path = "Source/NSAlert+ThreadSafety.m"; sourceTree = "<group>"; };
+		45CC89001569365300928F5B /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45D73FDF1503C266007E0838 /* ServicesMenu.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = ServicesMenu.strings; sourceTree = "<group>"; };
 		45DD3DD6156571B400C9A4C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InProgressWindow.xib; sourceTree = "<group>"; };
 		45DD3DD81565729000C9A4C1 /* InProgressWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InProgressWindowController.h; path = Source/InProgressWindowController.h; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 		30B2057A14D56F3500AE9583 /* Strings */ = {
 			isa = PBXGroup;
 			children = (
+				45CC88FF1569365300928F5B /* Localizable.strings */,
 				45D73FDF1503C266007E0838 /* ServicesMenu.strings */,
 				3058B7D414D56C6A00AA8881 /* InfoPlist.strings */,
 				30B2054114D56EBF00AE9583 /* MainMenu.xib.strings */,
@@ -515,6 +518,7 @@
 				30B2057914D56F2A00AE9583 /* sig.icns in Resources */,
 				45D73FE01503C266007E0838 /* ServicesMenu.strings in Resources */,
 				45DD3DD7156571B400C9A4C1 /* InProgressWindow.xib in Resources */,
+				45CC89011569365300928F5B /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,6 +671,14 @@
 				3008440714D5720E0021044B /* de */,
 			);
 			name = VerificationResultsWindow.xib.strings;
+			sourceTree = "<group>";
+		};
+		45CC88FF1569365300928F5B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				45CC89001569365300928F5B /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		45DD3DD5156571B400C9A4C1 /* InProgressWindow.xib */ = {
