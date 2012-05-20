@@ -1,0 +1,189 @@
+﻿/* arg:path */
+"%@ — Cannot import directory" = "%@ — Cannot import directory";
+
+/* Filename for Archive.zip.gpg */
+"Archive" = "Archive";
+
+/* arg:userID */
+"Bad signature by %@" = "Bad signature by %@";
+
+/* for saving a file */
+"Choose Destination" = "Choose Destination";
+
+/* arg:shortKeyID */
+"Could not export key %@" = "Could not export key %@";
+
+/* arg1:successCount arg2:totalCount */
+"Decrypted %1$u of %2$u files" = "Decrypted %1$u of %2$u files";
+
+/* arg:filename */
+"Decrypted %@" = "Decrypted %@";
+
+/* arg:filename */
+"Decrypting %@" = "Decrypting %@";
+
+/* arg:count */
+"Decrypting %u files" = "Decrypting %u files";
+
+/* No comment provided by engineer. */
+"Decryption failed" = "Decryption failed";
+
+/* No comment provided by engineer. */
+"Decryption finished" = "Decryption finished";
+
+/* No comment provided by engineer. */
+"Decryption finished (partially)" = "Decryption finished (partially)";
+
+/* arg:filename */
+"Encrypting %@" = "Encrypting %@";
+
+/* arg:count */
+"Encrypting %u files" = "Encrypting %u files";
+
+/* No comment provided by engineer. */
+"Encryption canceled" = "Encryption canceled";
+
+/* No comment provided by engineer. */
+"Encryption failed" = "Encryption failed";
+
+/* No comment provided by engineer. */
+"Encryption finished" = "Encryption finished";
+
+/* No comment provided by engineer. */
+"Export failed" = "Export failed";
+
+/* Matched in \"Verification FAILED:\" */
+"FAILED" = "FAILED";
+
+/* arg:filename */
+"Failed decrypting %@" = "Failed decrypting %@";
+
+/* arg:filename */
+"Failed importing %@" = "Failed importing %@";
+
+/* arg:filename */
+"Failed signing %@" = "Failed signing %@";
+
+/* No comment provided by engineer. */
+"File doesn't exist" = "File doesn't exist";
+
+/* arg1:validity arg2:userID */
+"Good signature (%@ trust):\n\"%@\"" = "Good signature (%1$@ trust):\n\"%2$@\"";
+
+/* Pasteboard could not supply the string in an acceptible format. */
+"GPGServices did not get usable data from the pasteboard." = "GPGServices did not get usable data from the pasteboard.";
+
+/* No comment provided by engineer. */
+"Import failed" = "Import failed";
+
+/* No comment provided by engineer. */
+"Import finished" = "Import finished";
+
+/* No comment provided by engineer. */
+"Import finished (partially)" = "Import finished (partially)";
+
+/* No comment provided by engineer. */
+"Import result" = "Import result";
+
+/* No comment provided by engineer. */
+"Import result:" = "Import result:";
+
+/* arg1:successCount arg2:totalCount */
+"Imported %1$u of %2$u files" = "Imported %1$u of %2$u files";
+
+/* arg:filename */
+"Imported %@" = "Imported %@";
+
+/* arg:filename */
+"Importing %@" = "Importing %@";
+
+/* arg:count */
+"Importing %u files" = "Importing %u files";
+
+/* No comment provided by engineer. */
+"No encryptable text was found within the selection" = "No encryptable text was found within the selection";
+
+/* No comment provided by engineer. */
+"No private key selected for signing" = "No private key selected for signing";
+
+/* No comment provided by engineer. */
+"No private key selected to add to recipients" = "No private key selected to add to recipients";
+
+/* No comment provided by engineer. */
+"No signable text was found within the selection" = "No signable text was found within the selection";
+
+/* No comment provided by engineer. */
+"No signatures found" = "No signatures found";
+
+/* No comment provided by engineer. */
+"No signatures found within the selection" = "No signatures found within the selection";
+
+/* No comment provided by engineer. */
+"No valid recipients found" = "No valid recipients found";
+
+/* No comment provided by engineer. */
+"No verifiable data found" = "No verifiable data found";
+
+/* No comment provided by engineer. */
+"No verifiable text was found within the selection" = "No verifiable text was found within the selection";
+
+/* No comment provided by engineer. */
+"Please try again" = "Please try again";
+
+/* arg1:successCount; arg2:totalCount */
+"Signed %1$u of %2$u files" = "Signed %1$u of %2$u files";
+
+/* arg:filename */
+"Signed %@" = "Signed %@";
+
+/* arg:filename */
+"Signing %@" = "Signing %@";
+
+/* arg:count */
+"Signing %u files" = "Signing %u files";
+
+/* No comment provided by engineer. */
+"Signing failed" = "Signing failed";
+
+/* No comment provided by engineer. */
+"Signing finished" = "Signing finished";
+
+/* No comment provided by engineer. */
+"Signing finished (partially)" = "Signing finished (partially)";
+
+/* No comment provided by engineer. */
+"The default secret key is unusable" = "The default secret key is unusable";
+
+/* No comment provided by engineer. */
+"The passphrase is incorrect" = "The passphrase is incorrect";
+
+/* No comment provided by engineer. */
+"Unexpected decrypt error" = "Unexpected decrypt error";
+
+/* arg:GPGSignature status */
+"Unexpected GPG signature status %i" = "Unexpected GPG signature status %i";
+
+/* No comment provided by engineer. */
+"Unexpected import error" = "Unexpected import error";
+
+/* No comment provided by engineer. */
+"Verification failed" = "Verification failed";
+
+/* No comment provided by engineer. */
+"Verification FAILED: No signatures found" = "Verification FAILED: No signatures found";
+
+/* arg:filename */
+"Verification for %@" = "Verification for %@";
+
+/* arg:count */
+"Verification for %u files" = "Verification for %u files";
+
+/* No comment provided by engineer. */
+"Verification successful" = "Verification successful";
+
+/* arg:filename */
+"Verifying signature of %@" = "Verifying signature of %@";
+
+/* arg:count */
+"Verifying signatures of %u files" = "Verifying signatures of %u files";
+
