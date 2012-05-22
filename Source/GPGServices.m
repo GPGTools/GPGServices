@@ -715,6 +715,7 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 
         if ([output length]) {
             [output close];
+            [tempFile closeFile];
             
             NSString* sigFile = [file stringByAppendingPathExtension:@"sig"];
             sigFile = [self normalizedAndUniquifiedPathFromPath:sigFile];
@@ -997,6 +998,7 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
     GPGDebugLog(@"destination: %@", destination);
 
     [output close];
+    [tempFile closeFile];
     error = nil;
     [[NSFileManager defaultManager] moveItemAtPath:tempFile.fileName toPath:destination error:&error];
     if (error) {
@@ -1083,6 +1085,7 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
                 
                 if ([output length]) {
                     [output close];
+                    [tempFile closeFile];
 
                     error = nil;
                     NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];

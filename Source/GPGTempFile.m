@@ -8,9 +8,12 @@
 
 #import "GPGTempFile.h"
 
+static const int kInvalidDescriptor = -1;
+
 @implementation GPGTempFile
 
 @synthesize fileName = _filename;
+@synthesize fileDescriptor = _fd;
 @synthesize shouldDeleteFileOnDealloc = _shouldDeleteOnDealloc;
 
 - (void)dealloc 
@@ -43,11 +46,11 @@
             const char *utfSuffix = [suffix UTF8String];
             utfSuffixLength = strlen(utfSuffix);
         }
-        
-        int rc = mkstemps(utfTemplate, utfSuffixLength);
-        if (rc == -1) {
+
+        _fd = mkstemps(utfTemplate, utfSuffixLength);
+        if (_fd == kInvalidDescriptor) {
             if (error)
-                *error = [NSError errorWithDomain:@"libc" code:rc userInfo:nil];
+                *error = [NSError errorWithDomain:@"libc" code:errno userInfo:nil];
             _didDeleteFile = YES; // treat as already gone
         }
         else {
@@ -62,10 +65,21 @@
 
 - (void)deleteFile 
 {
+    [self closeFile];
+
     NSError *error = nil;
     [[NSFileManager defaultManager] removeItemAtPath:_filename error:&error];
     if (error == nil)
         _didDeleteFile = YES;
+}
+
+- (void)closeFile 
+{
+    if (_fd != kInvalidDescriptor)
+    {
+        close(_fd);
+        _fd = kInvalidDescriptor;
+    }    
 }
 
 @end

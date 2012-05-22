@@ -10,6 +10,7 @@
 
 @interface GPGTempFile : NSObject {
     NSString *_filename;
+    int _fd;
     BOOL _shouldDeleteOnDealloc;
     BOOL _didDeleteFile;
 }
@@ -18,11 +19,17 @@
 + (id)tempFileForTemplate:(NSString *)template suffixLen:(NSUInteger)suffixLength error:(NSError **)error;
 - (id)initForTemplate:(NSString *)template suffixLen:(NSUInteger)suffixLength error:(NSError **)error;
 
+// if successfully initialized, will be a non-nil file name
 @property (readonly) NSString *fileName;
+
+// if successfully initialized, will be a valid, open descriptor; otherwise -1;
+// after closeFile or deleteFile is called, will be -1
+@property (readonly) int fileDescriptor;
 
 // default is YES
 @property (assign) BOOL shouldDeleteFileOnDealloc;
 
 - (void)deleteFile;
+- (void)closeFile;
 
 @end
