@@ -507,7 +507,10 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
             GPGSignature* sig = [sigs objectAtIndex:0];
             GPGErrorCode status = sig.status;
             GPGDebugLog(@"sig.status: %i", status);
-            if([sig status] == GPGErrorNoError) {
+            if ([GrowlApplicationBridge isGrowlRunning]) {
+                [self growlVerificationResultsFor:NSLocalizedString(@"Selection", nil) signatures:sigs];
+            }
+            else if([sig status] == GPGErrorNoError) {
                 [self displaySignatureVerificationForSig:sig];
             } else {
                 NSString* errorMessage = nil;

@@ -136,6 +136,9 @@
 /* No comment provided by engineer. */
 "Please try again" = "Please try again";
 
+/* No comment provided by engineer. */
+"Selection" = "Selection";
+
 /* arg1:successCount; arg2:totalCount */
 "Signed %1$u of %2$u files" = "Signed %1$u of %2$u files";
 
