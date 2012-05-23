@@ -16,7 +16,10 @@
 #import "ServiceWorker.h"
 #import "ServiceWorkerDelegate.h"
 #import "ServiceWrappedArgs.h"
+#import "GPGTempFile.h"
 
+#import "Libmacgpg/GPGFileStream.h"
+#import "Libmacgpg/GPGMemoryStream.h"
 #import "ZipOperation.h"
 #import "ZipKit/ZKArchive.h"
 #import "NSPredicate+negate.h"
@@ -25,6 +28,8 @@
 
 #define SIZE_WARNING_LEVEL_IN_MB 10
 static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
+static NSString * const tempTemplate = @"_gpg(XXX).tmp";
+static NSUInteger const suffixLen = 5;
 
 @interface GPGServices ()
 - (void)removeWorker:(id)worker;
@@ -498,7 +503,10 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
             GPGSignature* sig = [sigs objectAtIndex:0];
             GPGErrorCode status = sig.status;
             GPGDebugLog(@"sig.status: %i", status);
-            if([sig status] == GPGErrorNoError) {
+            if ([GrowlApplicationBridge isGrowlRunning]) {
+                [self growlVerificationResultsFor:NSLocalizedString(@"Selection", nil) signatures:sigs];
+            }
+            else if([sig status] == GPGErrorNoError) {
                 [self displaySignatureVerificationForSig:sig];
             } else {
                 NSString* errorMessage = nil;
@@ -659,7 +667,7 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         for(GPGKey* k in keys)
             [ctx addSignerKey:[k description]];
 
-        NSData* dataToSign = nil;
+        GPGStream* dataToSign = nil;
 
         if([[self isDirectoryPredicate] evaluateWithObject:file]) {
             ZipOperation* zipOperation = [[[ZipOperation alloc] init] autorelease];
@@ -671,21 +679,55 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
             if([zipOperation.zipData writeToFile:file atomically:YES] == NO)
                 return nil;
             
-            dataToSign = [[[NSData alloc] initWithContentsOfFile:file] autorelease];
+            dataToSign = [GPGFileStream fileStreamForReadingAtPath:file];
         } else {
-            dataToSign = [[[NSData alloc] initWithContentsOfFile:file] autorelease];
+            dataToSign = [GPGFileStream fileStreamForReadingAtPath:file];
         }
 
-        NSData* signData = [ctx processData:dataToSign withEncryptSignMode:GPGDetachedSign recipients:nil hiddenRecipients:nil];
+        if (!dataToSign) {
+            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Could not read file", nil)
+                                                      message:file];
+            return nil;
+        }
+        
+        // write to a temporary location in the target directory
+        NSError *error = nil;
+        GPGTempFile *tempFile = [GPGTempFile tempFileForTemplate:
+                                 [file stringByAppendingString:tempTemplate]
+                                                       suffixLen:suffixLen error:&error];
+        if (error) {
+            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Could not write to directory", nil)
+                                                      message:[file stringByDeletingLastPathComponent]];
+            return nil;
+        }
+        
+        GPGFileStream *output = [GPGFileStream fileStreamForWritingAtPath:tempFile.fileName];
+        [ctx processTo:output data:dataToSign withEncryptSignMode:GPGDetachedSign recipients:nil hiddenRecipients:nil];
 
         if (ctx.error) 
 			@throw ctx.error;
 
-        NSString* sigFile = [file stringByAppendingPathExtension:@"sig"];
-        sigFile = [self normalizedAndUniquifiedPathFromPath:sigFile];
-        [signData writeToFile:sigFile atomically:YES];
-        
-        return sigFile;
+        if ([output length]) {
+            [output close];
+            [tempFile closeFile];
+            
+            NSString* sigFile = [file stringByAppendingPathExtension:@"sig"];
+            sigFile = [self normalizedAndUniquifiedPathFromPath:sigFile];
+            
+            error = nil;
+            [[NSFileManager defaultManager] moveItemAtPath:tempFile.fileName toPath:sigFile error:&error];
+            if(!error) {
+                tempFile.shouldDeleteFileOnDealloc = NO;
+                return sigFile;
+            }
+
+            NSLog(@"error while writing to output: %@", error);
+            [tempFile deleteFile];
+        }
+        else {
+            [output close];
+            [tempFile deleteFile];
+        }
     } @catch (GPGException* e) {
         if([GrowlApplicationBridge isGrowlRunning]) {//This is in a loop, so only display Growl...
             NSString *msg = [NSString stringWithFormat:@"%@\n\n%@", [file lastPathComponent], e];
@@ -840,7 +882,7 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
     
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
     
-    typedef NSData*(^DataProvider)();
+    typedef GPGStream*(^DataProvider)();
     DataProvider dataProvider = nil;
     
     if(files.count == 1) {
@@ -862,14 +904,14 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
                 operation.delegate = self;
                 [operation start];
                 
-                return operation.zipData;
+                return [GPGMemoryStream memoryStreamForReading:operation.zipData];
             };
         } else {
             NSNumber* fileSize = [self sizeOfFiles:[NSArray arrayWithObject:file]];
             megabytes = [fileSize unsignedLongLongValue] / kBytesInMB;
             destination = [file stringByAppendingFormat:@".%@", fileExtension];
             dataProvider = ^{
-                return (NSData*)[NSData dataWithContentsOfFile:file];
+                return [GPGFileStream fileStreamForReadingAtPath:file];
             };
         }  
     } else if(files.count > 1) {
@@ -883,14 +925,10 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
             operation.delegate = self;
             [operation start];
             
-            return operation.zipData;
+            return [GPGMemoryStream memoryStreamForReading:operation.zipData];
         };
     }
     
-    //Check if directory is writable and append i+1 if file already exists at destination
-    destination = [self normalizedAndUniquifiedPathFromPath:destination];
-    
-    GPGDebugLog(@"destination: %@", destination);
     GPGDebugLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
                                                               numberStyle:NSNumberFormatterDecimalStyle]);        
     
@@ -904,18 +942,31 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
     GPGController* ctx = [GPGController gpgController];
     // Only use armor for single files. otherwise it doesn't make much sense.
     ctx.useArmor = useASCII && [destination rangeOfString:@".asc"].location != NSNotFound;
-    NSData* gpgData = nil;
+    GPGStream* gpgData = nil;
     if(dataProvider != nil)
-        gpgData = [[[NSData alloc] initWithData:dataProvider()] autorelease];
+        gpgData = dataProvider();
 
-    NSData* encrypted = nil;
+    // write to a temporary location in the target directory
+    NSError *error = nil;
+    GPGTempFile *tempFile = [GPGTempFile tempFileForTemplate:
+                             [destination stringByAppendingString:tempTemplate]
+                                                   suffixLen:suffixLen error:&error];
+    if (error) {
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Could not write to directory", nil)
+                                                  message:[destination stringByDeletingLastPathComponent]];
+        return;
+    }
+
+    GPGFileStream *output = [GPGFileStream fileStreamForWritingAtPath:tempFile.fileName];
+    
     if(mode == GPGEncryptSign && privateKey != nil)
         [ctx addSignerKey:[privateKey description]];
     @try{
-        encrypted = [ctx processData:gpgData 
-                          withEncryptSignMode:mode
-                                   recipients:validRecipients
-                             hiddenRecipients:nil];
+        [ctx processTo:output 
+                  data:gpgData
+   withEncryptSignMode:mode
+            recipients:validRecipients
+      hiddenRecipients:nil];
 
         // check after a lengthy operation
         if (wrappedArgs.worker.amCanceling)
@@ -934,13 +985,23 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         return;
     }
 
-    if(encrypted == nil) {
+    //Check if directory is writable and append i+1 if file already exists at destination
+    destination = [self normalizedAndUniquifiedPathFromPath:destination];    
+    GPGDebugLog(@"destination: %@", destination);
+
+    [output close];
+    [tempFile closeFile];
+    error = nil;
+    [[NSFileManager defaultManager] moveItemAtPath:tempFile.fileName toPath:destination error:&error];
+    if (error) {
+        [tempFile deleteFile];
         // We should probably show the file from the exception too.
         [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
                         message:[destination lastPathComponent]];
         return;
     }
-    [encrypted writeToFile:destination atomically:YES];
+
+    tempFile.shouldDeleteFileOnDealloc = NO;
     [self displayOperationFinishedNotificationWithTitle:NSLocalizedString(@"Encryption finished", nil) 
                                                 message:[destination lastPathComponent]];
 }
@@ -990,23 +1051,47 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         @try {
             if([fmgr fileExistsAtPath:file isDirectory:&isDirectory] &&
                isDirectory == NO) {                
-                NSData* inputData = [[[NSData alloc] initWithContentsOfFile:file] autorelease];
-                GPGDebugLog(@"inputData.size: %lu", [inputData length]);
-                
-                NSData* outputData = [ctx decryptData:inputData];
+                GPGFileStream *input = [GPGFileStream fileStreamForReadingAtPath:file];
+                GPGDebugLog(@"inputData.size: %llu", [input length]);
+
+                // write to a temporary location in the target directory
+                NSError *error = nil;
+                GPGTempFile *tempFile = [GPGTempFile tempFileForTemplate:
+                                         [file stringByAppendingString:tempTemplate]
+                                                               suffixLen:suffixLen error:&error];
+                if (error) {
+                    [self displayOperationFailedNotificationWithTitle:
+                     NSLocalizedString(@"Could not write to directory", nil)
+                                                              message:[file stringByDeletingLastPathComponent]];
+                    return;
+                }
+
+                GPGFileStream *output = [GPGFileStream fileStreamForWritingAtPath:tempFile.fileName];
+                [ctx decryptTo:output data:input];
 
                 // check again after a potentially long operation
                 if (wrappedArgs.worker.amCanceling)
                     return;
                 
-                if (outputData && [outputData length]) {
+                if ([output length]) {
+                    [output close];
+                    [tempFile closeFile];
+
+                    error = nil;
                     NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
-                    NSError* error = nil;
-                    [outputData writeToFile:outputFile options:NSDataWritingAtomic error:&error];
-                    if(error != nil) 
+                    [[NSFileManager defaultManager] moveItemAtPath:tempFile.fileName toPath:outputFile error:&error];
+                    if(error != nil) {
                         NSLog(@"error while writing to output: %@", error);
-                    else
+                        [tempFile deleteFile];
+                    }
+                    else {
+                        tempFile.shouldDeleteFileOnDealloc = NO;
                         [decryptedFiles addObject:file];
+                    }
+                }
+                else {
+                    [output close];
+                    [tempFile deleteFile];
                 }
 
                 if (ctx.error) 
@@ -1149,9 +1234,9 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         if([fmgr fileExistsAtPath:signedFile] && [fmgr fileExistsAtPath:signatureFile]) {
             @try {
                 GPGController* ctx = [GPGController gpgController];
-                NSData* signatureFileData = [[[NSData alloc] initWithContentsOfFile:signatureFile] autorelease];
-                NSData* signedFileData = [[[NSData alloc] initWithContentsOfFile:signedFile] autorelease];
-                sigs = [ctx verifySignature:signatureFileData originalData:signedFileData];
+                GPGFileStream *signatureInput = [GPGFileStream fileStreamForReadingAtPath:signatureFile];
+                GPGFileStream *originalInput = [GPGFileStream fileStreamForReadingAtPath:signedFile];
+                sigs = [ctx verifySignatureOf:signatureInput originalData:originalInput];
             } @catch (NSException *exception) {
                 firstException = exception;
                 sigs = nil;
@@ -1166,8 +1251,8 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         if(sigs == nil || sigs.count == 0) {
             @try {
                 GPGController* ctx = [GPGController gpgController];
-                NSData* signedFileData = [[[NSData alloc] initWithContentsOfFile:serviceFile] autorelease];
-                sigs = [ctx verifySignedData:signedFileData];
+                GPGFileStream *signedInput = [GPGFileStream fileStreamForReadingAtPath:serviceFile];
+                sigs = [ctx verifySignatureOf:signedInput originalData:nil];
 
             } @catch (NSException *exception) {
                 secondException = exception;

@@ -13,6 +13,12 @@
 /* arg:shortKeyID */
 "Could not export key %@" = "Could not export key %@";
 
+/* no comment */
+"Could not read file" = "Could not read file";
+
+/* no comment */
+"Could not write to directory" = "Could not write to directory";
+
 /* arg1:successCount arg2:totalCount */
 "Decrypted %1$u of %2$u files" = "Decrypted %1$u of %2$u files";
 
@@ -126,6 +132,9 @@
 
 /* No comment provided by engineer. */
 "Please try again" = "Please try again";
+
+/* No comment provided by engineer. */
+"Selection" = "Selection";
 
 /* arg1:successCount; arg2:totalCount */
 "Signed %1$u of %2$u files" = "Signed %1$u of %2$u files";

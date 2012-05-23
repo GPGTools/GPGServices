@@ -23,6 +23,7 @@
 		30B2057714D56F2A00AE9583 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
 		30B2057814D56F2A00AE9583 /* lock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990C135CAB60004C89D5 /* lock.icns */; };
 		30B2057914D56F2A00AE9583 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
+		451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D886B156ABFAD00A0B890 /* GPGTempFile.m */; };
 		45C2B9E31565AEC300B3571A /* WorkerProgressViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */; };
 		45C2B9EA1565DD6600B3571A /* NSAlert+ThreadSafety.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2B9E91565DD6600B3571A /* NSAlert+ThreadSafety.m */; };
 		45CC89011569365300928F5B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45CC88FF1569365300928F5B /* Localizable.strings */; };
@@ -148,6 +149,8 @@
 		30B2055D14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
 		30B2055E14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* GPGServices_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGServices_Prefix.pch; path = Source/GPGServices_Prefix.pch; sourceTree = "<group>"; };
+		451D886A156ABFAD00A0B890 /* GPGTempFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGTempFile.h; path = Source/GPGTempFile.h; sourceTree = "<group>"; };
+		451D886B156ABFAD00A0B890 /* GPGTempFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GPGTempFile.m; path = Source/GPGTempFile.m; sourceTree = "<group>"; };
 		45C2B9E11565AEC300B3571A /* WorkerProgressViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorkerProgressViewItem.h; path = Source/WorkerProgressViewItem.h; sourceTree = "<group>"; };
 		45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WorkerProgressViewItem.m; path = Source/WorkerProgressViewItem.m; sourceTree = "<group>"; };
 		45C2B9E81565DD6600B3571A /* NSAlert+ThreadSafety.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAlert+ThreadSafety.h"; path = "Source/NSAlert+ThreadSafety.h"; sourceTree = "<group>"; };
@@ -219,6 +222,8 @@
 				4B1908C00A4CBF0B00052798 /* GPGServices.m */,
 				8EDC40F6133F6C5500D0A101 /* ZipOperation.h */,
 				8EDC40F7133F6C5500D0A101 /* ZipOperation.m */,
+				451D886A156ABFAD00A0B890 /* GPGTempFile.h */,
+				451D886B156ABFAD00A0B890 /* GPGTempFile.m */,
 				8EE899891348B92B004A3266 /* NSPredicate+negate.h */,
 				8E1BC426134D013600C1BFD6 /* GPGKey+utils.h */,
 				8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */,
@@ -564,6 +569,7 @@
 				45C2B9E31565AEC300B3571A /* WorkerProgressViewItem.m in Sources */,
 				45C2B9EA1565DD6600B3571A /* NSAlert+ThreadSafety.m in Sources */,
 				45FC40DB1566D2D80020A12B /* ServiceWrappedArgs.m in Sources */,
+				451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
