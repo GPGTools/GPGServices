@@ -28,6 +28,8 @@
 
 #define SIZE_WARNING_LEVEL_IN_MB 10
 static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
+static NSString * const tempTemplate = @"_gpg(XXX).tmp";
+static NSUInteger const suffixLen = 5;
 
 @interface GPGServices ()
 - (void)removeWorker:(id)worker;
@@ -695,8 +697,6 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         }
         
         // write to a temporary location in the target directory
-        static NSString * const tempTemplate = @"_gpg(XXX).sig";
-        static NSUInteger const suffixLen = 5;
         NSError *error = nil;
         GPGTempFile *tempFile = [GPGTempFile tempFileForTemplate:
                                  [file stringByAppendingString:tempTemplate]
@@ -953,8 +953,6 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         gpgData = dataProvider();
 
     // write to a temporary location in the target directory
-    static NSString * const tempTemplate = @"_gpg(XXX).gpg";
-    static NSUInteger const suffixLen = 5;
     NSError *error = nil;
     GPGTempFile *tempFile = [GPGTempFile tempFileForTemplate:
                              [destination stringByAppendingString:tempTemplate]
@@ -1063,8 +1061,6 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
                 GPGDebugLog(@"inputData.size: %llu", [input length]);
 
                 // write to a temporary location in the target directory
-                static NSString * const tempTemplate = @"_gpg(XXX).out";
-                static NSUInteger const suffixLen = 5;
                 NSError *error = nil;
                 GPGTempFile *tempFile = [GPGTempFile tempFileForTemplate:
                                          [file stringByAppendingString:tempTemplate]
