@@ -31,8 +31,10 @@ static const int kInvalidDescriptor = -1;
 - (id)initForTemplate:(NSString *)template suffixLen:(NSUInteger)suffixLength error:(NSError **)error 
 {
     if (self = [super init]) {
+        NSFileManager *fileMgr = [NSFileManager defaultManager];
+        
         // converting the template to writeable UTF8 for the libc functions
-        const char *utfRoTemplate = [template UTF8String];
+        const char *utfRoTemplate = [fileMgr fileSystemRepresentationWithPath:template];
         size_t utfLength = strlen(utfRoTemplate);
 
         char utfTemplate[utfLength + 1];
@@ -43,7 +45,7 @@ static const int kInvalidDescriptor = -1;
         int utfSuffixLength = 0;
         if (suffixLength > 0) {
             NSString *suffix = [template substringFromIndex:[template length] - suffixLength];
-            const char *utfSuffix = [suffix UTF8String];
+            const char *utfSuffix = [fileMgr fileSystemRepresentationWithPath:suffix];
             utfSuffixLength = strlen(utfSuffix);
         }
 
@@ -54,7 +56,8 @@ static const int kInvalidDescriptor = -1;
             _didDeleteFile = YES; // treat as already gone
         }
         else {
-            _filename = [[NSString stringWithUTF8String:utfTemplate] retain];
+            _filename = [[[NSFileManager defaultManager] 
+                          stringWithFileSystemRepresentation:utfTemplate length:utfLength] retain];
         }
 
         _shouldDeleteOnDealloc = YES;
