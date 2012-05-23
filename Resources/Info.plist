@@ -148,6 +148,9 @@
 					<string>com.apple.Safari</string>
 					<string>com.google.Chrome</string>
 					<string>org.mozilla.firefox</string>
+					<string>org.chromium.Chromium</string>
+					<string>com.operasoftware.Opera</string>
+					<string>org.mozilla.camino</string>
 				</array>
 			</dict>
 			<key>NSReturnTypes</key>
@@ -208,6 +211,9 @@
 					<string>com.apple.Safari</string>
 					<string>com.google.Chrome</string>
 					<string>org.mozilla.firefox</string>
+					<string>org.chromium.Chromium</string>
+					<string>com.operasoftware.Opera</string>
+					<string>org.mozilla.camino</string>
 				</array>
 			</dict>
 			<key>NSSendTypes</key>
@@ -266,6 +272,9 @@
 					<string>com.apple.Safari</string>
 					<string>com.google.Chrome</string>
 					<string>org.mozilla.firefox</string>
+					<string>org.chromium.Chromium</string>
+					<string>com.operasoftware.Opera</string>
+					<string>org.mozilla.camino</string>
 				</array>
 			</dict>
 			<key>NSSendTypes</key>
