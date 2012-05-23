@@ -13,6 +13,9 @@
 /* arg:shortKeyID */
 "Could not export key %@" = "Could not export key %@";
 
+/* no comment */
+"Could not open TextEdit" = "Could not open TextEdit";
+
 /* arg1:successCount arg2:totalCount */
 "Decrypted %1$u of %2$u files" = "Decrypted %1$u of %2$u files";
 
@@ -150,6 +153,9 @@
 
 /* No comment provided by engineer. */
 "Signing finished (partially)" = "Signing finished (partially)";
+
+/* no comment */
+"TextEdit did not respond to service request." = "TextEdit did not respond to service request.";
 
 /* No comment provided by engineer. */
 "The default secret key is unusable" = "The default secret key is unusable";
