@@ -85,9 +85,6 @@
 /* No comment provided by engineer. */
 "Import result" = "Import result";
 
-/* No comment provided by engineer. */
-"Import result:" = "Import result:";
-
 /* arg1:successCount arg2:totalCount */
 "Imported %1$u of %2$u files" = "Imported %1$u of %2$u files";
 

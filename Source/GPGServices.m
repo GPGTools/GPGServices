@@ -125,13 +125,9 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
                                                   message:[ex description]];
         return;
 	}
-    
-    [[NSAlert alertWithMessageText:NSLocalizedString(@"Import result", nil)
-                     defaultButton:nil
-                   alternateButton:nil
-                       otherButton:nil
-         informativeTextWithFormat:importText]
-     runModal];
+
+    [self displayOperationFinishedNotificationWithTitle:NSLocalizedString(@"Import result", nil) 
+                                                message:importText];
 }
 
 - (void)importKey:(NSString *)inputString {
@@ -280,14 +276,10 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         NSData* keyData = [ctx exportKeys:[NSArray arrayWithObject:selectedPrivateKey] allowSecret:NO fullExport:NO];
         
         if(keyData == nil) {
-            [[NSAlert alertWithMessageText:NSLocalizedString(@"Export failed", nil) 
-                             defaultButton:nil
-                           alternateButton:nil
-                               otherButton:nil
-                 informativeTextWithFormat:NSLocalizedString(@"Could not export key %@", @"arg:shortKeyID"), 
-              [selectedPrivateKey shortKeyID]] 
-             runModal];
-            
+            NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"Could not export key %@", @"arg:shortKeyID"), 
+                             [selectedPrivateKey shortKeyID]];
+            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Export failed", nil) 
+                                                      message:msg];            
             return nil;
         } else {
             return [[[NSString alloc] initWithData:keyData 
@@ -475,8 +467,10 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         }
          */
         NSString* errorMessage = [[[localException userInfo] valueForKey:@"gpgTask"] errText];
-        if(errorMessage != nil)
-            [self displayMessageWindowWithTitleText:NSLocalizedString(@"Signing failed", nil) bodyText:errorMessage];
+        if(errorMessage != nil) {
+            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Signing failed", nil) 
+                                                      message:errorMessage];
+        }
         
         return nil;
 	}
@@ -1265,7 +1259,7 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
         return;
 	}
     
-    [[NSAlert alertWithMessageText:NSLocalizedString(@"Import result:", nil)
+    [[NSAlert alertWithMessageText:NSLocalizedString(@"Import result", nil)
                      defaultButton:nil
                    alternateButton:nil
                        otherButton:nil
