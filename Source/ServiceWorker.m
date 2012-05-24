@@ -77,11 +77,12 @@
     @try {
         if (gpc)
             [gpc cancel];
-        [_queue cancelAllOperations];
     }
     @catch (NSException *exception) {
         // swallow anything during a cancelation
     }
+
+    [_queue cancelAllOperations];
 
     if (_delegate)
         [_delegate workerWasCanceled:self];
