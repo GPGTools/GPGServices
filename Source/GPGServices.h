@@ -89,7 +89,6 @@ typedef enum {
 - (NSNumber*)folderSize:(NSString *)folderPath;
 - (NSNumber*)sizeOfFiles:(NSArray*)files;
 
-- (NSString*)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys;
 - (void)signFiles:(NSArray*)files;
 - (void)encryptFiles:(NSArray*)files;
 - (void)decryptFiles:(NSArray*)files; 
