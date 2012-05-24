@@ -842,9 +842,6 @@ static NSUInteger const suffixLen = 5;
 
     GPGDebugLog(@"encrypting file(s): %@...", [files componentsJoinedByString:@","]);
     
-    BOOL useASCII = [[[GPGOptions sharedOptions] valueForKey:@"UseASCIIOutput"] boolValue];
-    GPGDebugLog(@"Output as ASCII: %@", useASCII ? @"YES" : @"NO");
-    NSString *fileExtension = useASCII ? @"asc" : @"gpg";
     RecipientWindowController* rcp = [[[RecipientWindowController alloc] init] autorelease];
 	int ret = [rcp runModal]; // thread-safe
 	if(ret != 0)
@@ -880,6 +877,8 @@ static NSUInteger const suffixLen = 5;
     NSMutableArray *encryptedFiles = [NSMutableArray arrayWithCapacity:[files count]];
     NSMutableArray *errorMsgs = [NSMutableArray array];
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    BOOL defaultIsArmor = [[GPGOptions sharedOptions] boolForKey:@"armor"];
+    BOOL emitVersion = [[GPGOptions sharedOptions] boolForKey:@"emit-version"];
 
     for (NSString *file in files) 
     {
@@ -891,6 +890,7 @@ static NSUInteger const suffixLen = 5;
             long double megabytes = 0;
             NSString* destination = nil;
             BOOL isDirectory = YES;
+            BOOL useArmor = NO; // only single-files when "armor" is set in .conf
             
             if (! [fmgr fileExistsAtPath:file isDirectory:&isDirectory]) 
                 continue;
@@ -907,6 +907,8 @@ static NSUInteger const suffixLen = 5;
                     return [GPGMemoryStream memoryStreamForReading:operation.zipData];
                 };
             } else {
+                useArmor = defaultIsArmor;
+                NSString *fileExtension = useArmor ? @"asc" : @"gpg";
                 NSNumber* fileSize = [self sizeOfFiles:[NSArray arrayWithObject:file]];
                 megabytes = [fileSize unsignedLongLongValue] / kBytesInMB;
                 destination = [file stringByAppendingFormat:@".%@", fileExtension];
@@ -922,8 +924,9 @@ static NSUInteger const suffixLen = 5;
                 return;
 
             GPGController* ctx = [GPGController gpgController];
-            // Only use armor for single files. otherwise it doesn't make much sense.
-            ctx.useArmor = useASCII && [destination rangeOfString:@".asc"].location != NSNotFound;
+            ctx.useArmor = useArmor;
+            ctx.printVersion = emitVersion;
+            ctx.useDefaultComments = YES;
             GPGStream* gpgData = nil;
             if(dataProvider != nil)
                 gpgData = dataProvider();
