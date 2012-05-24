@@ -10,6 +10,7 @@
 #import "ServiceWorkerDelegate.h"
 #import "ServiceWrappedOperation.h"
 #import "ServiceWrappedArgs.h"
+#import "Libmacgpg/GPGController.h"
 
 @interface ServiceWorker ()
 - (void)finishWork:(id)sender;
@@ -20,11 +21,13 @@
 @synthesize delegate = _delegate;
 @synthesize workerDescription = _workerDescription;
 @synthesize amCanceling = _amCanceling;
+@synthesize runningController = _runningController;
 
 - (void)dealloc 
 {
     [_workerDescription release];
     [_queue release];
+    [_runningController release];
     [super dealloc];
 }
 
@@ -69,7 +72,16 @@
         return;
 
     _amCanceling = YES;
-    [_queue cancelAllOperations];
+
+    GPGController *gpc = [[_runningController retain] autorelease];
+    @try {
+        if (gpc)
+            [gpc cancel];
+        [_queue cancelAllOperations];
+    }
+    @catch (NSException *exception) {
+        // swallow anything during a cancelation
+    }
 
     if (_delegate)
         [_delegate workerWasCanceled:self];

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class GPGController;
 @protocol ServiceWorkerDelegate;
 
 @interface ServiceWorker : NSObject {
@@ -17,11 +18,17 @@
     NSOperationQueue *_queue;
     id <ServiceWorkerDelegate> _delegate;
     BOOL _amCanceling;
+    GPGController *_runningController;
 }
 
 @property (assign) id <ServiceWorkerDelegate> delegate;
 @property (retain) NSString *workerDescription;
 @property (readonly) BOOL amCanceling;
+
+// ServiceWorker does not own;
+// underlying operations might use to store the currently running controller 
+// to allow this class's cancel to possibly interrupt a gpg2 operation
+@property (retain) GPGController *runningController;
 
 + (id)serviceWorkerWithTarget:(id)target andAction:(SEL)action;
 - (id)initWithTarget:(id)target andAction:(SEL)action;
