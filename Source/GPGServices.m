@@ -877,133 +877,136 @@ static NSUInteger const suffixLen = 5;
     if (wrappedArgs.worker.amCanceling)
         return;
 
-    long double megabytes = 0;
-    NSString* destination = nil;
-    
+    NSMutableArray *encryptedFiles = [NSMutableArray arrayWithCapacity:[files count]];
+    NSMutableArray *errorMsgs = [NSMutableArray array];
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
-    
-    typedef GPGStream*(^DataProvider)();
-    DataProvider dataProvider = nil;
-    
-    if(files.count == 1) {
-        NSString* file = [files objectAtIndex:0];
-        BOOL isDirectory = YES;
-        
-        if (! [fmgr fileExistsAtPath:file isDirectory:&isDirectory]) {    
-            [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"File doesn't exist", nil)
-                                                      message:NSLocalizedString(@"Please try again", nil)];
-            return;
-        }
-        if(isDirectory) {
-            NSString* filename = [NSString stringWithFormat:@"%@.zip.gpg", [file lastPathComponent]];
-            megabytes = [[self folderSize:file] unsignedLongLongValue] / kBytesInMB;
-            destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
-            dataProvider = ^{
-                ZipOperation* operation = [[[ZipOperation alloc] init] autorelease];
-                operation.filePath = file;
-                operation.delegate = self;
-                [operation start];
-                
-                return [GPGMemoryStream memoryStreamForReading:operation.zipData];
-            };
-        } else {
-            NSNumber* fileSize = [self sizeOfFiles:[NSArray arrayWithObject:file]];
-            megabytes = [fileSize unsignedLongLongValue] / kBytesInMB;
-            destination = [file stringByAppendingFormat:@".%@", fileExtension];
-            dataProvider = ^{
-                return [GPGFileStream fileStreamForReadingAtPath:file];
-            };
-        }  
-    } else if(files.count > 1) {
-        megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / kBytesInMB;
-        destination = [[[[files objectAtIndex:0] stringByDeletingLastPathComponent] 
-                       stringByAppendingPathComponent:NSLocalizedString(@"Archive", @"Filename for Archive.zip.gpg")]
-                       stringByAppendingString:@".zip.gpg"];
-        dataProvider = ^{
-            ZipOperation* operation = [[[ZipOperation alloc] init] autorelease];
-            operation.files = files;
-            operation.delegate = self;
-            [operation start];
+
+    for (NSString *file in files) 
+    {
+        @try
+        {
+            typedef GPGStream*(^DataProvider)();
+            DataProvider dataProvider = nil;
             
-            return [GPGMemoryStream memoryStreamForReading:operation.zipData];
-        };
+            long double megabytes = 0;
+            NSString* destination = nil;
+            BOOL isDirectory = YES;
+            
+            if (! [fmgr fileExistsAtPath:file isDirectory:&isDirectory]) 
+                continue;
+            if(isDirectory) {
+                NSString* filename = [NSString stringWithFormat:@"%@.zip.gpg", [file lastPathComponent]];
+                megabytes = [[self folderSize:file] unsignedLongLongValue] / kBytesInMB;
+                destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
+                dataProvider = ^{
+                    ZipOperation* operation = [[[ZipOperation alloc] init] autorelease];
+                    operation.filePath = file;
+                    operation.delegate = self;
+                    [operation start];
+                    
+                    return [GPGMemoryStream memoryStreamForReading:operation.zipData];
+                };
+            } else {
+                NSNumber* fileSize = [self sizeOfFiles:[NSArray arrayWithObject:file]];
+                megabytes = [fileSize unsignedLongLongValue] / kBytesInMB;
+                destination = [file stringByAppendingFormat:@".%@", fileExtension];
+                dataProvider = ^{
+                    return [GPGFileStream fileStreamForReadingAtPath:file];
+                };
+            }  
+            
+            GPGDebugLog(@"fileSize: %@Mb", [NSNumber numberWithDouble:megabytes]);        
+            
+            // check before starting an operation
+            if (wrappedArgs.worker.amCanceling)
+                return;
+
+            GPGController* ctx = [GPGController gpgController];
+            // Only use armor for single files. otherwise it doesn't make much sense.
+            ctx.useArmor = useASCII && [destination rangeOfString:@".asc"].location != NSNotFound;
+            GPGStream* gpgData = nil;
+            if(dataProvider != nil)
+                gpgData = dataProvider();
+
+            // write to a temporary location in the target directory
+            NSError *error = nil;
+            GPGTempFile *tempFile = [GPGTempFile tempFileForTemplate:
+                                     [destination stringByAppendingString:tempTemplate]
+                                                           suffixLen:suffixLen error:&error];
+            if (error) {
+                [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Could not write to directory", nil)
+                                                          message:[destination stringByDeletingLastPathComponent]];
+                return;
+            }
+
+            GPGFileStream *output = [GPGFileStream fileStreamForWritingAtPath:tempFile.fileName];
+            
+            if(mode == GPGEncryptSign && privateKey != nil)
+                [ctx addSignerKey:[privateKey description]];
+
+            [ctx processTo:output data:gpgData withEncryptSignMode:mode recipients:validRecipients hiddenRecipients:nil];
+
+            // check after a lengthy operation
+            if (wrappedArgs.worker.amCanceling)
+                return;
+            
+            if (ctx.error) 
+                @throw ctx.error;
+
+            //Check if directory is writable and append i+1 if file already exists at destination
+            destination = [self normalizedAndUniquifiedPathFromPath:destination];    
+            GPGDebugLog(@"destination: %@", destination);
+            
+            [output close];
+            [tempFile closeFile];
+            error = nil;
+            [[NSFileManager defaultManager] moveItemAtPath:tempFile.fileName toPath:destination error:&error];
+            if(error != nil) {
+                NSLog(@"error while renaming file: %@", error);
+                [tempFile deleteFile];
+                NSString *msg = [NSString stringWithFormat:
+                                 NSLocalizedString(@"Failed renaming to %@", @"arg:filename"),
+                                 [destination lastPathComponent]];
+                [errorMsgs addObject:msg];
+            }
+            else {
+                tempFile.shouldDeleteFileOnDealloc = NO;
+                [encryptedFiles addObject:file];
+            }
+
+        } @catch(NSException* ex) {
+            NSString *msg;
+            if ([ex isKindOfClass:[GPGException class]]) {
+                msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent], ex];
+            }
+            else {
+                msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent], 
+                       NSLocalizedString(@"Unexpected encrypt error", nil)];
+                NSLog(@"encryptData ex: %@", ex);
+            }
+            
+            [errorMsgs addObject:msg];
+        }
     }
-    
-    GPGDebugLog(@"fileSize: %@Mb", [NSNumberFormatter localizedStringFromNumber:[NSNumber numberWithDouble:megabytes]
-                                                              numberStyle:NSNumberFormatterDecimalStyle]);        
-    
-    NSAssert(dataProvider != nil, @"dataProvider can't be nil");
-    NSAssert(destination != nil, @"destination can't be nil");
-    
-    // check before starting an operation
-    if (wrappedArgs.worker.amCanceling)
-        return;
 
-    GPGController* ctx = [GPGController gpgController];
-    // Only use armor for single files. otherwise it doesn't make much sense.
-    ctx.useArmor = useASCII && [destination rangeOfString:@".asc"].location != NSNotFound;
-    GPGStream* gpgData = nil;
-    if(dataProvider != nil)
-        gpgData = dataProvider();
-
-    // write to a temporary location in the target directory
-    NSError *error = nil;
-    GPGTempFile *tempFile = [GPGTempFile tempFileForTemplate:
-                             [destination stringByAppendingString:tempTemplate]
-                                                   suffixLen:suffixLen error:&error];
-    if (error) {
-        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Could not write to directory", nil)
-                                                  message:[destination stringByDeletingLastPathComponent]];
-        return;
+    NSUInteger innCount = [files count];
+    NSUInteger outCount = [encryptedFiles count];        
+    NSString *title = (innCount == outCount
+                       ? NSLocalizedString(@"Encryption finished", nil)
+                       : (outCount > 0
+                          ? NSLocalizedString(@"Encryption finished (partially)", nil)
+                          : NSLocalizedString(@"Encryption failed", nil)));
+    NSMutableString *message = [NSMutableString stringWithString:
+                                [self describeCompletionForFiles:files 
+                                                    successCount:outCount 
+                                                   singleFileFmt:NSLocalizedString(@"Encrypted %@", @"arg:filename") 
+                                                   singleFailFmt:NSLocalizedString(@"Failed encrypting %@", @"arg:filename")
+                                                  pluralFilesFmt:NSLocalizedString(@"Encrypted %1$u of %2$u files", @"arg1:successCount arg2:totalCount")]];
+    if ([errorMsgs count]) {
+        [message appendString:@"\n\n"];
+        [message appendString:[errorMsgs componentsJoinedByString:@"\n"]];
     }
-
-    GPGFileStream *output = [GPGFileStream fileStreamForWritingAtPath:tempFile.fileName];
-    
-    if(mode == GPGEncryptSign && privateKey != nil)
-        [ctx addSignerKey:[privateKey description]];
-    @try{
-        [ctx processTo:output 
-                  data:gpgData
-   withEncryptSignMode:mode
-            recipients:validRecipients
-      hiddenRecipients:nil];
-
-        // check after a lengthy operation
-        if (wrappedArgs.worker.amCanceling)
-            return;
-        
-        if (ctx.error) 
-			@throw ctx.error;
-        
-    } @catch(GPGException* localException) {
-        [self displayOperationFailedNotificationWithTitle:[localException reason]  
-                                                  message:[localException description]];
-        return;
-    } @catch(NSException* localException) {
-        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)  
-                        message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
-        return;
-    }
-
-    //Check if directory is writable and append i+1 if file already exists at destination
-    destination = [self normalizedAndUniquifiedPathFromPath:destination];    
-    GPGDebugLog(@"destination: %@", destination);
-
-    [output close];
-    [tempFile closeFile];
-    error = nil;
-    [[NSFileManager defaultManager] moveItemAtPath:tempFile.fileName toPath:destination error:&error];
-    if (error) {
-        [tempFile deleteFile];
-        // We should probably show the file from the exception too.
-        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
-                        message:[destination lastPathComponent]];
-        return;
-    }
-
-    tempFile.shouldDeleteFileOnDealloc = NO;
-    [self displayOperationFinishedNotificationWithTitle:NSLocalizedString(@"Encryption finished", nil) 
-                                                message:[destination lastPathComponent]];
+    [self displayOperationFinishedNotificationWithTitle:title message:message];
 }
 
 - (void)decryptFiles:(NSArray *)files
@@ -1081,8 +1084,12 @@ static NSUInteger const suffixLen = 5;
                     NSString* outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
                     [[NSFileManager defaultManager] moveItemAtPath:tempFile.fileName toPath:outputFile error:&error];
                     if(error != nil) {
-                        NSLog(@"error while writing to output: %@", error);
+                        NSLog(@"error while renaming file: %@", error);
                         [tempFile deleteFile];
+                        NSString *msg = [NSString stringWithFormat:
+                                         NSLocalizedString(@"Failed renaming to %@", @"arg:filename"),
+                                         [outputFile lastPathComponent]];
+                        [errorMsgs addObject:msg];
                     }
                     else {
                         tempFile.shouldDeleteFileOnDealloc = NO;
