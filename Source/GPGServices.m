@@ -1517,7 +1517,7 @@ static NSUInteger const suffixLen = 5;
 			if(!(pboardString = [pboard stringForType:NSPasteboardTypeString]))
 			{
 				*error = myerror;
-				[self exitServiceRequest];
+				[self goneIn60Seconds];
 				return;
 			}
 		}
@@ -1526,14 +1526,14 @@ static NSUInteger const suffixLen = 5;
 			if(!(pboardString = [pboard stringForType:NSPasteboardTypeString]))
 			{
 				*error = myerror;
-				[self exitServiceRequest];
+				[self goneIn60Seconds];
 				return;
 			}
 		}
 		else
 		{
 			*error = myerror;
-			[self exitServiceRequest];
+			[self goneIn60Seconds];
 			return;
 		}
 	}
@@ -1566,48 +1566,44 @@ static NSUInteger const suffixLen = 5;
             break;
 	}
     
-	if(newString!=nil)
-	{
+	BOOL shouldExitServiceRequest = YES;
+	
+	if (newString != nil) {
         static NSString * const kServiceShowInWindow = @"showInWindow";
         if ([userData isEqualToString:kServiceShowInWindow]) {
-            //Use new pasteboard for invoking the show in TextEdit service
-            pboard = [NSPasteboard pasteboardWithUniqueName];
+			[SimpleTextWindow showText:newString withTitle:@"GPGServices" andDelegate:self];
+			shouldExitServiceRequest = NO;
         }
         else {
             [pboard clearContents];
-        }
+			
+			NSMutableArray *pbitems = [NSMutableArray array];
+			
+			if ([pbtype isEqualToString:NSPasteboardTypeHTML]) {        
+				NSPasteboardItem *htmlItem = [[[NSPasteboardItem alloc] init] autorelease];
+				[htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"] 
+							forType:NSPasteboardTypeHTML];
+				[pbitems addObject:htmlItem];
+			}
+			else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {        
+				NSPasteboardItem *rtfItem = [[[NSPasteboardItem alloc] init] autorelease];
+				[rtfItem setString:newString forType:NSPasteboardTypeRTF];
+				[pbitems addObject:rtfItem];
+			}
+			else {
+				NSPasteboardItem *stringItem = [[[NSPasteboardItem alloc] init] autorelease];
+				[stringItem setString:newString forType:NSPasteboardTypeString];            
+				[pbitems addObject:stringItem];
+			}
+			
+			[pboard writeObjects:pbitems];
 
-        NSMutableArray *pbitems = [NSMutableArray array];
-
-        if ([pbtype isEqualToString:NSPasteboardTypeHTML]) {        
-            NSPasteboardItem *htmlItem = [[[NSPasteboardItem alloc] init] autorelease];
-            [htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"] 
-                        forType:NSPasteboardTypeHTML];
-            [pbitems addObject:htmlItem];
-        }
-        else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {        
-            NSPasteboardItem *rtfItem = [[[NSPasteboardItem alloc] init] autorelease];
-            [rtfItem setString:newString forType:NSPasteboardTypeRTF];
-            [pbitems addObject:rtfItem];
-        }
-        else {
-            NSPasteboardItem *stringItem = [[[NSPasteboardItem alloc] init] autorelease];
-            [stringItem setString:newString forType:NSPasteboardTypeString];            
-            [pbitems addObject:stringItem];
-        }
-
-        [pboard writeObjects:pbitems];
-
-        if ([userData isEqualToString:kServiceShowInWindow]) {
-            BOOL ret = NSPerformService(@"New TextEdit Window Containing Selection", pboard);
-            if (!ret) {
-                [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Could not open TextEdit", nil)
-                                                          message:NSLocalizedString(@"TextEdit did not respond to service request.", nil)];
-            }
         }
 	}
     
-	[self exitServiceRequest];
+	if (shouldExitServiceRequest) {
+		[self goneIn60Seconds];
+	}
 }
 
 -(void)dealWithFilesPasteboard:(NSPasteboard *)pboard
@@ -1648,14 +1644,9 @@ static NSUInteger const suffixLen = 5;
         }
     }
     
-    [self exitServiceRequest];
+    [self goneIn60Seconds];
 }
 
--(void)exitServiceRequest
-{
-	[NSApp hide:self];
-	[self goneIn60Seconds];
-}
 
 -(void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {[self dealWithPasteboard:pboard userData:userData mode:SignService error:error];}
@@ -1808,28 +1799,38 @@ static NSUInteger const suffixLen = 5;
 }
 */
 
--(IBAction)closeModalWindow:(id)sender{
+- (IBAction)closeModalWindow:(id)sender {
 	[NSApp stopModalWithCode:[sender tag]];
+}
+
+- (void)simpleTextWindowWillClose:(SimpleTextWindow *)simpleTextWindow {
+	[self goneIn60Seconds];
 }
 
 //
 //Timer based application termination
 //
--(void)cancelTerminateTimer
-{
+- (void)cancelTerminateTimer {
+	terminateCounter++;
 	[currentTerminateTimer invalidate];
-	currentTerminateTimer=nil;
+	currentTerminateTimer = nil;
 }
 
--(void)goneIn60Seconds
-{
-	if(currentTerminateTimer!=nil)
+- (void)goneIn60Seconds {
+	terminateCounter--;
+	if (currentTerminateTimer != nil) {
+		//Shouldn't happen.
 		[self cancelTerminateTimer];
-	currentTerminateTimer=[NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(selfQuit:) userInfo:nil repeats:YES];
+		terminateCounter--;
+	}
+	if (terminateCounter <= 0) {
+		terminateCounter = 0;
+		[NSApp hide:self];
+		currentTerminateTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(selfQuit:) userInfo:nil repeats:YES];
+	}
 }
 
--(void)selfQuit:(NSTimer *)timer
-{
+- (void)selfQuit:(NSTimer *)timer {
     if ([_inProgressCtlr.serviceWorkerArray count] < 1) {
         [self cancelTerminateTimer];
         [NSApp terminate:self];

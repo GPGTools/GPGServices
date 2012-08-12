@@ -11,6 +11,7 @@
 #import "Libmacgpg/Libmacgpg.h"
 #import <Growl/Growl.h>
 #import "ServiceWorkerDelegate.h"
+#import "SimpleTextWindow.h"
 
 typedef BOOL(^KeyValidatorT)(GPGKey* key);
 
@@ -40,7 +41,7 @@ typedef enum {
 
 @class InProgressWindowController;
 
-@interface GPGServices : NSObject <NSApplicationDelegate, ServiceWorkerDelegate, GrowlApplicationBridgeDelegate>
+@interface GPGServices : NSObject <NSApplicationDelegate, ServiceWorkerDelegate, GrowlApplicationBridgeDelegate, SimpleTextWindowDelegate>
 {
 	IBOutlet NSWindow *recipientWindow;
 	
@@ -48,6 +49,7 @@ typedef enum {
 	IBOutlet NSSecureTextField *passphraseText;
 	
 	NSTimer *currentTerminateTimer;
+	int terminateCounter;
 
     InProgressWindowController *_inProgressCtlr;
 }
@@ -113,7 +115,6 @@ typedef enum {
                           mode:(FileServiceModeEnum)mode
                          error:(NSString **)error;
 
--(void)exitServiceRequest;
 -(void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)encrypt:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)decrypt:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
