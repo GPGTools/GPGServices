@@ -1568,7 +1568,15 @@ static NSUInteger const suffixLen = 5;
     
 	if(newString!=nil)
 	{
-        [pboard clearContents];
+        static NSString * const kServiceShowInWindow = @"showInWindow";
+        if ([userData isEqualToString:kServiceShowInWindow]) {
+            //Use new pasteboard for invoking the show in TextEdit service
+            pboard = [NSPasteboard pasteboardWithUniqueName];
+        }
+        else {
+            [pboard clearContents];
+        }
+
         NSMutableArray *pbitems = [NSMutableArray array];
 
         if ([pbtype isEqualToString:NSPasteboardTypeHTML]) {        
@@ -1589,6 +1597,14 @@ static NSUInteger const suffixLen = 5;
         }
 
         [pboard writeObjects:pbitems];
+
+        if ([userData isEqualToString:kServiceShowInWindow]) {
+            BOOL ret = NSPerformService(@"New TextEdit Window Containing Selection", pboard);
+            if (!ret) {
+                [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Could not open TextEdit", nil)
+                                                          message:NSLocalizedString(@"TextEdit did not respond to service request.", nil)];
+            }
+        }
 	}
     
 	[self exitServiceRequest];
