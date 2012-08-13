@@ -25,7 +25,17 @@
 @implementation RecipientWindowController
 
 @synthesize dataSource;
-@synthesize okEnabled, selectedKeys, sign;
+@synthesize selectedKeys, sign, symetricEncryption, encryptForOwnKeyToo;
+
+
+
++ (NSSet*)keyPathsForValuesAffectingOkEnabled {
+	return [NSSet setWithObjects:@"encryptForOwnKeyToo", @"symetricEncryption", nil]; 
+}
+
+- (BOOL)okEnabled {
+	return encryptForOwnKeyToo || symetricEncryption || self.selectedKeys.count > 0;
+}
 
 - (GPGKey*)selectedPrivateKey {
     if (!_firstUpdate) {
@@ -35,14 +45,14 @@
     return dataSource.selectedKey;
 }
 
-- (void)setEncryptForOwnKeyToo:(BOOL)value {
+/*- (void)setEncryptForOwnKeyToo:(BOOL)value {
 	encryptForOwnKeyToo = value;
-	self.okEnabled = encryptForOwnKeyToo || self.selectedKeys.count > 0;	
+	//self.okEnabled = encryptForOwnKeyToo || self.selectedKeys.count > 0;	
 }
 
 - (BOOL)encryptForOwnKeyToo {
 	return encryptForOwnKeyToo;
-}
+}*/
 
 - (id)init {
 	self = [super initWithWindowNibName:@"RecipientWindow"];
@@ -194,8 +204,10 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
             [self.selectedKeys removeObject:k];
         else
             [self.selectedKeys addObject:k];
-     
-        self.okEnabled = self.encryptForOwnKeyToo || self.selectedKeys.count > 0;
+		
+		[self willChangeValueForKey:@"okEnabled"];
+		[self didChangeValueForKey:@"okEnabled"];
+        //self.okEnabled = self.encryptForOwnKeyToo || self.selectedKeys.count > 0;
         
         [tableView reloadData];
     }
@@ -244,7 +256,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         else
             [self.selectedKeys addObject:k];
      
-        self.okEnabled = self.encryptForOwnKeyToo || self.selectedKeys.count > 0;
+		[self willChangeValueForKey:@"okEnabled"];
+		[self didChangeValueForKey:@"okEnabled"];
+        //self.okEnabled = self.encryptForOwnKeyToo || self.selectedKeys.count > 0;
         
         [keyTableView reloadData];
 	}

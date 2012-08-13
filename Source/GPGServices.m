@@ -300,8 +300,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 
--(NSString *)encryptTextString:(NSString *)inputString
-{
+-(NSString *)encryptTextString:(NSString *)inputString {
     GPGController* ctx = [GPGController gpgController];
 	ctx.trustAllKeys = YES;
     ctx.useArmor = YES;
@@ -313,7 +312,6 @@ static NSUInteger const suffixLen = 5;
 		return nil;  // User pressed 'cancel'
 
     NSData* inputData = [inputString UTF8Data];
-    GPGEncryptSignMode mode = rcp.sign ? GPGEncryptSign : GPGPublicKeyEncrypt;
     NSArray* validRecipients = rcp.selectedKeys;
     GPGKey* privateKey = rcp.selectedPrivateKey;
     
@@ -324,6 +322,8 @@ static NSUInteger const suffixLen = 5;
     } else {
         validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
     }
+	
+	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
     
     if(rcp.encryptForOwnKeyToo && !privateKey) {
         [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil) 
@@ -336,14 +336,20 @@ static NSUInteger const suffixLen = 5;
         return nil;
     }
     
-    if(validRecipients.count == 0) {
+    if(validRecipients.count == 0 && !rcp.symetricEncryption) {
         [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
                                                   message:NSLocalizedString(@"No valid recipients found", nil)];
         return nil;
     }
+    if (mode == 0) {
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
+                                                  message:NSLocalizedString(@"Nothing to do", nil)];
+        return nil;
+    }
+
     
     @try {
-        if(mode == GPGEncryptSign)
+        if(mode & GPGSign)
             [ctx addSignerKey:[privateKey description]];
         
         NSData* outputData = [ctx processData:inputData 
@@ -856,30 +862,45 @@ static NSUInteger const suffixLen = 5;
 	int ret = [rcp runModal]; // thread-safe
 	if(ret != 0)
 		return;  // User pressed 'cancel'
+	
 
-    GPGEncryptSignMode mode = rcp.sign ? GPGEncryptSign : GPGPublicKeyEncrypt;
-    NSArray* validRecipients = rcp.selectedKeys;
+	
+	NSArray* validRecipients = rcp.selectedKeys;
     GPGKey* privateKey = rcp.selectedPrivateKey;
-    
-    if(rcp.encryptForOwnKeyToo && !privateKey) {
-        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil)
-                                                  message:NSLocalizedString(@"No private key selected to add to recipients", nil)];
-        return;
-    }
-    if(rcp.sign && !privateKey) {
-        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil) 
-                                                  message:NSLocalizedString(@"No private key selected for signing", nil)];
-        return;
-    }
     
     if(rcp.encryptForOwnKeyToo && privateKey) {
         validRecipients = [[[NSSet setWithArray:validRecipients] 
-                            setByAddingObject:[privateKey primaryKey]] 
+                            setByAddingObject:privateKey] 
                            allObjects];
     } else {
         validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
     }
-
+	
+	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
+    
+    if (rcp.encryptForOwnKeyToo && !privateKey) {
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil) 
+                                                  message:NSLocalizedString(@"No private key selected to add to recipients", nil)];
+        return;
+    }
+    if (rcp.sign && !privateKey) {
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil) 
+                                                  message:NSLocalizedString(@"No private key selected for signing", nil)];
+        return;
+    }
+    if (validRecipients.count == 0 && !rcp.symetricEncryption) {
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
+                                                  message:NSLocalizedString(@"No valid recipients found", nil)];
+        return;
+    }
+    if (mode == 0) {
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
+                                                  message:NSLocalizedString(@"Nothing to do", nil)];
+        return;
+    }
+	
+	
+	
     // check before starting an operation
     if (wrappedArgs.worker.amCanceling)
         return;
@@ -968,7 +989,7 @@ static NSUInteger const suffixLen = 5;
 
     GPGFileStream *output = [GPGFileStream fileStreamForWritingAtPath:tempFile.fileName];
     
-    if(mode == GPGEncryptSign && privateKey != nil)
+    if(mode & GPGSign && privateKey != nil)
         [ctx addSignerKey:[privateKey description]];
     @try{
         [ctx processTo:output 

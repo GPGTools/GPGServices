@@ -25,8 +25,8 @@
 	
 	BOOL sign;
     BOOL encryptForOwnKeyToo;
+    BOOL symetricEncryption;
     
-    BOOL okEnabled;
     BOOL _firstUpdate;
 	
 	KeyChooserDataSource *dataSource;
@@ -37,7 +37,8 @@
 @property (readonly) GPGKey* selectedPrivateKey;
 @property (assign) BOOL sign;
 @property (assign) BOOL encryptForOwnKeyToo;
-@property (assign) BOOL okEnabled;
+@property (assign) BOOL symetricEncryption;
+@property (readonly) BOOL okEnabled;
 
 // thread-safe
 - (NSInteger)runModal;
