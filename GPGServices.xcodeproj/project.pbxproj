@@ -53,6 +53,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1B278B2815F7C75A00B7DA9F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B306AD1157AC50C009AECCF;
+			remoteInfo = GPGTaskHelper;
+		};
 		8E6935ED13953A33004DFAE5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
@@ -410,6 +417,7 @@
 			children = (
 				8E81D258139523890034B9D1 /* Libmacgpg.framework */,
 				8E81D25A139523890034B9D1 /* UnitTest.octest */,
+				1B278B2915F7C75A00B7DA9F /* org.gpgtools.Libmacgpg.GPGTaskHelper.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -489,6 +497,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		1B278B2915F7C75A00B7DA9F /* org.gpgtools.Libmacgpg.GPGTaskHelper.xpc */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = org.gpgtools.Libmacgpg.GPGTaskHelper.xpc;
+			remoteRef = 1B278B2815F7C75A00B7DA9F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		8E81D258139523890034B9D1 /* Libmacgpg.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -743,8 +758,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = GPGServices;
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = service;
 				ZERO_LINK = YES;
 			};
@@ -768,7 +785,9 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = /Library/Services;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = GPGServices;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = service;
 			};
 			name = Release;
