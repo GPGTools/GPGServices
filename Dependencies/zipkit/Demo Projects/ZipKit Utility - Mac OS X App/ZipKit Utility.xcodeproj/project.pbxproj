@@ -34,13 +34,6 @@
 			remoteGlobalIDString = CB9B9CB6109F665C003E3F8B;
 			remoteInfo = zipkit;
 		};
-		CB49E72E109F79180046B62A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CB9B9DB6109F6949003E3F8B /* ZipKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CB9B9CEE109F6769003E3F8B;
-			remoteInfo = touchzipkit;
-		};
 		CB49E731109F79250046B62A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CB9B9DB6109F6949003E3F8B /* ZipKit.xcodeproj */;
@@ -162,7 +155,6 @@
 			children = (
 				CB49E72B109F79180046B62A /* ZipKit.framework */,
 				CB49E72D109F79180046B62A /* libzipkit.a */,
-				CB49E72F109F79180046B62A /* libtouchzipkit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -232,13 +224,6 @@
 			remoteRef = CB49E72C109F79180046B62A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CB49E72F109F79180046B62A /* libtouchzipkit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libtouchzipkit.a;
-			remoteRef = CB49E72E109F79180046B62A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -302,7 +287,9 @@
 				GCC_PREFIX_HEADER = ZipKit_Utility_Prefix.pch;
 				INFOPLIST_FILE = "ZipKit_Utility-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "ZipKit Utility";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -317,7 +304,9 @@
 				GCC_PREFIX_HEADER = ZipKit_Utility_Prefix.pch;
 				INFOPLIST_FILE = "ZipKit_Utility-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "ZipKit Utility";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
