@@ -1033,7 +1033,7 @@ static NSUInteger const suffixLen = 5;
                                                     successCount:outCount 
                                                    singleFileFmt:NSLocalizedString(@"Encrypted %@", @"arg:filename") 
                                                    singleFailFmt:NSLocalizedString(@"Failed encrypting %@", @"arg:filename")
-                                                  pluralFilesFmt:NSLocalizedString(@"Encrypted %1$u of %2$u files", @"arg1:successCount arg2:totalCount")]];
+                                                  pluralFilesFmt:NSLocalizedString(@"Encrypted %1$u of %2$u selections", @"arg1:successCount arg2:totalCount")]];
     if ([errorMsgs count]) {
         [message appendString:@"\n\n"];
         [message appendString:[errorMsgs componentsJoinedByString:@"\n"]];

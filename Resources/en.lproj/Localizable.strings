@@ -40,7 +40,7 @@
 "Decryption finished (partially)" = "Decryption finished (partially)";
 
 /* arg1:successCount arg2:totalCount */
-"Encrypted %1$u of %2$u files" = "Encrypted %1$u of %2$u files";
+"Encrypted %1$u of %2$u selections" = "Encrypted %1$u of %2$u selections";
 
 /* arg:filename */
 "Encrypted %@" = "Encrypted %@";
