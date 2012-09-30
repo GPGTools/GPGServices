@@ -1,9 +1,6 @@
 ﻿/* arg:path */
 "%@ — Cannot import directory" = "%@ — Cannot import directory";
 
-/* Filename for Archive.zip.gpg */
-"Archive" = "Archive";
-
 /* arg:userID */
 "Bad signature by %@" = "Bad signature by %@";
 
@@ -13,10 +10,10 @@
 /* arg:shortKeyID */
 "Could not export key %@" = "Could not export key %@";
 
-/* no comment */
+/* No comment provided by engineer. */
 "Could not read file" = "Could not read file";
 
-/* no comment */
+/* No comment provided by engineer. */
 "Could not write to directory" = "Could not write to directory";
 
 "Could not open TextEdit" = "Could not open TextEdit";
@@ -42,6 +39,12 @@
 /* No comment provided by engineer. */
 "Decryption finished (partially)" = "Decryption finished (partially)";
 
+/* arg1:successCount arg2:totalCount */
+"Encrypted %1$u of %2$u selections" = "Encrypted %1$u of %2$u selections";
+
+/* arg:filename */
+"Encrypted %@" = "Encrypted %@";
+
 /* arg:filename */
 "Encrypting %@" = "Encrypting %@";
 
@@ -58,6 +61,9 @@
 "Encryption finished" = "Encryption finished";
 
 /* No comment provided by engineer. */
+"Encryption finished (partially)" = "Encryption finished (partially)";
+
+/* No comment provided by engineer. */
 "Export failed" = "Export failed";
 
 /* Matched in \"Verification FAILED:\" */
@@ -67,13 +73,16 @@
 "Failed decrypting %@" = "Failed decrypting %@";
 
 /* arg:filename */
+"Failed encrypting %@" = "Failed encrypting %@";
+
+/* arg:filename */
 "Failed importing %@" = "Failed importing %@";
 
 /* arg:filename */
-"Failed signing %@" = "Failed signing %@";
+"Failed renaming to %@" = "Failed renaming to %@";
 
-/* No comment provided by engineer. */
-"File doesn't exist" = "File doesn't exist";
+/* arg:filename */
+"Failed signing %@" = "Failed signing %@";
 
 /* arg1:validity arg2:userID */
 "Good signature (%@ trust):\n\"%@\"" = "Good signature (%1$@ trust):\n\"%2$@\"";
@@ -133,9 +142,6 @@
 "No verifiable text was found within the selection" = "No verifiable text was found within the selection";
 
 /* No comment provided by engineer. */
-"Please try again" = "Please try again";
-
-/* No comment provided by engineer. */
 "Selection" = "Selection";
 
 /* arg1:successCount; arg2:totalCount */
@@ -170,6 +176,9 @@
 
 /* No comment provided by engineer. */
 "Unexpected decrypt error" = "Unexpected decrypt error";
+
+/* No comment provided by engineer. */
+"Unexpected encrypt error" = "Unexpected encrypt error";
 
 /* arg:GPGSignature status */
 "Unexpected GPG signature status %i" = "Unexpected GPG signature status %i";
