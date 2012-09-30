@@ -151,6 +151,7 @@
 					<string>org.chromium.Chromium</string>
 					<string>com.operasoftware.Opera</string>
 					<string>org.mozilla.camino</string>
+					<string>com.adiumX.adiumX</string>
 					<string>com.apple.mail</string>
 				</array>
 			</dict>
@@ -215,6 +216,7 @@
 					<string>org.chromium.Chromium</string>
 					<string>com.operasoftware.Opera</string>
 					<string>org.mozilla.camino</string>
+					<string>com.adiumX.adiumX</string>
 					<string>com.apple.mail</string>
 				</array>
 			</dict>
@@ -277,6 +279,7 @@
 					<string>org.chromium.Chromium</string>
 					<string>com.operasoftware.Opera</string>
 					<string>org.mozilla.camino</string>
+					<string>com.adiumX.adiumX</string>
 					<string>com.apple.mail</string>
 				</array>
 			</dict>
