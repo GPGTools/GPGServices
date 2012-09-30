@@ -1,0 +1,35 @@
+/* Localized versions of Service menu items */
+
+"OpenPGP: Verify" = "OpenPGP: Verify Signature of Selection";
+"OpenPGP: Sign" = "OpenPGP: Sign Selection";
+"OpenPGP: Sign Selection to New Window" = "OpenPGP: Sign Selection to New Window";
+"OpenPGP: Encrypt" = "OpenPGP: Encrypt Selection";
+"OpenPGP: Encrypt Selection to New Window" = "OpenPGP: Encrypt Selection to New Window";
+"OpenPGP: Decrypt" = "OpenPGP: Decrypt Selection";
+"OpenPGP: Decrypt Selection to New Window" = "OpenPGP: Decrypt Selection to New Window";
+"OpenPGP: Insert my key" = "OpenPGP: Insert My Key";
+"OpenPGP: Insert my fingerprint" = "OpenPGP: Insert My Fingerprint";
+"OpenPGP: Import key" = "OpenPGP: Import Key from Selection";
+"OpenPGP: Sign File" = "OpenPGP: Sign File";
+"OpenPGP: Encrypt File" = "OpenPGP: Encrypt File";
+"OpenPGP: Decrypt File" = "OpenPGP: Decrypt File";
+"OpenPGP: Validate" = "OpenPGP: Verify Signature of File";
+"OpenPGP: Import" = "OpenPGP: Import Key from File";
+
+/* Rescued from https://github.com/GPGTools/GPGServices/commit/1907e8 , but
+   English has been re-worded since, and the keys have been changed slightly. 
+ */
+/* 
+ "OpenPGP: Verify" = "OpenPGP: Verifizieren"
+ "OpenPGP: Import key" = "OpenPGP: Schlüssel importieren";
+ "OpenPGP: Sign" = "OpenPGP: Signieren";
+ "OpenPGP: Sign and show Result" = "OpenPGP: Signieren und Ergebnis anzeigen";
+ "OpenPGP: Insert my fingerprint" = "OpenPGP: Meinen Fingerabdruck einfügen";
+ "OpenPGP: Insert my key" = "OpenPGP: Meinen Schlüssel einfügen";
+ "OpenPGP: Decrypt" = "OpenPGP: Entschlüsseln";
+ "OpenPGP: Decrypt and show Result" = "OpenPGP: Entschlüsseln und Ergebnis anzeigen";
+ "OpenPGP: Encrypt" = "OpenPGP: Verschlüsseln";
+ "OpenPGP: Encrypt and show Result" = "OpenPGP: Verschlüsseln und Ergebnis anzeigen";
+ "OpenPGP: Import" = "OpenPGP: Importieren"
+ "OpenPGP: Validate" = "OpenPGP: Validieren";
+ */

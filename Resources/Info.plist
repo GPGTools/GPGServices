@@ -130,6 +130,42 @@
 			<string>600000</string>
 		</dict>
 		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>OpenPGP: Sign Selection to New Window</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>sign</string>
+			<key>NSPortName</key>
+			<string>GPGServices</string>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSApplicationIdentifier</key>
+				<array>
+					<string>com.apple.Safari</string>
+					<string>com.google.Chrome</string>
+					<string>org.mozilla.firefox</string>
+					<string>org.chromium.Chromium</string>
+					<string>com.operasoftware.Opera</string>
+					<string>org.mozilla.camino</string>
+					<string>com.apple.mail</string>
+				</array>
+			</dict>
+			<key>NSReturnTypes</key>
+			<array/>
+			<key>NSSendTypes</key>
+			<array>
+				<string>public.plain-text</string>
+				<string>NSStringPboardType</string>
+				<string>NSRTFPboardType</string>
+			</array>
+			<key>NSTimeout</key>
+			<string>600000</string>
+		</dict>
+		<dict>
 			<key>NSKeyEquivalent</key>
 			<dict>
 				<key>default</key>
@@ -158,6 +194,40 @@
 			<string>600000</string>
 		</dict>
 		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>OpenPGP: Encrypt Selection to New Window</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>encrypt</string>
+			<key>NSPortName</key>
+			<string>GPGServices</string>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSApplicationIdentifier</key>
+				<array>
+					<string>com.apple.Safari</string>
+					<string>com.google.Chrome</string>
+					<string>org.mozilla.firefox</string>
+					<string>org.chromium.Chromium</string>
+					<string>com.operasoftware.Opera</string>
+					<string>org.mozilla.camino</string>
+					<string>com.apple.mail</string>
+				</array>
+			</dict>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+				<string>NSRTFPboardType</string>
+				<string>public.plain-text</string>
+			</array>
+			<key>NSTimeout</key>
+			<string>600000</string>
+		</dict>
+		<dict>
 			<key>NSKeyEquivalent</key>
 			<dict>
 				<key>default</key>
@@ -176,6 +246,40 @@
 			<array>
 				<string>NSStringPboardType</string>
 			</array>
+			<key>NSSendTypes</key>
+			<array>
+				<string>public.plain-text</string>
+				<string>NSStringPboardType</string>
+				<string>NSRTFPboardType</string>
+			</array>
+			<key>NSTimeout</key>
+			<string>100000</string>
+		</dict>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>OpenPGP: Decrypt Selection to New Window</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>decrypt</string>
+			<key>NSPortName</key>
+			<string>GPGServices</string>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSApplicationIdentifier</key>
+				<array>
+					<string>com.apple.Safari</string>
+					<string>com.google.Chrome</string>
+					<string>org.mozilla.firefox</string>
+					<string>org.chromium.Chromium</string>
+					<string>com.operasoftware.Opera</string>
+					<string>org.mozilla.camino</string>
+					<string>com.apple.mail</string>
+				</array>
+			</dict>
 			<key>NSSendTypes</key>
 			<array>
 				<string>public.plain-text</string>

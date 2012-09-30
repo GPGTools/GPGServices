@@ -67,6 +67,7 @@ static NSUInteger const suffixLen = 5;
 - (void)decryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs; 
 - (void)verifyFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
 - (void)importFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
+- (NSString*)detachedSignFileWrapped:(ServiceWrappedArgs *)wrappedArgs file:(NSString*)file withKeys:(NSArray*)keys;
 
 // If growl is active, produce one for a file's signatures
 - (void)growlVerificationResultsFor:(NSString *)file signatures:(NSArray *)signatures;
@@ -299,8 +300,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 
--(NSString *)encryptTextString:(NSString *)inputString
-{
+-(NSString *)encryptTextString:(NSString *)inputString {
     GPGController* ctx = [GPGController gpgController];
 	ctx.trustAllKeys = YES;
     ctx.useArmor = YES;
@@ -312,7 +312,6 @@ static NSUInteger const suffixLen = 5;
 		return nil;  // User pressed 'cancel'
 
     NSData* inputData = [inputString UTF8Data];
-    GPGEncryptSignMode mode = rcp.sign ? GPGEncryptSign : GPGPublicKeyEncrypt;
     NSArray* validRecipients = rcp.selectedKeys;
     GPGKey* privateKey = rcp.selectedPrivateKey;
     
@@ -323,6 +322,8 @@ static NSUInteger const suffixLen = 5;
     } else {
         validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
     }
+	
+	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
     
     if(rcp.encryptForOwnKeyToo && !privateKey) {
         [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil) 
@@ -335,14 +336,20 @@ static NSUInteger const suffixLen = 5;
         return nil;
     }
     
-    if(validRecipients.count == 0) {
+    if(validRecipients.count == 0 && !rcp.symetricEncryption) {
         [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
                                                   message:NSLocalizedString(@"No valid recipients found", nil)];
         return nil;
     }
+    if (mode == 0) {
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
+                                                  message:NSLocalizedString(@"Nothing to do", nil)];
+        return nil;
+    }
+
     
     @try {
-        if(mode == GPGEncryptSign)
+        if(mode & GPGSign)
             [ctx addSignerKey:[privateKey description]];
         
         NSData* outputData = [ctx processData:inputData 
@@ -659,10 +666,11 @@ static NSUInteger const suffixLen = 5;
     return [NSNumber numberWithUnsignedLongLong:size];
 }
 
-- (NSString*)detachedSignFile:(NSString*)file withKeys:(NSArray*)keys {
+- (NSString*)detachedSignFileWrapped:(ServiceWrappedArgs *)wrappedArgs file:(NSString *)file withKeys:(NSArray *)keys {
     @try {
         GPGController* ctx = [GPGController gpgController];
         ctx.useArmor = YES;
+        wrappedArgs.worker.runningController = ctx;
 
         for(GPGKey* k in keys)
             [ctx addSignerKey:[k description]];
@@ -703,6 +711,10 @@ static NSUInteger const suffixLen = 5;
         
         GPGFileStream *output = [GPGFileStream fileStreamForWritingAtPath:tempFile.fileName];
         [ctx processTo:output data:dataToSign withEncryptSignMode:GPGDetachedSign recipients:nil hiddenRecipients:nil];
+
+        // check after an operation
+        if (wrappedArgs.worker.amCanceling)
+            return nil;
 
         if (ctx.error) 
 			@throw ctx.error;
@@ -789,7 +801,8 @@ static NSUInteger const suffixLen = 5;
             if (wrappedArgs.worker.amCanceling)
                 return;
 
-            NSString* sigFile = [self detachedSignFile:file withKeys:[NSArray arrayWithObject:chosenKey]];
+            NSString* sigFile = [self detachedSignFileWrapped:wrappedArgs 
+                                                         file:file withKeys:[NSArray arrayWithObject:chosenKey]];
 
             // check after an operation
             if (wrappedArgs.worker.amCanceling)
@@ -846,30 +859,45 @@ static NSUInteger const suffixLen = 5;
 	int ret = [rcp runModal]; // thread-safe
 	if(ret != 0)
 		return;  // User pressed 'cancel'
+	
 
-    GPGEncryptSignMode mode = rcp.sign ? GPGEncryptSign : GPGPublicKeyEncrypt;
-    NSArray* validRecipients = rcp.selectedKeys;
+	
+	NSArray* validRecipients = rcp.selectedKeys;
     GPGKey* privateKey = rcp.selectedPrivateKey;
-    
-    if(rcp.encryptForOwnKeyToo && !privateKey) {
-        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil)
-                                                  message:NSLocalizedString(@"No private key selected to add to recipients", nil)];
-        return;
-    }
-    if(rcp.sign && !privateKey) {
-        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil) 
-                                                  message:NSLocalizedString(@"No private key selected for signing", nil)];
-        return;
-    }
     
     if(rcp.encryptForOwnKeyToo && privateKey) {
         validRecipients = [[[NSSet setWithArray:validRecipients] 
-                            setByAddingObject:[privateKey primaryKey]] 
+                            setByAddingObject:privateKey] 
                            allObjects];
     } else {
         validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
     }
-
+	
+	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
+    
+    if (rcp.encryptForOwnKeyToo && !privateKey) {
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil) 
+                                                  message:NSLocalizedString(@"No private key selected to add to recipients", nil)];
+        return;
+    }
+    if (rcp.sign && !privateKey) {
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil) 
+                                                  message:NSLocalizedString(@"No private key selected for signing", nil)];
+        return;
+    }
+    if (validRecipients.count == 0 && !rcp.symetricEncryption) {
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
+                                                  message:NSLocalizedString(@"No valid recipients found", nil)];
+        return;
+    }
+    if (mode == 0) {
+        [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
+                                                  message:NSLocalizedString(@"Nothing to do", nil)];
+        return;
+    }
+	
+	
+	
     // check before starting an operation
     if (wrappedArgs.worker.amCanceling)
         return;
@@ -924,6 +952,7 @@ static NSUInteger const suffixLen = 5;
                 return;
 
             GPGController* ctx = [GPGController gpgController];
+            wrappedArgs.worker.runningController = ctx;
             ctx.useArmor = useArmor;
             ctx.printVersion = emitVersion;
             ctx.useDefaultComments = YES;
@@ -1038,7 +1067,7 @@ static NSUInteger const suffixLen = 5;
         return;
 
     GPGController* ctx = [GPGController gpgController];
-    // [ctx setPassphraseDelegate:self];
+    wrappedArgs.worker.runningController = ctx;
     
     NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
     
@@ -1244,6 +1273,8 @@ static NSUInteger const suffixLen = 5;
         if([fmgr fileExistsAtPath:signedFile] && [fmgr fileExistsAtPath:signatureFile]) {
             @try {
                 GPGController* ctx = [GPGController gpgController];
+                wrappedArgs.worker.runningController = ctx;
+
                 GPGFileStream *signatureInput = [GPGFileStream fileStreamForReadingAtPath:signatureFile];
                 GPGFileStream *originalInput = [GPGFileStream fileStreamForReadingAtPath:signedFile];
                 sigs = [ctx verifySignatureOf:signatureInput originalData:originalInput];
@@ -1261,6 +1292,8 @@ static NSUInteger const suffixLen = 5;
         if(sigs == nil || sigs.count == 0) {
             @try {
                 GPGController* ctx = [GPGController gpgController];
+                wrappedArgs.worker.runningController = ctx;
+
                 GPGFileStream *signedInput = [GPGFileStream fileStreamForReadingAtPath:serviceFile];
                 sigs = [ctx verifySignatureOf:signedInput originalData:nil];
 
@@ -1390,6 +1423,7 @@ static NSUInteger const suffixLen = 5;
         return;
 
 	GPGController* gpgc = [GPGController gpgController];
+	wrappedArgs.worker.runningController = gpgc;
 
     NSMutableArray *importedFiles = [NSMutableArray arrayWithCapacity:[files count]];
     NSMutableArray *errorMsgs = [NSMutableArray array];
@@ -1513,7 +1547,7 @@ static NSUInteger const suffixLen = 5;
 			if(!(pboardString = [pboard stringForType:NSPasteboardTypeString]))
 			{
 				*error = myerror;
-				[self exitServiceRequest];
+				[self goneIn60Seconds];
 				return;
 			}
 		}
@@ -1522,14 +1556,14 @@ static NSUInteger const suffixLen = 5;
 			if(!(pboardString = [pboard stringForType:NSPasteboardTypeString]))
 			{
 				*error = myerror;
-				[self exitServiceRequest];
+				[self goneIn60Seconds];
 				return;
 			}
 		}
 		else
 		{
 			*error = myerror;
-			[self exitServiceRequest];
+			[self goneIn60Seconds];
 			return;
 		}
 	}
@@ -1562,32 +1596,44 @@ static NSUInteger const suffixLen = 5;
             break;
 	}
     
-	if(newString!=nil)
-	{
-        [pboard clearContents];
-        NSMutableArray *pbitems = [NSMutableArray array];
-
-        if ([pbtype isEqualToString:NSPasteboardTypeHTML]) {        
-            NSPasteboardItem *htmlItem = [[[NSPasteboardItem alloc] init] autorelease];
-            [htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"] 
-                        forType:NSPasteboardTypeHTML];
-            [pbitems addObject:htmlItem];
-        }
-        else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {        
-            NSPasteboardItem *rtfItem = [[[NSPasteboardItem alloc] init] autorelease];
-            [rtfItem setString:newString forType:NSPasteboardTypeRTF];
-            [pbitems addObject:rtfItem];
+	BOOL shouldExitServiceRequest = YES;
+	
+	if (newString != nil) {
+        static NSString * const kServiceShowInWindow = @"showInWindow";
+        if ([userData isEqualToString:kServiceShowInWindow]) {
+			[SimpleTextWindow showText:newString withTitle:@"GPGServices" andDelegate:self];
+			shouldExitServiceRequest = NO;
         }
         else {
-            NSPasteboardItem *stringItem = [[[NSPasteboardItem alloc] init] autorelease];
-            [stringItem setString:newString forType:NSPasteboardTypeString];            
-            [pbitems addObject:stringItem];
-        }
+            [pboard clearContents];
+			
+			NSMutableArray *pbitems = [NSMutableArray array];
+			
+			if ([pbtype isEqualToString:NSPasteboardTypeHTML]) {        
+				NSPasteboardItem *htmlItem = [[[NSPasteboardItem alloc] init] autorelease];
+				[htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"] 
+							forType:NSPasteboardTypeHTML];
+				[pbitems addObject:htmlItem];
+			}
+			else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {        
+				NSPasteboardItem *rtfItem = [[[NSPasteboardItem alloc] init] autorelease];
+				[rtfItem setString:newString forType:NSPasteboardTypeRTF];
+				[pbitems addObject:rtfItem];
+			}
+			else {
+				NSPasteboardItem *stringItem = [[[NSPasteboardItem alloc] init] autorelease];
+				[stringItem setString:newString forType:NSPasteboardTypeString];            
+				[pbitems addObject:stringItem];
+			}
+			
+			[pboard writeObjects:pbitems];
 
-        [pboard writeObjects:pbitems];
+        }
 	}
     
-	[self exitServiceRequest];
+	if (shouldExitServiceRequest) {
+		[self goneIn60Seconds];
+	}
 }
 
 -(void)dealWithFilesPasteboard:(NSPasteboard *)pboard
@@ -1628,14 +1674,9 @@ static NSUInteger const suffixLen = 5;
         }
     }
     
-    [self exitServiceRequest];
+    [self goneIn60Seconds];
 }
 
--(void)exitServiceRequest
-{
-	[NSApp hide:self];
-	[self goneIn60Seconds];
-}
 
 -(void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {[self dealWithPasteboard:pboard userData:userData mode:SignService error:error];}
@@ -1788,28 +1829,38 @@ static NSUInteger const suffixLen = 5;
 }
 */
 
--(IBAction)closeModalWindow:(id)sender{
+- (IBAction)closeModalWindow:(id)sender {
 	[NSApp stopModalWithCode:[sender tag]];
+}
+
+- (void)simpleTextWindowWillClose:(SimpleTextWindow *)simpleTextWindow {
+	[self goneIn60Seconds];
 }
 
 //
 //Timer based application termination
 //
--(void)cancelTerminateTimer
-{
+- (void)cancelTerminateTimer {
+	terminateCounter++;
 	[currentTerminateTimer invalidate];
-	currentTerminateTimer=nil;
+	currentTerminateTimer = nil;
 }
 
--(void)goneIn60Seconds
-{
-	if(currentTerminateTimer!=nil)
+- (void)goneIn60Seconds {
+	terminateCounter--;
+	if (currentTerminateTimer != nil) {
+		//Shouldn't happen.
 		[self cancelTerminateTimer];
-	currentTerminateTimer=[NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(selfQuit:) userInfo:nil repeats:YES];
+		terminateCounter--;
+	}
+	if (terminateCounter <= 0) {
+		terminateCounter = 0;
+		[NSApp hide:self];
+		currentTerminateTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(selfQuit:) userInfo:nil repeats:YES];
+	}
 }
 
--(void)selfQuit:(NSTimer *)timer
-{
+- (void)selfQuit:(NSTimer *)timer {
     if ([_inProgressCtlr.serviceWorkerArray count] < 1) {
         [self cancelTerminateTimer];
         [NSApp terminate:self];

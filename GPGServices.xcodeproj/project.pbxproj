@@ -12,6 +12,7 @@
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
+		3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3021FB1415D83ED300510CA8 /* SimpleTextView.m */; };
 		30B2056F14D56F1E00AE9583 /* ServicesRestart in Resources */ = {isa = PBXBuildFile; fileRef = 22261772144ED07200750926 /* ServicesRestart */; };
 		30B2057014D56F1E00AE9583 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7C814D56C5A00AA8881 /* MainMenu.xib */; };
 		30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */; };
@@ -23,11 +24,13 @@
 		30B2057714D56F2A00AE9583 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
 		30B2057814D56F2A00AE9583 /* lock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990C135CAB60004C89D5 /* lock.icns */; };
 		30B2057914D56F2A00AE9583 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
+		30CC110C15D7E6BF000DC2C5 /* SimpleTextWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */; };
+		30CC112415D7ECAF000DC2C5 /* SimpleTextWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */; };
 		451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D886B156ABFAD00A0B890 /* GPGTempFile.m */; };
+		45715A0C156D4BD100E5E7DD /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45715A0E156D4BD100E5E7DD /* ServicesMenu.strings */; };
 		45C2B9E31565AEC300B3571A /* WorkerProgressViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */; };
 		45C2B9EA1565DD6600B3571A /* NSAlert+ThreadSafety.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2B9E91565DD6600B3571A /* NSAlert+ThreadSafety.m */; };
 		45CC89011569365300928F5B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45CC88FF1569365300928F5B /* Localizable.strings */; };
-		45D73FE01503C266007E0838 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45D73FDF1503C266007E0838 /* ServicesMenu.strings */; };
 		45DD3DD7156571B400C9A4C1 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45DD3DD5156571B400C9A4C1 /* InProgressWindow.xib */; };
 		45DD3DDA1565729000C9A4C1 /* InProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DD3DD91565729000C9A4C1 /* InProgressWindowController.m */; };
 		45DD3DDE156579FF00C9A4C1 /* ServiceWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DD3DDD156579FF00C9A4C1 /* ServiceWorker.m */; };
@@ -50,6 +53,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1B278B2815F7C75A00B7DA9F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B306AD1157AC50C009AECCF;
+			remoteInfo = GPGTaskHelper;
+		};
 		8E6935ED13953A33004DFAE5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
@@ -130,6 +140,8 @@
 		3008440514D5720E0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
 		3008440614D5720E0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
 		3008440714D5720E0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
+		3021FB1315D83ED300510CA8 /* SimpleTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextView.h; path = Source/SimpleTextView.h; sourceTree = "<group>"; };
+		3021FB1415D83ED300510CA8 /* SimpleTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextView.m; path = Source/SimpleTextView.m; sourceTree = "<group>"; };
 		3058B7C714D56C5A00AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3058B7CA14D56C5E00AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
 		3058B7CD14D56C6400AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
@@ -148,15 +160,19 @@
 		30B2055C14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
 		30B2055D14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
 		30B2055E14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
+		30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleTextWindow.xib; sourceTree = "<group>"; };
+		30CC112215D7ECAF000DC2C5 /* SimpleTextWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextWindow.h; path = Source/SimpleTextWindow.h; sourceTree = "<group>"; };
+		30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextWindow.m; path = Source/SimpleTextWindow.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* GPGServices_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGServices_Prefix.pch; path = Source/GPGServices_Prefix.pch; sourceTree = "<group>"; };
 		451D886A156ABFAD00A0B890 /* GPGTempFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGTempFile.h; path = Source/GPGTempFile.h; sourceTree = "<group>"; };
 		451D886B156ABFAD00A0B890 /* GPGTempFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GPGTempFile.m; path = Source/GPGTempFile.m; sourceTree = "<group>"; };
+		45715A0D156D4BD100E5E7DD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		45715A0F156D4BDD00E5E7DD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		45C2B9E11565AEC300B3571A /* WorkerProgressViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorkerProgressViewItem.h; path = Source/WorkerProgressViewItem.h; sourceTree = "<group>"; };
 		45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WorkerProgressViewItem.m; path = Source/WorkerProgressViewItem.m; sourceTree = "<group>"; };
 		45C2B9E81565DD6600B3571A /* NSAlert+ThreadSafety.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAlert+ThreadSafety.h"; path = "Source/NSAlert+ThreadSafety.h"; sourceTree = "<group>"; };
 		45C2B9E91565DD6600B3571A /* NSAlert+ThreadSafety.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAlert+ThreadSafety.m"; path = "Source/NSAlert+ThreadSafety.m"; sourceTree = "<group>"; };
 		45CC89001569365300928F5B /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		45D73FDF1503C266007E0838 /* ServicesMenu.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = ServicesMenu.strings; sourceTree = "<group>"; };
 		45DD3DD6156571B400C9A4C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InProgressWindow.xib; sourceTree = "<group>"; };
 		45DD3DD81565729000C9A4C1 /* InProgressWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InProgressWindowController.h; path = Source/InProgressWindowController.h; sourceTree = "<group>"; };
 		45DD3DD91565729000C9A4C1 /* InProgressWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InProgressWindowController.m; path = Source/InProgressWindowController.m; sourceTree = "<group>"; };
@@ -335,7 +351,7 @@
 			isa = PBXGroup;
 			children = (
 				45CC88FF1569365300928F5B /* Localizable.strings */,
-				45D73FDF1503C266007E0838 /* ServicesMenu.strings */,
+				45715A0E156D4BD100E5E7DD /* ServicesMenu.strings */,
 				3058B7D414D56C6A00AA8881 /* InfoPlist.strings */,
 				30B2054114D56EBF00AE9583 /* MainMenu.xib.strings */,
 				30B2054314D56EBF00AE9583 /* PrivateKeyChooserWindow.xib.strings */,
@@ -353,6 +369,7 @@
 				3058B7CE14D56C6400AA8881 /* RecipientWindow.xib */,
 				3058B7D114D56C6700AA8881 /* VerificationResultsWindow.xib */,
 				45DD3DD5156571B400C9A4C1 /* InProgressWindow.xib */,
+				30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */,
 			);
 			name = XIBs;
 			sourceTree = "<group>";
@@ -369,6 +386,10 @@
 		8E1BC3D6134B977500C1BFD6 /* UI Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3021FB1315D83ED300510CA8 /* SimpleTextView.h */,
+				3021FB1415D83ED300510CA8 /* SimpleTextView.m */,
+				30CC112215D7ECAF000DC2C5 /* SimpleTextWindow.h */,
+				30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */,
 				8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */,
 				8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */,
 				8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */,
@@ -396,6 +417,7 @@
 			children = (
 				8E81D258139523890034B9D1 /* Libmacgpg.framework */,
 				8E81D25A139523890034B9D1 /* UnitTest.octest */,
+				1B278B2915F7C75A00B7DA9F /* org.gpgtools.Libmacgpg.GPGTaskHelper.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -475,6 +497,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		1B278B2915F7C75A00B7DA9F /* org.gpgtools.Libmacgpg.GPGTaskHelper.xpc */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = org.gpgtools.Libmacgpg.GPGTaskHelper.xpc;
+			remoteRef = 1B278B2815F7C75A00B7DA9F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		8E81D258139523890034B9D1 /* Libmacgpg.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -521,9 +550,10 @@
 				30B2057714D56F2A00AE9583 /* asc.icns in Resources */,
 				30B2057814D56F2A00AE9583 /* lock.icns in Resources */,
 				30B2057914D56F2A00AE9583 /* sig.icns in Resources */,
-				45D73FE01503C266007E0838 /* ServicesMenu.strings in Resources */,
+				45715A0C156D4BD100E5E7DD /* ServicesMenu.strings in Resources */,
 				45DD3DD7156571B400C9A4C1 /* InProgressWindow.xib in Resources */,
 				45CC89011569365300928F5B /* Localizable.strings in Resources */,
+				30CC110C15D7E6BF000DC2C5 /* SimpleTextWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +600,8 @@
 				45C2B9EA1565DD6600B3571A /* NSAlert+ThreadSafety.m in Sources */,
 				45FC40DB1566D2D80020A12B /* ServiceWrappedArgs.m in Sources */,
 				451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */,
+				30CC112415D7ECAF000DC2C5 /* SimpleTextWindow.m in Sources */,
+				3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,6 +711,15 @@
 			name = VerificationResultsWindow.xib.strings;
 			sourceTree = "<group>";
 		};
+		45715A0E156D4BD100E5E7DD /* ServicesMenu.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				45715A0D156D4BD100E5E7DD /* en */,
+				45715A0F156D4BDD00E5E7DD /* de */,
+			);
+			name = ServicesMenu.strings;
+			sourceTree = "<group>";
+		};
 		45CC88FF1569365300928F5B /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -753,8 +794,9 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -764,7 +806,8 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				SDKROOT = macosx10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

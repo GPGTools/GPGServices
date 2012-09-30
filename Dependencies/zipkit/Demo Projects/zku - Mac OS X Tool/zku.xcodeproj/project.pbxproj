@@ -29,13 +29,6 @@
 			remoteGlobalIDString = CB9B9CB6109F665C003E3F8B;
 			remoteInfo = zipkit;
 		};
-		CB49E6FE109F78DF0046B62A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CB9B9E11109F6ADB003E3F8B /* ZipKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CB9B9CEE109F6769003E3F8B;
-			remoteInfo = touchzipkit;
-		};
 		CB49E703109F78EE0046B62A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CB9B9E11109F6ADB003E3F8B /* ZipKit.xcodeproj */;
@@ -113,7 +106,6 @@
 			children = (
 				CB49E6FB109F78DF0046B62A /* ZipKit.framework */,
 				CB49E6FD109F78DF0046B62A /* libzipkit.a */,
-				CB49E6FF109F78DF0046B62A /* libtouchzipkit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,7 +138,11 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "zku" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* zku */;
 			projectDirPath = "";
 			projectReferences = (
@@ -175,13 +171,6 @@
 			fileType = archive.ar;
 			path = libzipkit.a;
 			remoteRef = CB49E6FC109F78DF0046B62A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CB49E6FF109F78DF0046B62A /* libtouchzipkit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libtouchzipkit.a;
-			remoteRef = CB49E6FE109F78DF0046B62A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -219,11 +208,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = zku_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
 				PRODUCT_NAME = zku;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -237,11 +228,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = zku_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
 				PRODUCT_NAME = zku;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
