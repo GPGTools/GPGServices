@@ -53,12 +53,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1B278B2815F7C75A00B7DA9F /* PBXContainerItemProxy */ = {
+		304AB8C81657D12500D7C188 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8E81D24F139523890034B9D1 /* Libmacgpg.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 1B306AD1157AC50C009AECCF;
-			remoteInfo = GPGTaskHelper;
+			remoteGlobalIDString = 1B46CFCC161555DF00CF9C5F;
+			remoteInfo = org.gpgtools.Libmacgpg.xpc;
 		};
 		8E6935ED13953A33004DFAE5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -417,7 +417,7 @@
 			children = (
 				8E81D258139523890034B9D1 /* Libmacgpg.framework */,
 				8E81D25A139523890034B9D1 /* UnitTest.octest */,
-				1B278B2915F7C75A00B7DA9F /* org.gpgtools.Libmacgpg.GPGTaskHelper.xpc */,
+				304AB8C91657D12500D7C188 /* org.gpgtools.Libmacgpg.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -497,11 +497,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		1B278B2915F7C75A00B7DA9F /* org.gpgtools.Libmacgpg.GPGTaskHelper.xpc */ = {
+		304AB8C91657D12500D7C188 /* org.gpgtools.Libmacgpg.xpc */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = org.gpgtools.Libmacgpg.GPGTaskHelper.xpc;
-			remoteRef = 1B278B2815F7C75A00B7DA9F /* PBXContainerItemProxy */;
+			fileType = "compiled.mach-o.executable";
+			path = org.gpgtools.Libmacgpg.xpc;
+			remoteRef = 304AB8C81657D12500D7C188 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		8E81D258139523890034B9D1 /* Libmacgpg.framework */ = {
