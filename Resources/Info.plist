@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BuildNumber</key>
+	<string>AUTOFILL</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
@@ -63,14 +65,14 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>AUTOFILL</string>
 	<key>CFBundleSignature</key>
 	<string>ccsv</string>
-	<key>CFBundleURLTypes</key>
-	<array/>
-	<key>CFBundleShortVersionString</key>
-	<string>1.7</string>
 	<key>CFBundleVersion</key>
-	<string>1.7</string>
+	<string>AUTOFILL</string>
+	<key>CommitHash</key>
+	<string>AUTOFILL</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -139,8 +141,6 @@
 			<string>sign</string>
 			<key>NSPortName</key>
 			<string>GPGServices</string>
-			<key>NSUserData</key>
-			<string>showInWindow</string>
 			<key>NSRequiredContext</key>
 			<dict>
 				<key>NSApplicationIdentifier</key>
@@ -164,6 +164,8 @@
 			</array>
 			<key>NSTimeout</key>
 			<string>600000</string>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
 		</dict>
 		<dict>
 			<key>NSKeyEquivalent</key>
@@ -203,8 +205,6 @@
 			<string>encrypt</string>
 			<key>NSPortName</key>
 			<string>GPGServices</string>
-			<key>NSUserData</key>
-			<string>showInWindow</string>
 			<key>NSRequiredContext</key>
 			<dict>
 				<key>NSApplicationIdentifier</key>
@@ -226,6 +226,8 @@
 			</array>
 			<key>NSTimeout</key>
 			<string>600000</string>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
 		</dict>
 		<dict>
 			<key>NSKeyEquivalent</key>
@@ -265,8 +267,6 @@
 			<string>decrypt</string>
 			<key>NSPortName</key>
 			<string>GPGServices</string>
-			<key>NSUserData</key>
-			<string>showInWindow</string>
 			<key>NSRequiredContext</key>
 			<dict>
 				<key>NSApplicationIdentifier</key>
@@ -288,6 +288,8 @@
 			</array>
 			<key>NSTimeout</key>
 			<string>100000</string>
+			<key>NSUserData</key>
+			<string>showInWindow</string>
 		</dict>
 		<dict>
 			<key>NSKeyEquivalent</key>
@@ -479,9 +481,5 @@
 	</array>
 	<key>NSUIElement</key>
 	<string>1</string>
-	<key>UTExportedTypeDeclarations</key>
-	<array/>
-	<key>UTImportedTypeDeclarations</key>
-	<array/>
 </dict>
 </plist>

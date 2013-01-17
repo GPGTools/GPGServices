@@ -24,6 +24,46 @@
 			<key>UUID</key>
 			<string>73072BC0-7410-4E8A-8A2A-F8E86B347C8B</string>
 		</dict>
+		<dict>
+			<key>PACKAGE_SETTINGS</key>
+			<dict>
+				<key>LOCATION</key>
+				<integer>0</integer>
+				<key>NAME</key>
+				<string>Libmacgpg</string>
+			</dict>
+			<key>PATH</key>
+			<dict>
+				<key>PATH</key>
+				<string>../Dependencies/Libmacgpg/build/Libmacgpg_core.pkg</string>
+				<key>PATH_TYPE</key>
+				<integer>1</integer>
+			</dict>
+			<key>TYPE</key>
+			<integer>1</integer>
+			<key>UUID</key>
+			<string>48D8D04F-A1E8-45DA-BBD5-165000309398</string>
+		</dict>
+		<dict>
+			<key>PACKAGE_SETTINGS</key>
+			<dict>
+				<key>LOCATION</key>
+				<integer>0</integer>
+				<key>NAME</key>
+				<string>Libmacgpg XPC</string>
+			</dict>
+			<key>PATH</key>
+			<dict>
+				<key>PATH</key>
+				<string>../Dependencies/Libmacgpg/build/LibmacgpgXPC_core.pkg</string>
+				<key>PATH_TYPE</key>
+				<integer>1</integer>
+			</dict>
+			<key>TYPE</key>
+			<integer>1</integer>
+			<key>UUID</key>
+			<string>2F85E696-2371-496D-BCB0-EBA0A2BCC15F</string>
+		</dict>
 	</array>
 	<key>PROJECT</key>
 	<dict>
@@ -90,6 +130,72 @@
 								<integer>0</integer>
 								<key>UUID</key>
 								<string>79FD09A5-576B-4CB1-992F-E840A1626CF6</string>
+							</dict>
+							<dict>
+								<key>DESCRIPTION</key>
+								<array/>
+								<key>OPTIONS</key>
+								<dict>
+									<key>HIDDEN</key>
+									<false/>
+									<key>STATE</key>
+									<integer>1</integer>
+								</dict>
+								<key>PACKAGE_UUID</key>
+								<string>48D8D04F-A1E8-45DA-BBD5-165000309398</string>
+								<key>TITLE</key>
+								<array/>
+								<key>TOOLTIP</key>
+								<array/>
+								<key>TYPE</key>
+								<integer>0</integer>
+								<key>UUID</key>
+								<string>4DDF2943-F584-4463-828E-F5F660A44E30</string>
+							</dict>
+							<dict>
+								<key>DESCRIPTION</key>
+								<array/>
+								<key>OPTIONS</key>
+								<dict>
+									<key>HIDDEN</key>
+									<false/>
+									<key>STATE</key>
+									<integer>1</integer>
+								</dict>
+								<key>PACKAGE_UUID</key>
+								<string>2F85E696-2371-496D-BCB0-EBA0A2BCC15F</string>
+								<key>REQUIREMENTS</key>
+								<array>
+									<dict>
+										<key>BEHAVIOR</key>
+										<integer>1</integer>
+										<key>DICTIONARY</key>
+										<dict>
+											<key>IC_REQUIREMENT_OS_DISK_TYPE</key>
+											<integer>0</integer>
+											<key>IC_REQUIREMENT_OS_DISTRIBUTION_TYPE</key>
+											<integer>0</integer>
+											<key>IC_REQUIREMENT_OS_MINIMUM_VERSION</key>
+											<integer>100800</integer>
+										</dict>
+										<key>IDENTIFIER</key>
+										<string>fr.whitebox.Packages.requirement.os</string>
+										<key>MESSAGE</key>
+										<array/>
+										<key>NAME</key>
+										<string>Operating System &gt;= 10.8</string>
+										<key>STATE</key>
+										<true/>
+									</dict>
+								</array>
+								<key>TITLE</key>
+								<array/>
+								<key>TOOLTIP</key>
+								<array/>
+								<key>TYPE</key>
+								<integer>0</integer>
+								<key>UUID</key>
+								<string>1C1AF9FD-244D-4261-AE17-DA0899E71D44</string>
 							</dict>
 						</array>
 						<key>REMOVED</key>
