@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2226176F144ECFD500750926 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2226176E144ECFD500750926 /* Libmacgpg.framework */; };
-		22261771144ED03A00750926 /* Libmacgpg.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8E81D258139523890034B9D1 /* Libmacgpg.framework */; };
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
@@ -111,7 +110,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				22261771144ED03A00750926 /* Libmacgpg.framework in Copy Frameworks */,
 				2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */,
 				8EF7A61D1334C05300FD8C5B /* Growl.framework in Copy Frameworks */,
 			);
