@@ -15,6 +15,9 @@ dir="$PWD"
 cd "$(readlink "$2")"
 target="$(pwd -P)"
 
+echo "Readlink result: $(readlink "$2")"
+echo "Target before: $target"
+
 if cd "$homedir" && [[ "$target" == "$(pwd -P)" ]] ;then
 	target="$homedir"
 else
@@ -22,6 +25,11 @@ else
 fi
 ################################################################################
 
+echo "Sysdir: $sysdir"
+echo "PWD: $dir"
+echo "Argument 2: $2"
+echo "Homedir $homedir"
+echo "Target after: $target"
 
 # Check if GPGServices is correct installed ####################################
 if [[ ! -e "$target/$bundle" ]] ;then
