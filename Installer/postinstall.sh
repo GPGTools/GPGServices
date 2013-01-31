@@ -56,7 +56,7 @@ echo "[gpgservices] Moving bundle to final destination: $target"
 if [[ ! -d "$target" ]]; then
 	mkdir -p "$target" || exit 1
 fi
-mv "$temporarydir/$bundle" "$target/"
+mv "$temporarydir/$bundle" "$target/" || exit 1
 ################################################################################
 
 
