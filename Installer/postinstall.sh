@@ -6,38 +6,36 @@
 sysdir="/Library/Services"
 homedir="$HOME/Library/Services"
 bundle="GPGServices.service"
-USER=${USER:-$(id -un)}
+USER=${USER:-$(id -un)} 
+temporarydir="$2"
 ################################################################################
 
 
 # Find real target #############################################################
-dir="$PWD"
-cd "$(readlink "$2")"
-target="$(pwd -P)"
+existingInstallationAt=""
 
-echo "Readlink result: $(readlink "$2")"
-echo "Target before: $target"
-
-if cd "$homedir" && [[ "$target" == "$(pwd -P)" ]] ;then
+if [[ -e "$homedir/$bundle" ]]; then
+	existingInstallationAt="$homedir"
 	target="$homedir"
+elif [[ -e "$sysdir/$bundle" ]]; then
+	existingInstallationAt="$sysdir"
+	target="$sysdir"
 else
 	target="$sysdir"
 fi
+
 ################################################################################
 
-echo "Sysdir: $sysdir"
-echo "PWD: $dir"
-echo "Argument 2: $2"
-echo "Homedir $homedir"
-echo "Target after: $target"
+echo "Temporary dir: $temporarydir"
+echo "existing installation at: $existingInstallationAt"
+echo "installation target: $target"
 
-# Check if GPGServices is correct installed ####################################
-if [[ ! -e "$target/$bundle" ]] ;then
-	echo "[gpgservices] Can't find '$bundle'.  Aborting." >&2
+# Check if GPGServices is correct installed in the temporary directory.
+if [[ ! -e "$temporarydir/$bundle" ]] ;then
+	echo "[gpgservices] Couldn't install '$bundle' in temporary directory $temporarydir.  Aborting." >&2
 	exit 1
 fi
 ################################################################################
-
 
 # Quit GPGServices #############################################################
 if ps -axo command | grep -q "[G]PGServices" ;then
@@ -47,9 +45,18 @@ fi
 
 
 # Cleanup ######################################################################
-echo "[gpgservices] Removing duplicates of the bundle..."
-[[ "$target" != "$sysdir" ]] && rm -rf "$sysdir/$bundle"
-[[ "$target" != "$homedir" ]] && rm -rf "$homedir/$bundle"
+if [[ "$existingInstallationAt" != "" ]]; then
+	echo "[gpgservices] Removing existing installation of the bundle..."
+	rm -rf "$existingInstallationAt/$bundle" || exit 1
+fi
+################################################################################
+
+# Proper installation ##########################################################
+echo "[gpgservices] Moving bundle to final destination: $target"
+if [[ ! -d "$target" ]]; then
+	mkdir -p "$target" || exit 1
+fi
+mv "$temporarydir/$bundle" "$target/"
 ################################################################################
 
 
