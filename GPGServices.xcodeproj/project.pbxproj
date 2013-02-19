@@ -54,6 +54,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		307FE35416D42766006E8265 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 307FE34D16D42765006E8265 /* Libmacgpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Libmacgpg;
+		};
+		307FE35616D42766006E8265 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 307FE34D16D42765006E8265 /* Libmacgpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 30C8B38E139503A800F49AA1;
+			remoteInfo = UnitTest;
+		};
+		307FE35816D42766006E8265 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 307FE34D16D42765006E8265 /* Libmacgpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1B46CFCC161555DF00CF9C5F;
+			remoteInfo = org.gpgtools.Libmacgpg.xpc;
+		};
+		307FE35B16D42776006E8265 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 307FE34D16D42765006E8265 /* Libmacgpg.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = Libmacgpg;
+		};
 		8EDC4076133F650800D0A101 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
@@ -121,6 +149,7 @@
 		3058B7CD14D56C6400AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
 		3058B7D014D56C6700AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
 		3058B7D314D56C6A00AA8881 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		307FE34D16D42765006E8265 /* Libmacgpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Libmacgpg.xcodeproj; path = Dependencies/Libmacgpg/Libmacgpg.xcodeproj; sourceTree = "<group>"; };
 		30B2054214D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.xib.strings; sourceTree = "<group>"; };
 		30B2054414D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
 		30B2054614D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
@@ -261,6 +290,7 @@
 		22CA686C12DFD8B400ED919C /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				307FE34D16D42765006E8265 /* Libmacgpg.xcodeproj */,
 				8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */,
 			);
 			name = Dependencies;
@@ -319,6 +349,16 @@
 				8ED7990B135CAB60004C89D5 /* sig.icns */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		307FE34E16D42765006E8265 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				307FE35516D42766006E8265 /* Libmacgpg.framework */,
+				307FE35716D42766006E8265 /* UnitTest.octest */,
+				307FE35916D42766006E8265 /* org.gpgtools.Libmacgpg.xpc */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		30B2057A14D56F3500AE9583 /* Strings */ = {
@@ -412,6 +452,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				307FE35C16D42776006E8265 /* PBXTargetDependency */,
 				8EDC40F4133F6B3E00D0A101 /* PBXTargetDependency */,
 			);
 			name = GPGServices;
@@ -445,6 +486,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 307FE34E16D42765006E8265 /* Products */;
+					ProjectRef = 307FE34D16D42765006E8265 /* Libmacgpg.xcodeproj */;
+				},
+				{
 					ProductGroup = 8EDC405C133F650800D0A101 /* Products */;
 					ProjectRef = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
 				},
@@ -457,6 +502,27 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		307FE35516D42766006E8265 /* Libmacgpg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Libmacgpg.framework;
+			remoteRef = 307FE35416D42766006E8265 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		307FE35716D42766006E8265 /* UnitTest.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTest.octest;
+			remoteRef = 307FE35616D42766006E8265 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		307FE35916D42766006E8265 /* org.gpgtools.Libmacgpg.xpc */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = org.gpgtools.Libmacgpg.xpc;
+			remoteRef = 307FE35816D42766006E8265 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		8EDC4077133F650800D0A101 /* ZipKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -561,6 +627,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		307FE35C16D42776006E8265 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Libmacgpg;
+			targetProxy = 307FE35B16D42776006E8265 /* PBXContainerItemProxy */;
+		};
 		8EDC40F4133F6B3E00D0A101 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ZipKit;
