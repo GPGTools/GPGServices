@@ -84,6 +84,8 @@ static NSUInteger const suffixLen = 5;
     
     [GrowlApplicationBridge setGrowlDelegate:self];
     _inProgressCtlr = [[InProgressWindowController alloc] init];
+	
+	updater = [SUUpdater updaterForBundle:[NSBundle bundleForClass:[self class]]];
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {

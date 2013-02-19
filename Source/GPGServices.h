@@ -12,6 +12,7 @@
 #import <Growl/Growl.h>
 #import "ServiceWorkerDelegate.h"
 #import "SimpleTextWindow.h"
+#import "Sparkle/Sparkle.h"
 
 typedef BOOL(^KeyValidatorT)(GPGKey* key);
 
@@ -41,8 +42,7 @@ typedef enum {
 
 @class InProgressWindowController;
 
-@interface GPGServices : NSObject <NSApplicationDelegate, ServiceWorkerDelegate, GrowlApplicationBridgeDelegate, SimpleTextWindowDelegate>
-{
+@interface GPGServices : NSObject <NSApplicationDelegate, ServiceWorkerDelegate, GrowlApplicationBridgeDelegate, SimpleTextWindowDelegate> {
 	IBOutlet NSWindow *recipientWindow;
 	
 	IBOutlet NSWindow *passphraseWindow;
@@ -52,9 +52,10 @@ typedef enum {
 	int terminateCounter;
 
     InProgressWindowController *_inProgressCtlr;
+	SUUpdater *updater;
 }
 
--(void)applicationDidFinishLaunching:(NSNotification *)aNotification;
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 
 
 #pragma mark -
