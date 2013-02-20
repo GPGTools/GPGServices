@@ -146,4 +146,6 @@ typedef enum {
 - (void)goneIn60Seconds;
 - (void)selfQuit:(NSTimer *)timer;
 
+- (void)updater:(SUUpdater *)updater didFindValidUpdate:(SUAppcastItem *)update;
+
 @end

@@ -86,6 +86,7 @@ static NSUInteger const suffixLen = 5;
     _inProgressCtlr = [[InProgressWindowController alloc] init];
 	
 	updater = [SUUpdater updaterForBundle:[NSBundle bundleForClass:[self class]]];
+	updater.delegate = self;
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
@@ -109,6 +110,9 @@ static NSUInteger const suffixLen = 5;
     [NSApp replyToOpenOrPrint:NSApplicationDelegateReplySuccess];
 }
 
+- (void)updater:(SUUpdater *)updater didFindValidUpdate:(SUAppcastItem *)update {
+	[self cancelTerminateTimer];
+}
 
 #pragma mark -
 #pragma mark GPG-Helper
