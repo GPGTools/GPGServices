@@ -484,6 +484,6 @@
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>https://www.gpgtools.org/gpgservices/test-appcast.xml</string>
+	<string>https://gpgtools.org/gpgservices/appcast</string>
 </dict>
 </plist>

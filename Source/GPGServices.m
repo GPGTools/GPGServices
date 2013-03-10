@@ -110,9 +110,6 @@ static NSUInteger const suffixLen = 5;
     [NSApp replyToOpenOrPrint:NSApplicationDelegateReplySuccess];
 }
 
-- (void)updater:(SUUpdater *)updater didFindValidUpdate:(SUAppcastItem *)update {
-	[self cancelTerminateTimer];
-}
 
 #pragma mark -
 #pragma mark GPG-Helper
@@ -1858,10 +1855,12 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)selfQuit:(NSTimer *)timer {
-    if ([_inProgressCtlr.serviceWorkerArray count] < 1) {
+    if ([_inProgressCtlr.serviceWorkerArray count] < 1 && ![updater updateInProgress]) {
         [self cancelTerminateTimer];
         [NSApp terminate:self];
     }
 }
+
+
 
 @end

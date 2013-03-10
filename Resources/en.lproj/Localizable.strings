@@ -198,3 +198,6 @@
 /* arg:count */
 "Verifying signatures of %u files" = "Verifying signatures of %u files";
 
+"Version: %@" = "Version: %@";
+
+"Build: %@" = "Build: %@";
