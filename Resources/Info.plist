@@ -485,5 +485,7 @@
 	<true/>
 	<key>SUFeedURL</key>
 	<string>https://gpgtools.org/gpgservices/appcast</string>
+	<key>SUEnableSystemProfiling</key>
+	<true/>
 </dict>
 </plist>
