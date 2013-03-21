@@ -1,0 +1,17 @@
+{"info":
+    {"features":
+        ["Symmetric encryption\n\nOne of the most requested GPGServices features has arrived. You can now encrypt with a password. <a href="https://gpgtools.lighthouseapp.com/projects/67607/tickets/74-symmetric-encryption">[#74]</a>"],
+        ["Encrypt read-only text selections\n\nNow GPGServices will work in most used browsers like Safari, Chrome, Firefox, Chromium and more as well as in Mail.app. <a href="https://gpgtools.lighthouseapp.com/projects/67607/tickets/73-decrypt-read-only-text-selections">[#73]</a> and <a href="https://gpgtools.lighthouseapp.com/projects/67607/tickets/136-allow-decryption-in-mailapp">[#136]</a>"],
+        ["Added Version information\n\nNow displaying the version of GPGServices being used so users easily can find out which version they have. <a href="https://gpgtools.lighthouseapp.com/projects/67607/tickets/116-show-version-information">[#116]</a>"],
+    "fixes": [
+        "Fix for double encryption / decryption <a href="https://gpgtools.lighthouseapp.com/projects/67607/tickets/146-everything-doubling-when-encryptingdecrypting">[#146]</a>",
+        "Fix for signature not being found <a href="https://gpgtools.lighthouseapp.com/projects/67607/tickets/131-via-tender-no-signuture-was-found-within-the-selected-text-when-using-check-signature">[#131]</a>",
+        "Fix broken Growl icon <a href="https://gpgtools.lighthouseapp.com/projects/67607/tickets/121-via-tender-growl-errors-such-as-decryption-failed-have-a-broken-icon">[#121]</a>",
+        "Fix for canceling encryption resulting in finished encryption <a href="https://gpgtools.lighthouseapp.com/projects/67607/tickets/125-canceling-out-of-the-passphrase-still-results-in-encryption-finished-and-an-empty-file">[#125]</a>",
+        "Display missing error messages to the user <a href="https://gpgtools.lighthouseapp.com/projects/67607/tickets/102-forward-error-messages-to-the-user">[#102]</a>",
+        "Fix for double encryption / decryption <a href="https://gpgtools.lighthouseapp.com/projects/67607/tickets/146-everything-doubling-when-encryptingdecrypting">[#146]</a>",
+        "Fix for PathFinder creating duplicate files when decrypting and some other minor oddities with PathFinder <a href="https://gpgtools.lighthouseapp.com/projects/67607-gpgservices/tickets/155-Double-Duplicates-with-GPGServices#ticket-155">[#155]</a>",
+        "Something Else describing a fix"
+    ]
+    }
+}
