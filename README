@@ -1,7 +1,7 @@
 Port of the GPGServices to Snow Leopard.
 See http://www.far-blue.co.uk/projects/gpgservices.html for details.
 
-To compile and test (takes some time since MacGPGME gets compiled too):
+To compile and test
 
 git clone --recursive git@github.com:GPGTools/GPGServices.git
 cd GPGServices
