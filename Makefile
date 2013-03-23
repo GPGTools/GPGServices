@@ -3,9 +3,7 @@ TARGET = GPGServices
 PRODUCT = GPGServices.service
 MAKE_DEFAULT = Dependencies/GPGTools_Core/newBuildSystem/Makefile.default
 
-ifneq "$(wildcard $(MAKE_DEFAULT))" ""
-	include $(MAKE_DEFAULT)
-endif
+-include $(MAKE_DEFAULT)
 
 $(MAKE_DEFAULT):
 	@bash -c "$$(curl -fsSL https://raw.github.com/GPGTools/GPGTools_Core/master/newBuildSystem/prepare-core.sh)"
