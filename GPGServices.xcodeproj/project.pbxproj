@@ -14,6 +14,7 @@
 		302D33D116D41B7100C05409 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D016D41B7100C05409 /* Sparkle.framework */; };
 		302D33D216D41B7600C05409 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D016D41B7100C05409 /* Sparkle.framework */; };
 		302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D316D41BCF00C05409 /* Libmacgpg.framework */; };
+		305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */; };
 		30B2056F14D56F1E00AE9583 /* ServicesRestart in Resources */ = {isa = PBXBuildFile; fileRef = 22261772144ED07200750926 /* ServicesRestart */; };
 		30B2057014D56F1E00AE9583 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7C814D56C5A00AA8881 /* MainMenu.xib */; };
 		30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */; };
@@ -32,7 +33,6 @@
 		45C2B9E31565AEC300B3571A /* WorkerProgressViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */; };
 		45C2B9EA1565DD6600B3571A /* NSAlert+ThreadSafety.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2B9E91565DD6600B3571A /* NSAlert+ThreadSafety.m */; };
 		45CC89011569365300928F5B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45CC88FF1569365300928F5B /* Localizable.strings */; };
-		45DD3DD7156571B400C9A4C1 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45DD3DD5156571B400C9A4C1 /* InProgressWindow.xib */; };
 		45DD3DDA1565729000C9A4C1 /* InProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DD3DD91565729000C9A4C1 /* InProgressWindowController.m */; };
 		45DD3DDE156579FF00C9A4C1 /* ServiceWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DD3DDD156579FF00C9A4C1 /* ServiceWorker.m */; };
 		45DD3DE115657C4900C9A4C1 /* ServiceWrappedOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DD3DE015657C4900C9A4C1 /* ServiceWrappedOperation.m */; };
@@ -156,6 +156,7 @@
 		3058B7CD14D56C6400AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
 		3058B7D014D56C6700AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
 		3058B7D314D56C6A00AA8881 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InProgressWindow.xib; sourceTree = "<group>"; };
 		307FE34D16D42765006E8265 /* Libmacgpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Libmacgpg.xcodeproj; path = Dependencies/Libmacgpg/Libmacgpg.xcodeproj; sourceTree = "<group>"; };
 		30B2054214D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.xib.strings; sourceTree = "<group>"; };
 		30B2054414D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
@@ -183,7 +184,6 @@
 		45C2B9E81565DD6600B3571A /* NSAlert+ThreadSafety.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAlert+ThreadSafety.h"; path = "Source/NSAlert+ThreadSafety.h"; sourceTree = "<group>"; };
 		45C2B9E91565DD6600B3571A /* NSAlert+ThreadSafety.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAlert+ThreadSafety.m"; path = "Source/NSAlert+ThreadSafety.m"; sourceTree = "<group>"; };
 		45CC89001569365300928F5B /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		45DD3DD6156571B400C9A4C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InProgressWindow.xib; sourceTree = "<group>"; };
 		45DD3DD81565729000C9A4C1 /* InProgressWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InProgressWindowController.h; path = Source/InProgressWindowController.h; sourceTree = "<group>"; };
 		45DD3DD91565729000C9A4C1 /* InProgressWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InProgressWindowController.m; path = Source/InProgressWindowController.m; sourceTree = "<group>"; };
 		45DD3DDC156579FE00C9A4C1 /* ServiceWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServiceWorker.h; path = Source/ServiceWorker.h; sourceTree = "<group>"; };
@@ -390,7 +390,7 @@
 				3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */,
 				3058B7CE14D56C6400AA8881 /* RecipientWindow.xib */,
 				3058B7D114D56C6700AA8881 /* VerificationResultsWindow.xib */,
-				45DD3DD5156571B400C9A4C1 /* InProgressWindow.xib */,
+				305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */,
 				30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */,
 			);
 			name = XIBs;
@@ -571,9 +571,9 @@
 				30B2057814D56F2A00AE9583 /* lock.icns in Resources */,
 				30B2057914D56F2A00AE9583 /* sig.icns in Resources */,
 				45715A0C156D4BD100E5E7DD /* ServicesMenu.strings in Resources */,
-				45DD3DD7156571B400C9A4C1 /* InProgressWindow.xib in Resources */,
 				45CC89011569365300928F5B /* Localizable.strings in Resources */,
 				30CC110C15D7E6BF000DC2C5 /* SimpleTextWindow.xib in Resources */,
+				305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -760,14 +760,6 @@
 				45CC89001569365300928F5B /* en */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		45DD3DD5156571B400C9A4C1 /* InProgressWindow.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				45DD3DD6156571B400C9A4C1 /* en */,
-			);
-			name = InProgressWindow.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
