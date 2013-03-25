@@ -111,6 +111,11 @@ static NSUInteger const suffixLen = 5;
 	[NSApp replyToOpenOrPrint:NSApplicationDelegateReplySuccess];
 }
 
+- (void)updateAlert:(SUUpdateAlert *)updateAlert willShowReleaseNotesWithSize:(NSSize *)size {
+	size->width = 600;
+	size->height = 350;
+}
+
 #pragma mark -
 #pragma mark GPG-Helper
 
