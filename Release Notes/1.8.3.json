@@ -1,0 +1,8 @@
+{
+    "info": {
+        "features": [],
+        "fixes": [
+            "Load the progress window in languages other than english."
+		]
+    }
+}

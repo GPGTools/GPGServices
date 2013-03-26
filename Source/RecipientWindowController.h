@@ -39,6 +39,8 @@
 @property (assign) BOOL encryptForOwnKeyToo;
 @property (assign) BOOL symetricEncryption;
 @property (readonly) BOOL okEnabled;
+@property (readonly) NSString *versionDescription;
+@property (readonly) NSString *buildNumberDescription;
 
 // thread-safe
 - (NSInteger)runModal;

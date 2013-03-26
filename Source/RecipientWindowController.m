@@ -54,6 +54,15 @@
 	return encryptForOwnKeyToo;
 }*/
 
+- (NSString *)versionDescription {
+	return [NSString stringWithFormat:NSLocalizedString(@"Version: %@", nil), [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+}
+
+- (NSString *)buildNumberDescription {
+    return [NSString stringWithFormat:NSLocalizedString(@"Build: %@", nil), [[NSBundle mainBundle] objectForInfoDictionaryKey:@"BuildNumber"]];
+}
+
+
 - (id)init {
 	self = [super initWithWindowNibName:@"RecipientWindow"];
 

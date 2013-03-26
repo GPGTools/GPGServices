@@ -481,5 +481,11 @@
 	</array>
 	<key>NSUIElement</key>
 	<string>1</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://gpgtools.org/releases/gpgservices/appcast.xml</string>
+	<key>SUEnableSystemProfiling</key>
+	<true/>
 </dict>
 </plist>
