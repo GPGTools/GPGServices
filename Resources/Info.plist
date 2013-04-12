@@ -484,7 +484,7 @@
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>https://gpgtools.org/releases/gpgservices/appcast.xml</string>
+	<string>https://nightly.gpgtools.org/releases/gpgservices/appcast.xml</string>
 	<key>SUEnableSystemProfiling</key>
 	<true/>
 </dict>
