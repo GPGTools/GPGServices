@@ -20,6 +20,7 @@
 
 #import "Libmacgpg/GPGFileStream.h"
 #import "Libmacgpg/GPGMemoryStream.h"
+#import <Libmacgpg/Libmacgpg.h>
 #import "ZipOperation.h"
 #import "ZipKit/ZKArchive.h"
 #import "NSPredicate+negate.h"
@@ -114,6 +115,32 @@ static NSUInteger const suffixLen = 5;
 - (void)updateAlert:(SUUpdateAlert *)updateAlert willShowReleaseNotesWithSize:(NSSize *)size {
 	size->width = 600;
 	size->height = 350;
+}
+
+- (NSString *)feedURLStringForUpdater:(SUUpdater *)updater {
+	NSString *updateSourceKey = @"UpdateSource";
+	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	
+	NSString *feedURLKey = @"SUFeedURL";
+	NSString *appcastSource = [[GPGOptions sharedOptions] stringForKey:updateSourceKey];
+	if ([appcastSource isEqualToString:@"nightly"]) {
+		feedURLKey = @"SUFeedURL_nightly";
+	} else if ([appcastSource isEqualToString:@"prerelease"]) {
+		feedURLKey = @"SUFeedURL_prerelease";
+	} else {
+		NSString *version = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+		if ([version rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"nN"]].length > 0) {
+			feedURLKey = @"SUFeedURL_nightly";
+		} else if ([version rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"abAB"]].length > 0) {
+			feedURLKey = @"SUFeedURL_prerelease";
+		}
+	}
+	
+	NSString *appcastURL = [bundle objectForInfoDictionaryKey:feedURLKey];
+	if (!appcastURL) {
+		appcastURL = [bundle objectForInfoDictionaryKey:@"SUFeedURL"];
+	}
+	return appcastURL;
 }
 
 #pragma mark -
