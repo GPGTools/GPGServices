@@ -1624,6 +1624,12 @@ static NSUInteger const suffixLen = 5;
 			[self goneIn60Seconds];
 			return;
 		}
+		
+		if ([pboardString rangeOfString:@"\xC2\xA0"].length > 0) {
+			// Replace non-breaking space with a normal space.
+			NSString *temp = [pboardString stringByReplacingOccurrencesOfString:@"\xC2\xA0" withString:@" "];
+			pboardString = temp ? temp : pboardString;
+		}
 	}
 
 	NSString *newString = nil;
