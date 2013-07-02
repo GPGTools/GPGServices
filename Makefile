@@ -22,3 +22,9 @@ clean-all: clean-libmacgpg
 $(PRODUCT): Source/* Resources/* Resources/*/* GPGServices.xcodeproj
 	@xcodebuild -project $(PROJECT).xcodeproj -target $(TARGET) -configuration $(CONFIG) build $(XCCONFIG)
 
+install: $(PRODUCT)
+	@echo "Installing GPGServices into $(INSTALL_ROOT)Library/Services"
+	@mkdir -p "$(INSTALL_ROOT)Library/Services"
+	@rsync -rltDE "build/$(CONFIG)/GPGServices.service" "$(INSTALL_ROOT)Library/Services"
+	@echo Done
+	@echo "In order to use GPGServices, please don't forget to install MacGPG2 and Libmacgpg."
