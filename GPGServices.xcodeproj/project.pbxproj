@@ -512,6 +512,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "source \"$SRCROOT/Makefile.config\" || exit 1\n\nPLIST=\"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n\n/usr/libexec/PlistBuddy -c \"Set CommitHash \\\"$commitHash\\\"\" -c \"Set BuildNumber \\\"$buildNumber\\\"\" -c \"Set CFBundleVersion \\\"$build_version\\\"\" -c \"Set CFBundleShortVersionString \\\"$version\\\"\" \"$PLIST\" || exit 2\n";
+			showEnvVarsInLog = 0;
 		};
 		30B2052714D56D5200AE9583 /* Localize XIBs */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -526,6 +527,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "pushd \"$SRCROOT\" > /dev/null\nalias localizeXIB=Dependencies/GPGTools_Core/bin/localizeXIB\n\nlocalizeXIB Resources/en.lproj/MainMenu.xib                   de it\nlocalizeXIB Resources/en.lproj/PrivateKeyChooserWindow.xib    de it\nlocalizeXIB Resources/en.lproj/RecipientWindow.xib            de it\nlocalizeXIB Resources/en.lproj/VerificationResultsWindow.xib  de it\n\npopd > /dev/null\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -743,8 +745,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;
 			};
