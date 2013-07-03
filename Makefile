@@ -13,11 +13,6 @@ $(MAKE_DEFAULT):
 
 init: $(MAKE_DEFAULT)
 
-update: update-libmacgpg
-
-pkg: pkg-libmacgpg
-
-clean-all: clean-libmacgpg
 
 $(PRODUCT): Source/* Resources/* Resources/*/* GPGServices.xcodeproj
 	@xcodebuild -project $(PROJECT).xcodeproj -target $(TARGET) -configuration $(CONFIG) build $(XCCONFIG)
