@@ -967,6 +967,7 @@ static NSUInteger const suffixLen = 5;
 
 	long double megabytes = 0;
 	NSString *destination = nil;
+	NSString *originalName = nil;
 
 	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
 
@@ -983,9 +984,9 @@ static NSUInteger const suffixLen = 5;
 			return;
 		}
 		if (isDirectory) {
-			NSString *filename = [NSString stringWithFormat:@"%@.zip.gpg", [file lastPathComponent]];
+			originalName = [NSString stringWithFormat:@"%@.zip", [file lastPathComponent]];
 			megabytes = [[self folderSize:file] unsignedLongLongValue] / kBytesInMB;
-			destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
+			destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:[originalName stringByAppendingString:@".gpg"]];
 			dataProvider = ^{
 				ZipOperation *operation = [[[ZipOperation alloc] init] autorelease];
 				operation.filePath = file;
@@ -997,6 +998,7 @@ static NSUInteger const suffixLen = 5;
 		} else {
 			NSNumber *fileSize = [self sizeOfFiles:[NSArray arrayWithObject:file]];
 			megabytes = [fileSize unsignedLongLongValue] / kBytesInMB;
+			originalName = [file lastPathComponent];
 			destination = [file stringByAppendingFormat:@".%@", fileExtension];
 			dataProvider = ^{
 				return [GPGFileStream fileStreamForReadingAtPath:file];
@@ -1004,9 +1006,9 @@ static NSUInteger const suffixLen = 5;
 		}
 	} else if (files.count > 1) {
 		megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / kBytesInMB;
-		destination = [[[[files objectAtIndex:0] stringByDeletingLastPathComponent]
-						stringByAppendingPathComponent:NSLocalizedString(@"Archive", @"Filename for Archive.zip.gpg")]
-					   stringByAppendingString:@".zip.gpg"];
+		originalName = [NSLocalizedString(@"Archive", @"Filename for Archive.zip.gpg") stringByAppendingString:@".zip"];
+		destination = [[[files objectAtIndex:0] stringByDeletingLastPathComponent]
+						stringByAppendingPathComponent:[originalName stringByAppendingString:@".gpg"]];
 		dataProvider = ^{
 			ZipOperation *operation = [[[ZipOperation alloc] init] autorelease];
 			operation.files = files;
@@ -1032,6 +1034,8 @@ static NSUInteger const suffixLen = 5;
 	// Only use armor for single files. otherwise it doesn't make much sense.
 	ctx.useArmor = useASCII && [destination rangeOfString:@".asc"].location != NSNotFound;
 	wrappedArgs.worker.runningController = ctx;
+	
+	ctx.forceFilename = originalName;
 
 	GPGStream *gpgData = nil;
 	if (dataProvider != nil) {
