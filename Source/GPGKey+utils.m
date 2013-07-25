@@ -33,7 +33,7 @@
     GPGValidity val = [self validity];
     
     //Simply return the highest trust
-    for(GPGSubkey* uid in [self userIDs])
+    for(GPGUserID *uid in [self userIDs])
         if([uid validity] > val)
             val = [uid validity];
     

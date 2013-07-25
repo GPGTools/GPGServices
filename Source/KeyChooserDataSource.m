@@ -100,24 +100,21 @@
         NSString* c = [k comment];
         c = (c && [c length]) ? [NSString stringWithFormat:@"(%@) ", c] : @"";
         [arr addObject:[NSString stringWithFormat:@"%@ - %@ %@<%@>",
-                        [k shortKeyID], [k name], c, [k email]]];
+                        k.keyID.shortKeyID, k.name, c, k.email]];
     }
     
     self.keyDescriptions = arr;
 }
 
 - (NSArray*)getPrivateKeys {
-    NSArray* keys = [[GPGServices myPrivateKeys] allObjects];
+    NSSet* keys = [GPGServices myPrivateKeys];
 
-    if(self.keyValidator) 
-        return [keys filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            if([evaluatedObject isKindOfClass:[GPGKey class]])
-                return self.keyValidator((GPGKey*)evaluatedObject);
-            return NO;
-        }]];
-    else {
-        return keys;
-    }
+    if (self.keyValidator) {
+		keys =[keys objectsPassingTest:^BOOL(GPGKey *key, BOOL *stop) {
+			return self.keyValidator(key);
+		}];
+	}
+	return [keys allObjects];
 }
 
 - (GPGKey*)getDefaultKey {
@@ -135,8 +132,7 @@
         NSString *privFingerprint = [GPGServices myPrivateFingerprint];
         if (privFingerprint) {
             for (GPGKey *key in self.availableKeys) {
-                NSRange rmatch = [key.allFingerprints rangeOfString:privFingerprint];
-                if (rmatch.location != NSNotFound) {
+				if ([key.allFingerprints member:privFingerprint]) {
                     nowSelected = key;
                     break;
                 }

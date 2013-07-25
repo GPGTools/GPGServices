@@ -22,11 +22,11 @@
     KeyValidatorT keyValidator;
 }
 
-@property(retain) NSArray* availableKeys;
-@property(retain) GPGKey* selectedKey;
-@property(assign) NSInteger selectedIndex;
-@property(retain) NSArray* keyDescriptions;
-@property(retain) KeyValidatorT keyValidator;
+@property (retain) NSArray* availableKeys;
+@property (retain) GPGKey* selectedKey;
+@property (assign) NSInteger selectedIndex;
+@property (retain) NSArray* keyDescriptions;
+@property (copy) KeyValidatorT keyValidator;
 
 - (id)initWithValidator:(KeyValidatorT)validator;
 - (void)updateDescriptions;

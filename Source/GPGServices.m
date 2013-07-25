@@ -178,17 +178,9 @@ static NSUInteger const suffixLen = 5;
 }
 
 + (NSSet *)myPrivateKeys {
-	GPGController *context = [GPGController gpgController];
-
-	NSMutableSet *keySet = [NSMutableSet set];
-
-	for (GPGKey *k in [context allKeys]) {
-		if (k.secret == YES) {
-			[keySet addObject:k];
-		}
-	}
-
-	return keySet;
+	return [[GPGKeyManager sharedInstance].allKeys objectsPassingTest:^BOOL(GPGKey *key, BOOL *stop) {
+		return key.secret;
+	}];
 }
 
 + (NSString *)myPrivateFingerprint {
@@ -196,23 +188,20 @@ static NSUInteger const suffixLen = 5;
 }
 
 + (GPGKey *)myPrivateKey {
-	NSString *keyID = [GPGServices myPrivateFingerprint];
+	NSString *fingerprint = [GPGServices myPrivateFingerprint];
 
-	if (keyID == nil) {
+	if (fingerprint.length == 0) {
 		return nil;
 	}
 
-	GPGController *controller = [GPGController gpgController];
-
 	@try {
-		// User's configuration may contain a readable fingerprint containing spaces
-		// (e.g., from gpg --fingerprint), but we must match GPGKey without spaces
-		NSString *condensedKey = [keyID stringByReplacingOccurrencesOfString:@" " withString:@""];
-		GPGKey *key = [[controller keysForSearchPattern:condensedKey] anyObject];
-		return (key && key.secret == YES) ? key : nil;
-	} @catch (NSException *s) {
+		for (GPGKey *key in self.myPrivateKeys) {
+			if ([key.textForFilter rangeOfString:fingerprint].length > 0) {
+				return key;
+			}
+		}		
+	} @catch (NSException *e) {
 	}
-
 	return nil;
 }
 
@@ -221,7 +210,7 @@ static NSUInteger const suffixLen = 5;
 
 + (KeyValidatorT)canEncryptValidator {
 	KeyValidatorT block = ^(GPGKey *key) {
-		if ([key canAnyEncrypt] && key.status < GPGKeyStatus_Invalid) {
+		if ([key canAnyEncrypt] && key.validity < GPGValidityInvalid) {
 			return YES;
 		}
 		return NO;
@@ -232,7 +221,7 @@ static NSUInteger const suffixLen = 5;
 
 + (KeyValidatorT)canSignValidator {
 	KeyValidatorT block = ^(GPGKey *key) {
-		if ([key canAnySign] && key.status < GPGKeyStatus_Invalid) {
+		if ([key canAnySign] && key.validity < GPGValidityInvalid) {
 			return YES;
 		}
 		return NO;
@@ -253,7 +242,7 @@ static NSUInteger const suffixLen = 5;
 			return YES;
 		}
 
-		for (GPGSubkey *aSubkey in [key subkeys]) {
+		for (GPGKey *aSubkey in [key subkeys]) {
 			if (![aSubkey expired] &&
 				![aSubkey revoked] &&
 				![aSubkey invalid] &&
@@ -323,7 +312,7 @@ static NSUInteger const suffixLen = 5;
 
 		if (keyData == nil) {
 			NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"Could not export key %@", @"arg:shortKeyID"),
-							 [selectedPrivateKey shortKeyID]];
+							 selectedPrivateKey.keyID.shortKeyID];
 			[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Export failed", nil)
 													  message:msg];
 			return nil;
@@ -562,7 +551,7 @@ static NSUInteger const suffixLen = 5;
 				switch (status) {
 					case GPGErrorBadSignature:
 						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Bad signature by %@", @"arg:userID"),
-										sig.userID];
+										sig.userIDDescription];
 						break;
 					default:
 						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unexpected GPG signature status %i", @"arg:GPGSignature status"), status ];
@@ -1796,7 +1785,8 @@ static NSUInteger const suffixLen = 5;
 	NSSavePanel *savePanel = [NSSavePanel savePanel];
 
 	savePanel.title = NSLocalizedString(@"Choose Destination", @"for saving a file");
-	savePanel.directory = [path stringByDeletingLastPathComponent];
+	savePanel.directoryURL = [NSURL fileURLWithPath:[path stringByDeletingLastPathComponent]];
+	
 
 	if (ext == nil) {
 		ext = @".gpg";
@@ -1816,7 +1806,7 @@ static NSUInteger const suffixLen = 5;
 					 defaultButton:nil
 				   alternateButton:nil
 					   otherButton:nil
-		 informativeTextWithFormat:[NSString stringWithFormat:@"%@", body]] runModalOnMain];
+		 informativeTextWithFormat:@"%@", body] runModalOnMain];
 }
 
 - (void)displayOperationFinishedNotificationWithTitle:(NSString *)title message:(NSString *)body {
@@ -1881,7 +1871,7 @@ static NSUInteger const suffixLen = 5;
 	 * NSString* validity = [sig validityDescription];
 	 */
 
-	NSString *userID = [sig userID];
+	NSString *userID = sig.userIDDescription;
 	NSString *validity = [GPGKey validityDescription:[sig trust]];
 
 	[[NSAlert alertWithMessageText:NSLocalizedString(@"Verification successful", nil)

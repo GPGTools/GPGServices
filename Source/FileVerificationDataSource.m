@@ -95,7 +95,7 @@
                 bgColor = [NSColor clearColor];
         }
         
-        verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", [sig userID], validityDesc];                         
+        verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", sig.userIDDescription, validityDesc];
         NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
                                                                                  attributes:nil] autorelease];
         NSRange range = [verificationResult rangeOfString:[NSString stringWithFormat:@"(%@ trust)", validityDesc]];

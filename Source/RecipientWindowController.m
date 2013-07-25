@@ -12,9 +12,9 @@
 #import "GPGKey+utils.h"
 
 @interface RecipientWindowController ()
+@property (nonatomic, retain) NSArray *keysMatchingSearch;
 
 - (void)displayItemsMatchingString:(NSString*)s;
-- (NSPredicate*)validationPredicate;
 - (void)generateContextMenuForTable:(NSTableView *)table;
 - (void)selectHeaderVisibility:(NSMenuItem *)sender;
 
@@ -23,9 +23,7 @@
 @end
 
 @implementation RecipientWindowController
-
-@synthesize dataSource;
-@synthesize selectedKeys, sign, symetricEncryption, encryptForOwnKeyToo;
+@synthesize dataSource, selectedKeys, sign, symetricEncryption, encryptForOwnKeyToo, keysMatchingSearch, sortDescriptors=_sortDescriptors;
 
 
 
@@ -68,15 +66,14 @@
 
     dataSource = [[KeyChooserDataSource alloc] initWithValidator:[GPGServices canSignValidator]];
 
-    encryptPredicate = [[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [GPGServices canEncryptValidator]((GPGKey*)evaluatedObject);
-    }] retain];
-
-	GPGController* gpgController = [[GPGController gpgController] retain];
-    availableKeys = [[[[gpgController allKeys] filteredSetUsingPredicate:[self validationPredicate]] 
-                      sortedArrayUsingDescriptors:[keyTableView sortDescriptors]] retain];
-	[gpgController release];
-	keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
+	
+	availableKeys = [[[[GPGKeyManager sharedInstance] allKeys] objectsPassingTest:^BOOL(GPGKey *key, BOOL *stop) {
+		return key.canAnyEncrypt && key.validity < GPGValidityInvalid;
+	}] retain];
+	
+	
+	
+	self.keysMatchingSearch = [availableKeys allObjects];
 
     selectedKeys = [[NSMutableArray alloc] init];
 	
@@ -114,9 +111,8 @@
     
 	[availableKeys release];
 	[keysMatchingSearch release];
+	keysMatchingSearch = nil;
 	
-    [encryptPredicate release];
-    
 	[super dealloc];
 }
 
@@ -130,8 +126,8 @@
 - (id)tableView:(NSTableView *)tableView 
 objectValueForTableColumn:(NSTableColumn *)tableColumn
 			row:(NSInteger)row {
-	NSString* iden = tableColumn.identifier;
-	GPGKey* key = [keysMatchingSearch objectAtIndex:row];
+	NSString *iden = tableColumn.identifier;
+	GPGKey *key = [keysMatchingSearch objectAtIndex:row];
 	
 	if([iden isEqualToString:@"comment"])
 		return [key comment];
@@ -148,13 +144,13 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	else if([iden isEqualToString:@"algorithm"])
 		return [key algorithmDescription];
 	else if([iden isEqualToString:@"shortKeyID"])
-		return [key shortKeyID];
+		return key.keyID.shortKeyID;
 	else if([iden isEqualToString:@"email"])
 		return [key email];
 	else if([iden isEqualToString:@"expirationDate"])
 		return [key expirationDate];
 	else if([iden isEqualToString:@"type"]) {
-		return [key type];
+		return key.secret ? @"sec" : @"pub";
 	} else if([iden isEqualToString:@"ownerTrust"]) {
         return [GPGKey validityDescription:[key ownerTrust]];
 	} else if([iden isEqualToString:@"ownerTrustIndicator"]) {
@@ -170,6 +166,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
             case GPGValidityFull:
             case GPGValidityUltimate:
                 i = 3; break;
+			default:
+				break;
         }
         
 		return [NSNumber numberWithInt:i];
@@ -189,6 +187,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
             case GPGValidityFull:
             case GPGValidityUltimate:
                 i = 3; break;
+			default:
+				break;
         }
         
 		return [NSNumber numberWithInt:i];
@@ -222,21 +222,15 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     }
 }
 
-- (void)displayItemsMatchingString:(NSString*)searchString {    
-	if(searchString.length == 0) {
-		[keysMatchingSearch release];		
-		keysMatchingSearch = [[NSArray alloc] initWithArray:availableKeys];
-	} else {        
-		NSMutableArray* newFilteredArray = [[NSMutableArray alloc] init];		
-		[availableKeys enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            if([[(GPGKey *)obj textForFilter] rangeOfString:searchString options:NSCaseInsensitiveSearch].length > 0) {
-                [newFilteredArray addObject:obj];
-			}
+- (void)displayItemsMatchingString:(NSString*)searchString {
+	NSSet *filteredKeys = availableKeys;
+	if(searchString.length > 0) {
+		filteredKeys = [filteredKeys objectsPassingTest:^BOOL(GPGKey *key, BOOL *stop) {
+            return [key.textForFilter rangeOfString:searchString options:NSCaseInsensitiveSearch].length > 0;
 		}];
-
-		[keysMatchingSearch release];
-		keysMatchingSearch = newFilteredArray;
 	}
+	self.keysMatchingSearch = [[filteredKeys allObjects] sortedArrayUsingDescriptors:self.sortDescriptors];
+	
     [keyTableView reloadData];
 }
 
@@ -245,14 +239,21 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     [self displayItemsMatchingString:searchString];
 }
 
+- (void)setSortDescriptors:(NSArray *)sortDescriptors {
+	if (sortDescriptors != _sortDescriptors) {
+		id old = _sortDescriptors;
+		_sortDescriptors = [sortDescriptors copy];
+		[old release];
+		
+		[self displayItemsMatchingString:[searchField stringValue]];
+	}
+}
+
 #pragma mark -
 #pragma mark Delegate
 
 - (void)tableView:(NSTableView *)aTableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
-    NSArray* tmp = [availableKeys sortedArrayUsingDescriptors:[keyTableView sortDescriptors]];
-    [availableKeys release];
-    availableKeys = [tmp retain];
-    [self displayItemsMatchingString:[searchField stringValue]]; 
+	self.sortDescriptors = [keyTableView sortDescriptors];
 }
 
 - (void)doubleClickAction:(id)sender {
@@ -312,12 +313,6 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         return NO;
     else
         return YES;
-}
-
-#pragma mark Helpers
-
-- (NSPredicate*)validationPredicate {
-    return encryptPredicate;
 }
 
 #pragma mark -

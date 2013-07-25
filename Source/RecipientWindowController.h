@@ -16,12 +16,11 @@
 	IBOutlet NSTableView* keyTableView;
 	IBOutlet NSSearchField* searchField;
 		
-	NSArray* availableKeys;
-	NSArray* keysMatchingSearch;
-    
-    NSPredicate* encryptPredicate;
+	NSSet *availableKeys;
+	NSArray *keysMatchingSearch;
+    NSArray *_sortDescriptors;
 	
-    NSMutableArray* selectedKeys;
+    NSMutableArray *selectedKeys;
 	
 	BOOL sign;
     BOOL encryptForOwnKeyToo;
@@ -41,6 +40,7 @@
 @property (readonly) BOOL okEnabled;
 @property (readonly) NSString *versionDescription;
 @property (readonly) NSString *buildNumberDescription;
+@property (nonatomic, copy) NSArray *sortDescriptors;
 
 // thread-safe
 - (NSInteger)runModal;
