@@ -81,7 +81,8 @@ static NSUInteger const suffixLen = 5;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 #ifndef DEBUG
 	/* Perform signature validation, to check if the app bundle has been tampered with. */
-	if([[NSBundle mainBundle] ob_codeSignState] != OBCodeSignStateSignatureValid) {
+    OBCodeSignState codeSignState = [NSBundle mainBundle].ob_codeSignState;
+    if(codeSignState != OBCodeSignStateSignatureValid && codeSignState != OBCodeSignStateUnsigned) {
 		NSRunAlertPanel(@"Someone tampered with your installation of GPGServices!", @"To keep you safe, GPGServices will exit now!\n\nPlease download and install the latest version of GPG Suite from https://gpgtools.org to be sure you have an original version from us!", @"", nil, nil, nil);
 		exit(1);
 	}
