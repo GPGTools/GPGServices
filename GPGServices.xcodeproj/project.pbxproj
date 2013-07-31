@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B57170817A811F600B96393 /* NSBundle+Sandbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B57170717A811F600B96393 /* NSBundle+Sandbox.m */; };
 		1B57171217A812B300B96393 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B57171117A812B300B96393 /* Security.framework */; };
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
@@ -134,8 +133,6 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1B34FA9017A80FE00078B93A /* Libmacgpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Libmacgpg.xcodeproj; path = Dependencies/Libmacgpg/Libmacgpg.xcodeproj; sourceTree = "<group>"; };
-		1B57170617A811F600B96393 /* NSBundle+Sandbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+Sandbox.h"; path = "Source/NSBundle+Sandbox.h"; sourceTree = "<group>"; };
-		1B57170717A811F600B96393 /* NSBundle+Sandbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+Sandbox.m"; path = "Source/NSBundle+Sandbox.m"; sourceTree = "<group>"; };
 		1B57171117A812B300B96393 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		22261772144ED07200750926 /* ServicesRestart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = ServicesRestart; path = Dependencies/GPGTools_Core/bin/ServicesRestart; sourceTree = SOURCE_ROOT; };
 		2260756C12EBA0B50026DBEA /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
@@ -248,8 +245,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1B57170617A811F600B96393 /* NSBundle+Sandbox.h */,
-				1B57170717A811F600B96393 /* NSBundle+Sandbox.m */,
 				45C2B9E41565D29D00B3571A /* Categories */,
 				8E1BC3D6134B977500C1BFD6 /* UI Classes */,
 				4B1908BF0A4CBF0B00052798 /* GPGServices.h */,
@@ -653,7 +648,6 @@
 				45FC40DB1566D2D80020A12B /* ServiceWrappedArgs.m in Sources */,
 				451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */,
 				30CC112415D7ECAF000DC2C5 /* SimpleTextWindow.m in Sources */,
-				1B57170817A811F600B96393 /* NSBundle+Sandbox.m in Sources */,
 				3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -819,6 +813,7 @@
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "CODE_SIGN_CHECK=$(CODE_SIGN)";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = /Library/Services;

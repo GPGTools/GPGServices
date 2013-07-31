@@ -26,7 +26,6 @@
 #import "NSPredicate+negate.h"
 #import "GPGKey+utils.h"
 #import "NSAlert+ThreadSafety.h"
-#import "NSBundle+Sandbox.h"
 
 #define SIZE_WARNING_LEVEL_IN_MB 10
 static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
@@ -79,15 +78,7 @@ static NSUInteger const suffixLen = 5;
 @implementation GPGServices
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-#ifndef DEBUG
-	/* Perform signature validation, to check if the app bundle has been tampered with. */
-    OBCodeSignState codeSignState = [NSBundle mainBundle].ob_codeSignState;
-    if(codeSignState != OBCodeSignStateSignatureValid && codeSignState != OBCodeSignStateUnsigned) {
-		NSRunAlertPanel(@"Someone tampered with your installation of GPGServices!", @"To keep you safe, GPGServices will exit now!\n\nPlease download and install the latest version of GPG Suite from https://gpgtools.org to be sure you have an original version from us!", @"", nil, nil, nil);
-		exit(1);
-	}
-#endif
-	
+
 	[NSApp setServicesProvider:self];
 	// NSUpdateDynamicServices();
 	currentTerminateTimer = nil;
@@ -1944,5 +1935,20 @@ static NSUInteger const suffixLen = 5;
 		[NSApp terminate:self];
 	}
 }
+
+
+
++ (NSString *)localizedStringForKey:(NSString *)key {
+    NSBundle *bundle = [NSBundle mainBundle];
+	
+    NSString *localizedString = [bundle localizedStringForKey:key value:@"" table:nil];
+    
+    if(![localizedString isEqualToString:key])
+        return localizedString; // Translation found, out of here.
+    
+    NSBundle *englishLanguageBundle = [NSBundle bundleWithPath:[bundle pathForResource:@"en" ofType:@"lproj"]];
+    return [englishLanguageBundle localizedStringForKey:key value:@"" table:nil];
+}
+
 
 @end
