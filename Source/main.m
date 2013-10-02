@@ -17,9 +17,10 @@ int main(int argc, char *argv[]) {
 		NSRunAlertPanel(localized(@"LIBMACGPG_NOT_FOUND_TITLE"), localized(@"LIBMACGPG_NOT_FOUND_MESSAGE"), nil, nil, nil);
 		return 1;
 	}
-#ifdef CODE_SIGN_CHECK
+#if CODE_SIGN_CHECK == 1
 	/* Check the validity of the code signature. */
-    if (![NSBundle mainBundle].isValidSigned) {
+	NSBundle *bundle = [NSBundle mainBundle];
+    if (![bundle respondsToSelector:@selector(isValidSigned)] || !bundle.isValidSigned) {
 		NSRunAlertPanel(localized(@"CODE_SIGN_ERROR_TITLE"), localized(@"CODE_SIGN_ERROR_MESSAGE"), nil, nil, nil);
         return 1;
     }
