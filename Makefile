@@ -1,7 +1,8 @@
 PROJECT = GPGServices
 TARGET = GPGServices
-PRODUCT = GPGServices.service
+PRODUCT = GPGServices
 MAKE_DEFAULT = Dependencies/GPGTools_Core/newBuildSystem/Makefile.default
+VPATH = build/$(CONFIG)/GPGServices.service/Contents/MacOS
 NEED_LIBMACGPG = 1
 
 
