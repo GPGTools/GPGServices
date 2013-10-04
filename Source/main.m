@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 		NSRunAlertPanel(localized(@"LIBMACGPG_NOT_FOUND_TITLE"), localized(@"LIBMACGPG_NOT_FOUND_MESSAGE"), nil, nil, nil);
 		return 1;
 	}
-#if CODE_SIGN_CHECK == 1
+#ifdef CODE_SIGN_CHECK
 	/* Check the validity of the code signature. */
 	NSBundle *bundle = [NSBundle mainBundle];
     if (![bundle respondsToSelector:@selector(isValidSigned)] || !bundle.isValidSigned) {
