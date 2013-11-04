@@ -67,6 +67,11 @@
 	[NSApp stopModalWithCode:0];
 }
 
+- (void)windowWillClose:(NSNotification *)notification {
+	[NSApp stopModalWithCode:0];
+}
+
+
 // Who invokes this and what does it do?
 - (void)observeValueForKeyPath:(NSString *)keyPath 
                       ofObject:(id)object
