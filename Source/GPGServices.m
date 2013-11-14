@@ -1165,8 +1165,8 @@ static NSUInteger const suffixLen = 5;
 				if (wrappedArgs.worker.amCanceling) {
 					return;
 				}
-
-				if ([output length]) {
+				
+				if (output.length || [[[[ctx.statusDict objectForKey:@"PLAINTEXT_LENGTH"] firstObject] firstObject] isEqualToString:@"0"]) {
 					[output close];
 					[tempFile closeFile];
 
