@@ -11,6 +11,7 @@
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
+		300DD0EA1853AED00057B05F /* How to get the source code in Resources */ = {isa = PBXBuildFile; fileRef = 300DD0E91853AED00057B05F /* How to get the source code */; };
 		3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3021FB1415D83ED300510CA8 /* SimpleTextView.m */; };
 		302D33D116D41B7100C05409 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D016D41B7100C05409 /* Sparkle.framework */; };
 		302D33D216D41B7600C05409 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D016D41B7100C05409 /* Sparkle.framework */; };
@@ -150,6 +151,7 @@
 		3008440514D5720E0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
 		3008440614D5720E0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
 		3008440714D5720E0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
+		300DD0E91853AED00057B05F /* How to get the source code */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "How to get the source code"; path = "../../GPGTools_Core/resources/How to get the source code"; sourceTree = "<group>"; };
 		3021FB1315D83ED300510CA8 /* SimpleTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextView.h; path = Source/SimpleTextView.h; sourceTree = "<group>"; };
 		3021FB1415D83ED300510CA8 /* SimpleTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextView.m; path = Source/SimpleTextView.m; sourceTree = "<group>"; };
 		302D33D016D41B7100C05409 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				22261772144ED07200750926 /* ServicesRestart */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */,
+				300DD0E91853AED00057B05F /* How to get the source code */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -578,6 +581,7 @@
 				30B2057414D56F1E00AE9583 /* InfoPlist.strings in Resources */,
 				30B2057514D56F1E00AE9583 /* Growl Registration Ticket.growlRegDict in Resources */,
 				30B2057614D56F2A00AE9583 /* Icon.icns in Resources */,
+				300DD0EA1853AED00057B05F /* How to get the source code in Resources */,
 				30B2057714D56F2A00AE9583 /* asc.icns in Resources */,
 				30B2057814D56F2A00AE9583 /* lock.icns in Resources */,
 				30B2057914D56F2A00AE9583 /* sig.icns in Resources */,
