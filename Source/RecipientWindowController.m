@@ -20,6 +20,9 @@
 
 - (void)runModalOnMain:(NSMutableArray *)resHolder;
 
+- (void) persistSelectedKeys;
+- (void) restoreSelectedKeys;
+
 @end
 
 @implementation RecipientWindowController
@@ -76,6 +79,7 @@
 	self.keysMatchingSearch = [availableKeys allObjects];
 
     selectedKeys = [[NSMutableArray alloc] init];
+    [self restoreSelectedKeys];
 	
     self.encryptForOwnKeyToo = YES;
     
@@ -341,10 +345,36 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 
 - (IBAction)okClicked:(id)sender {
 	[NSApp stopModalWithCode:0];
+    
+    [self persistSelectedKeys];
 }
 
 - (IBAction)cancelClicked:(id)sender {
 	[NSApp stopModalWithCode:1];
+}
+
+- (NSString *)selectedKeysDefaultsKey {
+    return [NSStringFromClass( [self class] ) stringByAppendingString:@"SelectedKeys"];
+}
+
+- (void) persistSelectedKeys {
+    NSMutableArray * keyIds = [[[NSMutableArray alloc] init] autorelease];
+    for ( GPGKey * key in selectedKeys ) {
+        [keyIds addObject:key.keyID];
+    }
+    [[NSUserDefaults standardUserDefaults] setValue:keyIds
+                                             forKey:[self selectedKeysDefaultsKey]];
+}
+
+- (void) restoreSelectedKeys {
+    NSArray * keyIds = [[NSUserDefaults standardUserDefaults] valueForKey:[self selectedKeysDefaultsKey]];
+    for ( NSString * keyId in keyIds ) {
+        for ( GPGKey * key in availableKeys ) {
+            if ( [key.keyID isEqualToString:keyId] ) {
+                [selectedKeys addObject:key];
+            }
+        }
+    }
 }
 
 @end
