@@ -1,4 +1,5 @@
 #import "SimpleTextWindow.h"
+#import "SimpleTextView.h"
 
 @interface SimpleTextWindow ()
 @property (retain) NSString *text, *title;
@@ -31,6 +32,10 @@
 - (void)setWindow:(NSWindow *)window {
 	window.level = NSFloatingWindowLevel;
 	[super setWindow:window];
+}
+
+- (void) windowDidLoad {
+    textView.textStorage.font = [NSFont userFixedPitchFontOfSize:12];
 }
 
 

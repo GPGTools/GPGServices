@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SimpleTextWindow">
             <connections>
+                <outlet property="textView" destination="4" id="JJK-Rr-Ydt"/>
                 <outlet property="window" destination="38" id="40"/>
             </connections>
         </customObject>
@@ -16,28 +17,28 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" canJoinAllSpaces="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="595" y="602" width="500" height="400"/>
+            <rect key="contentRect" x="595" y="602" width="640" height="480"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <value key="minSize" type="size" width="200" height="100"/>
             <view key="contentView" id="39">
-                <rect key="frame" x="0.0" y="0.0" width="500" height="400"/>
+                <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="3">
-                        <rect key="frame" x="-1" y="-1" width="502" height="402"/>
+                        <rect key="frame" x="-1" y="-1" width="642" height="482"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="ySA-Fe-PpJ">
-                            <rect key="frame" x="1" y="1" width="500" height="400"/>
+                            <rect key="frame" x="1" y="1" width="640" height="480"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" richText="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="4" customClass="SimpleTextView">
-                                    <rect key="frame" x="0.0" y="0.0" width="500" height="400"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="500" height="400"/>
+                                    <size key="minSize" width="640" height="480"/>
                                     <size key="maxSize" width="872" height="10000000"/>
                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="500" height="400"/>
+                                    <size key="minSize" width="640" height="480"/>
                                     <size key="maxSize" width="872" height="10000000"/>
                                     <connections>
                                         <binding destination="-2" name="attributedString" keyPath="text" id="45">
@@ -56,7 +57,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="6">
-                            <rect key="frame" x="485" y="1" width="16" height="400"/>
+                            <rect key="frame" x="625" y="1" width="16" height="480"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
