@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
-		<string key="IBDocument.InterfaceBuilderVersion">4457.6</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
-		<string key="IBDocument.HIToolboxVersion">626.00</string>
+		<string key="IBDocument.SystemVersion">13A603</string>
+		<string key="IBDocument.InterfaceBuilderVersion">4514</string>
+		<string key="IBDocument.AppKitVersion">1265</string>
+		<string key="IBDocument.HIToolboxVersion">695.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">4457.6</string>
+			<string key="NS.object.0">4514</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSBox</string>
@@ -77,7 +77,7 @@
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">OK</string>
 								<object class="NSFont" key="NSSupport" id="979646211">
-									<string key="NSName">LucidaGrande</string>
+									<string key="NSName">.LucidaGrandeUI</string>
 									<double key="NSSize">13</double>
 									<int key="NSfFlags">1044</int>
 								</object>
@@ -164,7 +164,7 @@
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">Type</string>
 														<object class="NSFont" key="NSSupport" id="26">
-															<string key="NSName">LucidaGrande</string>
+															<string key="NSName">.LucidaGrandeUI</string>
 															<double key="NSSize">11</double>
 															<int key="NSfFlags">3100</int>
 														</object>
@@ -471,7 +471,7 @@
 																<integer value="1040" key="formatterBehavior"/>
 																<integer value="0" key="timeStyle"/>
 															</dictionary>
-															<string key="NS.format">dd.MM.yyyy</string>
+															<string key="NS.format">dd.MM.y</string>
 															<bool key="NS.natural">NO</bool>
 														</object>
 														<reference key="NSControlView" ref="1064828203"/>
@@ -513,7 +513,7 @@
 																<integer value="1040" key="formatterBehavior"/>
 																<integer value="0" key="timeStyle"/>
 															</dictionary>
-															<string key="NS.format">dd.MM.yyyy</string>
+															<string key="NS.format">dd.MM.y</string>
 															<bool key="NS.natural">NO</bool>
 														</object>
 														<reference key="NSControlView" ref="1064828203"/>
@@ -761,7 +761,7 @@
 								</object>
 								<object class="NSClipView" id="16976236">
 									<reference key="NSNextResponder" ref="804949323"/>
-									<int key="NSvFlags">3840</int>
+									<int key="NSvFlags">3874</int>
 									<array class="NSMutableArray" key="NSSubviews">
 										<reference ref="474234992"/>
 									</array>
@@ -859,9 +859,10 @@
 									<int key="NSCellFlags">0</int>
 									<int key="NSCellFlags2">0</int>
 									<string key="NSContents">search</string>
+									<reference key="NSControlView" ref="779993603"/>
 									<string key="NSAction">_searchFieldSearch:</string>
 									<reference key="NSTarget" ref="282556552"/>
-									<int key="NSButtonFlags">138428416</int>
+									<int key="NSButtonFlags">138690560</int>
 									<int key="NSButtonFlags2">0</int>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -870,6 +871,7 @@
 								<object class="NSButtonCell" key="NSCancelButtonCell">
 									<int key="NSCellFlags">-2147483648</int>
 									<int key="NSCellFlags2">0</int>
+									<string key="NSContents">clear</string>
 									<array class="NSMutableArray" key="NSAccessibilityOverriddenAttributes">
 										<dictionary class="NSMutableDictionary">
 											<string key="AXDescription">cancel</string>
@@ -887,6 +889,7 @@
 								<int key="NSMaximumRecents">255</int>
 							</object>
 							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+							<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
 						</object>
 						<object class="NSPopUpButton" id="476005190">
 							<reference key="NSNextResponder" ref="527633266"/>
@@ -899,7 +902,7 @@
 								<int key="NSCellFlags">-2076180416</int>
 								<int key="NSCellFlags2">2048</int>
 								<object class="NSFont" key="NSSupport">
-									<string key="NSName">LucidaGrande</string>
+									<string key="NSName">.LucidaGrandeUI</string>
 									<double key="NSSize">13</double>
 									<int key="NSfFlags">1301</int>
 								</object>
@@ -1031,6 +1034,7 @@
 								<reference key="NSTextColor" ref="635705183"/>
 							</object>
 							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+							<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
 						</object>
 						<object class="NSButton" id="268889266">
 							<reference key="NSNextResponder" ref="527633266"/>
@@ -1068,7 +1072,7 @@
 								<int key="NSCellFlags2">272892928</int>
 								<string key="NSContents">Version: xxx</string>
 								<object class="NSFont" key="NSSupport" id="22">
-									<string key="NSName">LucidaGrande</string>
+									<string key="NSName">.LucidaGrandeUI</string>
 									<double key="NSSize">9</double>
 									<int key="NSfFlags">3614</int>
 								</object>
@@ -1085,6 +1089,7 @@
 								</object>
 							</object>
 							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+							<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
 						</object>
 						<object class="NSTextField" id="1007616681">
 							<reference key="NSNextResponder" ref="527633266"/>
@@ -1103,6 +1108,7 @@
 								<reference key="NSTextColor" ref="259973646"/>
 							</object>
 							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+							<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
 						</object>
 					</array>
 					<object class="NSPSMatrix" key="NSFrameMatrix"/>
@@ -1239,19 +1245,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">dataSource</string>
-						<reference key="source" ref="1064828203"/>
-						<reference key="destination" ref="408067648"/>
-					</object>
-					<string key="id">43</string>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="1064828203"/>
 						<reference key="destination" ref="408067648"/>
 					</object>
 					<string key="id">44</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">dataSource</string>
+						<reference key="source" ref="1064828203"/>
+						<reference key="destination" ref="408067648"/>
+					</object>
+					<string key="id">43</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2046,6 +2052,7 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
+		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">YES</bool>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<real value="1060" key="NS.object.0"/>
