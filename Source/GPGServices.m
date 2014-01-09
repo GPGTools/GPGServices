@@ -426,7 +426,6 @@ static NSUInteger const suffixLen = 5;
 - (NSString *)decryptTextString:(NSString *)inputString {
 	GPGController *ctx = [GPGController gpgController];
 
-	ctx.trustAllKeys = YES;
 	ctx.useArmor = YES;
 
 	NSData *outputData = nil;
