@@ -434,9 +434,34 @@ static NSUInteger const suffixLen = 5;
 	@try {
 		outputData = [ctx decryptData:[inputString UTF8Data]];
 
-		if (ctx.error) {
+		NSArray *sigs = ctx.signatures;
+		if (sigs.count > 0) {
+			GPGSignature *sig = [sigs objectAtIndex:0];
+			GPGErrorCode status = sig.status;
+			GPGDebugLog(@"sig.status: %i", status);
+			if ([GrowlApplicationBridge isGrowlRunning]) {
+				[self growlVerificationResultsFor:NSLocalizedString(@"Selection", nil) signatures:sigs];
+			} else if ([sig status] == GPGErrorNoError) {
+				[self displaySignatureVerificationForSig:sig];
+			} else {
+				NSString *errorMessage = nil;
+				switch (status) {
+					case GPGErrorBadSignature:
+						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Bad signature by %@", @"arg:userID"),
+										sig.userIDDescription];
+						break;
+					default:
+						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unexpected GPG signature status %i", @"arg:GPGSignature status"), status ];
+						break;  // I'm unsure if GPGErrorDescription should cover these signature errors
+				}
+				[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed", nil)
+														  message:errorMessage];
+			}
+		} else if (ctx.error) {
 			@throw ctx.error;
 		}
+			
+
 	} @catch (GPGException *localException) {
 		[self displayOperationFailedNotificationWithTitle:[localException reason]
 												  message:[localException description]];
