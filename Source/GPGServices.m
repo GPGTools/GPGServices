@@ -1722,8 +1722,15 @@ static NSUInteger const suffixLen = 5;
 
 	NSData *data = [pboard dataForType:NSFilenamesPboardType];
 
+	
 	NSError *serializationError = nil;
-	NSArray *filenames = [NSPropertyListSerialization propertyListWithData:data options:nil format:nil error:&serializationError];
+	NSArray *filenames = nil;
+	
+	if (!data) {
+		serializationError = [NSError errorWithDomain:@"GPGServices" code:1 userInfo:@{NSLocalizedDescriptionKey: @"No files found!"}];
+	} else {
+		filenames = [NSPropertyListSerialization propertyListWithData:data options:nil format:nil error:&serializationError];
+	}
 
 
 	if (serializationError) {
