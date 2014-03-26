@@ -91,7 +91,8 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
-	if ([[filename pathExtension] isEqualToString:@"gpg"]) {
+	NSString *extension = [filename pathExtension];
+	if ([extension isEqualToString:@"gpg"] || [extension isEqualToString:@"pgp"]) {
 		[self decryptFiles:[NSArray arrayWithObject:filename]];
 	}
 
