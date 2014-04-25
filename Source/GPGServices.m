@@ -1916,19 +1916,6 @@ static NSUInteger const suffixLen = 5;
 	 runModal];
 }
 
-/*
- * -(NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again
- * {
- *  [passphraseText setStringValue:@""];
- *  int flag=[NSApp runModalForWindow:passphraseWindow];
- *  NSString *passphrase=[[[passphraseText stringValue] copy] autorelease];
- *  [passphraseWindow close];
- *  if(flag)
- *      return passphrase;
- *  else
- *      return nil;
- * }
- */
 
 - (IBAction)closeModalWindow:(id)sender {
 	[NSApp stopModalWithCode:[sender tag]];

@@ -13,9 +13,11 @@
 #import "KeyChooserDataSource.h"
 
 @interface RecipientWindowController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource, NSWindowDelegate> {
-	IBOutlet NSTableView* keyTableView;
-	IBOutlet NSSearchField* searchField;
-		
+	IBOutlet NSTableView *keyTableView;
+	IBOutlet NSSearchField *searchField;
+	
+	NSString *selectedCountDescription;
+	
 	NSSet *availableKeys;
 	NSArray *keysMatchingSearch;
     NSArray *_sortDescriptors;
@@ -31,9 +33,12 @@
 	KeyChooserDataSource *dataSource;
 }
 
+@property (assign) id selectAll;
+@property (readonly) NSString *selectedCountDescription;
+
 @property (readonly) KeyChooserDataSource *dataSource;
-@property (readonly) NSMutableArray* selectedKeys;
-@property (readonly) GPGKey* selectedPrivateKey;
+@property (readonly) NSMutableArray *selectedKeys;
+@property (readonly) GPGKey *selectedPrivateKey;
 @property (assign) BOOL sign;
 @property (assign) BOOL encryptForOwnKeyToo;
 @property (assign) BOOL symetricEncryption;
@@ -47,5 +52,6 @@
 
 - (IBAction)okClicked:(id)sender;
 - (IBAction)cancelClicked:(id)sender;
+
 
 @end
