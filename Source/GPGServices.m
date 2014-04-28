@@ -1046,6 +1046,8 @@ static NSUInteger const suffixLen = 5;
 	}
 
 	GPGController *ctx = [GPGController gpgController];
+	
+	ctx.trustAllKeys = YES;
 	// Only use armor for single files. otherwise it doesn't make much sense.
 	ctx.useArmor = useASCII && [destination rangeOfString:@".asc"].location != NSNotFound;
 	wrappedArgs.worker.runningController = ctx;
