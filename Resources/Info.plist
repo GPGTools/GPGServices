@@ -493,5 +493,9 @@
 	<string>https://gpgtools.org/releases/gpgservices/pre-appcast.xml</string>
 	<key>SUEnableSystemProfiling</key>
 	<true/>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
+	<key>OSAScriptingDefinition</key>
+	<string>gpgservices.sdef</string>
 </dict>
 </plist>
