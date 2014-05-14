@@ -93,6 +93,13 @@
 			remoteGlobalIDString = 1BD78B9F1726B2820005F251;
 			remoteInfo = LeakFinder;
 		};
+		304030F61923A42B00955DBC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CB6F0A9817484BDE00F91524;
+			remoteInfo = touchzipkit;
+		};
 		8EDC4076133F650800D0A101 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
@@ -111,7 +118,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteGlobalIDString = CB6F09CD174838FC00F91524;
 			remoteInfo = ZipKit;
 		};
 /* End PBXContainerItemProxy section */
@@ -455,6 +462,7 @@
 			children = (
 				8EDC4077133F650800D0A101 /* ZipKit.framework */,
 				8EDC4079133F650800D0A101 /* libzipkit.a */,
+				304030F71923A42B00955DBC /* libtouchzipkit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -558,6 +566,13 @@
 			fileType = wrapper.application;
 			path = LeakFinder.app;
 			remoteRef = 1B34FAA117A80FE00078B93A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		304030F71923A42B00955DBC /* libtouchzipkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libtouchzipkit.a;
+			remoteRef = 304030F61923A42B00955DBC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		8EDC4077133F650800D0A101 /* ZipKit.framework */ = {
@@ -790,6 +805,8 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -816,6 +833,8 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (

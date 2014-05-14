@@ -33,18 +33,18 @@
 	KeyChooserDataSource *dataSource;
 }
 
-@property (assign) id selectAll;
-@property (readonly) NSString *selectedCountDescription;
+@property (unsafe_unretained) id selectAll;
+@property (unsafe_unretained, readonly) NSString *selectedCountDescription;
 
 @property (readonly) KeyChooserDataSource *dataSource;
 @property (readonly) NSMutableArray *selectedKeys;
-@property (readonly) GPGKey *selectedPrivateKey;
+@property (unsafe_unretained, readonly) GPGKey *selectedPrivateKey;
 @property (assign) BOOL sign;
 @property (assign) BOOL encryptForOwnKeyToo;
 @property (assign) BOOL symetricEncryption;
 @property (readonly) BOOL okEnabled;
-@property (readonly) NSString *versionDescription;
-@property (readonly) NSString *buildNumberDescription;
+@property (unsafe_unretained, readonly) NSString *versionDescription;
+@property (unsafe_unretained, readonly) NSString *buildNumberDescription;
 @property (nonatomic, copy) NSArray *sortDescriptors;
 
 // thread-safe

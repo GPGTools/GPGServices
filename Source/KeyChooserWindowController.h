@@ -18,7 +18,7 @@
 	KeyChooserDataSource *dataSource;
 }
 
-@property(retain) GPGKey* selectedKey;
+@property(strong) GPGKey* selectedKey;
 @property (readonly) KeyChooserDataSource *dataSource;
 
 // thread-safe

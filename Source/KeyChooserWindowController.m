@@ -38,10 +38,6 @@
     return self;
 }
 
-- (void)dealloc {
-    [dataSource release];
-    [super dealloc];
-}
 
 - (void)windowDidLoad {
 	[super windowDidLoad];

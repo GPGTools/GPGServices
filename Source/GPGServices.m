@@ -151,7 +151,7 @@ static NSUInteger const suffixLen = 5;
 // It appears all importKey.. functions were disabled over how libmacgpg handles importing,
 // but apperently GPGAccess handles this identically.
 - (void)importKeyFromData:(NSData *)data {
-	GPGController *gpgc = [[[GPGController alloc] init] autorelease];
+	GPGController *gpgc = [[GPGController alloc] init];
 
 	NSString *importText = nil;
 
@@ -218,7 +218,7 @@ static NSUInteger const suffixLen = 5;
 		return NO;
 	};
 
-	return [[block copy] autorelease];
+	return [block copy];
 }
 
 + (KeyValidatorT)canSignValidator {
@@ -229,7 +229,7 @@ static NSUInteger const suffixLen = 5;
 		return NO;
 	};
 
-	return [[block copy] autorelease];
+	return [block copy];
 }
 
 + (KeyValidatorT)isActiveValidator {
@@ -255,14 +255,14 @@ static NSUInteger const suffixLen = 5;
 		return NO;
 	};
 
-	return [[block copy] autorelease];
+	return [block copy];
 }
 
 #pragma mark -
 #pragma mark Text Stuff
 
 - (NSString *)myFingerprint {
-	KeyChooserWindowController *wc = [[[KeyChooserWindowController alloc] init] autorelease];
+	KeyChooserWindowController *wc = [[KeyChooserWindowController alloc] init];
 	GPGKey *chosenKey = wc.selectedKey;
 
 	if (chosenKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
@@ -274,7 +274,7 @@ static NSUInteger const suffixLen = 5;
 	}
 
 	if (chosenKey != nil) {
-		NSString *fp = [[[chosenKey fingerprint] copy] autorelease];
+		NSString *fp = [[chosenKey fingerprint] copy];
 		NSMutableArray *arr = [NSMutableArray arrayWithCapacity:10];
 		NSUInteger fpLength = [fp length];
 		// expect 40-length string; breaking into 10 4-char chunks
@@ -290,7 +290,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (NSString *)myKey {
-	KeyChooserWindowController *wc = [[[KeyChooserWindowController alloc] init] autorelease];
+	KeyChooserWindowController *wc = [[KeyChooserWindowController alloc] init];
 	GPGKey *selectedPrivateKey = wc.selectedKey;
 
 	if (selectedPrivateKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
@@ -319,8 +319,8 @@ static NSUInteger const suffixLen = 5;
 													  message:msg];
 			return nil;
 		} else {
-			return [[[NSString alloc] initWithData:keyData
-										  encoding:NSUTF8StringEncoding] autorelease];
+			return [[NSString alloc] initWithData:keyData
+										  encoding:NSUTF8StringEncoding];
 		}
 	} @catch (NSException *localException) {
 		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Export failed", nil)
@@ -338,7 +338,7 @@ static NSUInteger const suffixLen = 5;
 
 	RecipientWindowController *rcp = [[RecipientWindowController alloc] init];
 	int ret = [rcp runModal];
-	[rcp autorelease];
+
 	if (ret != 0) {
 		return nil;  // User pressed 'cancel'
 	}
@@ -485,7 +485,7 @@ static NSUInteger const suffixLen = 5;
 
 	NSData *inputData = [inputString UTF8Data];
 
-	KeyChooserWindowController *wc = [[[KeyChooserWindowController alloc] init] autorelease];
+	KeyChooserWindowController *wc = [[KeyChooserWindowController alloc] init];
 	GPGKey *chosenKey = wc.selectedKey;
 
 	if (chosenKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
@@ -653,7 +653,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (NSString *)normalizedAndUniquifiedPathFromPath:(NSString *)path {
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	if ([fmgr isWritableFileAtPath:[path stringByDeletingLastPathComponent]]) {
 		return [ZKArchive uniquify:path];
@@ -665,7 +665,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (unsigned long long)sizeOfFile:(NSString *)file {
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	if ([fmgr fileExistsAtPath:file]) {
 		NSError *err = nil;
@@ -693,7 +693,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (NSNumber *)folderSize:(NSString *)folderPath {
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 	NSArray *filesArray = [fmgr subpathsOfDirectoryAtPath:folderPath error:nil];
 	NSEnumerator *filesEnumerator = [filesArray objectEnumerator];
 	NSString *fileName = nil;
@@ -711,7 +711,7 @@ static NSUInteger const suffixLen = 5;
 - (NSNumber *)sizeOfFiles:(NSArray *)files {
 	__block unsigned long long size = 0;
 
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	[files enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		 NSString *file = (NSString *)obj;
@@ -740,7 +740,7 @@ static NSUInteger const suffixLen = 5;
 		GPGStream *dataToSign = nil;
 
 		if ([[self isDirectoryPredicate] evaluateWithObject:file]) {
-			ZipOperation *zipOperation = [[[ZipOperation alloc] init] autorelease];
+			ZipOperation *zipOperation = [[ZipOperation alloc] init];
 			zipOperation.filePath = file;
 			[zipOperation start];
 
@@ -832,10 +832,10 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)signFilesSync:(ServiceWrappedArgs *)wrappedArgs {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[self signFilesWrapped:wrappedArgs];
-	[pool release];
+		[self signFilesWrapped:wrappedArgs];
+	}
 }
 
 - (void)signFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
@@ -852,7 +852,7 @@ static NSUInteger const suffixLen = 5;
 		return;
 	}
 
-	KeyChooserWindowController *wc = [[[KeyChooserWindowController alloc] init] autorelease];
+	KeyChooserWindowController *wc = [[KeyChooserWindowController alloc] init];
 	GPGKey *chosenKey = wc.selectedKey;
 
 	if (chosenKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
@@ -914,10 +914,10 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)encryptFilesSync:(ServiceWrappedArgs *)wrappedArgs {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[self encryptFilesWrapped:wrappedArgs];
-	[pool release];
+		[self encryptFilesWrapped:wrappedArgs];
+	}
 }
 
 - (void)encryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
@@ -934,7 +934,7 @@ static NSUInteger const suffixLen = 5;
 	BOOL useASCII = [[[GPGOptions sharedOptions] valueForKey:@"UseASCIIOutput"] boolValue];
 	GPGDebugLog(@"Output as ASCII: %@", useASCII ? @"YES" : @"NO");
 	NSString *fileExtension = useASCII ? @"asc" : @"gpg";
-	RecipientWindowController *rcp = [[[RecipientWindowController alloc] init] autorelease];
+	RecipientWindowController *rcp = [[RecipientWindowController alloc] init];
 	int ret = [rcp runModal]; // thread-safe
 	if (ret != 0) {
 		return;  // User pressed 'cancel'
@@ -984,7 +984,7 @@ static NSUInteger const suffixLen = 5;
 	NSString *destination = nil;
 	NSString *originalName = nil;
 
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	typedef GPGStream *(^DataProvider)();
 	DataProvider dataProvider = nil;
@@ -1003,7 +1003,7 @@ static NSUInteger const suffixLen = 5;
 			megabytes = [[self folderSize:file] unsignedLongLongValue] / kBytesInMB;
 			destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:[originalName stringByAppendingString:@".gpg"]];
 			dataProvider = ^{
-				ZipOperation *operation = [[[ZipOperation alloc] init] autorelease];
+				ZipOperation *operation = [[ZipOperation alloc] init];
 				operation.filePath = file;
 				operation.delegate = self;
 				[operation start];
@@ -1025,7 +1025,7 @@ static NSUInteger const suffixLen = 5;
 		destination = [[[files objectAtIndex:0] stringByDeletingLastPathComponent]
 						stringByAppendingPathComponent:[originalName stringByAppendingString:@".gpg"]];
 		dataProvider = ^{
-			ZipOperation *operation = [[[ZipOperation alloc] init] autorelease];
+			ZipOperation *operation = [[ZipOperation alloc] init];
 			operation.files = files;
 			operation.delegate = self;
 			[operation start];
@@ -1134,10 +1134,10 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)decryptFilesSync:(ServiceWrappedArgs *)wrappedArgs {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[self decryptFilesWrapped:wrappedArgs];
-	[pool release];
+		[self decryptFilesWrapped:wrappedArgs];
+	}
 }
 
 - (void)decryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
@@ -1152,7 +1152,7 @@ static NSUInteger const suffixLen = 5;
 	GPGController *ctx = [GPGController gpgController];
 	wrappedArgs.worker.runningController = ctx;
 
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	NSMutableArray *decryptedFiles = [NSMutableArray arrayWithCapacity:[files count]];
 	NSMutableArray *errorMsgs = [NSMutableArray array];
@@ -1280,7 +1280,6 @@ static NSUInteger const suffixLen = 5;
 	[self displayOperationFinishedNotificationWithTitle:title message:message];
 
 	[dummyController runModal]; // thread-safe
-	[dummyController release];
 }
 
 - (void)verifyFiles:(NSArray *)files {
@@ -1296,10 +1295,10 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)verifyFilesSync:(ServiceWrappedArgs *)wrappedArgs {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[self verifyFilesWrapped:wrappedArgs];
-	[pool release];
+		[self verifyFilesWrapped:wrappedArgs];
+	}
 }
 
 - (void)verifyFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
@@ -1308,14 +1307,14 @@ static NSUInteger const suffixLen = 5;
 	NSArray *files = wrappedArgs.arg1;
 
 	NSMutableSet *filesInVerification = [NSMutableSet set];
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	// has thread-safe methods as used here
 	DummyVerificationController *fvc = nil;
 
 	if ([GrowlApplicationBridge isGrowlRunning] == NO) {
-		fvc = [[[DummyVerificationController alloc]
-				initWithWindowNibName:@"VerificationResultsWindow"] autorelease];
+		fvc = [[DummyVerificationController alloc]
+				initWithWindowNibName:@"VerificationResultsWindow"];
 		[fvc showWindow:self]; // now thread-safe
 		fvc.isActive = YES; // now thread-safe
 	}
@@ -1417,7 +1416,6 @@ static NSUInteger const suffixLen = 5;
 										verificationResult, @"verificationResult",
 										nil];
 				[fvc addResults:result];
-				[verificationResult release];
 			} else if (sigs.count > 0) {
 				for (GPGSignature *sig in sigs) {
 					[fvc addResultFromSig:sig forFile:signedFile];
@@ -1491,10 +1489,10 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)importFilesSync:(ServiceWrappedArgs *)wrappedArgs {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[self importFilesWrapped:wrappedArgs];
-	[pool release];
+		[self importFilesWrapped:wrappedArgs];
+	}
 }
 
 - (void)importFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
@@ -1592,22 +1590,22 @@ static NSUInteger const suffixLen = 5;
 #pragma mark - NSPredicates for filtering file arrays
 
 - (NSPredicate *)fileExistsPredicate {
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
-	return [[[NSPredicate predicateWithBlock:^BOOL (id file, NSDictionary *bindings) {
+	return [[NSPredicate predicateWithBlock:^BOOL (id file, NSDictionary *bindings) {
 				  return [file isKindOfClass:[NSString class]] && [fmgr fileExistsAtPath:file];
-			  }] copy] autorelease];
+			  }] copy];
 }
 
 - (NSPredicate *)isDirectoryPredicate {
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
-	return [[[NSPredicate predicateWithBlock:^BOOL (id file, NSDictionary *bindings) {
+	return [[NSPredicate predicateWithBlock:^BOOL (id file, NSDictionary *bindings) {
 				  BOOL isDirectory = NO;
 				  return [file isKindOfClass:[NSString class]] &&
 				  [fmgr fileExistsAtPath:file isDirectory:&isDirectory] &&
 				  isDirectory;
-			  }] copy] autorelease];
+			  }] copy];
 }
 
 #pragma mark -
@@ -1693,16 +1691,16 @@ static NSUInteger const suffixLen = 5;
 			NSMutableArray *pbitems = [NSMutableArray array];
 
 			if ([pbtype isEqualToString:NSPasteboardTypeHTML]) {
-				NSPasteboardItem *htmlItem = [[[NSPasteboardItem alloc] init] autorelease];
+				NSPasteboardItem *htmlItem = [[NSPasteboardItem alloc] init];
 				[htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"]
 							forType:NSPasteboardTypeHTML];
 				[pbitems addObject:htmlItem];
 			} else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {
-				NSPasteboardItem *rtfItem = [[[NSPasteboardItem alloc] init] autorelease];
+				NSPasteboardItem *rtfItem = [[NSPasteboardItem alloc] init];
 				[rtfItem setString:newString forType:NSPasteboardTypeRTF];
 				[pbitems addObject:rtfItem];
 			} else {
-				NSPasteboardItem *stringItem = [[[NSPasteboardItem alloc] init] autorelease];
+				NSPasteboardItem *stringItem = [[NSPasteboardItem alloc] init];
 				[stringItem setString:newString forType:NSPasteboardTypeString];
 				[pbitems addObject:stringItem];
 			}

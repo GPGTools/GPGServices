@@ -21,16 +21,10 @@ static const NSUInteger kMaxVisibleItems = 4;
 
 @implementation InProgressWindowController
 
-@synthesize collectionView = _collectionView;
-@synthesize arrayController = _arrayController;
-@synthesize serviceWorkerArray = _serviceWorkerArray;
+@synthesize collectionView;
+@synthesize arrayController;
+@synthesize serviceWorkerArray;
 
-- (void)dealloc
-{
-    [_serviceWorkerArray release];
-    [_delayTimer release];
-    [super dealloc];
-}
 
 - (id)init
 {
@@ -41,21 +35,21 @@ static const NSUInteger kMaxVisibleItems = 4;
 }
 
 - (void)insertObject:(ServiceWorker *)w inServiceWorkerArrayAtIndex:(NSUInteger)index {
-    [_serviceWorkerArray insertObject:w atIndex:index];
+    [serviceWorkerArray insertObject:w atIndex:index];
     [self adjustWindowSize];
 }
 
 - (void)removeObjectFromServiceWorkerArrayAtIndex:(NSUInteger)index {
-    [_serviceWorkerArray removeObjectAtIndex:index];
+    [serviceWorkerArray removeObjectAtIndex:index];
     [self adjustWindowSize];
 }
 
 - (void)addObjectToServiceWorkerArray:(id)worker {
-    [self insertObject:worker inServiceWorkerArrayAtIndex:[_serviceWorkerArray count]];
+    [self insertObject:worker inServiceWorkerArrayAtIndex:[serviceWorkerArray count]];
 }
 
 - (void)removeObjectFromServiceWorkerArray:(id)worker {
-    NSUInteger x = [_serviceWorkerArray indexOfObject:worker];
+    NSUInteger x = [serviceWorkerArray indexOfObject:worker];
     if (x != NSNotFound)
         [self removeObjectFromServiceWorkerArrayAtIndex:x];
 }
@@ -64,17 +58,16 @@ static const NSUInteger kMaxVisibleItems = 4;
 {
     if (!_delayTimer)
     {
-        _delayTimer = [[NSTimer timerWithTimeInterval:kShowWindowDelaySeconds 
+        _delayTimer = [NSTimer timerWithTimeInterval:kShowWindowDelaySeconds 
                                                target:self 
                                              selector:@selector(showWindowCallback:)
-                                             userInfo:nil repeats:NO] retain];
+                                             userInfo:nil repeats:NO];
         [[NSRunLoop currentRunLoop] addTimer:_delayTimer forMode:NSDefaultRunLoopMode];
     }
 }
 
 - (void)showWindowCallback:(id)sender
 {
-    [_delayTimer release];
     _delayTimer = nil;
     [self showWindow:nil];
 }
@@ -83,7 +76,6 @@ static const NSUInteger kMaxVisibleItems = 4;
 {
     if (_delayTimer) {
         [_delayTimer invalidate];
-        [_delayTimer release];
         _delayTimer = nil;
     }
     [self.window orderOut:nil];
@@ -91,7 +83,7 @@ static const NSUInteger kMaxVisibleItems = 4;
 
 - (void)adjustWindowSize
 {
-    NSUInteger nitems = [_serviceWorkerArray count];
+    NSUInteger nitems = [serviceWorkerArray count];
     NSUInteger ndisplay = (nitems > kMaxVisibleItems) ? kMaxVisibleItems : nitems;
     ndisplay = MAX(ndisplay, 1);
     CGFloat newHeight = ndisplay * kSubviewHeight + [self windowTitleBarHeight];

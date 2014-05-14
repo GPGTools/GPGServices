@@ -2,7 +2,7 @@
 #import "SimpleTextView.h"
 
 @interface SimpleTextWindow ()
-@property (retain) NSString *text, *title;
+@property (strong) NSString *text, *title;
 @end
 
 @implementation SimpleTextWindow
@@ -10,7 +10,7 @@
 
 
 + (void)showText:(NSString *)text withTitle:(NSString *)title andDelegate:(NSObject <SimpleTextWindowDelegate> *)delegate {
-	SimpleTextWindow *simpleTextWindow = [[[SimpleTextWindow alloc] initWithWindowNibName:@"SimpleTextWindow"] autorelease];
+	SimpleTextWindow *simpleTextWindow = [[SimpleTextWindow alloc] initWithWindowNibName:@"SimpleTextWindow"];
 	simpleTextWindow.text = text;
 	simpleTextWindow.title = title;
 	simpleTextWindow.delegate = delegate;
@@ -19,14 +19,12 @@
 
 - (id)initWithWindow:(NSWindow *)window {
 	if ((self = [super initWithWindow:window])) {
-		[self retain];
 	}
 	return self;
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
 	[[self delegate] simpleTextWindowWillClose:self];
-	[self release];
 }
 
 - (void)setWindow:(NSWindow *)window {

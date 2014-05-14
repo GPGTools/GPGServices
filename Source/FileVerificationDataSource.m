@@ -31,10 +31,6 @@
     return self;
 }
 
-- (void)dealloc {
-    [verificationResults release];
-    [super dealloc];
-}
 
 - (void)addResults:(NSDictionary*)results {
     [self performSelectorOnMainThread:@selector(addResultsOnMain:) withObject:results waitUntilDone:NO];
@@ -97,12 +93,11 @@
         
 		
 		NSString *string1 = [NSString stringWithFormat:@"Signed by: %@ (%@) – ", sig.userIDDescription, sig.fingerprint.shortKeyID];
-		NSMutableAttributedString *resultString = [[[NSMutableAttributedString alloc] initWithString:string1 attributes:nil] autorelease];
+		NSMutableAttributedString *resultString = [[NSMutableAttributedString alloc] initWithString:string1 attributes:nil];
 		
 		NSDictionary *attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:[NSFont systemFontSize]], NSBackgroundColorAttributeName: bgColor};
 		NSAttributedString *trustString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ trust", validityDesc] attributes:attributes];
 		[resultString appendAttributedString:trustString];
-		[trustString release];
 		
 		
 		verificationResult = resultString;
@@ -112,8 +107,8 @@
         
         // Should really call GPGErrorDescription but Libmacgpg nolonger offer that.
         verificationResult = [NSString stringWithFormat:@"Verification FAILED: %d", [sig status]];
-        NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
-                                                                                 attributes:nil] autorelease];
+        NSMutableAttributedString* tmp = [[NSMutableAttributedString alloc] initWithString:verificationResult 
+                                                                                 attributes:nil];
         NSRange range = [verificationResult rangeOfString:@"FAILED"];
         [tmp addAttribute:NSFontAttributeName 
                     value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           

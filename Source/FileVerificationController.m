@@ -38,10 +38,7 @@
 
 - (void)dealloc {
     [verificationQueue waitUntilAllOperationsAreFinished];
-    [verificationQueue release];
-    [filesInVerification release];
     
-    [super dealloc];
 }
 
 - (void)windowDidLoad {
@@ -94,7 +91,7 @@
 #pragma mark - Helper Methods
 
 + (NSString*)searchFileForSignatureFile:(NSString*)sigFile {
-    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    NSFileManager* fmgr = [[NSFileManager alloc] init];
     
     NSString* file = [sigFile stringByDeletingPathExtension];
     BOOL isDir = NO;
@@ -105,7 +102,7 @@
 }
 
 + (NSString*)searchSignatureFileForFile:(NSString*)sigFile {
-    NSFileManager* fmgr = [[[NSFileManager alloc] init] autorelease];
+    NSFileManager* fmgr = [[NSFileManager alloc] init];
     
     NSSet* exts = [NSSet setWithObjects:@".sig", @".asc", nil];
     

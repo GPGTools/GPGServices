@@ -13,7 +13,7 @@
 
 
 @interface RecipientWindowController ()
-@property (nonatomic, retain) NSArray *keysMatchingSearch;
+@property (nonatomic, strong) NSArray *keysMatchingSearch;
 
 - (void)displayItemsMatchingString:(NSString*)s;
 - (void)generateContextMenuForTable:(NSTableView *)table;
@@ -47,11 +47,11 @@
 - (id)selectAll {
 	NSUInteger selectedCount = selectedKeys.count;
 	if (selectedCount == 0) {
-		return 0;
+		return @(0);
 	} else if (availableKeys.count > selectedCount) {
 		return NSMultipleValuesMarker;
 	}
-	return 1;
+	return @(1);
 }
 - (void)setSelectAll:(id)value {
 	[self willChangeValueForKey:@"selectedKeys"];
@@ -103,9 +103,9 @@
     dataSource = [[KeyChooserDataSource alloc] initWithValidator:[GPGServices canSignValidator]];
 
 	
-	availableKeys = [[[[GPGKeyManager sharedInstance] allKeys] objectsPassingTest:^BOOL(GPGKey *key, BOOL *stop) {
+	availableKeys = [[[GPGKeyManager sharedInstance] allKeys] objectsPassingTest:^BOOL(GPGKey *key, BOOL *stop) {
 		return key.canAnyEncrypt && key.validity < GPGValidityInvalid;
-	}] retain];
+	}];
 	
 	
 	
@@ -141,17 +141,12 @@
 }
 
 - (void)dealloc {
-    [dataSource release];
     keyTableView.delegate = nil;
     keyTableView.dataSource = nil;
     searchField.delegate = nil;
     
-	[availableKeys release];
-	[keysMatchingSearch release];
-	keysMatchingSearch = nil;
 	
 	
-	[super dealloc];
 }
 
 #pragma mark -
@@ -279,9 +274,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 
 - (void)setSortDescriptors:(NSArray *)sortDescriptors {
 	if (sortDescriptors != _sortDescriptors) {
-		id old = _sortDescriptors;
 		_sortDescriptors = [sortDescriptors copy];
-		[old release];
 		
 		[self displayItemsMatchingString:[searchField stringValue]];
 	}
@@ -317,7 +310,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (void)generateContextMenuForTable:(NSTableView *)table {
 	NSMenuItem *menuItem;
 	NSString *title;
-	NSMenu *contextMenu = [[[NSMenu alloc] initWithTitle:@""] autorelease];
+	NSMenu *contextMenu = [[NSMenu alloc] initWithTitle:@""];
 	[[keyTableView headerView] setMenu:contextMenu];
 	
 	NSArray *columns = [keyTableView tableColumns];
@@ -392,7 +385,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (void)persistSelectedKeys {
-    NSMutableArray * keyIds = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray * keyIds = [[NSMutableArray alloc] init];
     for ( GPGKey * key in selectedKeys ) {
         [keyIds addObject:key.keyID];
     }
