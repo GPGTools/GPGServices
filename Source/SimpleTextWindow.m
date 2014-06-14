@@ -24,10 +24,12 @@
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
+	selfReference = nil;
 	[[self delegate] simpleTextWindowWillClose:self];
 }
 
 - (void)setWindow:(NSWindow *)window {
+	selfReference = self;
 	window.level = NSFloatingWindowLevel;
 	[super setWindow:window];
 }
@@ -35,7 +37,6 @@
 - (void) windowDidLoad {
     textView.textStorage.font = [NSFont userFixedPitchFontOfSize:12];
 }
-
 
 @end
 

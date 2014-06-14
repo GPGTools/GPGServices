@@ -9,8 +9,9 @@
 @interface SimpleTextWindow : NSWindowController <NSWindowDelegate> {
 	NSString *text, *title;
     IBOutlet SimpleTextView * textView;
+	id selfReference;
 }
-@property (unsafe_unretained) NSObject <SimpleTextWindowDelegate> *delegate;
+@property (strong) NSObject <SimpleTextWindowDelegate> *delegate;
 @property (strong, readonly) NSString *text, *title;
 + (void)showText:(NSString *)text withTitle:(NSString *)title andDelegate:(NSObject <SimpleTextWindowDelegate> *)delegate;
 @end
