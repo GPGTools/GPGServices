@@ -1188,7 +1188,9 @@ static NSUInteger const suffixLen = 5;
 				}
 
 				if (ctx.error) {
-					@throw ctx.error;
+					if (!ctx.statusDict[@"DECRYPTION_OKAY"]) {
+						@throw ctx.error;
+					}
 				}
 
 				//
@@ -1198,7 +1200,7 @@ static NSUInteger const suffixLen = 5;
 					if ([ctx.signatures count] > 0) {
 						[self growlVerificationResultsFor:file signatures:ctx.signatures];
 					}
-				} else if (ctx.signatures && ctx.signatures.count > 0) {
+				} else if (ctx.signatures.count > 0) {
 					GPGDebugLog(@"found signatures: %@", ctx.signatures);
 
 					if (dummyController == nil) {
@@ -1237,11 +1239,16 @@ static NSUInteger const suffixLen = 5;
 
 	NSUInteger innCount = [files count];
 	NSUInteger outCount = [decryptedFiles count];
-	NSString *title = (innCount == outCount
-					   ? NSLocalizedString(@"Decryption finished", nil)
-					   : (outCount > 0
-						  ? NSLocalizedString(@"Decryption finished (partially)", nil)
-						  : NSLocalizedString(@"Decryption failed", nil)));
+	NSString *title;
+	if (innCount == outCount) {
+		title = NSLocalizedString(@"Decryption finished", nil);
+	} else if (outCount > 0) {
+		title = NSLocalizedString(@"Decryption finished (partially)", nil);
+	} else {
+		title = NSLocalizedString(@"Decryption failed", nil);
+	}
+	
+	
 	NSMutableString *message = [NSMutableString stringWithString:
 								[self describeCompletionForFiles:files
 													successCount:outCount
