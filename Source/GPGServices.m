@@ -1120,7 +1120,7 @@ static NSUInteger const suffixLen = 5;
 	// because it's retained by ServiceWrappedArgs
 	NSArray *files = wrappedArgs.arg1;
 
-	if ([files count] < 1) {
+	if (files.count == 0) {
 		return;
 	}
 
@@ -1173,7 +1173,18 @@ static NSUInteger const suffixLen = 5;
 					[tempFile closeFile];
 
 					error = nil;
-					NSString *outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
+					
+					NSString *outputFile;
+					NSString *fileName = ctx.statusDict[@"PLAINTEXT"][0][2];
+					if (fileName.length && [fileName rangeOfString:@"/"].length == 0) {
+						outputFile = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
+					} else {
+						outputFile = [file stringByDeletingPathExtension];
+					}
+					
+					outputFile = [self normalizedAndUniquifiedPathFromPath:outputFile];
+					
+					
 					[[NSFileManager defaultManager] moveItemAtPath:tempFile.fileName toPath:outputFile error:&error];
 					if (error != nil) {
 						NSLog(@"error while writing to output: %@", error);
