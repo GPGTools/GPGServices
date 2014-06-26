@@ -488,7 +488,7 @@
 	<key>SUFeedURL</key>
 	<string>https://gpgtools.org/releases/gpgservices/appcast.xml</string>
 	<key>SUFeedURL_nightly</key>
-	<string>https://nightly.gpgtools.org/releases/gpgservices/appcast.xml</string>
+	<string>https://releases.gpgtools.org/nightlies/gpgservices/appcast.xml</string>
 	<key>SUFeedURL_prerelease</key>
 	<string>https://gpgtools.org/releases/gpgservices/pre-appcast.xml</string>
 	<key>SUEnableSystemProfiling</key>
