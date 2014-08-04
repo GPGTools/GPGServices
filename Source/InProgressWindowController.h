@@ -11,15 +11,12 @@
 @class ServiceWorker;
 
 @interface InProgressWindowController : NSWindowController {
-    NSCollectionView *_collectionView;
-    NSArrayController *_arrayController;
-    NSMutableArray *_serviceWorkerArray;
     NSTimer *_delayTimer;
 }
 
-@property (assign) IBOutlet NSCollectionView *collectionView;
-@property (assign) IBOutlet NSArrayController *arrayController;
-@property (retain) IBOutlet NSMutableArray *serviceWorkerArray;
+@property (unsafe_unretained) IBOutlet NSCollectionView *collectionView;
+@property (unsafe_unretained) IBOutlet NSArrayController *arrayController;
+@property (strong) IBOutlet NSMutableArray *serviceWorkerArray;
 
 - (void)insertObject:(ServiceWorker *)w inServiceWorkerArrayAtIndex:(NSUInteger)index;
 - (void)removeObjectFromServiceWorkerArrayAtIndex:(NSUInteger)index;

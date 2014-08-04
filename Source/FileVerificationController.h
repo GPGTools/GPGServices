@@ -22,7 +22,7 @@
     NSMutableSet* filesInVerification;
 }
 
-@property(retain) NSArray* filesToVerify;
+@property(strong) NSArray* filesToVerify;
 @property(readonly) NSOperationQueue* verificationQueue;
 
 // threadSafe

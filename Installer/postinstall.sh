@@ -65,7 +65,8 @@ echo "[gpgservices] Fixing permissions..."
 if [ "$target" == "$homedir" ]; then
     chown -R "$USER:staff" "$homedir/$bundle"
 fi
-chmod -R 755 "$target"
+chmod 755 $target
+chmod -R u=rwX,go=rX "$target/$bundle"
 ################################################################################
 
 

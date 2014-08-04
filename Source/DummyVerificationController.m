@@ -95,4 +95,9 @@
 	[NSApp stopModalWithCode:0];
 }
 
+- (void)windowWillClose:(NSNotification *)notification {
+	[NSApp stopModalWithCode:0];
+}
+
+
 @end

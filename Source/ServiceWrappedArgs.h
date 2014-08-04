@@ -15,9 +15,9 @@
     id _arg1;
 }
 
-@property (retain) ServiceWorker *worker;
+@property (strong) ServiceWorker *worker;
 // access as id, but enforce to be NSObject
-@property (retain) id arg1;
+@property (strong) id arg1;
 
 // worker and arg1 will be retained
 + (id)wrappedArgsForWorker:(ServiceWorker *)worker arg1:(id)arg1;

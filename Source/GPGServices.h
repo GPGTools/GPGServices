@@ -44,10 +44,7 @@ typedef enum {
 
 @interface GPGServices : NSObject <NSApplicationDelegate, ServiceWorkerDelegate, GrowlApplicationBridgeDelegate, SimpleTextWindowDelegate> {
 	IBOutlet NSWindow *recipientWindow;
-	
-	IBOutlet NSWindow *passphraseWindow;
-	IBOutlet NSSecureTextField *passphraseText;
-	
+		
 	NSTimer *currentTerminateTimer;
 	int terminateCounter;
 
@@ -137,7 +134,6 @@ typedef enum {
 - (void)displayOperationFinishedNotificationWithTitle:(NSString*)title message:(NSString*)body;
 - (void)displayOperationFailedNotificationWithTitle:(NSString*)title message:(NSString*)body;
 - (void)displaySignatureVerificationForSig:(GPGSignature*)sig;
-//- (NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again;
 - (IBAction)closeModalWindow:(id)sender;
 - (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path
                          withSuggestedExtension:(NSString*)ext;

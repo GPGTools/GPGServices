@@ -18,22 +18,15 @@
 
 @implementation ServiceWorker 
 
-@synthesize delegate = _delegate;
-@synthesize workerDescription = _workerDescription;
-@synthesize amCanceling = _amCanceling;
-@synthesize runningController = _runningController;
+@synthesize delegate;
+@synthesize workerDescription;
+@synthesize amCanceling;
+@synthesize runningController;
 
-- (void)dealloc 
-{
-    [_workerDescription release];
-    [_queue release];
-    [_runningController release];
-    [super dealloc];
-}
 
 + (id)serviceWorkerWithTarget:(id)target andAction:(SEL)action
 {
-    return [[[self alloc] initWithTarget:target andAction:action] autorelease];
+    return [[self alloc] initWithTarget:target andAction:action];
 }
 
 - (id)initWithTarget:(id)target andAction:(SEL)action
@@ -58,8 +51,8 @@
     _queue = [[NSOperationQueue alloc] init];
     // built an invocation operation for the user-specified target/action
     ServiceWrappedArgs *wrappedArgs = [ServiceWrappedArgs wrappedArgsForWorker:self arg1:args];
-    NSInvocationOperation *op = [[[NSInvocationOperation alloc] 
-                                  initWithTarget:_target selector:_action object:wrappedArgs] autorelease];
+    NSInvocationOperation *op = [[NSInvocationOperation alloc] 
+                                  initWithTarget:_target selector:_action object:wrappedArgs];
     // wrap it in our operation so we can get a callback
     ServiceWrappedOperation *wrapped = [ServiceWrappedOperation wrappedOperation:op 
                                                           callbackTarget:self action:@selector(finishWork:)];
@@ -71,9 +64,9 @@
     if (!_queue)
         return;
 
-    _amCanceling = YES;
+    amCanceling = YES;
 
-    GPGController *gpc = [[_runningController retain] autorelease];
+    GPGController *gpc = runningController;
     @try {
         if (gpc)
             [gpc cancel];
@@ -84,17 +77,17 @@
 
     [_queue cancelAllOperations];
 
-    if (_delegate)
-        [_delegate workerWasCanceled:self];
+    if (delegate)
+        [delegate workerWasCanceled:self];
 }
 
 - (void)finishWork:(id)sender
 {
-    if (_amCanceling)
+    if (amCanceling)
         return;
 
-    if (_delegate)
-        [_delegate workerDidFinish:self];
+    if (delegate)
+        [delegate workerDidFinish:self];
 }
 
 @end
