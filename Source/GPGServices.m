@@ -1181,6 +1181,7 @@ static NSUInteger const suffixLen = 5;
 					NSString *outputFile;
 					NSString *fileName = ctx.statusDict[@"PLAINTEXT"][0][2];
 					if (fileName.length && [fileName rangeOfString:@"/"].length == 0) {
+						fileName = [fileName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 						outputFile = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
 					} else {
 						outputFile = [file stringByDeletingPathExtension];
