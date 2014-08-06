@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1B57171217A812B300B96393 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B57171117A812B300B96393 /* Security.framework */; };
+		1BB1F50F199285D4004BCB19 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1BB1F505199285D4004BCB19 /* InfoPlist.strings */; };
+		1BB1F512199285D4004BCB19 /* PLWeakCompatibility-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1BB1F50B199285D4004BCB19 /* PLWeakCompatibility-Info.plist */; };
+		1BB1F513199285D4004BCB19 /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1F50E199285D4004BCB19 /* PLWeakCompatibilityStubs.m */; };
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
@@ -144,6 +147,15 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1B34FA9017A80FE00078B93A /* Libmacgpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Libmacgpg.xcodeproj; path = Dependencies/Libmacgpg/Libmacgpg.xcodeproj; sourceTree = "<group>"; };
 		1B57171117A812B300B96393 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		1BB1F506199285D4004BCB19 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BB1F507199285D4004BCB19 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1BB1F508199285D4004BCB19 /* MAZeroingWeakRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAZeroingWeakRef.h; sourceTree = "<group>"; };
+		1BB1F509199285D4004BCB19 /* MAZeroingWeakRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAZeroingWeakRef.m; sourceTree = "<group>"; };
+		1BB1F50A199285D4004BCB19 /* MAZeroingWeakRefNativeZWRNotAllowedTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAZeroingWeakRefNativeZWRNotAllowedTable.h; sourceTree = "<group>"; };
+		1BB1F50B199285D4004BCB19 /* PLWeakCompatibility-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PLWeakCompatibility-Info.plist"; sourceTree = "<group>"; };
+		1BB1F50C199285D4004BCB19 /* PLWeakCompatibility-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PLWeakCompatibility-Prefix.pch"; sourceTree = "<group>"; };
+		1BB1F50D199285D4004BCB19 /* PLWeakCompatibilityStubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLWeakCompatibilityStubs.h; sourceTree = "<group>"; };
+		1BB1F50E199285D4004BCB19 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 		22261772144ED07200750926 /* ServicesRestart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = ServicesRestart; path = Dependencies/GPGTools_Core/bin/ServicesRestart; sourceTree = SOURCE_ROOT; };
 		2260756C12EBA0B50026DBEA /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		22D6D9C913267E0C00622189 /* RecipientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecipientWindowController.h; path = Source/RecipientWindowController.h; sourceTree = "<group>"; };
@@ -325,9 +337,27 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1BB1F504199285D4004BCB19 /* PLWeakCompatibility */ = {
+			isa = PBXGroup;
+			children = (
+				1BB1F505199285D4004BCB19 /* InfoPlist.strings */,
+				1BB1F507199285D4004BCB19 /* main.m */,
+				1BB1F508199285D4004BCB19 /* MAZeroingWeakRef.h */,
+				1BB1F509199285D4004BCB19 /* MAZeroingWeakRef.m */,
+				1BB1F50A199285D4004BCB19 /* MAZeroingWeakRefNativeZWRNotAllowedTable.h */,
+				1BB1F50B199285D4004BCB19 /* PLWeakCompatibility-Info.plist */,
+				1BB1F50C199285D4004BCB19 /* PLWeakCompatibility-Prefix.pch */,
+				1BB1F50D199285D4004BCB19 /* PLWeakCompatibilityStubs.h */,
+				1BB1F50E199285D4004BCB19 /* PLWeakCompatibilityStubs.m */,
+			);
+			name = PLWeakCompatibility;
+			path = Dependencies/PLWeakCompatibility/PLWeakCompatibility;
+			sourceTree = "<group>";
+		};
 		22CA686C12DFD8B400ED919C /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				1BB1F504199285D4004BCB19 /* PLWeakCompatibility */,
 				1B34FA9017A80FE00078B93A /* Libmacgpg.xcodeproj */,
 				8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */,
 			);
@@ -596,6 +626,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BB1F512199285D4004BCB19 /* PLWeakCompatibility-Info.plist in Resources */,
 				30B2056F14D56F1E00AE9583 /* ServicesRestart in Resources */,
 				30B2057014D56F1E00AE9583 /* MainMenu.xib in Resources */,
 				30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */,
@@ -603,6 +634,7 @@
 				30B2057314D56F1E00AE9583 /* VerificationResultsWindow.xib in Resources */,
 				30B2057414D56F1E00AE9583 /* InfoPlist.strings in Resources */,
 				30B2057514D56F1E00AE9583 /* Growl Registration Ticket.growlRegDict in Resources */,
+				1BB1F50F199285D4004BCB19 /* InfoPlist.strings in Resources */,
 				30B2057614D56F2A00AE9583 /* Icon.icns in Resources */,
 				300DD0EA1853AED00057B05F /* How to get the source code in Resources */,
 				30B2057714D56F2A00AE9583 /* asc.icns in Resources */,
@@ -666,6 +698,7 @@
 				8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */,
 				8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */,
 				8EFFC2271360FBAC00712940 /* FileVerificationDataSource.m in Sources */,
+				1BB1F513199285D4004BCB19 /* PLWeakCompatibilityStubs.m in Sources */,
 				8EFFC22A1361009400712940 /* DummyVerificationController.m in Sources */,
 				8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */,
 				45DD3DDA1565729000C9A4C1 /* InProgressWindowController.m in Sources */,
@@ -692,6 +725,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		1BB1F505199285D4004BCB19 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1BB1F506199285D4004BCB19 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		3058B7C814D56C5A00AA8881 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -823,6 +864,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks /Library/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = GPGServices;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = service;
@@ -849,6 +891,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = /Library/Services;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks /Library/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = GPGServices;
 				WRAPPER_EXTENSION = service;
 			};
@@ -862,6 +905,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -875,6 +922,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 				SDKROOT = macosx;
 			};
 			name = Release;

@@ -20,7 +20,7 @@
 //    GPGController *_runningController;
 }
 
-@property (unsafe_unretained) id <ServiceWorkerDelegate> delegate;
+@property (weak) id <ServiceWorkerDelegate> delegate;
 @property (strong) NSString *workerDescription;
 @property (readonly) BOOL amCanceling;
 

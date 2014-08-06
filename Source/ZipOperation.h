@@ -21,6 +21,6 @@
 @property(strong) NSString* filePath;
 @property(strong) NSArray* files;
 @property(strong) id delegate;
-@property(unsafe_unretained, readonly) NSData* zipData;
+@property(readonly) NSData* zipData;
 
 @end

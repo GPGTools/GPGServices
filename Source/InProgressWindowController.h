@@ -14,8 +14,8 @@
     NSTimer *_delayTimer;
 }
 
-@property (unsafe_unretained) IBOutlet NSCollectionView *collectionView;
-@property (unsafe_unretained) IBOutlet NSArrayController *arrayController;
+@property (weak) IBOutlet NSCollectionView *collectionView;
+@property (strong) IBOutlet NSArrayController *arrayController;
 @property (strong) IBOutlet NSMutableArray *serviceWorkerArray;
 
 - (void)insertObject:(ServiceWorker *)w inServiceWorkerArrayAtIndex:(NSUInteger)index;
