@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1BFDF3F019D73DDD00DFB134 /* PLWeakCompatibilityStubs.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BFDF3E619D73DDD00DFB134 /* PLWeakCompatibilityStubs.h */; };
+		1BFDF3F119D73DDD00DFB134 /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BFDF3E719D73DDD00DFB134 /* PLWeakCompatibilityStubs.m */; };
 		22164E18181ABDA400ECDC0F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 22164E17181ABDA400ECDC0F /* libz.dylib */; };
 		22164E19181ABE4900ECDC0F /* ZKDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6F09FA17483A9A00F91524 /* ZKDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22164E1A181ABE4900ECDC0F /* GMAppleDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6F0A3C17483CC900F91524 /* GMAppleDouble.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -118,6 +120,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1BFDF3E619D73DDD00DFB134 /* PLWeakCompatibilityStubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PLWeakCompatibilityStubs.h; path = ../PLWeakCompatibility/PLWeakCompatibility/PLWeakCompatibilityStubs.h; sourceTree = "<group>"; };
+		1BFDF3E719D73DDD00DFB134 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLWeakCompatibilityStubs.m; path = ../PLWeakCompatibility/PLWeakCompatibility/PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 		22164E17181ABDA400ECDC0F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		22164E2B181ABEAA00ECDC0F /* ZipKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipKit.h; sourceTree = "<group>"; };
 		4C187B4B18D2839900D4AAC1 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
@@ -205,6 +209,8 @@
 		CB6F09C4174838FC00F91524 = {
 			isa = PBXGroup;
 			children = (
+				1BFDF3E619D73DDD00DFB134 /* PLWeakCompatibilityStubs.h */,
+				1BFDF3E719D73DDD00DFB134 /* PLWeakCompatibilityStubs.m */,
 				CB6F0A3A17483B7900F91524 /* COPYING.TXT */,
 				CB6F0A3917483B7900F91524 /* Credits.html */,
 				CB6F09D7174838FC00F91524 /* ZipKit */,
@@ -363,6 +369,7 @@
 				CB6F0A1417483A9A00F91524 /* NSFileHandle+ZKAdditions.h in Headers */,
 				CB6F0A1517483A9A00F91524 /* NSFileManager+ZKAdditions.h in Headers */,
 				CB6F0A1617483A9A00F91524 /* NSString+ZKAdditions.h in Headers */,
+				1BFDF3F019D73DDD00DFB134 /* PLWeakCompatibilityStubs.h in Headers */,
 				22164E2C181ABEAA00ECDC0F /* ZipKit.h in Headers */,
 				CB6F0A1717483A9A00F91524 /* ZKArchive.h in Headers */,
 				CB6F0A1817483A9A00F91524 /* ZKCDHeader.h in Headers */,
@@ -516,6 +523,7 @@
 				CB6F0A2C17483A9A00F91524 /* ZKCDTrailer64.m in Sources */,
 				CB6F0A2D17483A9A00F91524 /* ZKCDTrailer64Locator.m in Sources */,
 				CB6F0A2E17483A9A00F91524 /* ZKDataArchive.m in Sources */,
+				1BFDF3F119D73DDD00DFB134 /* PLWeakCompatibilityStubs.m in Sources */,
 				CB6F0A2F17483A9A00F91524 /* ZKDefs.m in Sources */,
 				CB6F0A3017483A9A00F91524 /* ZKFileArchive.m in Sources */,
 				CB6F0A3117483A9A00F91524 /* ZKLFHeader.m in Sources */,
@@ -601,8 +609,12 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = Debug;
 		};
@@ -626,7 +638,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-runtime-has-weak",
+				);
 			};
 			name = Release;
 		};
