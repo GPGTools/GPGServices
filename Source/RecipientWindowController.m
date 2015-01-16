@@ -262,7 +262,16 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
             return [key.textForFilter rangeOfString:searchString options:NSCaseInsensitiveSearch].length > 0;
 		}];
 	}
-	self.keysMatchingSearch = [[filteredKeys allObjects] sortedArrayUsingDescriptors:self.sortDescriptors];
+	
+	// Place selected keys on the top of the list.
+	NSSortDescriptor *selectedSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
+		return [self.selectedKeys containsObject:obj2] - [self.selectedKeys containsObject:obj1];
+	}];
+	NSMutableArray *sortDescriptors = [NSMutableArray arrayWithObject:selectedSortDescriptor];
+	[sortDescriptors addObjectsFromArray:self.sortDescriptors];
+	
+	// Sort the keys.
+	self.keysMatchingSearch = [[filteredKeys allObjects] sortedArrayUsingDescriptors:sortDescriptors];
 	
     [keyTableView reloadData];
 }
