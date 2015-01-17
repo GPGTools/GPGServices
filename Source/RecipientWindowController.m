@@ -67,7 +67,7 @@
 
 
 + (NSSet*)keyPathsForValuesAffectingOkEnabled {
-	return [NSSet setWithObjects:@"encryptForOwnKeyToo", @"symetricEncryption", nil]; 
+	return [NSSet setWithObjects:@"encryptForOwnKeyToo", @"symetricEncryption", @"selectedKeys", nil];
 }
 - (BOOL)okEnabled {
 	return encryptForOwnKeyToo || symetricEncryption || self.selectedKeys.count > 0;
