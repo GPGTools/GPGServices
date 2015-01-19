@@ -58,7 +58,7 @@
 	if ([value intValue] == 0) {
 		[selectedKeys removeAllObjects];
 	} else if ([value intValue] == 1) {
-		[selectedKeys setArray:[availableKeys allObjects]];
+		[selectedKeys setSet:availableKeys];
 	}
 	[keyTableView reloadData];
 	[self didChangeValueForKey:@"selectedKeys"];
@@ -111,7 +111,7 @@
 	
 	self.keysMatchingSearch = [availableKeys allObjects];
 
-    selectedKeys = [[NSMutableArray alloc] init];
+    selectedKeys = [[NSMutableSet alloc] init];
     [self restoreSelectedKeys];
 	
     self.encryptForOwnKeyToo = YES;
@@ -227,8 +227,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		return [NSNumber numberWithInt:i];
 	} else if([iden isEqualToString:@"useKey"]) {
         GPGKey *k = [keysMatchingSearch objectAtIndex:row];
-        return [NSNumber numberWithBool:[self.selectedKeys containsObject:k]];
-    }
+		NSNumber *result = [NSNumber numberWithBool:[self.selectedKeys containsObject:k]];
+		return result;
+	}
 
 	return @"";
 }
@@ -237,22 +238,22 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
    setObjectValue:(id)value
    forTableColumn:(NSTableColumn *)column
               row:(NSInteger)row {
-    if(tableView != keyTableView)
+	
+	if (tableView != keyTableView || row >= keysMatchingSearch.count || ![column.identifier isEqualToString:@"useKey"]) {
         return;
-    
-    if (row < keysMatchingSearch.count) {
-        GPGKey *k = [keysMatchingSearch objectAtIndex:row];
-		
-		[self willChangeValueForKey:@"selectedKeys"];
-		
-		if ([self.selectedKeys containsObject:k]) {
-			[self.selectedKeys removeObject:k];
-		} else {
-            [self.selectedKeys addObject:k];
-		}
-		
-		[self didChangeValueForKey:@"selectedKeys"];
-    }
+	}
+	
+	GPGKey *k = [keysMatchingSearch objectAtIndex:row];
+	
+	[self willChangeValueForKey:@"selectedKeys"];
+	if ([(NSNumber *)value boolValue]) {
+		[self.selectedKeys addObject:k];
+	} else {
+		[self.selectedKeys removeObject:k];
+	}
+	
+	[self didChangeValueForKey:@"selectedKeys"];
+
 }
 
 - (void)displayItemsMatchingString:(NSString*)searchString {
@@ -296,20 +297,19 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	self.sortDescriptors = [keyTableView sortDescriptors];
 }
 
-- (void)doubleClickAction:(id)sender {
-	if([sender clickedRow] != -1 && 
-	   [sender clickedRow] < keysMatchingSearch.count) {
-        GPGKey* k = [keysMatchingSearch objectAtIndex:[sender clickedRow]];
-     
-        if([self.selectedKeys containsObject:k])
+- (void)doubleClickAction:(NSTableView *)sender {
+	NSInteger clickedRow = sender.clickedRow;
+	if (clickedRow > -1 && clickedRow < keysMatchingSearch.count && sender.clickedColumn != 0) {
+        GPGKey *k = [keysMatchingSearch objectAtIndex:clickedRow];
+		
+		[self willChangeValueForKey:@"selectedKeys"];
+		if ([self.selectedKeys containsObject:k]) {
             [self.selectedKeys removeObject:k];
-        else
+		} else {
             [self.selectedKeys addObject:k];
-     
-		[self willChangeValueForKey:@"okEnabled"];
-		[self didChangeValueForKey:@"okEnabled"];
-        //self.okEnabled = self.encryptForOwnKeyToo || self.selectedKeys.count > 0;
-        
+		}
+		[self didChangeValueForKey:@"selectedKeys"];
+		
         [keyTableView reloadData];
 	}
 }

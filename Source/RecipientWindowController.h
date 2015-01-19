@@ -22,7 +22,7 @@
 	NSArray *keysMatchingSearch;
     NSArray *_sortDescriptors;
 	
-    NSMutableArray *selectedKeys;
+    NSMutableSet *selectedKeys;
 	
 	BOOL sign;
     BOOL encryptForOwnKeyToo;
@@ -37,7 +37,7 @@
 @property (readonly) NSString *selectedCountDescription;
 
 @property (readonly) KeyChooserDataSource *dataSource;
-@property (readonly) NSMutableArray *selectedKeys;
+@property (readonly) NSMutableSet *selectedKeys;
 @property (readonly) GPGKey *selectedPrivateKey;
 @property (assign) BOOL sign;
 @property (assign) BOOL encryptForOwnKeyToo;
