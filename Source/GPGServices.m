@@ -318,15 +318,11 @@ static NSUInteger const suffixLen = 5;
 		return nil;  // User pressed 'cancel'
 	}
 	NSData *inputData = [inputString UTF8Data];
-	NSArray *validRecipients = rcp.selectedKeys;
+	NSSet *validRecipients = rcp.selectedKeys;
 	GPGKey *privateKey = rcp.selectedPrivateKey;
 
 	if (rcp.encryptForOwnKeyToo && privateKey) {
-		validRecipients = [[[NSSet setWithArray:validRecipients]
-							setByAddingObject:privateKey]
-						   allObjects];
-	} else {
-		validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
+		validRecipients = [validRecipients setByAddingObject:privateKey];
 	}
 
 	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
@@ -918,15 +914,11 @@ static NSUInteger const suffixLen = 5;
 	if (ret != 0) {
 		return;  // User pressed 'cancel'
 	}
-	NSArray *validRecipients = rcp.selectedKeys;
+	NSSet *validRecipients = rcp.selectedKeys;
 	GPGKey *privateKey = rcp.selectedPrivateKey;
 
 	if (rcp.encryptForOwnKeyToo && privateKey) {
-		validRecipients = [[[NSSet setWithArray:validRecipients]
-							setByAddingObject:privateKey]
-						   allObjects];
-	} else {
-		validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
+		validRecipients = [validRecipients setByAddingObject:privateKey];
 	}
 
 	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
