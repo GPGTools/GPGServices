@@ -20,7 +20,6 @@
 		302D33D216D41B7600C05409 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D016D41B7100C05409 /* Sparkle.framework */; };
 		302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D316D41BCF00C05409 /* Libmacgpg.framework */; };
 		305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */; };
-		30B2056F14D56F1E00AE9583 /* ServicesRestart in Resources */ = {isa = PBXBuildFile; fileRef = 22261772144ED07200750926 /* ServicesRestart */; };
 		30B2057014D56F1E00AE9583 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7C814D56C5A00AA8881 /* MainMenu.xib */; };
 		30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */; };
 		30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CE14D56C6400AA8881 /* RecipientWindow.xib */; };
@@ -156,7 +155,6 @@
 		1BB1F50C199285D4004BCB19 /* PLWeakCompatibility-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PLWeakCompatibility-Prefix.pch"; sourceTree = "<group>"; };
 		1BB1F50D199285D4004BCB19 /* PLWeakCompatibilityStubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLWeakCompatibilityStubs.h; sourceTree = "<group>"; };
 		1BB1F50E199285D4004BCB19 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
-		22261772144ED07200750926 /* ServicesRestart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = ServicesRestart; path = Dependencies/GPGTools_Core/bin/ServicesRestart; sourceTree = SOURCE_ROOT; };
 		2260756C12EBA0B50026DBEA /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		22D6D9C913267E0C00622189 /* RecipientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecipientWindowController.h; path = Source/RecipientWindowController.h; sourceTree = "<group>"; };
 		22D6D9CA13267E0C00622189 /* RecipientWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecipientWindowController.m; path = Source/RecipientWindowController.m; sourceTree = "<group>"; };
@@ -392,7 +390,6 @@
 				30B2057B14D56F3900AE9583 /* XIBs */,
 				30B2057A14D56F3500AE9583 /* Strings */,
 				300B934814D56B97005016A7 /* Images */,
-				22261772144ED07200750926 /* ServicesRestart */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */,
 				30C2DEDD191E6B4100D56CDC /* gpgservices.sdef */,
@@ -627,7 +624,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BB1F512199285D4004BCB19 /* PLWeakCompatibility-Info.plist in Resources */,
-				30B2056F14D56F1E00AE9583 /* ServicesRestart in Resources */,
 				30B2057014D56F1E00AE9583 /* MainMenu.xib in Resources */,
 				30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */,
 				30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */,
@@ -663,7 +659,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "source \"$SRCROOT/Makefile.config\" || exit 1\n\nPLIST=\"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n\n/usr/libexec/PlistBuddy -c \"Set CommitHash \\\"$commitHash\\\"\" -c \"Set BuildNumber \\\"$buildNumber\\\"\" -c \"Set CFBundleVersion \\\"$build_version\\\"\" -c \"Set CFBundleShortVersionString \\\"$version\\\"\" \"$PLIST\" || exit 2\n";
+			shellScript = "source \"$SRCROOT/Makefile.config\" || exit 1\n\nPLIST=\"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n\n/usr/libexec/PlistBuddy -c \"Set CommitHash '$COMMIT_HASH'\" -c \"Set BuildNumber '${BUILD_NUMBER:-0}'\" -c \"Set CFBundleVersion '$BUILD_VERSION'\" -c \"Set CFBundleShortVersionString '$VERSION'\" \"$PLIST\" || exit 2\n";
 			showEnvVarsInLog = 0;
 		};
 		30B2052714D56D5200AE9583 /* Localize XIBs */ = {
@@ -678,7 +674,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "pushd \"$SRCROOT\" > /dev/null\nalias localizeXIB=Dependencies/GPGTools_Core/bin/localizeXIB\n\nlocalizeXIB Resources/en.lproj/MainMenu.xib                   de it\nlocalizeXIB Resources/en.lproj/PrivateKeyChooserWindow.xib    de it\nlocalizeXIB Resources/en.lproj/RecipientWindow.xib            de it\nlocalizeXIB Resources/en.lproj/VerificationResultsWindow.xib  de it\n\npopd > /dev/null\n";
+			shellScript = "[[ -x Dependencies/GPGTools_Core/bin/localizeXIB ]] || exit 0\npushd \"$SRCROOT\" > /dev/null\nalias localizeXIB=Dependencies/GPGTools_Core/bin/localizeXIB\n\nlocalizeXIB Resources/en.lproj/MainMenu.xib                   de it\nlocalizeXIB Resources/en.lproj/PrivateKeyChooserWindow.xib    de it\nlocalizeXIB Resources/en.lproj/RecipientWindow.xib            de it\nlocalizeXIB Resources/en.lproj/VerificationResultsWindow.xib  de it\n\npopd > /dev/null\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
