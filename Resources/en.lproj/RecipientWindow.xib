@@ -2292,5 +2292,6 @@
 			<string key="NSMenuMixedState">{10, 2}</string>
 			<string key="NSSwitch">{15, 15}</string>
 		</dictionary>
+		<integer value="1" key="IBCocoaDocument.explicitCustomObjectInstantiationBehavior"/>
 	</data>
 </archive>
