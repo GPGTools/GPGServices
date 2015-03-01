@@ -160,7 +160,6 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		300843FA14D571FC0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		300843FB14D571FC0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
 		300843FC14D571FC0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
 		300843FD14D571FC0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
@@ -184,7 +183,6 @@
 		30B2054614D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
 		30B2054814D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
 		30B2055614D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		30B2055714D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		30B2055814D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/MainMenu.xib.strings; sourceTree = "<group>"; };
 		30B2055914D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
 		30B2055A14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
@@ -745,8 +743,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3058B7C714D56C5A00AA8881 /* en */,
-				30B2055714D56EC700AE9583 /* it */,
-				300843FA14D571FC0021044B /* de */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
