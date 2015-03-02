@@ -1,5 +1,4 @@
 PRODUCT = GPGServices
-MAKE_DEFAULT = Dependencies/GPGTools_Core/newBuildSystem/Makefile.default
 VPATH = build/Release/GPGServices.service/Contents/MacOS
 
 all: $(PRODUCT)
