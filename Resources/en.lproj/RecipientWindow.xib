@@ -140,7 +140,7 @@
 											<string key="NSFrameSize">{658, 131}</string>
 											<reference key="NSSuperview" ref="479373857"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="177660419"/>
+											<reference key="NSNextKeyView" ref="750276098"/>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -818,7 +818,7 @@
 							<string key="NSFrame">{{20, 124}, {660, 149}}</string>
 							<reference key="NSSuperview" ref="527633266"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="479373857"/>
+							<reference key="NSNextKeyView" ref="177660419"/>
 							<int key="NSsFlags">133682</int>
 							<reference key="NSVScroller" ref="750276098"/>
 							<reference key="NSHScroller" ref="1046379287"/>
@@ -1136,7 +1136,7 @@
 							<reference key="NSNextResponder" ref="527633266"/>
 							<int key="NSvFlags">1828</int>
 							<object class="NSPSMatrix" key="NSFrameMatrix"/>
-							<string key="NSFrame">{{185, 7}, {166, 11}}</string>
+							<string key="NSFrame">{{93, 7}, {166, 11}}</string>
 							<reference key="NSSuperview" ref="527633266"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="313759458"/>
@@ -1565,11 +1565,11 @@
 							<reference ref="411492515"/>
 							<reference ref="268889266"/>
 							<reference ref="890865373"/>
-							<reference ref="1007616681"/>
 							<reference ref="804949323"/>
 							<reference ref="445697749"/>
 							<reference ref="239108544"/>
 							<reference ref="779993603"/>
+							<reference ref="1007616681"/>
 						</array>
 						<reference key="parent" ref="319219446"/>
 					</object>
@@ -2159,6 +2159,7 @@
 				<boolean value="NO" key="38.showNotes"/>
 				<string key="39.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="39.showNotes"/>
+				<reference key="4.IBNSViewMetadataGestureRecognizers" ref="0"/>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<reference key="4.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="4.showNotes"/>
