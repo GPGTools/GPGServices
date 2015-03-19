@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">13A603</string>
-		<string key="IBDocument.InterfaceBuilderVersion">4514</string>
-		<string key="IBDocument.AppKitVersion">1265</string>
-		<string key="IBDocument.HIToolboxVersion">695.00</string>
+		<int key="IBDocument.SystemTarget">101000</int>
+		<string key="IBDocument.SystemVersion">14C1510</string>
+		<string key="IBDocument.InterfaceBuilderVersion">6751</string>
+		<string key="IBDocument.AppKitVersion">1344.72</string>
+		<string key="IBDocument.HIToolboxVersion">757.30</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">4514</string>
+			<string key="NS.object.0">6751</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSArrayController</string>
@@ -68,7 +68,7 @@
 											<reference key="NSNextResponder" ref="18942298"/>
 											<int key="NSvFlags">1792</int>
 											<object class="NSPSMatrix" key="NSFrameMatrix"/>
-											<string key="NSFrameSize">{1244, 146}</string>
+											<string key="NSFrameSize">{1244, 161}</string>
 											<reference key="NSSuperview" ref="18942298"/>
 											<reference key="NSNextKeyView" ref="537629743"/>
 											<bool key="NSEnabled">YES</bool>
@@ -84,10 +84,9 @@
 												<reference key="NSTableView" ref="193202669"/>
 											</object>
 											<object class="_NSCornerView" key="NSCornerView" id="537629743">
-												<reference key="NSNextResponder" ref="86164340"/>
+												<nil key="NSNextResponder"/>
 												<int key="NSvFlags">-2147481856</int>
 												<string key="NSFrameSize">{15, 20}</string>
-												<reference key="NSSuperview" ref="86164340"/>
 												<reference key="NSNextKeyView" ref="859868017"/>
 											</object>
 											<array class="NSMutableArray" key="NSTableColumns">
@@ -101,7 +100,7 @@
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">Indikator</string>
 														<object class="NSFont" key="NSSupport" id="26">
-															<string key="NSName">.LucidaGrandeUI</string>
+															<bool key="IBIsSystemFont">YES</bool>
 															<double key="NSSize">11</double>
 															<int key="NSfFlags">3100</int>
 														</object>
@@ -124,7 +123,7 @@
 														<int key="NSCellFlags2">272630784</int>
 														<string key="NSContents">Text</string>
 														<object class="NSFont" key="NSSupport" id="403735143">
-															<string key="NSName">.LucidaGrandeUI</string>
+															<bool key="IBIsSystemFont">YES</bool>
 															<double key="NSSize">13</double>
 															<int key="NSfFlags">1044</int>
 														</object>
@@ -207,17 +206,18 @@
 											<int key="NSTableViewGroupRowStyle">1</int>
 										</object>
 									</array>
-									<string key="NSFrame">{{1, 17}, {460, 146}}</string>
+									<string key="NSFrame">{{1, 17}, {460, 161}}</string>
 									<reference key="NSSuperview" ref="86164340"/>
 									<reference key="NSNextKeyView" ref="193202669"/>
 									<reference key="NSDocView" ref="193202669"/>
-									<object class="NSColor" key="NSBGColor" id="391711315">
+									<object class="NSColor" key="NSBGColor">
 										<int key="NSColorSpace">6</int>
 										<string key="NSCatalogName">System</string>
 										<string key="NSColorName">controlBackgroundColor</string>
 										<reference key="NSColor" ref="505456413"/>
 									</object>
 									<int key="NScvFlags">4</int>
+									<bool key="NSAutomaticallyAdjustsContentInsets">YES</bool>
 								</object>
 								<object class="NSClipView" id="859868017">
 									<reference key="NSNextResponder" ref="86164340"/>
@@ -229,19 +229,19 @@
 									<reference key="NSSuperview" ref="86164340"/>
 									<reference key="NSNextKeyView" ref="44762083"/>
 									<reference key="NSDocView" ref="44762083"/>
-									<reference key="NSBGColor" ref="391711315"/>
-									<int key="NScvFlags">4</int>
+									<bool key="NSAutomaticallyAdjustsContentInsets">YES</bool>
 								</object>
-								<reference ref="537629743"/>
 								<object class="NSScroller" id="820058273">
 									<reference key="NSNextResponder" ref="86164340"/>
 									<int key="NSvFlags">1792</int>
 									<object class="NSPSMatrix" key="NSFrameMatrix"/>
-									<string key="NSFrame">{{1, 163}, {460, 15}}</string>
+									<string key="NSFrame">{{1, 162}, {460, 16}}</string>
 									<reference key="NSSuperview" ref="86164340"/>
 									<reference key="NSNextKeyView" ref="572147292"/>
 									<bool key="NSEnabled">YES</bool>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+									<string key="NSControlAction">_doScroller:</string>
+									<reference key="NSControlTarget" ref="86164340"/>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="86164340"/>
 									<string key="NSAction">_doScroller:</string>
@@ -255,6 +255,8 @@
 									<reference key="NSSuperview" ref="86164340"/>
 									<reference key="NSNextKeyView" ref="820058273"/>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+									<string key="NSControlAction">_doScroller:</string>
+									<reference key="NSControlTarget" ref="86164340"/>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="86164340"/>
 									<string key="NSAction">_doScroller:</string>
@@ -318,7 +320,7 @@
 					<string key="NSFrameSize">{502, 259}</string>
 					<reference key="NSNextKeyView" ref="86164340"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1680, 1027}}</string>
 				<string key="NSMinSize">{480, 227}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">verificationResults</string>
@@ -339,7 +341,7 @@
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<bool key="usesAutoincrementingIDs">NO</bool>
-			<array class="NSMutableArray" key="connectionRecords">
+			<array key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">okClicked:</string>
@@ -636,63 +638,10 @@
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">FileVerificationController</string>
-					<string key="superclassName">NSWindowController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">okClicked:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">okClicked:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">okClicked:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="dataSource">FileVerificationDataSource</string>
-						<string key="indicator">NSProgressIndicator</string>
-						<string key="tableView">NSTableView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="dataSource">
-							<string key="name">dataSource</string>
-							<string key="candidateClassName">FileVerificationDataSource</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="indicator">
-							<string key="name">indicator</string>
-							<string key="candidateClassName">NSProgressIndicator</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="tableView">
-							<string key="name">tableView</string>
-							<string key="candidateClassName">NSTableView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/FileVerificationController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">FileVerificationDataSource</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/FileVerificationDataSource.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">YES</bool>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<real value="1060" key="NS.object.0"/>
-		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
 			<integer value="4600" key="NS.object.0"/>
