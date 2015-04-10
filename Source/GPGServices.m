@@ -1607,101 +1607,123 @@ static NSUInteger const suffixLen = 5;
 					 error:(NSString **)error {
 	[self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
-
-	NSString *pboardString = nil, *pbtype = nil;
-	if (mode != MyKeyService && mode != MyFingerprintService) {
-		pbtype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
-												 NSPasteboardTypeString,
-												 NSPasteboardTypeRTF,
-												 nil]];
-		NSString *myerror = NSLocalizedString(@"GPGServices did not get usable data from the pasteboard.", @"Pasteboard could not supply the string in an acceptible format.");
-
-		if ([pbtype isEqualToString:NSPasteboardTypeString]) {
-			if (!(pboardString = [pboard stringForType:NSPasteboardTypeString])) {
+	
+	
+	@try {
+		
+		NSString *pboardString = nil, *pbtype = nil;
+		if (mode != MyKeyService && mode != MyFingerprintService) {
+			pbtype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
+													 NSPasteboardTypeString,
+													 NSPasteboardTypeRTF,
+													 nil]];
+			NSString *myerror = NSLocalizedString(@"GPGServices did not get usable data from the pasteboard.", @"Pasteboard could not supply the string in an acceptible format.");
+			
+			if ([pbtype isEqualToString:NSPasteboardTypeString]) {
+				if (!(pboardString = [pboard stringForType:NSPasteboardTypeString])) {
+					*error = myerror;
+					[self goneIn60Seconds];
+					return;
+				}
+			} else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {
+				if (!(pboardString = [pboard stringForType:NSPasteboardTypeString])) {
+					*error = myerror;
+					[self goneIn60Seconds];
+					return;
+				}
+			} else {
 				*error = myerror;
 				[self goneIn60Seconds];
 				return;
 			}
-		} else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {
-			if (!(pboardString = [pboard stringForType:NSPasteboardTypeString])) {
-				*error = myerror;
-				[self goneIn60Seconds];
-				return;
+			
+			if ([pboardString rangeOfString:@"\xC2\xA0"].length > 0) {
+				// Replace non-breaking space with a normal space.
+				NSString *temp = [pboardString stringByReplacingOccurrencesOfString:@"\xC2\xA0" withString:@" "];
+				pboardString = temp ? temp : pboardString;
 			}
-		} else {
-			*error = myerror;
-			[self goneIn60Seconds];
-			return;
 		}
 		
-		if ([pboardString rangeOfString:@"\xC2\xA0"].length > 0) {
-			// Replace non-breaking space with a normal space.
-			NSString *temp = [pboardString stringByReplacingOccurrencesOfString:@"\xC2\xA0" withString:@" "];
-			pboardString = temp ? temp : pboardString;
+		NSString *newString = nil;
+		switch (mode) {
+			case SignService:
+				newString = [self signTextString:pboardString];
+				break;
+			case EncryptService:
+				newString = [self encryptTextString:pboardString];
+				break;
+			case DecryptService:
+				newString = [self decryptTextString:pboardString];
+				break;
+			case VerifyService:
+				[self verifyTextString:pboardString];
+				break;
+			case MyKeyService:
+				newString = [self myKey];
+				break;
+			case MyFingerprintService:
+				newString = [self myFingerprint];
+				break;
+			case ImportKeyService:
+				[self importKey:pboardString];
+				break;
+			default:
+				break;
 		}
-	}
-
-	NSString *newString = nil;
-	switch (mode) {
-		case SignService:
-			newString = [self signTextString:pboardString];
-			break;
-		case EncryptService:
-			newString = [self encryptTextString:pboardString];
-			break;
-		case DecryptService:
-			newString = [self decryptTextString:pboardString];
-			break;
-		case VerifyService:
-			[self verifyTextString:pboardString];
-			break;
-		case MyKeyService:
-			newString = [self myKey];
-			break;
-		case MyFingerprintService:
-			newString = [self myFingerprint];
-			break;
-		case ImportKeyService:
-			[self importKey:pboardString];
-			break;
-		default:
-			break;
-	}
-
-	BOOL shouldExitServiceRequest = YES;
-
-	if (newString != nil) {
-		static NSString *const kServiceShowInWindow = @"showInWindow";
-		if ([userData isEqualToString:kServiceShowInWindow]) {
-			[SimpleTextWindow showText:newString withTitle:@"GPGServices" andDelegate:self];
-			shouldExitServiceRequest = NO;
-		} else {
-			[pboard clearContents];
-
-			NSMutableArray *pbitems = [NSMutableArray array];
-
-			if ([pbtype isEqualToString:NSPasteboardTypeHTML]) {
-				NSPasteboardItem *htmlItem = [[NSPasteboardItem alloc] init];
-				[htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"]
-							forType:NSPasteboardTypeHTML];
-				[pbitems addObject:htmlItem];
-			} else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {
-				NSPasteboardItem *rtfItem = [[NSPasteboardItem alloc] init];
-				[rtfItem setString:newString forType:NSPasteboardTypeRTF];
-				[pbitems addObject:rtfItem];
+		
+		BOOL shouldExitServiceRequest = YES;
+		
+		if (newString != nil) {
+			static NSString *const kServiceShowInWindow = @"showInWindow";
+			if ([userData isEqualToString:kServiceShowInWindow]) {
+				[SimpleTextWindow showText:newString withTitle:@"GPGServices" andDelegate:self];
+				shouldExitServiceRequest = NO;
 			} else {
-				NSPasteboardItem *stringItem = [[NSPasteboardItem alloc] init];
-				[stringItem setString:newString forType:NSPasteboardTypeString];
-				[pbitems addObject:stringItem];
+				[pboard clearContents];
+				
+				NSMutableArray *pbitems = [NSMutableArray array];
+				
+				if ([pbtype isEqualToString:NSPasteboardTypeHTML]) {
+					NSPasteboardItem *htmlItem = [[NSPasteboardItem alloc] init];
+					if (!htmlItem) {
+						NSLog(@"Unable to create htmlItem!");
+						[NSException raise:NSGenericException format:@"Unable to create htmlItem!"];
+					}
+					[htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"]
+								forType:NSPasteboardTypeHTML];
+					[pbitems addObject:htmlItem];
+				} else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {
+					NSPasteboardItem *rtfItem = [[NSPasteboardItem alloc] init];
+					if (!rtfItem) {
+						NSLog(@"Unable to create rtfItem!");
+						[NSException raise:NSGenericException format:@"Unable to create rtfItem!"];
+					}
+					[rtfItem setString:newString forType:NSPasteboardTypeRTF];
+					[pbitems addObject:rtfItem];
+				} else {
+					NSPasteboardItem *stringItem = [[NSPasteboardItem alloc] init];
+					if (!stringItem) {
+						NSLog(@"Unable to create stringItem!");
+						[NSException raise:NSGenericException format:@"Unable to create stringItem!"];
+					}
+					[stringItem setString:newString forType:NSPasteboardTypeString];
+					[pbitems addObject:stringItem];
+				}
+				
+				[pboard writeObjects:pbitems];
 			}
-
-			[pboard writeObjects:pbitems];
 		}
+		
+		if (shouldExitServiceRequest) {
+			[self goneIn60Seconds];
+		}
+		
+	} @catch (NSException *exception) {
+		NSLog(@"An exception(1) occured: '%@'\nException class: %@\nBacktrace: '%@'",
+			  exception.description, exception.className, exception.callStackSymbols);
+		GPGDebugLog(@"Pasteboard: '%@'\nuserData: '%@'\nmode: %i", pboard, userData, mode);
 	}
-
-	if (shouldExitServiceRequest) {
-		[self goneIn60Seconds];
-	}
+	
 }
 
 - (void)dealWithFilesPasteboard:(NSPasteboard *)pboard
@@ -1710,46 +1732,54 @@ static NSUInteger const suffixLen = 5;
 						  error:(NSString **)error {
 	[self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
-
-	NSData *data = [pboard dataForType:NSFilenamesPboardType];
-
 	
-	NSError *serializationError = nil;
-	NSArray *filenames = nil;
-	
-	if (!data) {
-		serializationError = [NSError errorWithDomain:@"GPGServices" code:1 userInfo:@{NSLocalizedDescriptionKey: @"No files found!"}];
-	} else {
-		filenames = [NSPropertyListSerialization propertyListWithData:data options:nil format:nil error:&serializationError];
-	}
-
-
-	if (serializationError) {
-		NSLog(@"error while getting files form pboard: %@", serializationError);
-		*error = [serializationError localizedDescription];
-	} else {
-		filenames = [[NSSet setWithArray:filenames] allObjects];
-
-		switch (mode) {
-			case SignFileService:
-				[self signFiles:filenames];
-				break;
-			case EncryptFileService:
-				[self encryptFiles:filenames];
-				break;
-			case DecryptFileService:
-				[self decryptFiles:filenames];
-				break;
-			case VerifyFileService:
-				[self verifyFiles:filenames];
-				break;
-			case ImportFileService:
-				[self importFiles:filenames];
-				break;
+	@try {
+		
+		NSData *data = [pboard dataForType:NSFilenamesPboardType];
+		
+		
+		NSError *serializationError = nil;
+		NSArray *filenames = nil;
+		
+		if (!data) {
+			serializationError = [NSError errorWithDomain:@"GPGServices" code:1 userInfo:@{NSLocalizedDescriptionKey: @"No files found!"}];
+		} else {
+			filenames = [NSPropertyListSerialization propertyListWithData:data options:nil format:nil error:&serializationError];
 		}
+		
+		
+		if (serializationError) {
+			NSLog(@"error while getting files form pboard: %@", serializationError);
+			*error = [serializationError localizedDescription];
+		} else {
+			filenames = [[NSSet setWithArray:filenames] allObjects];
+			
+			switch (mode) {
+				case SignFileService:
+					[self signFiles:filenames];
+					break;
+				case EncryptFileService:
+					[self encryptFiles:filenames];
+					break;
+				case DecryptFileService:
+					[self decryptFiles:filenames];
+					break;
+				case VerifyFileService:
+					[self verifyFiles:filenames];
+					break;
+				case ImportFileService:
+					[self importFiles:filenames];
+					break;
+			}
+		}
+		
+		[self goneIn60Seconds];
+	} @catch (NSException *exception) {
+		NSLog(@"An exception(2) occured: '%@'\nException class: %@\nBacktrace: '%@'",
+			  exception.description, exception.className, exception.callStackSymbols);
+		GPGDebugLog(@"Pasteboard: '%@'\nuserData: '%@'\nmode: %i", pboard, userData, mode);
 	}
 
-	[self goneIn60Seconds];
 }
 
 - (void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
