@@ -12,23 +12,22 @@
 @protocol ServiceWorkerDelegate;
 
 @interface ServiceWorker : NSObject {
-    NSString *_workerDescription;
+//    NSString *_workerDescription;
     id _target;
     SEL _action;
     NSOperationQueue *_queue;
-    id <ServiceWorkerDelegate> _delegate;
-    BOOL _amCanceling;
-    GPGController *_runningController;
+//    BOOL _amCanceling;
+//    GPGController *_runningController;
 }
 
-@property (assign) id <ServiceWorkerDelegate> delegate;
-@property (retain) NSString *workerDescription;
+@property (weak) id <ServiceWorkerDelegate> delegate;
+@property (strong) NSString *workerDescription;
 @property (readonly) BOOL amCanceling;
 
 // ServiceWorker does not own;
 // underlying operations might use to store the currently running controller 
 // to allow this class's cancel to possibly interrupt a gpg2 operation
-@property (retain) GPGController *runningController;
+@property (strong) GPGController *runningController;
 
 + (id)serviceWorkerWithTarget:(id)target andAction:(SEL)action;
 - (id)initWithTarget:(id)target andAction:(SEL)action;

@@ -10,23 +10,17 @@
 
 @implementation ServiceWrappedOperation
 
-- (void)dealloc
-{
-    [_operation release];
-    [_callbackTarget release];
-    [super dealloc];
-}
 
 + (id)wrappedOperation:(NSOperation *)operation callbackTarget:(id)target action:(SEL)action
 {
-    return [[[self alloc] initWithOperation:operation callbackTarget:target action:action] autorelease];
+    return [[self alloc] initWithOperation:operation callbackTarget:target action:action];
 }
 
 - (id)initWithOperation:(NSOperation *)operation callbackTarget:(id)target action:(SEL)action
 {
     if (self = [super init]) {
-        _operation = [operation retain];
-        _callbackTarget = [target retain];
+        _operation = operation;
+        _callbackTarget = target;
         _callbackAction = action;
     }
     

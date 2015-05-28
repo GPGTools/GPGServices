@@ -23,8 +23,7 @@
 
     [self willChangeValueForKey:@"selectedKey"];
     NSUInteger keyindex = [self.availableKeys indexOfObject:selKey];
-    [selectedKey release];
-    selectedKey = [selKey retain];
+    selectedKey = selKey;
     [self didChangeValueForKey:@"selectedKey"];
     
     self.selectedIndex = keyindex;
@@ -74,11 +73,8 @@
     [self removeObserver:self forKeyPath:@"availableKeys"];
     [self removeObserver:self forKeyPath:@"keyValidator"];
 
-    self.availableKeys = nil;
     self.selectedKey = nil;
-    self.keyValidator = nil;
     
-    [super dealloc];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath 

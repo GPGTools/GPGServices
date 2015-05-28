@@ -18,9 +18,9 @@
     ZKDataArchive* archive;
 }
 
-@property(retain) NSString* filePath;
-@property(retain) NSArray* files;
-@property(retain) id delegate;
+@property(strong) NSString* filePath;
+@property(strong) NSArray* files;
+@property(strong) id delegate;
 @property(readonly) NSData* zipData;
 
 @end

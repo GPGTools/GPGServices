@@ -10,6 +10,7 @@
 #import "ServiceWorker.h"
 
 @implementation WorkerProgressViewItem
+@synthesize progressIndicator=_progressIndicator;
 
 - (BOOL)shouldAnimate {
     return YES;

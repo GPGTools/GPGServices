@@ -32,10 +32,21 @@
 - (GPGValidity)overallValidity {
     GPGValidity val = [self validity];
     
-    //Simply return the highest trust
-    for(GPGUserID *uid in [self userIDs])
-        if([uid validity] > val)
-            val = [uid validity];
+    // S̶i̶m̶p̶l̶̵y̶ return the highest trust.
+    for (GPGUserID *uid in [self userIDs]) {
+		GPGValidity uidVal = uid.validity;
+		if (uidVal < 8) { /* < 8 means valid */
+			if (uidVal > val || val >= 8) { /* Higher validity than val or val isn't valid */
+				val = uidVal;
+			}
+		} else if (val >= 8) {
+			if ((uidVal & 7) > (val & 7)) { /* Higher validity than val */
+				val = uidVal;
+			} else if ((uidVal & 7) == (val & 7) && uidVal < val) { /* val is more invalid */
+				val = uidVal;
+			}
+		}
+	}
     
     return val;
 }

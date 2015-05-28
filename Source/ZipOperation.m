@@ -24,10 +24,6 @@
     return self;
 }
 
-- (void)dealloc {
-    [archive release];
-    [super dealloc];
-}
 
 - (void)main {
     if(filePath != nil) {

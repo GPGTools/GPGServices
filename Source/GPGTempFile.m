@@ -20,12 +20,10 @@ static const int kInvalidDescriptor = -1;
 {
     if (_shouldDeleteOnDealloc && !_didDeleteFile)
         [self deleteFile];
-    [_filename release];
-    [super dealloc];
 }
 
 + (id)tempFileForTemplate:(NSString *)template suffixLen:(NSUInteger)suffixLength error:(NSError **)error {
-    return [[[self alloc] initForTemplate:template suffixLen:suffixLength error:error] autorelease];
+    return [[self alloc] initForTemplate:template suffixLen:suffixLength error:error];
 }
 
 - (id)initForTemplate:(NSString *)template suffixLen:(NSUInteger)suffixLength error:(NSError **)error 
@@ -56,8 +54,8 @@ static const int kInvalidDescriptor = -1;
             _didDeleteFile = YES; // treat as already gone
         }
         else {
-            _filename = [[[NSFileManager defaultManager] 
-                          stringWithFileSystemRepresentation:utfTemplate length:utfLength] retain];
+            _filename = [[NSFileManager defaultManager] 
+                          stringWithFileSystemRepresentation:utfTemplate length:utfLength];
         }
 
         _shouldDeleteOnDealloc = YES;

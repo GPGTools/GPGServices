@@ -9,9 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 @interface WorkerProgressViewItem : NSCollectionViewItem {
-    NSProgressIndicator *_progressIndicator;
 }
 
+@property (weak) IBOutlet NSProgressIndicator *progressIndicator;
 @property (readonly, nonatomic) BOOL shouldAnimate;
 
 - (IBAction)cancelTouched:(id)sender;

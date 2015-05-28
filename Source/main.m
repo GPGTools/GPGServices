@@ -13,17 +13,20 @@
 #define localized(key) [GPGServices localizedStringForKey:(key)]
 
 int main(int argc, char *argv[]) {
-	if (![GPGController class]) {
-		NSRunAlertPanel(localized(@"LIBMACGPG_NOT_FOUND_TITLE"), localized(@"LIBMACGPG_NOT_FOUND_MESSAGE"), nil, nil, nil);
-		return 1;
-	}
+    @autoreleasepool {
+        if (![GPGController class]) {
+            NSRunAlertPanel(localized(@"LIBMACGPG_NOT_FOUND_TITLE"), localized(@"LIBMACGPG_NOT_FOUND_MESSAGE"), nil, nil, nil);
+            return 1;
+        }
 #ifdef CODE_SIGN_CHECK
-	/* Check the validity of the code signature. */
-	NSBundle *bundle = [NSBundle mainBundle];
-    if (![bundle respondsToSelector:@selector(isValidSigned)] || !bundle.isValidSigned) {
-		NSRunAlertPanel(localized(@"CODE_SIGN_ERROR_TITLE"), localized(@"CODE_SIGN_ERROR_MESSAGE"), nil, nil, nil);
-        return 1;
-    }
+        /* Check the validity of the code signature. */
+        NSBundle *bundle = [NSBundle mainBundle];
+        if (![bundle respondsToSelector:@selector(isValidSigned)] || !bundle.isValidSigned) {
+            NSRunAlertPanel(localized(@"CODE_SIGN_ERROR_TITLE"), localized(@"CODE_SIGN_ERROR_MESSAGE"), nil, nil, nil);
+            return 1;
+        }
 #endif
+    }
+    
     return NSApplicationMain(argc,  (const char **) argv);
 }

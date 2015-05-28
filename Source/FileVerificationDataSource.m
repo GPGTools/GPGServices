@@ -31,10 +31,6 @@
     return self;
 }
 
-- (void)dealloc {
-    [verificationResults release];
-    [super dealloc];
-}
 
 - (void)addResults:(NSDictionary*)results {
     [self performSelectorOnMainThread:@selector(addResultsOnMain:) withObject:results waitUntilDone:NO];
@@ -95,25 +91,24 @@
                 bgColor = [NSColor clearColor];
         }
         
-        verificationResult = [NSString stringWithFormat:@"Signed by: %@ (%@ trust)", sig.userIDDescription, validityDesc];
-        NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
-                                                                                 attributes:nil] autorelease];
-        NSRange range = [verificationResult rangeOfString:[NSString stringWithFormat:@"(%@ trust)", validityDesc]];
-        [tmp addAttribute:NSFontAttributeName 
-                    value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
-                    range:range];
-        [tmp addAttribute:NSBackgroundColorAttributeName 
-                    value:bgColor
-                    range:range];
-        
-        verificationResult = (NSString*)tmp;
-    } else {
+		
+		NSString *string1 = [NSString stringWithFormat:@"Signed by: %@ (%@) – ", sig.userIDDescription, sig.fingerprint.shortKeyID];
+		NSMutableAttributedString *resultString = [[NSMutableAttributedString alloc] initWithString:string1 attributes:nil];
+		
+		NSDictionary *attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:[NSFont systemFontSize]], NSBackgroundColorAttributeName: bgColor};
+		NSAttributedString *trustString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ trust", validityDesc] attributes:attributes];
+		[resultString appendAttributedString:trustString];
+		
+		
+		verificationResult = resultString;
+		
+	} else {
         bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
         
         // Should really call GPGErrorDescription but Libmacgpg nolonger offer that.
         verificationResult = [NSString stringWithFormat:@"Verification FAILED: %d", [sig status]];
-        NSMutableAttributedString* tmp = [[[NSMutableAttributedString alloc] initWithString:verificationResult 
-                                                                                 attributes:nil] autorelease];
+        NSMutableAttributedString* tmp = [[NSMutableAttributedString alloc] initWithString:verificationResult 
+                                                                                 attributes:nil];
         NSRange range = [verificationResult rangeOfString:@"FAILED"];
         [tmp addAttribute:NSFontAttributeName 
                     value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           

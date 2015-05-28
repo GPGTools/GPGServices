@@ -91,7 +91,8 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
-	if ([[filename pathExtension] isEqualToString:@"gpg"]) {
+	NSString *extension = [filename pathExtension];
+	if ([extension isEqualToString:@"gpg"] || [extension isEqualToString:@"pgp"]) {
 		[self decryptFiles:[NSArray arrayWithObject:filename]];
 	}
 
@@ -99,7 +100,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
-	NSArray *encs = [filenames pathsMatchingExtensions:[NSArray arrayWithObject:@"gpg"]];
+	NSArray *encs = [filenames pathsMatchingExtensions:[NSArray arrayWithObjects:@"gpg", @"pgp", nil]];
 	NSArray *sigs = [filenames pathsMatchingExtensions:[NSArray arrayWithObjects:@"sig", @"asc", nil]];
 
 	if (encs != nil && encs.count != 0) {
@@ -118,31 +119,6 @@ static NSUInteger const suffixLen = 5;
 	size->height = 350;
 }
 
-- (NSString *)feedURLStringForUpdater:(SUUpdater *)updater {
-	NSString *updateSourceKey = @"UpdateSource";
-	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	
-	NSString *feedURLKey = @"SUFeedURL";
-	NSString *appcastSource = [[GPGOptions sharedOptions] stringForKey:updateSourceKey];
-	if ([appcastSource isEqualToString:@"nightly"]) {
-		feedURLKey = @"SUFeedURL_nightly";
-	} else if ([appcastSource isEqualToString:@"prerelease"]) {
-		feedURLKey = @"SUFeedURL_prerelease";
-	} else {
-		NSString *version = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
-		if ([version rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"nN"]].length > 0) {
-			feedURLKey = @"SUFeedURL_nightly";
-		} else if ([version rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"abAB"]].length > 0) {
-			feedURLKey = @"SUFeedURL_prerelease";
-		}
-	}
-	
-	NSString *appcastURL = [bundle objectForInfoDictionaryKey:feedURLKey];
-	if (!appcastURL) {
-		appcastURL = [bundle objectForInfoDictionaryKey:@"SUFeedURL"];
-	}
-	return appcastURL;
-}
 
 #pragma mark -
 #pragma mark GPG-Helper
@@ -150,7 +126,7 @@ static NSUInteger const suffixLen = 5;
 // It appears all importKey.. functions were disabled over how libmacgpg handles importing,
 // but apperently GPGAccess handles this identically.
 - (void)importKeyFromData:(NSData *)data {
-	GPGController *gpgc = [[[GPGController alloc] init] autorelease];
+	GPGController *gpgc = [[GPGController alloc] init];
 
 	NSString *importText = nil;
 
@@ -217,7 +193,7 @@ static NSUInteger const suffixLen = 5;
 		return NO;
 	};
 
-	return [[block copy] autorelease];
+	return [block copy];
 }
 
 + (KeyValidatorT)canSignValidator {
@@ -228,7 +204,7 @@ static NSUInteger const suffixLen = 5;
 		return NO;
 	};
 
-	return [[block copy] autorelease];
+	return [block copy];
 }
 
 + (KeyValidatorT)isActiveValidator {
@@ -254,14 +230,14 @@ static NSUInteger const suffixLen = 5;
 		return NO;
 	};
 
-	return [[block copy] autorelease];
+	return [block copy];
 }
 
 #pragma mark -
 #pragma mark Text Stuff
 
 - (NSString *)myFingerprint {
-	KeyChooserWindowController *wc = [[[KeyChooserWindowController alloc] init] autorelease];
+	KeyChooserWindowController *wc = [[KeyChooserWindowController alloc] init];
 	GPGKey *chosenKey = wc.selectedKey;
 
 	if (chosenKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
@@ -273,7 +249,7 @@ static NSUInteger const suffixLen = 5;
 	}
 
 	if (chosenKey != nil) {
-		NSString *fp = [[[chosenKey fingerprint] copy] autorelease];
+		NSString *fp = [[chosenKey fingerprint] copy];
 		NSMutableArray *arr = [NSMutableArray arrayWithCapacity:10];
 		NSUInteger fpLength = [fp length];
 		// expect 40-length string; breaking into 10 4-char chunks
@@ -289,7 +265,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (NSString *)myKey {
-	KeyChooserWindowController *wc = [[[KeyChooserWindowController alloc] init] autorelease];
+	KeyChooserWindowController *wc = [[KeyChooserWindowController alloc] init];
 	GPGKey *selectedPrivateKey = wc.selectedKey;
 
 	if (selectedPrivateKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
@@ -318,8 +294,8 @@ static NSUInteger const suffixLen = 5;
 													  message:msg];
 			return nil;
 		} else {
-			return [[[NSString alloc] initWithData:keyData
-										  encoding:NSUTF8StringEncoding] autorelease];
+			return [[NSString alloc] initWithData:keyData
+										  encoding:NSUTF8StringEncoding];
 		}
 	} @catch (NSException *localException) {
 		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Export failed", nil)
@@ -337,20 +313,16 @@ static NSUInteger const suffixLen = 5;
 
 	RecipientWindowController *rcp = [[RecipientWindowController alloc] init];
 	int ret = [rcp runModal];
-	[rcp autorelease];
+
 	if (ret != 0) {
 		return nil;  // User pressed 'cancel'
 	}
 	NSData *inputData = [inputString UTF8Data];
-	NSArray *validRecipients = rcp.selectedKeys;
+	NSSet *validRecipients = rcp.selectedKeys;
 	GPGKey *privateKey = rcp.selectedPrivateKey;
 
 	if (rcp.encryptForOwnKeyToo && privateKey) {
-		validRecipients = [[[NSSet setWithArray:validRecipients]
-							setByAddingObject:privateKey]
-						   allObjects];
-	} else {
-		validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
+		validRecipients = [validRecipients setByAddingObject:privateKey];
 	}
 
 	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
@@ -426,7 +398,6 @@ static NSUInteger const suffixLen = 5;
 - (NSString *)decryptTextString:(NSString *)inputString {
 	GPGController *ctx = [GPGController gpgController];
 
-	ctx.trustAllKeys = YES;
 	ctx.useArmor = YES;
 
 	NSData *outputData = nil;
@@ -434,9 +405,38 @@ static NSUInteger const suffixLen = 5;
 	@try {
 		outputData = [ctx decryptData:[inputString UTF8Data]];
 
-		if (ctx.error) {
+		NSArray *sigs = ctx.signatures;
+		if (sigs.count > 0) {
+			GPGSignature *sig = [sigs objectAtIndex:0];
+			GPGErrorCode status = sig.status;
+			GPGDebugLog(@"sig.status: %i", status);
+			if ([GrowlApplicationBridge isGrowlRunning]) {
+				[self growlVerificationResultsFor:NSLocalizedString(@"Selection", nil) signatures:sigs];
+			} else if ([sig status] == GPGErrorNoError) {
+				[self displaySignatureVerificationForSig:sig];
+			} else {
+				NSString *errorMessage = nil;
+				switch (status) {
+					case GPGErrorBadSignature:
+						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Bad signature by %@", @"arg:userID"),
+										sig.userIDDescription];
+						break;
+					case GPGErrorNoPublicKey:
+						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unable to verify signature! Missing public key: %@", nil),
+										sig.fingerprint.shortKeyID];
+						break;
+					default:
+						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unexpected GPG signature status %i", @"arg:GPGSignature status"), status ];
+						break;  // I'm unsure if GPGErrorDescription should cover these signature errors
+				}
+				[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed", nil)
+														  message:errorMessage];
+			}
+		} else if (ctx.error) {
 			@throw ctx.error;
 		}
+			
+
 	} @catch (GPGException *localException) {
 		[self displayOperationFailedNotificationWithTitle:[localException reason]
 												  message:[localException description]];
@@ -460,7 +460,7 @@ static NSUInteger const suffixLen = 5;
 
 	NSData *inputData = [inputString UTF8Data];
 
-	KeyChooserWindowController *wc = [[[KeyChooserWindowController alloc] init] autorelease];
+	KeyChooserWindowController *wc = [[KeyChooserWindowController alloc] init];
 	GPGKey *chosenKey = wc.selectedKey;
 
 	if (chosenKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
@@ -628,7 +628,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (NSString *)normalizedAndUniquifiedPathFromPath:(NSString *)path {
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	if ([fmgr isWritableFileAtPath:[path stringByDeletingLastPathComponent]]) {
 		return [ZKArchive uniquify:path];
@@ -640,7 +640,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (unsigned long long)sizeOfFile:(NSString *)file {
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	if ([fmgr fileExistsAtPath:file]) {
 		NSError *err = nil;
@@ -668,7 +668,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (NSNumber *)folderSize:(NSString *)folderPath {
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 	NSArray *filesArray = [fmgr subpathsOfDirectoryAtPath:folderPath error:nil];
 	NSEnumerator *filesEnumerator = [filesArray objectEnumerator];
 	NSString *fileName = nil;
@@ -686,7 +686,7 @@ static NSUInteger const suffixLen = 5;
 - (NSNumber *)sizeOfFiles:(NSArray *)files {
 	__block unsigned long long size = 0;
 
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	[files enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		 NSString *file = (NSString *)obj;
@@ -715,7 +715,7 @@ static NSUInteger const suffixLen = 5;
 		GPGStream *dataToSign = nil;
 
 		if ([[self isDirectoryPredicate] evaluateWithObject:file]) {
-			ZipOperation *zipOperation = [[[ZipOperation alloc] init] autorelease];
+			ZipOperation *zipOperation = [[ZipOperation alloc] init];
 			zipOperation.filePath = file;
 			[zipOperation start];
 
@@ -807,10 +807,10 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)signFilesSync:(ServiceWrappedArgs *)wrappedArgs {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[self signFilesWrapped:wrappedArgs];
-	[pool release];
+		[self signFilesWrapped:wrappedArgs];
+	}
 }
 
 - (void)signFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
@@ -827,7 +827,7 @@ static NSUInteger const suffixLen = 5;
 		return;
 	}
 
-	KeyChooserWindowController *wc = [[[KeyChooserWindowController alloc] init] autorelease];
+	KeyChooserWindowController *wc = [[KeyChooserWindowController alloc] init];
 	GPGKey *chosenKey = wc.selectedKey;
 
 	if (chosenKey == nil || [wc.dataSource.keyDescriptions count] > 1) {
@@ -889,10 +889,10 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)encryptFilesSync:(ServiceWrappedArgs *)wrappedArgs {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[self encryptFilesWrapped:wrappedArgs];
-	[pool release];
+		[self encryptFilesWrapped:wrappedArgs];
+	}
 }
 
 - (void)encryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
@@ -909,20 +909,16 @@ static NSUInteger const suffixLen = 5;
 	BOOL useASCII = [[[GPGOptions sharedOptions] valueForKey:@"UseASCIIOutput"] boolValue];
 	GPGDebugLog(@"Output as ASCII: %@", useASCII ? @"YES" : @"NO");
 	NSString *fileExtension = useASCII ? @"asc" : @"gpg";
-	RecipientWindowController *rcp = [[[RecipientWindowController alloc] init] autorelease];
+	RecipientWindowController *rcp = [[RecipientWindowController alloc] init];
 	int ret = [rcp runModal]; // thread-safe
 	if (ret != 0) {
 		return;  // User pressed 'cancel'
 	}
-	NSArray *validRecipients = rcp.selectedKeys;
+	NSSet *validRecipients = rcp.selectedKeys;
 	GPGKey *privateKey = rcp.selectedPrivateKey;
 
 	if (rcp.encryptForOwnKeyToo && privateKey) {
-		validRecipients = [[[NSSet setWithArray:validRecipients]
-							setByAddingObject:privateKey]
-						   allObjects];
-	} else {
-		validRecipients = [[NSSet setWithArray:validRecipients] allObjects];
+		validRecipients = [validRecipients setByAddingObject:privateKey];
 	}
 
 	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
@@ -959,7 +955,7 @@ static NSUInteger const suffixLen = 5;
 	NSString *destination = nil;
 	NSString *originalName = nil;
 
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	typedef GPGStream *(^DataProvider)();
 	DataProvider dataProvider = nil;
@@ -978,7 +974,7 @@ static NSUInteger const suffixLen = 5;
 			megabytes = [[self folderSize:file] unsignedLongLongValue] / kBytesInMB;
 			destination = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:[originalName stringByAppendingString:@".gpg"]];
 			dataProvider = ^{
-				ZipOperation *operation = [[[ZipOperation alloc] init] autorelease];
+				ZipOperation *operation = [[ZipOperation alloc] init];
 				operation.filePath = file;
 				operation.delegate = self;
 				[operation start];
@@ -1000,7 +996,7 @@ static NSUInteger const suffixLen = 5;
 		destination = [[[files objectAtIndex:0] stringByDeletingLastPathComponent]
 						stringByAppendingPathComponent:[originalName stringByAppendingString:@".gpg"]];
 		dataProvider = ^{
-			ZipOperation *operation = [[[ZipOperation alloc] init] autorelease];
+			ZipOperation *operation = [[ZipOperation alloc] init];
 			operation.files = files;
 			operation.delegate = self;
 			[operation start];
@@ -1021,6 +1017,8 @@ static NSUInteger const suffixLen = 5;
 	}
 
 	GPGController *ctx = [GPGController gpgController];
+	
+	ctx.trustAllKeys = YES;
 	// Only use armor for single files. otherwise it doesn't make much sense.
 	ctx.useArmor = useASCII && [destination rangeOfString:@".asc"].location != NSNotFound;
 	wrappedArgs.worker.runningController = ctx;
@@ -1107,10 +1105,10 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)decryptFilesSync:(ServiceWrappedArgs *)wrappedArgs {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[self decryptFilesWrapped:wrappedArgs];
-	[pool release];
+		[self decryptFilesWrapped:wrappedArgs];
+	}
 }
 
 - (void)decryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
@@ -1118,14 +1116,14 @@ static NSUInteger const suffixLen = 5;
 	// because it's retained by ServiceWrappedArgs
 	NSArray *files = wrappedArgs.arg1;
 
-	if ([files count] < 1) {
+	if (files.count == 0) {
 		return;
 	}
 
 	GPGController *ctx = [GPGController gpgController];
 	wrappedArgs.worker.runningController = ctx;
 
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	NSMutableArray *decryptedFiles = [NSMutableArray arrayWithCapacity:[files count]];
 	NSMutableArray *errorMsgs = [NSMutableArray array];
@@ -1165,13 +1163,25 @@ static NSUInteger const suffixLen = 5;
 				if (wrappedArgs.worker.amCanceling) {
 					return;
 				}
-
-				if ([output length]) {
+				
+				if (output.length || [[[[ctx.statusDict objectForKey:@"PLAINTEXT_LENGTH"] firstObject] firstObject] isEqualToString:@"0"]) {
 					[output close];
 					[tempFile closeFile];
 
 					error = nil;
-					NSString *outputFile = [self normalizedAndUniquifiedPathFromPath:[file stringByDeletingPathExtension]];
+					
+					NSString *outputFile;
+					NSString *fileName = ctx.statusDict[@"PLAINTEXT"][0][2];
+					if (fileName.length && [fileName rangeOfString:@"/"].length == 0) {
+						fileName = [fileName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+						outputFile = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
+					} else {
+						outputFile = [file stringByDeletingPathExtension];
+					}
+					
+					outputFile = [self normalizedAndUniquifiedPathFromPath:outputFile];
+					
+					
 					[[NSFileManager defaultManager] moveItemAtPath:tempFile.fileName toPath:outputFile error:&error];
 					if (error != nil) {
 						NSLog(@"error while writing to output: %@", error);
@@ -1186,7 +1196,9 @@ static NSUInteger const suffixLen = 5;
 				}
 
 				if (ctx.error) {
-					@throw ctx.error;
+					if (!ctx.statusDict[@"DECRYPTION_OKAY"]) {
+						@throw ctx.error;
+					}
 				}
 
 				//
@@ -1196,7 +1208,7 @@ static NSUInteger const suffixLen = 5;
 					if ([ctx.signatures count] > 0) {
 						[self growlVerificationResultsFor:file signatures:ctx.signatures];
 					}
-				} else if (ctx.signatures && ctx.signatures.count > 0) {
+				} else if (ctx.signatures.count > 0) {
 					GPGDebugLog(@"found signatures: %@", ctx.signatures);
 
 					if (dummyController == nil) {
@@ -1235,11 +1247,16 @@ static NSUInteger const suffixLen = 5;
 
 	NSUInteger innCount = [files count];
 	NSUInteger outCount = [decryptedFiles count];
-	NSString *title = (innCount == outCount
-					   ? NSLocalizedString(@"Decryption finished", nil)
-					   : (outCount > 0
-						  ? NSLocalizedString(@"Decryption finished (partially)", nil)
-						  : NSLocalizedString(@"Decryption failed", nil)));
+	NSString *title;
+	if (innCount == outCount) {
+		title = NSLocalizedString(@"Decryption finished", nil);
+	} else if (outCount > 0) {
+		title = NSLocalizedString(@"Decryption finished (partially)", nil);
+	} else {
+		title = NSLocalizedString(@"Decryption failed", nil);
+	}
+	
+	
 	NSMutableString *message = [NSMutableString stringWithString:
 								[self describeCompletionForFiles:files
 													successCount:outCount
@@ -1253,7 +1270,6 @@ static NSUInteger const suffixLen = 5;
 	[self displayOperationFinishedNotificationWithTitle:title message:message];
 
 	[dummyController runModal]; // thread-safe
-	[dummyController release];
 }
 
 - (void)verifyFiles:(NSArray *)files {
@@ -1269,10 +1285,10 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)verifyFilesSync:(ServiceWrappedArgs *)wrappedArgs {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[self verifyFilesWrapped:wrappedArgs];
-	[pool release];
+		[self verifyFilesWrapped:wrappedArgs];
+	}
 }
 
 - (void)verifyFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
@@ -1281,14 +1297,14 @@ static NSUInteger const suffixLen = 5;
 	NSArray *files = wrappedArgs.arg1;
 
 	NSMutableSet *filesInVerification = [NSMutableSet set];
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	// has thread-safe methods as used here
 	DummyVerificationController *fvc = nil;
 
 	if ([GrowlApplicationBridge isGrowlRunning] == NO) {
-		fvc = [[[DummyVerificationController alloc]
-				initWithWindowNibName:@"VerificationResultsWindow"] autorelease];
+		fvc = [[DummyVerificationController alloc]
+				initWithWindowNibName:@"VerificationResultsWindow"];
 		[fvc showWindow:self]; // now thread-safe
 		fvc.isActive = YES; // now thread-safe
 	}
@@ -1390,7 +1406,6 @@ static NSUInteger const suffixLen = 5;
 										verificationResult, @"verificationResult",
 										nil];
 				[fvc addResults:result];
-				[verificationResult release];
 			} else if (sigs.count > 0) {
 				for (GPGSignature *sig in sigs) {
 					[fvc addResultFromSig:sig forFile:signedFile];
@@ -1464,10 +1479,10 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)importFilesSync:(ServiceWrappedArgs *)wrappedArgs {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[self importFilesWrapped:wrappedArgs];
-	[pool release];
+		[self importFilesWrapped:wrappedArgs];
+	}
 }
 
 - (void)importFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
@@ -1565,22 +1580,22 @@ static NSUInteger const suffixLen = 5;
 #pragma mark - NSPredicates for filtering file arrays
 
 - (NSPredicate *)fileExistsPredicate {
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
-	return [[[NSPredicate predicateWithBlock:^BOOL (id file, NSDictionary *bindings) {
+	return [[NSPredicate predicateWithBlock:^BOOL (id file, NSDictionary *bindings) {
 				  return [file isKindOfClass:[NSString class]] && [fmgr fileExistsAtPath:file];
-			  }] copy] autorelease];
+			  }] copy];
 }
 
 - (NSPredicate *)isDirectoryPredicate {
-	NSFileManager *fmgr = [[[NSFileManager alloc] init] autorelease];
+	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
-	return [[[NSPredicate predicateWithBlock:^BOOL (id file, NSDictionary *bindings) {
+	return [[NSPredicate predicateWithBlock:^BOOL (id file, NSDictionary *bindings) {
 				  BOOL isDirectory = NO;
 				  return [file isKindOfClass:[NSString class]] &&
 				  [fmgr fileExistsAtPath:file isDirectory:&isDirectory] &&
 				  isDirectory;
-			  }] copy] autorelease];
+			  }] copy];
 }
 
 #pragma mark -
@@ -1592,101 +1607,123 @@ static NSUInteger const suffixLen = 5;
 					 error:(NSString **)error {
 	[self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
-
-	NSString *pboardString = nil, *pbtype = nil;
-	if (mode != MyKeyService && mode != MyFingerprintService) {
-		pbtype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
-												 NSPasteboardTypeString,
-												 NSPasteboardTypeRTF,
-												 nil]];
-		NSString *myerror = NSLocalizedString(@"GPGServices did not get usable data from the pasteboard.", @"Pasteboard could not supply the string in an acceptible format.");
-
-		if ([pbtype isEqualToString:NSPasteboardTypeString]) {
-			if (!(pboardString = [pboard stringForType:NSPasteboardTypeString])) {
+	
+	
+	@try {
+		
+		NSString *pboardString = nil, *pbtype = nil;
+		if (mode != MyKeyService && mode != MyFingerprintService) {
+			pbtype = [pboard availableTypeFromArray:[NSArray arrayWithObjects:
+													 NSPasteboardTypeString,
+													 NSPasteboardTypeRTF,
+													 nil]];
+			NSString *myerror = NSLocalizedString(@"GPGServices did not get usable data from the pasteboard.", @"Pasteboard could not supply the string in an acceptible format.");
+			
+			if ([pbtype isEqualToString:NSPasteboardTypeString]) {
+				if (!(pboardString = [pboard stringForType:NSPasteboardTypeString])) {
+					*error = myerror;
+					[self goneIn60Seconds];
+					return;
+				}
+			} else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {
+				if (!(pboardString = [pboard stringForType:NSPasteboardTypeString])) {
+					*error = myerror;
+					[self goneIn60Seconds];
+					return;
+				}
+			} else {
 				*error = myerror;
 				[self goneIn60Seconds];
 				return;
 			}
-		} else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {
-			if (!(pboardString = [pboard stringForType:NSPasteboardTypeString])) {
-				*error = myerror;
-				[self goneIn60Seconds];
-				return;
+			
+			if ([pboardString rangeOfString:@"\xC2\xA0"].length > 0) {
+				// Replace non-breaking space with a normal space.
+				NSString *temp = [pboardString stringByReplacingOccurrencesOfString:@"\xC2\xA0" withString:@" "];
+				pboardString = temp ? temp : pboardString;
 			}
-		} else {
-			*error = myerror;
-			[self goneIn60Seconds];
-			return;
 		}
 		
-		if ([pboardString rangeOfString:@"\xC2\xA0"].length > 0) {
-			// Replace non-breaking space with a normal space.
-			NSString *temp = [pboardString stringByReplacingOccurrencesOfString:@"\xC2\xA0" withString:@" "];
-			pboardString = temp ? temp : pboardString;
+		NSString *newString = nil;
+		switch (mode) {
+			case SignService:
+				newString = [self signTextString:pboardString];
+				break;
+			case EncryptService:
+				newString = [self encryptTextString:pboardString];
+				break;
+			case DecryptService:
+				newString = [self decryptTextString:pboardString];
+				break;
+			case VerifyService:
+				[self verifyTextString:pboardString];
+				break;
+			case MyKeyService:
+				newString = [self myKey];
+				break;
+			case MyFingerprintService:
+				newString = [self myFingerprint];
+				break;
+			case ImportKeyService:
+				[self importKey:pboardString];
+				break;
+			default:
+				break;
 		}
-	}
-
-	NSString *newString = nil;
-	switch (mode) {
-		case SignService:
-			newString = [self signTextString:pboardString];
-			break;
-		case EncryptService:
-			newString = [self encryptTextString:pboardString];
-			break;
-		case DecryptService:
-			newString = [self decryptTextString:pboardString];
-			break;
-		case VerifyService:
-			[self verifyTextString:pboardString];
-			break;
-		case MyKeyService:
-			newString = [self myKey];
-			break;
-		case MyFingerprintService:
-			newString = [self myFingerprint];
-			break;
-		case ImportKeyService:
-			[self importKey:pboardString];
-			break;
-		default:
-			break;
-	}
-
-	BOOL shouldExitServiceRequest = YES;
-
-	if (newString != nil) {
-		static NSString *const kServiceShowInWindow = @"showInWindow";
-		if ([userData isEqualToString:kServiceShowInWindow]) {
-			[SimpleTextWindow showText:newString withTitle:@"GPGServices" andDelegate:self];
-			shouldExitServiceRequest = NO;
-		} else {
-			[pboard clearContents];
-
-			NSMutableArray *pbitems = [NSMutableArray array];
-
-			if ([pbtype isEqualToString:NSPasteboardTypeHTML]) {
-				NSPasteboardItem *htmlItem = [[[NSPasteboardItem alloc] init] autorelease];
-				[htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"]
-							forType:NSPasteboardTypeHTML];
-				[pbitems addObject:htmlItem];
-			} else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {
-				NSPasteboardItem *rtfItem = [[[NSPasteboardItem alloc] init] autorelease];
-				[rtfItem setString:newString forType:NSPasteboardTypeRTF];
-				[pbitems addObject:rtfItem];
+		
+		BOOL shouldExitServiceRequest = YES;
+		
+		if (newString != nil) {
+			static NSString *const kServiceShowInWindow = @"showInWindow";
+			if ([userData isEqualToString:kServiceShowInWindow]) {
+				[SimpleTextWindow showText:newString withTitle:@"GPGServices" andDelegate:self];
+				shouldExitServiceRequest = NO;
 			} else {
-				NSPasteboardItem *stringItem = [[[NSPasteboardItem alloc] init] autorelease];
-				[stringItem setString:newString forType:NSPasteboardTypeString];
-				[pbitems addObject:stringItem];
+				[pboard clearContents];
+				
+				NSMutableArray *pbitems = [NSMutableArray array];
+				
+				if ([pbtype isEqualToString:NSPasteboardTypeHTML]) {
+					NSPasteboardItem *htmlItem = [[NSPasteboardItem alloc] init];
+					if (!htmlItem) {
+						NSLog(@"Unable to create htmlItem!");
+						[NSException raise:NSGenericException format:@"Unable to create htmlItem!"];
+					}
+					[htmlItem setString:[newString stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"]
+								forType:NSPasteboardTypeHTML];
+					[pbitems addObject:htmlItem];
+				} else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {
+					NSPasteboardItem *rtfItem = [[NSPasteboardItem alloc] init];
+					if (!rtfItem) {
+						NSLog(@"Unable to create rtfItem!");
+						[NSException raise:NSGenericException format:@"Unable to create rtfItem!"];
+					}
+					[rtfItem setString:newString forType:NSPasteboardTypeRTF];
+					[pbitems addObject:rtfItem];
+				} else {
+					NSPasteboardItem *stringItem = [[NSPasteboardItem alloc] init];
+					if (!stringItem) {
+						NSLog(@"Unable to create stringItem!");
+						[NSException raise:NSGenericException format:@"Unable to create stringItem!"];
+					}
+					[stringItem setString:newString forType:NSPasteboardTypeString];
+					[pbitems addObject:stringItem];
+				}
+				
+				[pboard writeObjects:pbitems];
 			}
-
-			[pboard writeObjects:pbitems];
 		}
+		
+		if (shouldExitServiceRequest) {
+			[self goneIn60Seconds];
+		}
+		
+	} @catch (NSException *exception) {
+		NSLog(@"An exception(1) occured: '%@'\nException class: %@\nBacktrace: '%@'",
+			  exception.description, exception.className, exception.callStackSymbols);
+		GPGDebugLog(@"Pasteboard: '%@'\nuserData: '%@'\nmode: %i", pboard, userData, mode);
 	}
-
-	if (shouldExitServiceRequest) {
-		[self goneIn60Seconds];
-	}
+	
 }
 
 - (void)dealWithFilesPasteboard:(NSPasteboard *)pboard
@@ -1695,39 +1732,54 @@ static NSUInteger const suffixLen = 5;
 						  error:(NSString **)error {
 	[self cancelTerminateTimer];
 	[NSApp activateIgnoringOtherApps:YES];
-
-	NSData *data = [pboard dataForType:NSFilenamesPboardType];
-
-	NSError *serializationError = nil;
-	NSArray *filenames = [NSPropertyListSerialization propertyListWithData:data options:nil format:nil error:&serializationError];
-
-
-	if (serializationError) {
-		NSLog(@"error while getting files form pboard: %@", serializationError);
-		*error = [serializationError localizedDescription];
-	} else {
-		filenames = [[NSSet setWithArray:filenames] allObjects];
-
-		switch (mode) {
-			case SignFileService:
-				[self signFiles:filenames];
-				break;
-			case EncryptFileService:
-				[self encryptFiles:filenames];
-				break;
-			case DecryptFileService:
-				[self decryptFiles:filenames];
-				break;
-			case VerifyFileService:
-				[self verifyFiles:filenames];
-				break;
-			case ImportFileService:
-				[self importFiles:filenames];
-				break;
+	
+	@try {
+		
+		NSData *data = [pboard dataForType:NSFilenamesPboardType];
+		
+		
+		NSError *serializationError = nil;
+		NSArray *filenames = nil;
+		
+		if (!data) {
+			serializationError = [NSError errorWithDomain:@"GPGServices" code:1 userInfo:@{NSLocalizedDescriptionKey: @"No files found!"}];
+		} else {
+			filenames = [NSPropertyListSerialization propertyListWithData:data options:nil format:nil error:&serializationError];
 		}
+		
+		
+		if (serializationError) {
+			NSLog(@"error while getting files form pboard: %@", serializationError);
+			*error = [serializationError localizedDescription];
+		} else {
+			filenames = [[NSSet setWithArray:filenames] allObjects];
+			
+			switch (mode) {
+				case SignFileService:
+					[self signFiles:filenames];
+					break;
+				case EncryptFileService:
+					[self encryptFiles:filenames];
+					break;
+				case DecryptFileService:
+					[self decryptFiles:filenames];
+					break;
+				case VerifyFileService:
+					[self verifyFiles:filenames];
+					break;
+				case ImportFileService:
+					[self importFiles:filenames];
+					break;
+			}
+		}
+		
+		[self goneIn60Seconds];
+	} @catch (NSException *exception) {
+		NSLog(@"An exception(2) occured: '%@'\nException class: %@\nBacktrace: '%@'",
+			  exception.description, exception.className, exception.callStackSymbols);
+		GPGDebugLog(@"Pasteboard: '%@'\nuserData: '%@'\nmode: %i", pboard, userData, mode);
 	}
 
-	[self goneIn60Seconds];
 }
 
 - (void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
@@ -1884,19 +1936,6 @@ static NSUInteger const suffixLen = 5;
 	 runModal];
 }
 
-/*
- * -(NSString *)context:(GPGContext *)context passphraseForKey:(GPGKey *)key again:(BOOL)again
- * {
- *  [passphraseText setStringValue:@""];
- *  int flag=[NSApp runModalForWindow:passphraseWindow];
- *  NSString *passphrase=[[[passphraseText stringValue] copy] autorelease];
- *  [passphraseWindow close];
- *  if(flag)
- *      return passphrase;
- *  else
- *      return nil;
- * }
- */
 
 - (IBAction)closeModalWindow:(id)sender {
 	[NSApp stopModalWithCode:[sender tag]];
