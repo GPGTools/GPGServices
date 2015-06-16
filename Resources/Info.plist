@@ -153,6 +153,7 @@
 					<string>org.mozilla.camino</string>
 					<string>com.adiumX.adiumX</string>
 					<string>com.apple.mail</string>
+					<string>com.microsoft.Outlook</string>
 				</array>
 			</dict>
 			<key>NSReturnTypes</key>
@@ -219,6 +220,7 @@
 					<string>com.adiumX.adiumX</string>
 					<string>com.apple.mail</string>
 					<string>com.hipchat.HipChat</string>
+					<string>com.microsoft.Outlook</string>
 				</array>
 			</dict>
 			<key>NSSendTypes</key>
@@ -283,6 +285,7 @@
 					<string>com.adiumX.adiumX</string>
 					<string>com.apple.mail</string>
 					<string>com.hipchat.HipChat</string>
+					<string>com.microsoft.Outlook</string>
 				</array>
 			</dict>
 			<key>NSSendTypes</key>
