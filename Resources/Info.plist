@@ -150,10 +150,24 @@
 					<string>org.mozilla.firefox</string>
 					<string>org.chromium.Chromium</string>
 					<string>com.operasoftware.Opera</string>
-					<string>org.mozilla.camino</string>
 					<string>com.adiumX.adiumX</string>
 					<string>com.apple.mail</string>
+					<string>com.hipchat.HipChat</string>
 					<string>com.microsoft.Outlook</string>
+					<string>org.libreoffice.script</string>
+					<string> com.microsoft.Word</string>
+					<string> org.mozilla.nightly</string>
+					<string> org.jitsi</string>
+					<string> com.apple.iChat</string>
+					<string> com.circusponies.NoteBook.Mac</string>
+					<string> com.apple.Notes</string>
+					<string> com.apple.Stickies</string>
+					<string> com.omnigroup.OmniFocus2</string>
+					<string> com.apple.iWork.Pages</string>
+					<string> com.apple.TextEdit</string>
+					<string> com.macromates.TextMate.preview</string>
+					<string> org.mozilla.thunderbird</string>
+					<string> org.mozilla.tor browser</string>
 				</array>
 			</dict>
 			<key>NSReturnTypes</key>
@@ -216,11 +230,24 @@
 					<string>org.mozilla.firefox</string>
 					<string>org.chromium.Chromium</string>
 					<string>com.operasoftware.Opera</string>
-					<string>org.mozilla.camino</string>
 					<string>com.adiumX.adiumX</string>
 					<string>com.apple.mail</string>
 					<string>com.hipchat.HipChat</string>
 					<string>com.microsoft.Outlook</string>
+					<string>org.libreoffice.script</string>
+					<string> com.microsoft.Word</string>
+					<string> org.mozilla.nightly</string>
+					<string> org.jitsi</string>
+					<string> com.apple.iChat</string>
+					<string> com.circusponies.NoteBook.Mac</string>
+					<string> com.apple.Notes</string>
+					<string> com.apple.Stickies</string>
+					<string> com.omnigroup.OmniFocus2</string>
+					<string> com.apple.iWork.Pages</string>
+					<string> com.apple.TextEdit</string>
+					<string> com.macromates.TextMate.preview</string>
+					<string> org.mozilla.thunderbird</string>
+					<string> org.mozilla.tor browser</string>
 				</array>
 			</dict>
 			<key>NSSendTypes</key>
@@ -281,11 +308,24 @@
 					<string>org.mozilla.firefox</string>
 					<string>org.chromium.Chromium</string>
 					<string>com.operasoftware.Opera</string>
-					<string>org.mozilla.camino</string>
 					<string>com.adiumX.adiumX</string>
 					<string>com.apple.mail</string>
 					<string>com.hipchat.HipChat</string>
 					<string>com.microsoft.Outlook</string>
+					<string>org.libreoffice.script</string>
+					<string> com.microsoft.Word</string>
+					<string> org.mozilla.nightly</string>
+					<string> org.jitsi</string>
+					<string> com.apple.iChat</string>
+					<string> com.circusponies.NoteBook.Mac</string>
+					<string> com.apple.Notes</string>
+					<string> com.apple.Stickies</string>
+					<string> com.omnigroup.OmniFocus2</string>
+					<string> com.apple.iWork.Pages</string>
+					<string> com.apple.TextEdit</string>
+					<string> com.macromates.TextMate.preview</string>
+					<string> org.mozilla.thunderbird</string>
+					<string> org.mozilla.tor browser</string>
 				</array>
 			</dict>
 			<key>NSSendTypes</key>
