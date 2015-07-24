@@ -83,12 +83,16 @@
 }
 
 
-- (NSString *)versionDescription {
-	return [NSString stringWithFormat:NSLocalizedString(@"Version: %@", nil), [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-}
+- (NSAttributedString *)versionAndBuildDescription {
+	NSMutableAttributedString *description = [NSMutableAttributedString new];
+	NSMutableString *mutableString = description.mutableString;
+	[mutableString appendFormat:NSLocalizedString(@"Version: %@", nil), [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+	[mutableString appendString:@"  "];
+	NSUInteger grayStart = description.length;
+	[mutableString appendFormat:NSLocalizedString(@"Build: %@", nil), [[NSBundle mainBundle] objectForInfoDictionaryKey:@"BuildNumber"]];
+	[description addAttribute:NSForegroundColorAttributeName value:[NSColor grayColor] range:NSMakeRange(grayStart, description.length - grayStart)];
 
-- (NSString *)buildNumberDescription {
-    return [NSString stringWithFormat:NSLocalizedString(@"Build: %@", nil), [[NSBundle mainBundle] objectForInfoDictionaryKey:@"BuildNumber"]];
+	return description;
 }
 
 

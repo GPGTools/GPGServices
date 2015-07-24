@@ -43,8 +43,7 @@
 @property (assign) BOOL encryptForOwnKeyToo;
 @property (assign) BOOL symetricEncryption;
 @property (readonly) BOOL okEnabled;
-@property (readonly) NSString *versionDescription;
-@property (readonly) NSString *buildNumberDescription;
+@property (readonly) NSAttributedString *versionAndBuildDescription;
 @property (nonatomic, copy) NSArray *sortDescriptors;
 
 // thread-safe
