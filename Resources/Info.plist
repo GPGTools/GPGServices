@@ -170,6 +170,7 @@
 					<string>org.mozilla.tor browser</string>
 					<string>com.sublimetext.3</string>
 					<string>com.sublimetext.2</string>
+					<string>com.apple.Terminal</string>
 				</array>
 			</dict>
 			<key>NSReturnTypes</key>
@@ -252,6 +253,7 @@
 					<string>org.mozilla.tor browser</string>
 					<string>com.sublimetext.3</string>
 					<string>com.sublimetext.2</string>
+					<string>com.apple.Terminal</string>
 				</array>
 			</dict>
 			<key>NSSendTypes</key>
@@ -332,6 +334,7 @@
 					<string>org.mozilla.tor browser</string>
 					<string>com.sublimetext.3</string>
 					<string>com.sublimetext.2</string>
+					<string>com.apple.Terminal</string>
 				</array>
 			</dict>
 			<key>NSSendTypes</key>
