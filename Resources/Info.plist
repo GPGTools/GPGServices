@@ -165,6 +165,7 @@
 					<string>com.omnigroup.OmniFocus2</string>
 					<string>com.apple.iWork.Pages</string>
 					<string>com.apple.TextEdit</string>
+					<string>com.macromates.textmate</string>
 					<string>com.macromates.TextMate.preview</string>
 					<string>org.mozilla.thunderbird</string>
 					<string>org.mozilla.tor browser</string>
@@ -248,6 +249,7 @@
 					<string>com.omnigroup.OmniFocus2</string>
 					<string>com.apple.iWork.Pages</string>
 					<string>com.apple.TextEdit</string>
+					<string>com.macromates.textmate</string>
 					<string>com.macromates.TextMate.preview</string>
 					<string>org.mozilla.thunderbird</string>
 					<string>org.mozilla.tor browser</string>
@@ -329,6 +331,7 @@
 					<string>com.omnigroup.OmniFocus2</string>
 					<string>com.apple.iWork.Pages</string>
 					<string>com.apple.TextEdit</string>
+					<string>com.macromates.textmate</string>
 					<string>com.macromates.TextMate.preview</string>
 					<string>org.mozilla.thunderbird</string>
 					<string>org.mozilla.tor browser</string>
