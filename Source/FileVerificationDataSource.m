@@ -106,7 +106,7 @@
         bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
         
         // Should really call GPGErrorDescription but Libmacgpg nolonger offer that.
-        verificationResult = [NSString stringWithFormat:@"Verification FAILED: %d", [sig status]];
+        verificationResult = [NSString stringWithFormat:@"Verification FAILED: %@ (Code: %i)", sig.humanReadableDescription, sig.status];
         NSMutableAttributedString* tmp = [[NSMutableAttributedString alloc] initWithString:verificationResult 
                                                                                  attributes:nil];
         NSRange range = [verificationResult rangeOfString:@"FAILED"];
