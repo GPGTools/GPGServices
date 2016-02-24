@@ -481,18 +481,6 @@
 			<string>100000</string>
 		</dict>
 	</array>
-	<key>NSUIElement</key>
-	<string>1</string>
-	<key>SUEnableAutomaticChecks</key>
-	<true/>
-	<key>SUFeedURL</key>
-	<string>https://gpgtools.org/releases/gpgservices/appcast.xml</string>
-	<key>SUFeedURL_nightly</key>
-	<string>https://nightly.gpgtools.org/releases/gpgservices/appcast.xml</string>
-	<key>SUFeedURL_prerelease</key>
-	<string>https://gpgtools.org/releases/gpgservices/pre-appcast.xml</string>
-	<key>SUEnableSystemProfiling</key>
-	<true/>
 	<key>NSAppleScriptEnabled</key>
 	<true/>
 	<key>OSAScriptingDefinition</key>
