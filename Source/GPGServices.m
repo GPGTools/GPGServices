@@ -75,6 +75,26 @@ static NSUInteger const suffixLen = 5;
 
 @end
 
+NSString *localized(NSString *key) {
+	if (!key) {
+		return nil;
+	}
+	static NSBundle *bundle = nil, *englishBundle = nil;
+	if (!bundle) {
+		bundle = [NSBundle mainBundle];
+		englishBundle = [NSBundle bundleWithPath:[bundle pathForResource:@"en" ofType:@"lproj"]];
+	}
+	
+	NSString *notFoundValue = @"~#*?*#~";
+	NSString *localized = [bundle localizedStringForKey:key value:notFoundValue table:nil];
+	if (localized == notFoundValue) {
+		localized = [englishBundle localizedStringForKey:key value:nil table:nil];
+	}
+	
+	return localized;
+}
+
+
 @implementation GPGServices
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -818,7 +838,7 @@ static NSUInteger const suffixLen = 5;
 	// because it's retained by ServiceWrappedArgs
 	NSArray *files = wrappedArgs.arg1;
 
-	if ([files count] < 1) {
+	if (files.count == 0) {
 		return;
 	}
 
@@ -826,6 +846,7 @@ static NSUInteger const suffixLen = 5;
 	if (wrappedArgs.worker.amCanceling) {
 		return;
 	}
+	
 
 	KeyChooserWindowController *wc = [[KeyChooserWindowController alloc] init];
 	GPGKey *chosenKey = wc.selectedKey;
@@ -904,6 +925,11 @@ static NSUInteger const suffixLen = 5;
 		return;
 	}
 
+	if ([self checkFileSizeAndWarn:files] == NO) {
+		return;
+	}
+
+	
 	GPGDebugLog(@"encrypting file(s): %@...", [files componentsJoinedByString:@","]);
 
 	BOOL useASCII = [[[GPGOptions sharedOptions] valueForKey:@"UseASCIIOutput"] boolValue];
@@ -1989,5 +2015,64 @@ static NSUInteger const suffixLen = 5;
     return [englishLanguageBundle localizedStringForKey:key value:@"" table:nil];
 }
 
+
+- (BOOL)checkFileSizeAndWarn:(NSArray *)files {
+	// This method calculates the size of all files and directories given,
+	// and warns if they are bigger than warningSize.
+	// Returns NO if the user decides to cancel.
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	NSInteger warningSize = 100 * 1024 * 1024;
+	
+	
+	for (NSString *file in files) {
+		NSDictionary *attributes = [fileManager attributesOfItemAtPath:file error:nil];
+		
+		if ([attributes.fileType isEqualToString:NSFileTypeDirectory]) {
+			NSDirectoryEnumerator *directoryEnumerator = [fileManager enumeratorAtURL:[NSURL fileURLWithPath:file]
+			  includingPropertiesForKeys:@[NSURLFileSizeKey, NSURLIsDirectoryKey]
+								 options:0
+							errorHandler:nil];
+			
+			for (NSURL *url in directoryEnumerator) {
+				NSNumber *isDirectory;
+				[url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil];
+				
+				if (isDirectory.boolValue) {
+					continue;
+				}
+				
+				NSNumber *size;
+				[url getResourceValue:&size forKey:NSURLFileSizeKey error:nil];
+				
+				warningSize -= size.unsignedLongLongValue;
+				if (warningSize <= 0) {
+					break;
+				}
+			}
+		} else {
+			warningSize -= attributes.fileSize;
+		}
+		
+		if (warningSize <= 0) {
+			break;
+		}
+	}
+	
+	if (warningSize <= 0) {
+		NSAlert *alert = [NSAlert new];
+		
+		alert.messageText = localized(@"BIG_FILE_ENCRYPTION_WARNING_TITLE");
+		alert.informativeText = localized(@"BIG_FILE_ENCRYPTION_WARNING_MSG");
+		[alert addButtonWithTitle:localized(@"BIG_FILE_ENCRYPTION_WARNING_BUTTON1")];
+		[alert addButtonWithTitle:localized(@"BIG_FILE_ENCRYPTION_WARNING_BUTTON2")];
+		
+		if (alert.runModal != NSAlertSecondButtonReturn) {
+			return NO;
+		}
+	}
+	
+	return YES;
+}
 
 @end
