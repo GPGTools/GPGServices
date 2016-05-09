@@ -15,8 +15,6 @@
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
 		3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3021FB1415D83ED300510CA8 /* SimpleTextView.m */; };
-		302D33D116D41B7100C05409 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D016D41B7100C05409 /* Sparkle.framework */; };
-		302D33D216D41B7600C05409 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D016D41B7100C05409 /* Sparkle.framework */; };
 		302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D316D41BCF00C05409 /* Libmacgpg.framework */; };
 		305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */; };
 		30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */; };
@@ -28,8 +26,6 @@
 		30B2057714D56F2A00AE9583 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
 		30B2057814D56F2A00AE9583 /* lock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990C135CAB60004C89D5 /* lock.icns */; };
 		30B2057914D56F2A00AE9583 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
-		30C2DEDC191E6B3700D56CDC /* GPGScripting.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C2DEDB191E6B3700D56CDC /* GPGScripting.m */; };
-		30C2DEDE191E6B4100D56CDC /* gpgservices.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 30C2DEDD191E6B4100D56CDC /* gpgservices.sdef */; };
 		30CC110C15D7E6BF000DC2C5 /* SimpleTextWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */; };
 		30CC112415D7ECAF000DC2C5 /* SimpleTextWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */; };
 		30E6C9BA1AB30EF4001541A3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30E6C9B91AB30EF4001541A3 /* MainMenu.xib */; };
@@ -66,13 +62,6 @@
 			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = Libmacgpg;
 		};
-		1B34FA9B17A80FE00078B93A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1B34FA9017A80FE00078B93A /* Libmacgpg.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 30C8B38E139503A800F49AA1;
-			remoteInfo = UnitTest;
-		};
 		1B34FA9D17A80FE00078B93A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1B34FA9017A80FE00078B93A /* Libmacgpg.xcodeproj */;
@@ -100,6 +89,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = CB6F0A9817484BDE00F91524;
 			remoteInfo = touchzipkit;
+		};
+		30ED68F11CE0C7D000C074F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1B34FA9017A80FE00078B93A /* Libmacgpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 30BE73BE1B54015C001A2137;
+			remoteInfo = UnitTests;
 		};
 		8EDC4076133F650800D0A101 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -133,7 +129,6 @@
 			files = (
 				2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */,
 				8EF7A61D1334C05300FD8C5B /* Growl.framework in Copy Frameworks */,
-				302D33D216D41B7600C05409 /* Sparkle.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -169,7 +164,6 @@
 		3008440714D5720E0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
 		3021FB1315D83ED300510CA8 /* SimpleTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextView.h; path = Source/SimpleTextView.h; sourceTree = "<group>"; };
 		3021FB1415D83ED300510CA8 /* SimpleTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextView.m; path = Source/SimpleTextView.m; sourceTree = "<group>"; };
-		302D33D016D41B7100C05409 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		302D33D316D41BCF00C05409 /* Libmacgpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Libmacgpg.framework; path = /Library/Frameworks/Libmacgpg.framework; sourceTree = "<absolute>"; };
 		3058B7CA14D56C5E00AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
 		3058B7CD14D56C6400AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
@@ -186,9 +180,6 @@
 		30B2055C14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
 		30B2055D14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
 		30B2055E14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
-		30C2DEDA191E6B3700D56CDC /* GPGScripting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGScripting.h; path = Source/GPGScripting.h; sourceTree = "<group>"; };
-		30C2DEDB191E6B3700D56CDC /* GPGScripting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GPGScripting.m; path = Source/GPGScripting.m; sourceTree = "<group>"; };
-		30C2DEDD191E6B4100D56CDC /* gpgservices.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = gpgservices.sdef; sourceTree = "<group>"; };
 		30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleTextWindow.xib; sourceTree = "<group>"; };
 		30CC112215D7ECAF000DC2C5 /* SimpleTextWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextWindow.h; path = Source/SimpleTextWindow.h; sourceTree = "<group>"; };
 		30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextWindow.m; path = Source/SimpleTextWindow.m; sourceTree = "<group>"; };
@@ -252,7 +243,6 @@
 				2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */,
-				302D33D116D41B7100C05409 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,8 +271,6 @@
 				45DD3DE015657C4900C9A4C1 /* ServiceWrappedOperation.m */,
 				45FC40D91566D2D80020A12B /* ServiceWrappedArgs.h */,
 				45FC40DA1566D2D80020A12B /* ServiceWrappedArgs.m */,
-				30C2DEDA191E6B3700D56CDC /* GPGScripting.h */,
-				30C2DEDB191E6B3700D56CDC /* GPGScripting.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -293,7 +281,6 @@
 				302D33D316D41BCF00C05409 /* Libmacgpg.framework */,
 				8E7341A21334BC1C003CBCEB /* Growl.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
-				302D33D016D41B7100C05409 /* Sparkle.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -320,10 +307,10 @@
 			isa = PBXGroup;
 			children = (
 				1B34FA9A17A80FE00078B93A /* Libmacgpg.framework */,
-				1B34FA9C17A80FE00078B93A /* UnitTest.octest */,
+				30ED68F21CE0C7D000C074F8 /* UnitTests.xctest */,
 				1B34FA9E17A80FE00078B93A /* org.gpgtools.Libmacgpg.xpc */,
-				1B34FAA017A80FE00078B93A /* installerHelper */,
 				1B34FAA217A80FE00078B93A /* LeakFinder.app */,
+				1B34FAA017A80FE00078B93A /* GPGTools.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -385,7 +372,6 @@
 				300B934814D56B97005016A7 /* Images */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */,
-				30C2DEDD191E6B4100D56CDC /* gpgservices.sdef */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -559,13 +545,6 @@
 			remoteRef = 1B34FA9917A80FE00078B93A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1B34FA9C17A80FE00078B93A /* UnitTest.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = UnitTest.octest;
-			remoteRef = 1B34FA9B17A80FE00078B93A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		1B34FA9E17A80FE00078B93A /* org.gpgtools.Libmacgpg.xpc */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
@@ -573,10 +552,10 @@
 			remoteRef = 1B34FA9D17A80FE00078B93A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1B34FAA017A80FE00078B93A /* installerHelper */ = {
+		1B34FAA017A80FE00078B93A /* GPGTools.app */ = {
 			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = installerHelper;
+			fileType = wrapper.application;
+			path = GPGTools.app;
 			remoteRef = 1B34FA9F17A80FE00078B93A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -592,6 +571,13 @@
 			fileType = archive.ar;
 			path = libtouchzipkit.a;
 			remoteRef = 304030F61923A42B00955DBC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		30ED68F21CE0C7D000C074F8 /* UnitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTests.xctest;
+			remoteRef = 30ED68F11CE0C7D000C074F8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		8EDC4077133F650800D0A101 /* ZipKit.framework */ = {
@@ -625,7 +611,6 @@
 				1BB1F50F199285D4004BCB19 /* InfoPlist.strings in Resources */,
 				30B2057614D56F2A00AE9583 /* Icon.icns in Resources */,
 				30B2057714D56F2A00AE9583 /* asc.icns in Resources */,
-				30C2DEDE191E6B4100D56CDC /* gpgservices.sdef in Resources */,
 				30B2057814D56F2A00AE9583 /* lock.icns in Resources */,
 				30B2057914D56F2A00AE9583 /* sig.icns in Resources */,
 				45715A0C156D4BD100E5E7DD /* ServicesMenu.strings in Resources */,
@@ -709,7 +694,6 @@
 				45C2B9E31565AEC300B3571A /* WorkerProgressViewItem.m in Sources */,
 				45C2B9EA1565DD6600B3571A /* NSAlert+ThreadSafety.m in Sources */,
 				45FC40DB1566D2D80020A12B /* ServiceWrappedArgs.m in Sources */,
-				30C2DEDC191E6B3700D56CDC /* GPGScripting.m in Sources */,
 				451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */,
 				30CC112415D7ECAF000DC2C5 /* SimpleTextWindow.m in Sources */,
 				3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */,

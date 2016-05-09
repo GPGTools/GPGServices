@@ -105,9 +105,6 @@ NSString *localized(NSString *key) {
 
 	[GrowlApplicationBridge setGrowlDelegate:self];
 	_inProgressCtlr = [[InProgressWindowController alloc] init];
-
-	updater = [SUUpdater updaterForBundle:[NSBundle bundleForClass:[self class]]];
-	updater.delegate = self;
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
@@ -133,12 +130,6 @@ NSString *localized(NSString *key) {
 
 	[NSApp replyToOpenOrPrint:NSApplicationDelegateReplySuccess];
 }
-
-- (void)updateAlert:(SUUpdateAlert *)updateAlert willShowReleaseNotesWithSize:(NSSize *)size {
-	size->width = 600;
-	size->height = 350;
-}
-
 
 #pragma mark -
 #pragma mark GPG-Helper
@@ -1995,7 +1986,7 @@ NSString *localized(NSString *key) {
 }
 
 - (void)selfQuit:(NSTimer *)timer {
-	if ([_inProgressCtlr.serviceWorkerArray count] < 1 && ![updater updateInProgress]) {
+	if (_inProgressCtlr.serviceWorkerArray.count < 1) {
 		[self cancelTerminateTimer];
 		[NSApp terminate:self];
 	}
