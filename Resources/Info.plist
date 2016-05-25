@@ -172,6 +172,8 @@
 					<string>com.sublimetext.3</string>
 					<string>com.sublimetext.2</string>
 					<string>com.apple.Terminal</string>
+					<string>it.bloop.airmail.beta11</string>
+					<string>it.bloop.airmail2</string>
 				</array>
 			</dict>
 			<key>NSReturnTypes</key>
@@ -256,6 +258,8 @@
 					<string>com.sublimetext.3</string>
 					<string>com.sublimetext.2</string>
 					<string>com.apple.Terminal</string>
+					<string>it.bloop.airmail.beta11</string>
+					<string>it.bloop.airmail2</string>
 				</array>
 			</dict>
 			<key>NSSendTypes</key>
@@ -338,6 +342,8 @@
 					<string>com.sublimetext.3</string>
 					<string>com.sublimetext.2</string>
 					<string>com.apple.Terminal</string>
+					<string>it.bloop.airmail.beta11</string>
+					<string>it.bloop.airmail2</string>
 				</array>
 			</dict>
 			<key>NSSendTypes</key>
