@@ -209,7 +209,7 @@ CODE_SIGN_ERROR_MESSAGE = "To keep you safe, GPGServices will exit now!\n\nPleas
 
 SelectedKeysDescription = "%i of %i keys selected";
 
-BIG_FILE_ENCRYPTION_WARNING_TITLE = "Warning: Please ensure your encrypted file is not damaged before removing the original unencrypted files.";
+BIG_FILE_ENCRYPTION_WARNING_TITLE = "Warning: Please ensure your encrypted file is not damaged before removing the original unencrypted file(s).";
 BIG_FILE_ENCRYPTION_WARNING_MSG = "For files bigger than 100MB, we recommend to use the Terminal. GPGServices still needs a bit of tweaking and we are on it. But until it is really reliable, you will see this warning. You may continue and encrypt your file(s). Before removing the unencrypted files, at least decrypt the encrypted file once. If that works without any error, you are good. If you run into an error, the encrypted file is damaged and you should look for another solution. Either try the terminal or use an encrypted disk image. The latter is available via the on board Disk Utility in OS X.";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "Cancel";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Continue";
