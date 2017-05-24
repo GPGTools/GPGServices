@@ -91,12 +91,27 @@
 }
 
 - (void)updateDescriptions {
-    NSMutableArray* arr = [NSMutableArray arrayWithCapacity:self.availableKeys.count];
-    for(GPGKey* k in self.availableKeys) {
-        NSString* c = [k comment];
-        c = (c && [c length]) ? [NSString stringWithFormat:@"(%@) ", c] : @"";
-        [arr addObject:[NSString stringWithFormat:@"%@ - %@ %@<%@>",
-                        k.keyID.shortKeyID, k.name, c, k.email]];
+    NSMutableArray *arr = [NSMutableArray new];
+	
+    for (GPGKey *key in self.availableKeys) {
+		NSString *name = key.name;
+		NSString *email = key.email;
+		
+		NSString *description = nil;
+		if (name && email) {
+			description = [NSString stringWithFormat:@"%@ <%@>", name, email];
+		} else if (name) {
+			description = name;
+		} else if (email) {
+			description = email;
+		}
+		if (description) {
+			description = [NSString stringWithFormat:@"%@ (%@)", description, key.shortKeyID];
+		} else {
+			description = key.shortKeyID;
+		}
+		
+		[arr addObject:description];
     }
     
     self.keyDescriptions = arr;
@@ -110,7 +125,12 @@
 			return self.keyValidator(key);
 		}];
 	}
-	return [keys allObjects];
+	
+	
+	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+	NSArray *secretKeys = [keys sortedArrayUsingDescriptors:@[descriptor]];
+	
+	return secretKeys;
 }
 
 - (GPGKey*)getDefaultKey {
