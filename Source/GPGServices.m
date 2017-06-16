@@ -372,6 +372,9 @@ NSString *localized(NSString *key) {
 								 hiddenRecipients:nil];
 
 		if (ctx.error) {
+			if ([ctx.error respondsToSelector:@selector(errorCode)] && [(GPGException *)ctx.error errorCode] == GPGErrorCancelled) {
+				return nil;
+			}
 			@throw ctx.error;
 		}
 
@@ -444,6 +447,9 @@ NSString *localized(NSString *key) {
 														  message:errorMessage];
 			}
 		} else if (ctx.error) {
+			if ([ctx.error respondsToSelector:@selector(errorCode)] && [(GPGException *)ctx.error errorCode] == GPGErrorCancelled) {
+				return nil;
+			}
 			@throw ctx.error;
 		}
 			
@@ -492,6 +498,9 @@ NSString *localized(NSString *key) {
 		NSData *outputData = [ctx processData:inputData withEncryptSignMode:GPGClearSign recipients:nil hiddenRecipients:nil];
 
 		if (ctx.error) {
+			if ([ctx.error respondsToSelector:@selector(errorCode)] && [(GPGException *)ctx.error errorCode] == GPGErrorCancelled) {
+				return nil;
+			}
 			@throw ctx.error;
 		}
 
@@ -767,6 +776,9 @@ NSString *localized(NSString *key) {
 		}
 
 		if (ctx.error) {
+			if ([ctx.error respondsToSelector:@selector(errorCode)] && [(GPGException *)ctx.error errorCode] == GPGErrorCancelled) {
+				return nil;
+			}
 			@throw ctx.error;
 		}
 
@@ -1076,6 +1088,9 @@ NSString *localized(NSString *key) {
 		}
 
 		if (ctx.error) {
+			if ([ctx.error respondsToSelector:@selector(errorCode)] && [(GPGException *)ctx.error errorCode] == GPGErrorCancelled) {
+				return;
+			}
 			@throw ctx.error;
 		}
 	} @catch (GPGException *localException) {
@@ -1214,6 +1229,9 @@ NSString *localized(NSString *key) {
 
 				if (ctx.error) {
 					if (!ctx.statusDict[@"DECRYPTION_OKAY"]) {
+						if ([ctx.error respondsToSelector:@selector(errorCode)] && [(GPGException *)ctx.error errorCode] == GPGErrorCancelled) {
+							return;
+						}
 						@throw ctx.error;
 					}
 				}
