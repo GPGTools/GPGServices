@@ -205,6 +205,8 @@
 			<string>encrypt</string>
 			<key>NSPortName</key>
 			<string>GPGServices</string>
+			<key>NSRequiredContext</key>
+			<dict/>
 			<key>NSReturnTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -229,41 +231,7 @@
 			<key>NSPortName</key>
 			<string>GPGServices</string>
 			<key>NSRequiredContext</key>
-			<dict>
-				<key>NSApplicationIdentifier</key>
-				<array>
-					<string>com.apple.Safari</string>
-					<string>com.google.Chrome</string>
-					<string>org.mozilla.firefox</string>
-					<string>org.chromium.Chromium</string>
-					<string>com.operasoftware.Opera</string>
-					<string>com.adiumX.adiumX</string>
-					<string>com.apple.mail</string>
-					<string>com.hipchat.HipChat</string>
-					<string>com.microsoft.Outlook</string>
-					<string>org.libreoffice.script</string>
-					<string>com.microsoft.Word</string>
-					<string>org.mozilla.nightly</string>
-					<string>org.jitsi</string>
-					<string>com.apple.iChat</string>
-					<string>com.circusponies.NoteBook.Mac</string>
-					<string>com.apple.Notes</string>
-					<string>com.apple.Stickies</string>
-					<string>com.omnigroup.OmniFocus2</string>
-					<string>com.apple.iWork.Pages</string>
-					<string>com.apple.TextEdit</string>
-					<string>com.macromates.textmate</string>
-					<string>com.macromates.TextMate.preview</string>
-					<string>org.mozilla.thunderbird</string>
-					<string>org.mozilla.tor browser</string>
-					<string>com.sublimetext.3</string>
-					<string>com.sublimetext.2</string>
-					<string>com.apple.Terminal</string>
-					<string>it.bloop.airmail.beta11</string>
-					<string>it.bloop.airmail2</string>
-					<string>com.github.atom</string>
-				</array>
-			</dict>
+			<dict/>
 			<key>NSSendTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -290,6 +258,8 @@
 			<string>decrypt</string>
 			<key>NSPortName</key>
 			<string>GPGServices</string>
+			<key>NSRequiredContext</key>
+			<dict/>
 			<key>NSReturnTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -314,41 +284,7 @@
 			<key>NSPortName</key>
 			<string>GPGServices</string>
 			<key>NSRequiredContext</key>
-			<dict>
-				<key>NSApplicationIdentifier</key>
-				<array>
-					<string>com.apple.Safari</string>
-					<string>com.google.Chrome</string>
-					<string>org.mozilla.firefox</string>
-					<string>org.chromium.Chromium</string>
-					<string>com.operasoftware.Opera</string>
-					<string>com.adiumX.adiumX</string>
-					<string>com.apple.mail</string>
-					<string>com.hipchat.HipChat</string>
-					<string>com.microsoft.Outlook</string>
-					<string>org.libreoffice.script</string>
-					<string>com.microsoft.Word</string>
-					<string>org.mozilla.nightly</string>
-					<string>org.jitsi</string>
-					<string>com.apple.iChat</string>
-					<string>com.circusponies.NoteBook.Mac</string>
-					<string>com.apple.Notes</string>
-					<string>com.apple.Stickies</string>
-					<string>com.omnigroup.OmniFocus2</string>
-					<string>com.apple.iWork.Pages</string>
-					<string>com.apple.TextEdit</string>
-					<string>com.macromates.textmate</string>
-					<string>com.macromates.TextMate.preview</string>
-					<string>org.mozilla.thunderbird</string>
-					<string>org.mozilla.tor browser</string>
-					<string>com.sublimetext.3</string>
-					<string>com.sublimetext.2</string>
-					<string>com.apple.Terminal</string>
-					<string>it.bloop.airmail.beta11</string>
-					<string>it.bloop.airmail2</string>
-					<string>com.github.atom</string>
-				</array>
-			</dict>
+			<dict/>
 			<key>NSSendTypes</key>
 			<array>
 				<string>public.plain-text</string>
