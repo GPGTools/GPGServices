@@ -2070,18 +2070,28 @@ NSString *localized(NSString *key) {
 	
 	if (warningSize <= 0) {
 		__block BOOL result = YES;
-		dispatch_sync(dispatch_get_main_queue(), ^{
+		
+		void (^alertBlock)() = ^{
 			NSAlert *alert = [NSAlert new];
 			
 			alert.messageText = localized(@"BIG_FILE_ENCRYPTION_WARNING_TITLE");
 			alert.informativeText = localized(@"BIG_FILE_ENCRYPTION_WARNING_MSG");
 			[alert addButtonWithTitle:localized(@"BIG_FILE_ENCRYPTION_WARNING_BUTTON1")];
 			[alert addButtonWithTitle:localized(@"BIG_FILE_ENCRYPTION_WARNING_BUTTON2")];
-
+			
+			[[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+			
 			if (alert.runModal != NSAlertSecondButtonReturn) {
 				result = NO;
 			}
-		});
+		};
+		
+		if ([NSThread isMainThread]) {
+			alertBlock();
+		} else {
+			dispatch_sync(dispatch_get_main_queue(), alertBlock);
+		}
+		
 		if (!result) {
 			return NO;
 		}
