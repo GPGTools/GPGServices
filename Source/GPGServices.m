@@ -32,7 +32,7 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 static NSString *const tempTemplate = @"_gpg(XXX).tmp";
 static NSUInteger const suffixLen = 5;
 
-@interface GPGServices ()
+@interface GPGServices () <GPGControllerDelegate>
 - (void)removeWorker:(id)worker;
 - (void)displayOperationFinishedNotificationWithTitleOnMain:(NSArray *)args;
 - (void)displayOperationFailedNotificationWithTitleOnMain:(NSArray *)args;
@@ -412,6 +412,7 @@ NSString *localized(NSString *key) {
 - (NSString *)decryptTextString:(NSString *)inputString {
 	GPGController *ctx = [GPGController gpgController];
 
+	ctx.delegate = self;
 	ctx.useArmor = YES;
 
 	NSData *outputData = nil;
@@ -419,6 +420,20 @@ NSString *localized(NSString *key) {
 	@try {
 		outputData = [ctx decryptData:[inputString UTF8Data]];
 
+		
+		// Check for canceling because of the no-mdc warning.
+		if (ctx.userInfo[@"cancelled"]) {
+			return nil;
+		}
+		
+		if (ctx.error) {
+			if ([ctx.error respondsToSelector:@selector(errorCode)] && [(GPGException *)ctx.error errorCode] == GPGErrorCancelled) {
+				return nil;
+			}
+			@throw ctx.error;
+		}
+
+		
 		NSArray *sigs = ctx.signatures;
 		if (sigs.count > 0) {
 			GPGSignature *sig = [sigs objectAtIndex:0];
@@ -446,13 +461,7 @@ NSString *localized(NSString *key) {
 				[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed", nil)
 														  message:errorMessage];
 			}
-		} else if (ctx.error) {
-			if ([ctx.error respondsToSelector:@selector(errorCode)] && [(GPGException *)ctx.error errorCode] == GPGErrorCancelled) {
-				return nil;
-			}
-			@throw ctx.error;
 		}
-			
 
 	} @catch (GPGException *localException) {
 		[self displayOperationFailedNotificationWithTitle:[localException reason]
@@ -1154,6 +1163,7 @@ NSString *localized(NSString *key) {
 
 	GPGController *ctx = [GPGController gpgController];
 	wrappedArgs.worker.runningController = ctx;
+	ctx.delegate = self;
 
 	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
@@ -1190,51 +1200,50 @@ NSString *localized(NSString *key) {
 
 				GPGFileStream *output = [GPGFileStream fileStreamForWritingAtPath:tempFile.fileName];
 				[ctx decryptTo:output data:input];
-
-				// check again after a potentially long operation
-				if (wrappedArgs.worker.amCanceling) {
-					return;
-				}
+				[output close];
+				[tempFile closeFile];
 				
-				if (output.length || [[[[ctx.statusDict objectForKey:@"PLAINTEXT_LENGTH"] firstObject] firstObject] isEqualToString:@"0"]) {
-					[output close];
-					[tempFile closeFile];
-
-					error = nil;
-					
-					NSString *outputFile;
-					NSString *fileName = ctx.statusDict[@"PLAINTEXT"][0][2];
-					if (fileName.length && ![fileName isEqualToString:@"_CONSOLE"]  && [fileName rangeOfString:@"/"].length == 0) {
-						fileName = [fileName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-						outputFile = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
-					} else {
-						outputFile = [file stringByDeletingPathExtension];
-					}
-					
-					outputFile = [self normalizedAndUniquifiedPathFromPath:outputFile];
-					
-					
-					[[NSFileManager defaultManager] moveItemAtPath:tempFile.fileName toPath:outputFile error:&error];
-					if (error != nil) {
-						NSLog(@"error while writing to output: %@", error);
-						[tempFile deleteFile];
-					} else {
-						tempFile.shouldDeleteFileOnDealloc = NO;
-						[decryptedFiles addObject:file];
-					}
-				} else {
-					[output close];
+				// check again after a potentially long operation
+				// Also check for canceling because of the no-mdc warning.
+				if (wrappedArgs.worker.amCanceling || ctx.userInfo[@"cancelled"]) {
 					[tempFile deleteFile];
+					return;
 				}
 
 				if (ctx.error) {
-					if (!ctx.statusDict[@"DECRYPTION_OKAY"]) {
-						if ([ctx.error respondsToSelector:@selector(errorCode)] && [(GPGException *)ctx.error errorCode] == GPGErrorCancelled) {
-							return;
-						}
-						@throw ctx.error;
+					[tempFile deleteFile];
+					if ([ctx.error respondsToSelector:@selector(errorCode)] && [(GPGException *)ctx.error errorCode] == GPGErrorCancelled) {
+						return;
 					}
+					@throw ctx.error;
 				}
+
+				
+				
+				NSString *outputFile;
+				NSString *fileName = nil;
+				if ([ctx.statusDict[@"PLAINTEXT"] count] > 0 && [ctx.statusDict[@"PLAINTEXT"][0] count] > 2) {
+					fileName = ctx.statusDict[@"PLAINTEXT"][0][2];
+				}
+				if (fileName.length && ![fileName isEqualToString:@"_CONSOLE"] && [fileName rangeOfString:@"/"].length == 0) {
+					fileName = [fileName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+					outputFile = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
+				} else {
+					outputFile = [file stringByDeletingPathExtension];
+				}
+				
+				outputFile = [self normalizedAndUniquifiedPathFromPath:outputFile];
+				
+				
+				[[NSFileManager defaultManager] moveItemAtPath:tempFile.fileName toPath:outputFile error:&error];
+				if (error) {
+					NSLog(@"error while writing to output: %@", error);
+					[tempFile deleteFile];
+				} else {
+					tempFile.shouldDeleteFileOnDealloc = NO;
+					[decryptedFiles addObject:file];
+				}
+				
 
 				//
 				// Show any signatures encountered
@@ -2099,5 +2108,47 @@ NSString *localized(NSString *key) {
 	
 	return YES;
 }
+
+- (BOOL)gpgControllerShouldDecryptWithoutMDC:(GPGController *)gpgc {
+	
+	if (gpgc.signatures.count > 0) {
+		GPGSignature *signature = gpgc.signatures[0];
+		// Allow messages without mdc, if there is a trusted signature.
+		if (signature.trust < GPGValidityInvalid && signature.trust >= GPGValidityFull) {
+			return YES;
+		}
+	}
+	
+	__block BOOL shouldDecryptWithoutMDC = NO;
+	
+	void (^alertBlock)() = ^{
+		NSAlert *alert = [NSAlert new];
+		
+		alert.messageText = localized(@"NO_MDC_DECRYPTION_WARNING_TITLE");
+		alert.informativeText = localized(@"NO_MDC_DECRYPTION_WARNING_MSG");
+		[alert addButtonWithTitle:localized(@"NO_MDC_DECRYPTION_WARNING_NO")];
+		[alert addButtonWithTitle:localized(@"NO_MDC_DECRYPTION_WARNING_YES")];
+		
+		[[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+		
+		if (alert.runModal == NSAlertSecondButtonReturn) {
+			shouldDecryptWithoutMDC = YES;
+		}
+	};
+	
+	if ([NSThread isMainThread]) {
+		alertBlock();
+	} else {
+		dispatch_sync(dispatch_get_main_queue(), alertBlock);
+	}
+	
+	if (!shouldDecryptWithoutMDC) {
+		gpgc.userInfo = @{@"cancelled": @YES};
+	}
+	
+	return shouldDecryptWithoutMDC;
+}
+
+
 
 @end
