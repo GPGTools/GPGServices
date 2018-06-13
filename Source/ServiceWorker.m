@@ -45,8 +45,9 @@
 
 - (void)start:(id)args 
 {
-    if (_queue) 
+	if (_queue) {
         return;
+	}
 
     _queue = [[NSOperationQueue alloc] init];
     // built an invocation operation for the user-specified target/action
@@ -61,15 +62,14 @@
 
 - (void)cancel
 {
-    if (!_queue)
+	if (!_queue) {
         return;
+	}
 
     amCanceling = YES;
 
-    GPGController *gpc = runningController;
     @try {
-        if (gpc)
-            [gpc cancel];
+		[runningController cancel];
     }
     @catch (NSException *exception) {
         // swallow anything during a cancelation
@@ -77,17 +77,16 @@
 
     [_queue cancelAllOperations];
 
-    if (delegate)
-        [delegate workerWasCanceled:self];
+	[delegate workerWasCanceled:self];
 }
 
 - (void)finishWork:(id)sender
 {
-    if (amCanceling)
+	if (amCanceling) {
         return;
+	}
 
-    if (delegate)
-        [delegate workerDidFinish:self];
+	[delegate workerDidFinish:self];
 }
 
 @end
