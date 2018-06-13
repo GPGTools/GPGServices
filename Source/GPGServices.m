@@ -412,6 +412,7 @@ NSString *localized(NSString *key) {
 - (NSString *)decryptTextString:(NSString *)inputString {
 	GPGController *ctx = [GPGController gpgController];
 
+	ctx.userInfo = @{@"type": @"text"};
 	ctx.delegate = self;
 	ctx.useArmor = YES;
 
@@ -422,7 +423,7 @@ NSString *localized(NSString *key) {
 
 		
 		// Check for canceling because of the no-mdc warning.
-		if (ctx.userInfo[@"cancelled"]) {
+		if ([ctx.userInfo[@"cancelled"] boolValue]) {
 			return nil;
 		}
 		
@@ -1161,15 +1162,13 @@ NSString *localized(NSString *key) {
 		return;
 	}
 
-	GPGController *ctx = [GPGController gpgController];
-	wrappedArgs.worker.runningController = ctx;
-	ctx.delegate = self;
 
 	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	NSMutableArray *decryptedFiles = [NSMutableArray arrayWithCapacity:[files count]];
 	NSMutableArray *errorMsgs = [NSMutableArray array];
-
+	NSUInteger cancelledCount = 0;
+	
 	// has thread-safe methods as used here
 	DummyVerificationController *dummyController = nil;
 
@@ -1199,16 +1198,28 @@ NSString *localized(NSString *key) {
 				}
 
 				GPGFileStream *output = [GPGFileStream fileStreamForWritingAtPath:tempFile.fileName];
+				
+				GPGController *ctx = [GPGController gpgController];
+				wrappedArgs.worker.runningController = ctx;
+				ctx.userInfo = @{@"type": @"file"};
+				ctx.delegate = self;
+				
 				[ctx decryptTo:output data:input];
 				[output close];
 				[tempFile closeFile];
 				
 				// check again after a potentially long operation
-				// Also check for canceling because of the no-mdc warning.
-				if (wrappedArgs.worker.amCanceling || ctx.userInfo[@"cancelled"]) {
+				if (wrappedArgs.worker.amCanceling) {
 					[tempFile deleteFile];
 					return;
 				}
+				if ([ctx.userInfo[@"cancelled"] boolValue]) {
+					// The user choosed to cancel this file decryption.
+					cancelledCount++;
+					[tempFile deleteFile];
+					continue;
+				}
+				
 
 				if (ctx.error) {
 					[tempFile deleteFile];
@@ -1287,10 +1298,17 @@ NSString *localized(NSString *key) {
 		}
 	}
 
-	dummyController.isActive = NO;
-
+	
 	NSUInteger innCount = [files count];
 	NSUInteger outCount = [decryptedFiles count];
+
+	if (cancelledCount == innCount) {
+		// All files where cancelled. Do not show a summary.
+		return;
+	}
+	
+	dummyController.isActive = NO;
+
 	NSString *title;
 	if (innCount == outCount) {
 		title = NSLocalizedString(@"Decryption finished", nil);
@@ -2124,10 +2142,12 @@ NSString *localized(NSString *key) {
 	void (^alertBlock)() = ^{
 		NSAlert *alert = [NSAlert new];
 		
-		alert.messageText = localized(@"NO_MDC_DECRYPTION_WARNING_TITLE");
-		alert.informativeText = localized(@"NO_MDC_DECRYPTION_WARNING_MSG");
-		[alert addButtonWithTitle:localized(@"NO_MDC_DECRYPTION_WARNING_NO")];
-		[alert addButtonWithTitle:localized(@"NO_MDC_DECRYPTION_WARNING_YES")];
+		NSString *baseString = [gpgc.userInfo[@"type"] isEqualToString:@"file"] ? @"NO_MDC_DECRYPT_FILE_WARNING_" : @"NO_MDC_DECRYPT_TEXT_WARNING_";
+		
+		alert.messageText = localized([baseString stringByAppendingString:@"TITLE"]);
+		alert.informativeText = localized([baseString stringByAppendingString:@"MSG"]);
+		[alert addButtonWithTitle:localized([baseString stringByAppendingString:@"NO"])];
+		[alert addButtonWithTitle:localized([baseString stringByAppendingString:@"YES"])];
 		
 		[[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
 		
@@ -2143,7 +2163,9 @@ NSString *localized(NSString *key) {
 	}
 	
 	if (!shouldDecryptWithoutMDC) {
-		gpgc.userInfo = @{@"cancelled": @YES};
+		NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:gpgc.userInfo];
+		userInfo[@"cancelled"] = @YES;
+		gpgc.userInfo = userInfo;
 	}
 	
 	return shouldDecryptWithoutMDC;
