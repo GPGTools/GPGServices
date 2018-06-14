@@ -584,6 +584,10 @@ NSString *localized(NSString *key) {
 						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Bad signature by %@", @"arg:userID"),
 										sig.userIDDescription];
 						break;
+					case GPGErrorNoPublicKey:
+						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unable to verify signature! Missing public key: %@", nil),
+										sig.fingerprint.shortKeyID];
+						break;
 					default:
 						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unexpected GPG signature status %i", @"arg:GPGSignature status"), status ];
 						break;  // I'm unsure if GPGErrorDescription should cover these signature errors
