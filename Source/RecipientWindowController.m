@@ -135,7 +135,7 @@
                                                          ascending:YES
                                                           selector:@selector(localizedCaseInsensitiveCompare:)];
     [keyTableView setSortDescriptors:[NSArray arrayWithObject:sd]];
-    [self tableView:keyTableView sortDescriptorsDidChange:nil];
+    [self tableView:keyTableView sortDescriptorsDidChange:@[]];
     
     [self generateContextMenuForTable:keyTableView];
     
@@ -145,12 +145,17 @@
 }
 
 - (void)dealloc {
-    keyTableView.delegate = nil;
-    keyTableView.dataSource = nil;
-    searchField.delegate = nil;
-    
+	void (^block)() = ^{
+		keyTableView.delegate = nil;
+		keyTableView.dataSource = nil;
+		searchField.delegate = nil;
+	};
 	
-	
+	if ([NSThread isMainThread]) {
+		block();
+	} else {
+		dispatch_sync(dispatch_get_main_queue(), block);
+	}
 }
 
 #pragma mark -
@@ -297,7 +302,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 #pragma mark -
 #pragma mark Delegate
 
-- (void)tableView:(NSTableView *)aTableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
+- (void)tableView:(NSTableView *)aTableView sortDescriptorsDidChange:(__unused NSArray *)oldDescriptors {
 	self.sortDescriptors = [keyTableView sortDescriptors];
 }
 
