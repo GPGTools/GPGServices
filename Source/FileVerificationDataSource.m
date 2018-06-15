@@ -92,7 +92,7 @@
         }
         
 		
-		NSString *string1 = [NSString stringWithFormat:@"Signed by: %@ (%@) – ", sig.userIDDescription, sig.fingerprint.shortKeyID];
+		NSString *string1 = [NSString stringWithFormat:@"Signed by: %@ (%@) – ", sig.userIDDescription, sig.fingerprint.keyID];
 		NSMutableAttributedString *resultString = [[NSMutableAttributedString alloc] initWithString:string1 attributes:nil];
 		
 		NSDictionary *attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:[NSFont systemFontSize]], NSBackgroundColorAttributeName: bgColor};

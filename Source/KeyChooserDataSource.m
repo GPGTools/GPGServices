@@ -106,9 +106,9 @@
 			description = email;
 		}
 		if (description) {
-			description = [NSString stringWithFormat:@"%@ (%@)", description, key.shortKeyID];
+			description = [NSString stringWithFormat:@"%@ (%@)", description, key.keyID];
 		} else {
-			description = key.shortKeyID;
+			description = key.keyID;
 		}
 		
 		[arr addObject:description];

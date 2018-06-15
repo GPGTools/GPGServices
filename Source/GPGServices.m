@@ -299,8 +299,8 @@ NSString *localized(NSString *key) {
 		NSData *keyData = [ctx exportKeys:[NSArray arrayWithObject:selectedPrivateKey] allowSecret:NO fullExport:NO];
 
 		if (keyData == nil) {
-			NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"Could not export key %@", @"arg:shortKeyID"),
-							 selectedPrivateKey.keyID.shortKeyID];
+			NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"Could not export key %@", @"arg:keyID"),
+							 selectedPrivateKey.keyID];
 			[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Export failed", nil)
 													  message:msg];
 			return nil;
@@ -453,7 +453,7 @@ NSString *localized(NSString *key) {
 						break;
 					case GPGErrorNoPublicKey:
 						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unable to verify signature! Missing public key: %@", nil),
-										sig.fingerprint.shortKeyID];
+										sig.fingerprint];
 						break;
 					default:
 						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unexpected GPG signature status %i", @"arg:GPGSignature status"), status ];
@@ -586,7 +586,7 @@ NSString *localized(NSString *key) {
 						break;
 					case GPGErrorNoPublicKey:
 						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unable to verify signature! Missing public key: %@", nil),
-										sig.fingerprint.shortKeyID];
+										sig.fingerprint];
 						break;
 					default:
 						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unexpected GPG signature status %i", @"arg:GPGSignature status"), status ];
