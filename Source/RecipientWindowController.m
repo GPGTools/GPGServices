@@ -14,6 +14,7 @@
 
 @interface RecipientWindowController ()
 @property (nonatomic, strong) NSArray *keysMatchingSearch;
+@property (readonly) BOOL selectAllMixed;
 
 - (void)displayItemsMatchingString:(NSString*)s;
 - (void)generateContextMenuForTable:(NSTableView *)table;
@@ -21,27 +22,26 @@
 
 - (void)runModalOnMain:(NSMutableArray *)resHolder;
 
-- (void) persistSelectedKeys;
-- (void) restoreSelectedKeys;
-
-@property (readonly) BOOL selectAllMixed;
+- (void) persistSelectedKeysAndOptions;
+- (void) restoreSelectedKeysAndOptions;
 
 @end
+
+
 
 @implementation RecipientWindowController
 @synthesize dataSource, selectedKeys, sign, symetricEncryption, encryptForOwnKeyToo, keysMatchingSearch, sortDescriptors=_sortDescriptors;
 
 
 
-+ (NSSet*)keyPathsForValuesAffectingSelectedCountDescription {
++ (NSSet *)keyPathsForValuesAffectingSelectedCountDescription {
 	return [NSSet setWithObjects:@"selectedKeys", @"availableKeys", nil];
 }
 - (NSString *)selectedCountDescription {
 	return [NSString stringWithFormat:[GPGServices localizedStringForKey:@"SelectedKeysDescription"], selectedKeys.count, availableKeys.count];
 }
 
-
-+ (NSSet*)keyPathsForValuesAffectingSelectAll {
++ (NSSet *)keyPathsForValuesAffectingSelectAll {
 	return [NSSet setWithObjects:@"selectedKeys", nil];
 }
 - (id)selectAll {
@@ -64,9 +64,7 @@
 	[self didChangeValueForKey:@"selectedKeys"];
 }
 
-
-
-+ (NSSet*)keyPathsForValuesAffectingOkEnabled {
++ (NSSet *)keyPathsForValuesAffectingOkEnabled {
 	return [NSSet setWithObjects:@"encryptForOwnKeyToo", @"symetricEncryption", @"selectedKeys", nil];
 }
 - (BOOL)okEnabled {
@@ -103,7 +101,12 @@
 
 - (id)init {
 	self = [super initWithWindowNibName:@"RecipientWindow"];
-
+	if (!self) {
+		return nil;
+	}
+	
+	[[NSUserDefaults standardUserDefaults]registerDefaults:@{self.signDefaultsKey: @YES, self.encryptForOwnKeyTooDefaultsKey: @YES}];
+	
     dataSource = [[KeyChooserDataSource alloc] initWithValidator:[GPGServices canSignValidator]];
 
 	
@@ -116,10 +119,8 @@
 	self.keysMatchingSearch = [availableKeys allObjects];
 
     selectedKeys = [[NSMutableSet alloc] init];
-    [self restoreSelectedKeys];
+    [self restoreSelectedKeysAndOptions];
 	
-    self.encryptForOwnKeyToo = YES;
-    
 	return self;
 }
 
@@ -377,35 +378,61 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (IBAction)okClicked:(id)sender {
 	[NSApp stopModalWithCode:0];
     
-    [self persistSelectedKeys];
+    [self persistSelectedKeysAndOptions];
 }
 
 - (IBAction)cancelClicked:(id)sender {
 	[NSApp stopModalWithCode:1];
 }
 
+
+#pragma mark -
+#pragma mark Helper methods
+
+
 - (NSString *)selectedKeysDefaultsKey {
-    return [NSStringFromClass( [self class] ) stringByAppendingString:@"SelectedKeys"];
+	return [NSStringFromClass([self class]) stringByAppendingString:@"SelectedKeys"];
+}
+- (NSString *)signDefaultsKey {
+	return [NSStringFromClass([self class]) stringByAppendingString:@"Sign"];
+}
+- (NSString *)encryptForOwnKeyTooDefaultsKey {
+	return [NSStringFromClass([self class]) stringByAppendingString:@"EncryptForOwnKeyToo"];
+}
+- (NSString *)symetricEncryptionDefaultsKey {
+	return [NSStringFromClass([self class]) stringByAppendingString:@"SymetricEncryption"];
 }
 
-- (void)persistSelectedKeys {
-    NSMutableArray * keyIds = [[NSMutableArray alloc] init];
-    for ( GPGKey * key in selectedKeys ) {
-        [keyIds addObject:key.keyID];
+
+- (void)persistSelectedKeysAndOptions {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+	NSMutableArray *keyIDs = [[NSMutableArray alloc] init];
+    for (GPGKey *key in selectedKeys) {
+        [keyIDs addObject:key.fingerprint];
     }
-    [[NSUserDefaults standardUserDefaults] setValue:keyIds
-                                             forKey:[self selectedKeysDefaultsKey]];
+    [defaults setValue:keyIDs forKey:self.selectedKeysDefaultsKey];
+	
+	[defaults setBool:self.sign forKey:self.signDefaultsKey];
+	[defaults setBool:self.encryptForOwnKeyToo forKey:self.encryptForOwnKeyTooDefaultsKey];
+	[defaults setBool:self.symetricEncryption forKey:self.symetricEncryptionDefaultsKey];
 }
 
-- (void)restoreSelectedKeys {
-    NSArray * keyIds = [[NSUserDefaults standardUserDefaults] valueForKey:[self selectedKeysDefaultsKey]];
-    for ( NSString * keyId in keyIds ) {
-        for ( GPGKey * key in availableKeys ) {
-            if ( [key.keyID isEqualToString:keyId] ) {
-                [selectedKeys addObject:key];
-            }
-        }
-    }
-}
+- (void)restoreSelectedKeysAndOptions {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
+	NSArray *keyIDs = [defaults valueForKey:self.selectedKeysDefaultsKey];
+	for (NSString *keyID in keyIDs ) {
+		for (GPGKey *key in availableKeys ) {
+			if ([key.fingerprint isEqualToString:keyID]) {
+				[selectedKeys addObject:key];
+			}
+		}
+	}
+
+	self.sign = [defaults boolForKey:self.signDefaultsKey];
+	self.encryptForOwnKeyToo = [defaults boolForKey:self.encryptForOwnKeyTooDefaultsKey];
+	self.symetricEncryption = [defaults boolForKey:self.symetricEncryptionDefaultsKey];
+}
+	 
 @end

@@ -24,26 +24,22 @@
 	
     NSMutableSet *selectedKeys;
 	
-	BOOL sign;
-    BOOL encryptForOwnKeyToo;
-    BOOL symetricEncryption;
-    
     BOOL _firstUpdate;
 	
 	KeyChooserDataSource *dataSource;
 }
 
-@property (weak) id selectAll;
-@property (readonly) NSString *selectedCountDescription;
+@property (nonatomic, weak) id selectAll;
+@property (nonatomic, readonly) NSString *selectedCountDescription;
 
-@property (readonly) KeyChooserDataSource *dataSource;
-@property (readonly) NSMutableSet *selectedKeys;
-@property (readonly) GPGKey *selectedPrivateKey;
-@property (assign) BOOL sign;
-@property (assign) BOOL encryptForOwnKeyToo;
-@property (assign) BOOL symetricEncryption;
-@property (readonly) BOOL okEnabled;
-@property (readonly) NSAttributedString *versionAndBuildDescription;
+@property (nonatomic, readonly) KeyChooserDataSource *dataSource;
+@property (nonatomic, readonly) NSMutableSet *selectedKeys;
+@property (nonatomic, readonly) GPGKey *selectedPrivateKey;
+@property (nonatomic, assign) BOOL sign;
+@property (nonatomic, assign) BOOL encryptForOwnKeyToo;
+@property (nonatomic, assign) BOOL symetricEncryption;
+@property (nonatomic, readonly) BOOL okEnabled;
+@property (nonatomic, readonly) NSAttributedString *versionAndBuildDescription;
 @property (nonatomic, copy) NSArray *sortDescriptors;
 
 // thread-safe
