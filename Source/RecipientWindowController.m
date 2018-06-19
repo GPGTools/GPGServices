@@ -144,20 +144,6 @@
         [keyTableView moveColumn:idx toColumn:0];
 }
 
-- (void)dealloc {
-	void (^block)() = ^{
-		keyTableView.delegate = nil;
-		keyTableView.dataSource = nil;
-		searchField.delegate = nil;
-	};
-	
-	if ([NSThread isMainThread]) {
-		block();
-	} else {
-		dispatch_sync(dispatch_get_main_queue(), block);
-	}
-}
-
 #pragma mark -
 #pragma mark Data Source
 
