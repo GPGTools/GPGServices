@@ -17,6 +17,7 @@
 #import "ServiceWorkerDelegate.h"
 #import "ServiceWrappedArgs.h"
 #import "GPGTempFile.h"
+#import "GKFingerprintTransformer.h"
 
 #import "Libmacgpg/GPGFileStream.h"
 #import "Libmacgpg/GPGMemoryStream.h"
@@ -25,12 +26,12 @@
 #import "ZipKit/ZKArchive.h"
 #import "NSPredicate+negate.h"
 #import "GPGKey+utils.h"
-#import "NSAlert+ThreadSafety.h"
 
 #define SIZE_WARNING_LEVEL_IN_MB 10
 static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 static NSString *const tempTemplate = @"_gpg(XXX).tmp";
 static NSUInteger const suffixLen = 5;
+
 
 @interface GPGServices () <GPGControllerDelegate>
 - (void)removeWorker:(id)worker;
@@ -92,6 +93,18 @@ NSString *localized(NSString *key) {
 	}
 	
 	return localized;
+}
+
+NSString *localizedWithFormat(NSString *key, ...) {
+	va_list args;
+	va_start(args, key);
+	
+	NSString *format = localized(key);
+	NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
+	NSLog(@"");
+	va_end(args);
+
+	return message;
 }
 
 
@@ -448,25 +461,45 @@ NSString *localized(NSString *key) {
 				NSString *errorMessage = nil;
 				switch (status) {
 					case GPGErrorBadSignature:
-						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Bad signature by %@", @"arg:userID"),
-										sig.userIDDescription];
+						errorMessage = localizedWithFormat(@"Bad signature by %@", sig.userIDDescription);
 						break;
 					case GPGErrorNoPublicKey:
-						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unable to verify signature! Missing public key: %@", nil),
-										sig.fingerprint];
+						errorMessage = localizedWithFormat(@"Unable to verify signature! Missing public key: %@", sig.fingerprint);
 						break;
 					default:
-						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unexpected GPG signature status %i", @"arg:GPGSignature status"), status ];
+						errorMessage = localizedWithFormat(@"Unexpected GPG signature status %i", status);
 						break;  // I'm unsure if GPGErrorDescription should cover these signature errors
 				}
-				[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed", nil)
-														  message:errorMessage];
+				[self displayOperationFailedNotificationWithTitle:localized(@"Verification failed") message:errorMessage];
 			}
 		}
 
-	} @catch (GPGException *localException) {
-		[self displayOperationFailedNotificationWithTitle:[localException reason]
-												  message:[localException description]];
+	} @catch (GPGException *ex) {
+		
+		NSString *title;
+		NSString *message;
+		
+		switch (ex.errorCode) {
+			case GPGErrorNoSecretKey: {
+				NSMutableArray *missingSecKeys = [NSMutableArray new];
+				NSArray *missingKeys = ex.gpgTask.statusDict[@"NO_SECKEY"]; //Array of Arrays of String!
+				NSUInteger count = missingKeys.count;
+				NSUInteger i = 0;
+				for (; i < count; i++) {
+					[missingSecKeys addObject:missingKeys[i][0]];
+				}
+				
+				title = localizedWithFormat(@"NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE");
+				message = localizedWithFormat(@"NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG", [self descriptionForKeys:missingSecKeys]);
+				break;
+			}
+			default:
+				title = ex.reason;
+				message = ex.description;
+				break;
+		}
+
+		[self displayOperationFailedNotificationWithTitle:title message:message];
 
 		return nil;
 	} @catch (NSException *localException) {
@@ -581,19 +614,16 @@ NSString *localized(NSString *key) {
 				NSString *errorMessage = nil;
 				switch (status) {
 					case GPGErrorBadSignature:
-						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Bad signature by %@", @"arg:userID"),
-										sig.userIDDescription];
+						errorMessage = localizedWithFormat(@"Bad signature by %@", sig.userIDDescription);
 						break;
 					case GPGErrorNoPublicKey:
-						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unable to verify signature! Missing public key: %@", nil),
-										sig.fingerprint];
+						errorMessage = localizedWithFormat(@"Unable to verify signature! Missing public key: %@", sig.fingerprint);
 						break;
 					default:
-						errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Unexpected GPG signature status %i", @"arg:GPGSignature status"), status ];
+						errorMessage = localizedWithFormat(@"Unexpected GPG signature status %i", status);
 						break;  // I'm unsure if GPGErrorDescription should cover these signature errors
 				}
-				[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed", nil)
-														  message:errorMessage];
+				[self displayOperationFailedNotificationWithTitle:localized(@"Verification failed") message:errorMessage];
 			}
 		} else {
 			// Looks like sigs.count == 0 when we have encrypted text but no signature
@@ -1086,10 +1116,11 @@ NSString *localized(NSString *key) {
 
 	GPGFileStream *output = [GPGFileStream fileStreamForWritingAtPath:tempFile.fileName];
 
-	if (mode & GPGSign && privateKey != nil) {
-		[ctx addSignerKey:[privateKey description]];
-	}
-	@try{
+	@try {
+		if (mode & GPGSign) {
+			[ctx addSignerKey:[privateKey description]];
+		}
+
 		[ctx processTo:output
 						data:gpgData
 		 withEncryptSignMode:mode
@@ -1170,7 +1201,7 @@ NSString *localized(NSString *key) {
 	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
 	NSMutableArray *decryptedFiles = [NSMutableArray arrayWithCapacity:[files count]];
-	NSMutableArray *errorMsgs = [NSMutableArray array];
+	NSMutableArray<NSDictionary *> *errors = [NSMutableArray array];
 	NSUInteger cancelledCount = 0;
 	
 	// has thread-safe methods as used here
@@ -1289,16 +1320,7 @@ NSString *localized(NSString *key) {
 				}
 			}
 		} @catch (NSException *ex) {
-			NSString *msg;
-			if ([ex isKindOfClass:[GPGException class]]) {
-				msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent], ex];
-			} else {
-				msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent],
-					   NSLocalizedString(@"Unexpected decrypt error", nil)];
-				NSLog(@"decryptData ex: %@", ex);
-			}
-
-			[errorMsgs addObject:msg];
+			[errors addObject:@{@"exception": ex, @"file": file}];
 		}
 	}
 
@@ -1311,28 +1333,93 @@ NSString *localized(NSString *key) {
 		return;
 	}
 	
-	dummyController.isActive = NO;
+	
+	
+	
 
 	NSString *title;
+	NSString *message;
 	if (innCount == outCount) {
-		title = NSLocalizedString(@"Decryption finished", nil);
+		title = localized(@"Decryption finished");
 	} else if (outCount > 0) {
-		title = NSLocalizedString(@"Decryption finished (partially)", nil);
+		title = localized(@"Decryption finished (partially)");
 	} else {
-		title = NSLocalizedString(@"Decryption failed", nil);
+		title = localized(@"Decryption failed");
 	}
 	
 	
-	NSMutableString *message = [NSMutableString stringWithString:
-								[self describeCompletionForFiles:files
-													successCount:outCount
-												   singleFileFmt:NSLocalizedString(@"Decrypted %@", @"arg:filename")
-												   singleFailFmt:NSLocalizedString(@"Failed decrypting %@", @"arg:filename")
-												  pluralFilesFmt:NSLocalizedString(@"Decrypted %1$u of %2$u files", @"arg1:successCount arg2:totalCount")]];
-	if ([errorMsgs count]) {
-		[message appendString:@"\n\n"];
-		[message appendString:[errorMsgs componentsJoinedByString:@"\n"]];
+	NSMutableArray *errorMsgs = [NSMutableArray new];
+	BOOL showDefaultMessage = YES;
+	
+	if (innCount == 1 && outCount == 0 && errors.count == 1) {
+		// Error messages for a single failed decryption.
+		
+		GPGException *ex = errors[0][@"exception"];
+		if ([ex isKindOfClass:[GPGException class]]) {
+			NSString *file = errors[0][@"file"];
+
+			switch (ex.errorCode) {
+				case GPGErrorNoSecretKey: {
+					NSMutableArray *missingSecKeys = [NSMutableArray new];
+					NSArray *missingKeys = ex.gpgTask.statusDict[@"NO_SECKEY"]; //Array of Arrays of String!
+					NSUInteger count = missingKeys.count;
+					NSUInteger i = 0;
+					for (; i < count; i++) {
+						[missingSecKeys addObject:missingKeys[i][0]];
+					}
+
+					title = localizedWithFormat(@"NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE", file.lastPathComponent);
+					message = localizedWithFormat(@"NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG", [self descriptionForKeys:missingSecKeys]);
+					showDefaultMessage = NO;
+					break;
+				}
+				default:
+					break;
+			}
+			
+			
+			
+			
+		}
 	}
+	
+	
+	
+	if (showDefaultMessage) {
+		for (NSDictionary *dict in errors) {
+			NSException *ex = dict[@"exception"];
+			NSString *file = dict[@"file"];
+			NSString *msg;
+			
+			if ([ex isKindOfClass:[GPGException class]]) {
+				msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent], ex];
+			} else {
+				msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent],
+					   NSLocalizedString(@"Unexpected decrypt error", nil)];
+				NSLog(@"decryptData ex: %@", ex);
+			}
+			
+			[errorMsgs addObject:msg];
+		}
+
+		NSMutableString *mutableMessage = [NSMutableString stringWithString:
+									[self describeCompletionForFiles:files
+														successCount:outCount
+													   singleFileFmt:NSLocalizedString(@"Decrypted %@", @"arg:filename")
+													   singleFailFmt:NSLocalizedString(@"Failed decrypting %@", @"arg:filename")
+													  pluralFilesFmt:NSLocalizedString(@"Decrypted %1$u of %2$u files", @"arg1:successCount arg2:totalCount")]];
+		if (errorMsgs.count) {
+			[mutableMessage appendString:@"\n\n"];
+			[mutableMessage appendString:[errorMsgs componentsJoinedByString:@"\n"]];
+		}
+		
+		message = mutableMessage;
+	}
+
+	
+	dummyController.isActive = NO;
+
+	
 	[self displayOperationFinishedNotificationWithTitle:title message:message];
 
 	[dummyController runModal]; // thread-safe
@@ -1897,7 +1984,7 @@ NSString *localized(NSString *key) {
 }
 
 #pragma mark -
-#pragma mark UI Helpher
+#pragma mark UI Helper
 
 - (NSURL *)getFilenameForSavingWithSuggestedPath:(NSString *)path
 						  withSuggestedExtension:(NSString *)ext {
@@ -1921,11 +2008,29 @@ NSString *localized(NSString *key) {
 }
 
 - (void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body {
-	[[NSAlert alertWithMessageText:title
-					 defaultButton:nil
-				   alternateButton:nil
-					   otherButton:nil
-		 informativeTextWithFormat:@"%@", body] runModalOnMain];
+	void (^alertBlock)() = ^{
+		NSAlert *alert = [NSAlert new];
+		alert.messageText = title;
+		alert.informativeText = body;
+		
+		NSWindow *window = alert.window;
+		NSView *contentView = window.contentView;
+		NSDictionary *views = @{@"content": contentView};
+		
+		// Add minimum width constraint
+		NSString *format = [NSString stringWithFormat:@"[content(>=%i@999)]", 470];
+		NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:format options:0 metrics:nil views:views];
+		[contentView addConstraints:constraints];
+		
+		[NSApp activateIgnoringOtherApps:YES];
+		[alert runModal];
+	};
+	
+	if ([NSThread isMainThread]) {
+		alertBlock();
+	} else {
+		dispatch_sync(dispatch_get_main_queue(), alertBlock);
+	}
 }
 
 - (void)displayOperationFinishedNotificationWithTitle:(NSString *)title message:(NSString *)body {
@@ -2044,15 +2149,7 @@ NSString *localized(NSString *key) {
 
 
 + (NSString *)localizedStringForKey:(NSString *)key {
-    NSBundle *bundle = [NSBundle mainBundle];
-	
-    NSString *localizedString = [bundle localizedStringForKey:key value:@"" table:nil];
-    
-    if(![localizedString isEqualToString:key])
-        return localizedString; // Translation found, out of here.
-    
-    NSBundle *englishLanguageBundle = [NSBundle bundleWithPath:[bundle pathForResource:@"en" ofType:@"lproj"]];
-    return [englishLanguageBundle localizedStringForKey:key value:@"" table:nil];
+	return localized(key);
 }
 
 
@@ -2174,6 +2271,108 @@ NSString *localized(NSString *key) {
 	
 	return shouldDecryptWithoutMDC;
 }
+
+
+- (NSString *)descriptionForKeys:(NSArray *)keys {
+	NSMutableString *descriptions = [NSMutableString string];
+	Class gpgKeyClass = [GPGKey class];
+	NSUInteger i = 0, count = keys.count;
+	NSUInteger lines = 10;
+	if (count == 0) {
+		return @"";
+	}
+	if (lines > 0 && count > lines) {
+		lines = lines - 1;
+	} else {
+		lines = NSUIntegerMax;
+	}
+	BOOL singleKey = count == 1;
+	BOOL indent = NO;
+	
+	
+	NSString *lineBreak = indent ? @"\n\t" : @"\n";
+	if (indent) {
+		[descriptions appendString:@"\t"];
+	}
+	
+	NSString *normalSeperator = [@"," stringByAppendingString:lineBreak];
+	NSString *lastSeperator = [NSString stringWithFormat:@" %@%@", localized(@"and"), lineBreak];
+	NSString *seperator = @"";
+	
+	for (__strong GPGKey *key in keys) {
+		if (i >= lines && i > 0) {
+			[descriptions appendFormat:localized(@"KeyDescriptionAndMore"), lineBreak , count - i];
+			break;
+		}
+		
+		if (![key isKindOfClass:gpgKeyClass]) {
+			NSString *keyID = (id)key;
+			GPGKeyManager *keyManager = [GPGKeyManager sharedInstance];
+			GPGKey *realKey = nil;
+			if (keyID.length == 16) {
+				realKey = keyManager.keysByKeyID[keyID];
+			} else {
+				realKey = [keyManager.allKeysAndSubkeys member:key];
+			}
+
+			if (!realKey) {
+				realKey = [[keyManager keysByKeyID] objectForKey:key.keyID];
+			}
+			if (realKey) {
+				key = realKey;
+			}
+		}
+		
+		if (i > 0) {
+			seperator = normalSeperator;
+			if (i == count - 1) {
+				seperator = lastSeperator;
+			}
+		}
+		
+		
+		BOOL isGPGKey = [key isKindOfClass:gpgKeyClass];
+		
+		if (isGPGKey) {
+			GPGKey *primaryKey = key.primaryKey;
+
+			NSString *name = primaryKey.name;
+			NSString *email = primaryKey.email;
+			NSString *keyID = [[GKFingerprintTransformer sharedInstance] transformedValue:key.fingerprint];
+			
+			if (name.length == 0) {
+				name = email;
+				email = nil;
+			}
+			
+			if (email.length > 0) {
+				if (singleKey) {
+					[descriptions appendFormat:@"%@%@ <%@>%@%@", seperator, name, email, lineBreak, keyID];
+				} else {
+					[descriptions appendFormat:@"%@%@ <%@> (%@)", seperator, name, email, keyID];
+				}
+			} else {
+				if (singleKey) {
+					[descriptions appendFormat:@"%@%@%@%@", seperator, name, lineBreak, keyID];
+				} else {
+					[descriptions appendFormat:@"%@%@ (%@)", seperator, name, keyID];
+				}
+				break;
+			}
+			
+		} else {
+			[descriptions appendFormat:@"%@%@", seperator, [[GKFingerprintTransformer sharedInstance] transformedValue:key]];
+		}
+		
+		
+		i++;
+	}
+	
+	return descriptions.copy;
+}
+
+
+
 
 
 

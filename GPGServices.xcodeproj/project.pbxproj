@@ -17,6 +17,7 @@
 		3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3021FB1415D83ED300510CA8 /* SimpleTextView.m */; };
 		302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D316D41BCF00C05409 /* Libmacgpg.framework */; };
 		305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */; };
+		30753EA320DA839400C667CA /* GKFingerprintTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 30753EA220DA839400C667CA /* GKFingerprintTransformer.m */; };
 		30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */; };
 		30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CE14D56C6400AA8881 /* RecipientWindow.xib */; };
 		30B2057314D56F1E00AE9583 /* VerificationResultsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7D114D56C6700AA8881 /* VerificationResultsWindow.xib */; };
@@ -32,7 +33,6 @@
 		451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D886B156ABFAD00A0B890 /* GPGTempFile.m */; };
 		45715A0C156D4BD100E5E7DD /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45715A0E156D4BD100E5E7DD /* ServicesMenu.strings */; };
 		45C2B9E31565AEC300B3571A /* WorkerProgressViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */; };
-		45C2B9EA1565DD6600B3571A /* NSAlert+ThreadSafety.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2B9E91565DD6600B3571A /* NSAlert+ThreadSafety.m */; };
 		45CC89011569365300928F5B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45CC88FF1569365300928F5B /* Localizable.strings */; };
 		45DD3DDA1565729000C9A4C1 /* InProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DD3DD91565729000C9A4C1 /* InProgressWindowController.m */; };
 		45DD3DDE156579FF00C9A4C1 /* ServiceWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DD3DDD156579FF00C9A4C1 /* ServiceWorker.m */; };
@@ -68,13 +68,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 1B46CFCC161555DF00CF9C5F;
 			remoteInfo = org.gpgtools.Libmacgpg.xpc;
-		};
-		1B34FA9F17A80FE00078B93A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1B34FA9017A80FE00078B93A /* Libmacgpg.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 30DF7CB816D39EAA00C8225C;
-			remoteInfo = installerHelper;
 		};
 		1B34FAA117A80FE00078B93A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -170,6 +163,8 @@
 		3058B7D014D56C6700AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
 		3058B7D314D56C6A00AA8881 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InProgressWindow.xib; sourceTree = "<group>"; };
+		30753EA120DA839400C667CA /* GKFingerprintTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GKFingerprintTransformer.h; path = Source/GKFingerprintTransformer.h; sourceTree = "<group>"; };
+		30753EA220DA839400C667CA /* GKFingerprintTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GKFingerprintTransformer.m; path = Source/GKFingerprintTransformer.m; sourceTree = "<group>"; };
 		30B2054414D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
 		30B2054614D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
 		30B2054814D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
@@ -191,8 +186,6 @@
 		45715A0F156D4BDD00E5E7DD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
 		45C2B9E11565AEC300B3571A /* WorkerProgressViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorkerProgressViewItem.h; path = Source/WorkerProgressViewItem.h; sourceTree = "<group>"; };
 		45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WorkerProgressViewItem.m; path = Source/WorkerProgressViewItem.m; sourceTree = "<group>"; };
-		45C2B9E81565DD6600B3571A /* NSAlert+ThreadSafety.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAlert+ThreadSafety.h"; path = "Source/NSAlert+ThreadSafety.h"; sourceTree = "<group>"; };
-		45C2B9E91565DD6600B3571A /* NSAlert+ThreadSafety.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAlert+ThreadSafety.m"; path = "Source/NSAlert+ThreadSafety.m"; sourceTree = "<group>"; };
 		45CC89001569365300928F5B /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DD3DD81565729000C9A4C1 /* InProgressWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InProgressWindowController.h; path = Source/InProgressWindowController.h; sourceTree = "<group>"; };
 		45DD3DD91565729000C9A4C1 /* InProgressWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InProgressWindowController.m; path = Source/InProgressWindowController.m; sourceTree = "<group>"; };
@@ -252,10 +245,11 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				45C2B9E41565D29D00B3571A /* Categories */,
 				8E1BC3D6134B977500C1BFD6 /* UI Classes */,
 				4B1908BF0A4CBF0B00052798 /* GPGServices.h */,
 				4B1908C00A4CBF0B00052798 /* GPGServices.m */,
+				30753EA120DA839400C667CA /* GKFingerprintTransformer.h */,
+				30753EA220DA839400C667CA /* GKFingerprintTransformer.m */,
 				8EDC40F6133F6C5500D0A101 /* ZipOperation.h */,
 				8EDC40F7133F6C5500D0A101 /* ZipOperation.m */,
 				451D886A156ABFAD00A0B890 /* GPGTempFile.h */,
@@ -310,7 +304,6 @@
 				30ED68F21CE0C7D000C074F8 /* UnitTests.xctest */,
 				1B34FA9E17A80FE00078B93A /* org.gpgtools.Libmacgpg.xpc */,
 				1B34FAA217A80FE00078B93A /* LeakFinder.app */,
-				1B34FAA017A80FE00078B93A /* GPGTools.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -421,15 +414,6 @@
 				30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */,
 			);
 			name = XIBs;
-			sourceTree = "<group>";
-		};
-		45C2B9E41565D29D00B3571A /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				45C2B9E81565DD6600B3571A /* NSAlert+ThreadSafety.h */,
-				45C2B9E91565DD6600B3571A /* NSAlert+ThreadSafety.m */,
-			);
-			name = Categories;
 			sourceTree = "<group>";
 		};
 		8E1BC3D6134B977500C1BFD6 /* UI Classes */ = {
@@ -552,13 +536,6 @@
 			remoteRef = 1B34FA9D17A80FE00078B93A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1B34FAA017A80FE00078B93A /* GPGTools.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = GPGTools.app;
-			remoteRef = 1B34FA9F17A80FE00078B93A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		1B34FAA217A80FE00078B93A /* LeakFinder.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -679,6 +656,7 @@
 				4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */,
 				22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */,
 				8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */,
+				30753EA320DA839400C667CA /* GKFingerprintTransformer.m in Sources */,
 				8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */,
 				8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */,
 				8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */,
@@ -692,7 +670,6 @@
 				45DD3DDE156579FF00C9A4C1 /* ServiceWorker.m in Sources */,
 				45DD3DE115657C4900C9A4C1 /* ServiceWrappedOperation.m in Sources */,
 				45C2B9E31565AEC300B3571A /* WorkerProgressViewItem.m in Sources */,
-				45C2B9EA1565DD6600B3571A /* NSAlert+ThreadSafety.m in Sources */,
 				45FC40DB1566D2D80020A12B /* ServiceWrappedArgs.m in Sources */,
 				451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */,
 				30CC112415D7ECAF000DC2C5 /* SimpleTextWindow.m in Sources */,
