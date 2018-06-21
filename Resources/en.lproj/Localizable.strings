@@ -225,11 +225,11 @@ NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Without integrity protection (missing modific
 NO_MDC_DECRYPT_TEXT_WARNING_YES = "Continue";
 NO_MDC_DECRYPT_TEXT_WARNING_NO = "Abort";
 
-NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "No secret key to decrypt the file \"%@\"";
-NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "None of the following secret keys could be found in GPG Keychain:\n\n%@\n\nThe secret key is needed to decrypt this message.\n\nPlease check with the sender that they used the correct public key of yours by comparing the fingerprint of your key with the public key they use.\nIf indeed you no longer have your secret key in GPG Keychain but think it should be there, you may try to recover your secret key from a backup.";
+NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Unable to decrypt the file \"%@\"";
+NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "The secret key required to decrypt this file is not available.\nThe file is encrypted to the keys with the following fingerprints:\n\n%@\n\nIf you don't recognize any one of these fingerprints, it is possible that the sender didn't use your public key to encrypt this file.";
 
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "No secret key to decrypt message";
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "None of the following secret keys could be found in GPG Keychain:\n\n%@\n\nThe secret key is needed to decrypt this message.\n\nPlease check with the sender that they used the correct public key of yours by comparing the fingerprint of your key with the public key they use.\nIf indeed you no longer have your secret key in GPG Keychain but think it should be there, you may try to recover your secret key from a backup.";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Unable to decrypt the selected contents";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "The secret key required to decrypt the content is not available.\nThe content is encrypted to the keys with the following fingerprints:\n\n%@\n\nIf you don't recognize any one of these fingerprints, it is possible that the sender didn't use your public key to encrypt this file.";
 
 
 "and" = "and";
