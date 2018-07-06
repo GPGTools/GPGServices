@@ -2357,7 +2357,6 @@ NSString *localizedWithFormat(NSString *key, ...) {
 				} else {
 					[descriptions appendFormat:@"%@%@ (%@)", seperator, name, keyID];
 				}
-				break;
 			}
 			
 		} else {
