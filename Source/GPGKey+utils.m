@@ -72,7 +72,7 @@
         case GPG_RSASignOnlyAlgorithm: return @"RSA-S";
         case GPG_ElgamalEncryptOnlyAlgorithm: return @"ELG-E";
         case GPG_DSAAlgorithm: return @"DSA";
-        case GPG_EllipticCurveAlgorithm: return @"EllipticCurve";
+        case GPG_ECDHAlgorithm: return @"ECDH";
         case GPG_ECDSAAlgorithm: return @"ECDSAA";
         case GPG_ElgamalAlgorithm: return @"ELG";
         case GPG_DiffieHellmanAlgorithm: return @"DH";
