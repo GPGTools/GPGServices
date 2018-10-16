@@ -121,28 +121,132 @@ NSString *localizedWithFormat(NSString *key, ...) {
 	
 }
 
-- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
-	NSString *extension = [filename pathExtension];
-	if ([extension isEqualToString:@"gpg"] || [extension isEqualToString:@"pgp"]) {
-		[self decryptFiles:[NSArray arrayWithObject:filename]];
-	}
-
-	return NO;
-}
-
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
-	NSArray *encs = [filenames pathsMatchingExtensions:[NSArray arrayWithObjects:@"gpg", @"pgp", nil]];
-	NSArray *sigs = [filenames pathsMatchingExtensions:[NSArray arrayWithObjects:@"sig", @"asc", nil]];
-
-	if (encs != nil && encs.count != 0) {
-		[self decryptFiles:encs];
+	BOOL failed = NO;
+	
+	NSMutableArray *filesToImport = [NSMutableArray new];
+	NSMutableArray *filesToVerify = [NSMutableArray new];
+	NSMutableArray *filesToDecrypt = [NSMutableArray new];
+	NSMutableArray *filesToEncrypt = [NSMutableArray new];
+	
+	for (NSString *path in filenames) {
+		GPGFileStream *fileStream = [GPGFileStream fileStreamForReadingAtPath:path];
+		if (!fileStream) {
+			failed = YES;
+			continue;
+		}
+		
+		GPGStream *unArmoredStream;
+		if (fileStream.isArmored) {
+			GPGUnArmor *unArmor = [GPGUnArmor unArmorWithGPGStream:fileStream];
+			NSData *unArmoredData;
+			if (fileStream.length > 10 * 1024) {
+				unArmoredData = [unArmor decodeHeader];
+			} else {
+				unArmoredData = [unArmor decodeAll];
+			}
+			unArmoredStream = [GPGMemoryStream memoryStreamForReading:unArmoredData];
+		} else {
+			unArmoredStream = fileStream;
+		}
+		
+		GPGPacketParser *parser = [GPGPacketParser packetParserWithStream:unArmoredStream];
+		GPGPacket *packet = [parser nextPacket];
+		BOOL verify = NO;
+		BOOL import = NO;
+		BOOL decrypt = NO;
+		
+		
+		switch (packet.tag) {
+			case GPGSignaturePacketTag: {
+				GPGSignaturePacket *thePacket = (id)packet;
+				if (thePacket.version < 2 || thePacket.version > 4) {
+					break;
+				}
+				switch (thePacket.type) {
+					case GPGBinarySignature:
+					case GPGTextSignature:
+						verify = YES;
+						break;
+					case GPGRevocationSignature:
+					case GPGSubkeyRevocationSignature:
+						import = YES;
+						break;
+					default:
+						break;
+				}
+				break;
+			}
+			case GPGOnePassSignaturePacketTag: {
+				GPGOnePassSignaturePacket *thePacket = (id)packet;
+				if (thePacket.version != 3) {
+					break;
+				}
+				if (thePacket.type != 0 && thePacket.type != 1) {
+					break;
+				}
+				decrypt = YES;
+				break;
+			}
+			case GPGPublicKeyEncryptedSessionKeyPacketTag: {
+				GPGPublicKeyEncryptedSessionKeyPacket *thePacket = (id)packet;
+				if (thePacket.version != 3) {
+					break;
+				}
+				decrypt = YES;
+				break;
+			}
+			case GPGSymmetricEncryptedSessionKeyPacketTag: {
+				GPGSymmetricEncryptedSessionKeyPacket *thePacket = (id)packet;
+				if (thePacket.version != 4) {
+					break;
+				}
+				decrypt = YES;
+				break;
+			}
+			default:
+				break;
+		}
+		
+		if (verify) {
+			[filesToVerify addObject:path];
+		} else if (import) {
+			[filesToImport addObject:path];
+		} else if (decrypt) {
+			[filesToDecrypt addObject:path];
+		} else {
+			[filesToEncrypt addObject:path];
+		}
 	}
-
-	if (sigs != nil && sigs.count != 0) {
-		[self verifyFiles:sigs];
+	
+	BOOL havePGPFiles = NO;
+	if (filesToVerify.count > 0) {
+		havePGPFiles = YES;
+		[self verifyFiles:filesToVerify];
 	}
-
-	[NSApp replyToOpenOrPrint:NSApplicationDelegateReplySuccess];
+	if (filesToDecrypt.count > 0) {
+		havePGPFiles = YES;
+		[self decryptFiles:filesToDecrypt];
+	}
+	if (filesToImport.count > 0) {
+		havePGPFiles = YES;
+		[self importFiles:filesToImport];
+	}
+	if (filesToEncrypt.count > 0) {
+		if (havePGPFiles) {
+			// Do not allow encryption and another operation with the same file-set.
+			failed = YES;
+		} else {
+			[self encryptFiles:filesToEncrypt];
+		}
+	}
+	
+	if (failed) {
+		[NSApp replyToOpenOrPrint:NSApplicationDelegateReplyFailure];
+	} else {
+		[NSApp replyToOpenOrPrint:NSApplicationDelegateReplySuccess];
+	}
+	
 }
 
 #pragma mark -
