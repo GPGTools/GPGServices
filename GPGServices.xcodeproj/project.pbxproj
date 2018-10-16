@@ -14,6 +14,7 @@
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
+		301E96B02175F2310081B43D /* GPGAltTitleTableColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = 301E96AF2175F2310081B43D /* GPGAltTitleTableColumn.m */; };
 		3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3021FB1415D83ED300510CA8 /* SimpleTextView.m */; };
 		302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D316D41BCF00C05409 /* Libmacgpg.framework */; };
 		305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */; };
@@ -21,7 +22,6 @@
 		30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */; };
 		30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CE14D56C6400AA8881 /* RecipientWindow.xib */; };
 		30B2057314D56F1E00AE9583 /* VerificationResultsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7D114D56C6700AA8881 /* VerificationResultsWindow.xib */; };
-		30B2057414D56F1E00AE9583 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7D414D56C6A00AA8881 /* InfoPlist.strings */; };
 		30B2057514D56F1E00AE9583 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */; };
 		30B2057614D56F2A00AE9583 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2260756C12EBA0B50026DBEA /* Icon.icns */; };
 		30B2057714D56F2A00AE9583 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
@@ -148,33 +148,23 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		300843FB14D571FC0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
-		300843FC14D571FC0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
-		300843FD14D571FC0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
-		3008440214D572030021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3008440514D5720E0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
-		3008440614D5720E0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
-		3008440714D5720E0021044B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
+		301E96AE2175F2310081B43D /* GPGAltTitleTableColumn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPGAltTitleTableColumn.h; path = Source/GPGAltTitleTableColumn.h; sourceTree = "<group>"; };
+		301E96AF2175F2310081B43D /* GPGAltTitleTableColumn.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GPGAltTitleTableColumn.m; path = Source/GPGAltTitleTableColumn.m; sourceTree = "<group>"; };
+		301E96BC21760B3E0081B43D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
+		301E96BD21760B3E0081B43D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
+		301E96BE21760B3E0081B43D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
+		301E96C121760B880081B43D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/RecipientWindow.strings; sourceTree = "<group>"; };
+		301E96C221760B8F0081B43D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/RecipientWindow.strings; sourceTree = "<group>"; };
+		301E96C321760B9F0081B43D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PrivateKeyChooserWindow.strings; sourceTree = "<group>"; };
+		301E96C421760BA20081B43D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/PrivateKeyChooserWindow.strings; sourceTree = "<group>"; };
+		301E96C521760BAF0081B43D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/VerificationResultsWindow.strings; sourceTree = "<group>"; };
+		301E96C621760BB30081B43D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/VerificationResultsWindow.strings; sourceTree = "<group>"; };
 		3021FB1315D83ED300510CA8 /* SimpleTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextView.h; path = Source/SimpleTextView.h; sourceTree = "<group>"; };
 		3021FB1415D83ED300510CA8 /* SimpleTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextView.m; path = Source/SimpleTextView.m; sourceTree = "<group>"; };
 		302D33D316D41BCF00C05409 /* Libmacgpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Libmacgpg.framework; path = /Library/Frameworks/Libmacgpg.framework; sourceTree = "<absolute>"; };
-		3058B7CA14D56C5E00AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
-		3058B7CD14D56C6400AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
-		3058B7D014D56C6700AA8881 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
-		3058B7D314D56C6A00AA8881 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InProgressWindow.xib; sourceTree = "<group>"; };
 		30753EA120DA839400C667CA /* GKFingerprintTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GKFingerprintTransformer.h; path = Source/GKFingerprintTransformer.h; sourceTree = "<group>"; };
 		30753EA220DA839400C667CA /* GKFingerprintTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GKFingerprintTransformer.m; path = Source/GKFingerprintTransformer.m; sourceTree = "<group>"; };
-		30B2054414D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
-		30B2054614D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
-		30B2054814D56EBF00AE9583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
-		30B2055614D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		30B2055914D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
-		30B2055A14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/PrivateKeyChooserWindow.xib.strings; sourceTree = "<group>"; };
-		30B2055B14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/RecipientWindow.xib; sourceTree = "<group>"; };
-		30B2055C14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/RecipientWindow.xib.strings; sourceTree = "<group>"; };
-		30B2055D14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/VerificationResultsWindow.xib; sourceTree = "<group>"; };
-		30B2055E14D56EC700AE9583 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/VerificationResultsWindow.xib.strings; sourceTree = "<group>"; };
 		30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleTextWindow.xib; sourceTree = "<group>"; };
 		30CC112215D7ECAF000DC2C5 /* SimpleTextWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextWindow.h; path = Source/SimpleTextWindow.h; sourceTree = "<group>"; };
 		30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextWindow.m; path = Source/SimpleTextWindow.m; sourceTree = "<group>"; };
@@ -302,8 +292,8 @@
 			children = (
 				1B34FA9A17A80FE00078B93A /* Libmacgpg.framework */,
 				30ED68F21CE0C7D000C074F8 /* UnitTests.xctest */,
-				1B34FA9E17A80FE00078B93A /* org.gpgtools.Libmacgpg.xpc */,
 				1B34FAA217A80FE00078B93A /* LeakFinder.app */,
+				1B34FA9E17A80FE00078B93A /* org.gpgtools.Libmacgpg.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -395,10 +385,6 @@
 			children = (
 				45CC88FF1569365300928F5B /* Localizable.strings */,
 				45715A0E156D4BD100E5E7DD /* ServicesMenu.strings */,
-				3058B7D414D56C6A00AA8881 /* InfoPlist.strings */,
-				30B2054314D56EBF00AE9583 /* PrivateKeyChooserWindow.xib.strings */,
-				30B2054514D56EBF00AE9583 /* RecipientWindow.xib.strings */,
-				30B2054714D56EBF00AE9583 /* VerificationResultsWindow.xib.strings */,
 			);
 			name = Strings;
 			sourceTree = "<group>";
@@ -441,6 +427,8 @@
 				45DD3DD91565729000C9A4C1 /* InProgressWindowController.m */,
 				45C2B9E11565AEC300B3571A /* WorkerProgressViewItem.h */,
 				45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */,
+				301E96AE2175F2310081B43D /* GPGAltTitleTableColumn.h */,
+				301E96AF2175F2310081B43D /* GPGAltTitleTableColumn.m */,
 			);
 			name = "UI Classes";
 			sourceTree = "<group>";
@@ -462,9 +450,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "GPGServices" */;
 			buildPhases = (
+				301E96C921760BF50081B43D /* Update en.lproj from Base.lproj */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				30B2052714D56D5200AE9583 /* Localize XIBs */,
 				8D1107290486CEB800E47090 /* Resources */,
 				4B1906FF0A4CBD8A00052798 /* Copy Frameworks */,
 				303870EF16A864E6006B79F7 /* Fill Info.plist */,
@@ -501,6 +489,7 @@
 				en,
 				it,
 				de,
+				Base,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* GPGServices */;
 			projectDirPath = "";
@@ -531,7 +520,7 @@
 		};
 		1B34FA9E17A80FE00078B93A /* org.gpgtools.Libmacgpg.xpc */ = {
 			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
+			fileType = "wrapper.xpc-service";
 			path = org.gpgtools.Libmacgpg.xpc;
 			remoteRef = 1B34FA9D17A80FE00078B93A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -583,7 +572,6 @@
 				30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */,
 				30E6C9BA1AB30EF4001541A3 /* MainMenu.xib in Resources */,
 				30B2057314D56F1E00AE9583 /* VerificationResultsWindow.xib in Resources */,
-				30B2057414D56F1E00AE9583 /* InfoPlist.strings in Resources */,
 				30B2057514D56F1E00AE9583 /* Growl Registration Ticket.growlRegDict in Resources */,
 				1BB1F50F199285D4004BCB19 /* InfoPlist.strings in Resources */,
 				30B2057614D56F2A00AE9583 /* Icon.icns in Resources */,
@@ -600,6 +588,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		301E96C921760BF50081B43D /* Update en.lproj from Base.lproj */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update en.lproj from Base.lproj";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "[[ -d \"$DEPLOY_RESOURCES_DIR\" ]] || exit 0\n \"$DEPLOY_RESOURCES_DIR/scripts/updateStringsFiles.sh\" || exit 1\n";
+			showEnvVarsInLog = 0;
+		};
 		303870EF16A864E6006B79F7 /* Fill Info.plist */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -613,21 +616,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [[ -d \"$DEPLOY_RESOURCES_DIR\" ]] ;then\nsource \"$DEPLOY_RESOURCES_DIR/config/versioning.sh\"\nelse\nsource \"$SRCROOT/Version.config\"\nfi\n[[ -n \"$VERSION\" ]] || { echo \"Missing Version!\"; exit 1; }\n\n\n/usr/libexec/PlistBuddy \\\n-c \"Set CommitHash '${COMMIT_HASH:--}'\" \\\n-c \"Set BuildNumber '${BUILD_NUMBER:-0}'\" \\\n-c \"Set CFBundleVersion '${BUILD_VERSION:-0n}'\" \\\n-c \"Set CFBundleShortVersionString '$VERSION'\" \\\n\"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\" || exit 2\n";
-			showEnvVarsInLog = 0;
-		};
-		30B2052714D56D5200AE9583 /* Localize XIBs */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Localize XIBs";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "[[ \"$LOCALIZE\" == \"NO\" ]] && exit 0\n[[ -d \"$DEPLOY_RESOURCES_DIR\" ]] || exit 0\n\nalias localizeXIB=\"$DEPLOY_RESOURCES_DIR/bin/localizeXIB\"\nignore=\"$DEPLOY_RESOURCES_DIR/config/l10n_ignored_strings.txt\"\nlangs=\"de it\"\nsourceDir=Resources/en.lproj\n\nlocalizeXIB -i \"$ignore\" $sourceDir/PrivateKeyChooserWindow.xib    $langs || exit 1\nlocalizeXIB -i \"$ignore\" $sourceDir/RecipientWindow.xib            $langs || exit 1\nlocalizeXIB -i \"$ignore\" $sourceDir/VerificationResultsWindow.xib  $langs || exit 1\n";
 			showEnvVarsInLog = 0;
 		};
 		30DC10051A98C06100B21E49 /* Copy "How to get the source code" into Resources */ = {
@@ -656,6 +644,7 @@
 				4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */,
 				22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */,
 				8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */,
+				301E96B02175F2310081B43D /* GPGAltTitleTableColumn.m in Sources */,
 				30753EA320DA839400C667CA /* GKFingerprintTransformer.m in Sources */,
 				8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */,
 				8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */,
@@ -699,9 +688,9 @@
 		3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3058B7CA14D56C5E00AA8881 /* en */,
-				30B2055914D56EC700AE9583 /* it */,
-				300843FB14D571FC0021044B /* de */,
+				301E96BC21760B3E0081B43D /* Base */,
+				301E96C321760B9F0081B43D /* de */,
+				301E96C421760BA20081B43D /* it */,
 			);
 			name = PrivateKeyChooserWindow.xib;
 			sourceTree = "<group>";
@@ -709,9 +698,9 @@
 		3058B7CE14D56C6400AA8881 /* RecipientWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3058B7CD14D56C6400AA8881 /* en */,
-				30B2055B14D56EC700AE9583 /* it */,
-				300843FC14D571FC0021044B /* de */,
+				301E96BD21760B3E0081B43D /* Base */,
+				301E96C121760B880081B43D /* de */,
+				301E96C221760B8F0081B43D /* it */,
 			);
 			name = RecipientWindow.xib;
 			sourceTree = "<group>";
@@ -719,51 +708,11 @@
 		3058B7D114D56C6700AA8881 /* VerificationResultsWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3058B7D014D56C6700AA8881 /* en */,
-				30B2055D14D56EC700AE9583 /* it */,
-				300843FD14D571FC0021044B /* de */,
+				301E96BE21760B3E0081B43D /* Base */,
+				301E96C521760BAF0081B43D /* de */,
+				301E96C621760BB30081B43D /* it */,
 			);
 			name = VerificationResultsWindow.xib;
-			sourceTree = "<group>";
-		};
-		3058B7D414D56C6A00AA8881 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3058B7D314D56C6A00AA8881 /* en */,
-				30B2055614D56EC700AE9583 /* it */,
-				3008440214D572030021044B /* de */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		30B2054314D56EBF00AE9583 /* PrivateKeyChooserWindow.xib.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				30B2054414D56EBF00AE9583 /* en */,
-				30B2055A14D56EC700AE9583 /* it */,
-				3008440514D5720E0021044B /* de */,
-			);
-			name = PrivateKeyChooserWindow.xib.strings;
-			sourceTree = "<group>";
-		};
-		30B2054514D56EBF00AE9583 /* RecipientWindow.xib.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				30B2054614D56EBF00AE9583 /* en */,
-				30B2055C14D56EC700AE9583 /* it */,
-				3008440614D5720E0021044B /* de */,
-			);
-			name = RecipientWindow.xib.strings;
-			sourceTree = "<group>";
-		};
-		30B2054714D56EBF00AE9583 /* VerificationResultsWindow.xib.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				30B2054814D56EBF00AE9583 /* en */,
-				30B2055E14D56EC700AE9583 /* it */,
-				3008440714D5720E0021044B /* de */,
-			);
-			name = VerificationResultsWindow.xib.strings;
 			sourceTree = "<group>";
 		};
 		45715A0E156D4BD100E5E7DD /* ServicesMenu.strings */ = {
@@ -807,7 +756,6 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks /Library/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = GPGServices;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = service;
@@ -834,7 +782,6 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = /Library/Services;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks /Library/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = GPGServices;
 				WRAPPER_EXTENSION = service;
 			};
@@ -847,7 +794,7 @@
 				DEPLOY_RESOURCES_DIR = "$(SRCROOT)/Dependencies/DeployResources";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Xclang",
@@ -866,7 +813,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_CFLAGS = (
 					"-Xclang",
 					"-fobjc-runtime-has-weak",

@@ -1,0 +1,35 @@
+[main]
+host = https://www.transifex.com
+lang_map = pt_BR:pt
+minimum-perc = 20
+ 
+[GPGServices.Localizable]
+file_filter = Resources/<lang>.lproj/Localizable.strings
+source_lang = en
+source_file = Resources/en.lproj/Localizable.strings
+type = STRINGS
+
+[GPGServices.PrivateKeyChooser]
+file_filter = Resources/<lang>.lproj/PrivateKeyChooserWindow.strings
+source_lang = en
+source_file = Resources/en.lproj/PrivateKeyChooserWindow.strings
+type = STRINGS
+
+[GPGServices.RecipientWindow]
+file_filter = Resources/<lang>.lproj/RecipientWindow.strings
+source_lang = en
+source_file = Resources/en.lproj/RecipientWindow.strings
+type = STRINGS
+
+[GPGServices.ServicesMenu]
+file_filter = Resources/<lang>.lproj/ServicesMenu.strings
+source_lang = en
+source_file = Resources/en.lproj/ServicesMenu.strings
+type = STRINGS
+ 
+[GPGServices.VerificationResults]
+file_filter = Resources/<lang>.lproj/VerificationResultsWindow.strings
+source_lang = en
+source_file = Resources/en.lproj/VerificationResultsWindow.strings
+type = STRINGS
+ 

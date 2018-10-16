@@ -7,6 +7,7 @@
 //
 
 #import "RecipientWindowController.h"
+#import "GPGAltTitleTableColumn.h"
 #import "GPGServices.h"
 
 #import "GPGKey+utils.h"
@@ -15,6 +16,7 @@
 @interface RecipientWindowController ()
 @property (nonatomic, strong) NSArray *keysMatchingSearch;
 @property (readonly) BOOL selectAllMixed;
+@property (nonatomic, strong) GPGFingerprintTransformer *fingerprintTransformer;
 
 - (void)displayItemsMatchingString:(NSString*)s;
 - (void)generateContextMenuForTable:(NSTableView *)table;
@@ -81,16 +83,17 @@
 }
 
 
-- (NSAttributedString *)versionAndBuildDescription {
-	NSMutableAttributedString *description = [NSMutableAttributedString new];
-	NSMutableString *mutableString = description.mutableString;
-	[mutableString appendFormat:NSLocalizedString(@"Version: %@", nil), [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-	[mutableString appendString:@"  "];
-	NSUInteger grayStart = description.length;
-	[mutableString appendFormat:NSLocalizedString(@"Build: %@", nil), [[NSBundle mainBundle] objectForInfoDictionaryKey:@"BuildNumber"]];
-	[description addAttribute:NSForegroundColorAttributeName value:[NSColor grayColor] range:NSMakeRange(grayStart, description.length - grayStart)];
-
-	return description;
+- (NSString *)versionDescription {
+	NSString *format = NSLocalizedString(@"Version: %@", nil);
+	NSString *versionDescription = [NSString stringWithFormat:format, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+	
+	return versionDescription;
+}
+- (NSString *)buildDescription {
+	NSString *format = NSLocalizedString(@"Build: %@", nil);
+	NSString *buildDescription = [NSString stringWithFormat:format, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+	
+	return buildDescription;
 }
 
 
@@ -106,6 +109,8 @@
 	}
 	
 	[[NSUserDefaults standardUserDefaults]registerDefaults:@{self.signDefaultsKey: @YES, self.encryptForOwnKeyTooDefaultsKey: @YES}];
+	
+	self.fingerprintTransformer = [GPGFingerprintTransformer new];
 	
     dataSource = [[KeyChooserDataSource alloc] initWithValidator:[GPGServices canSignValidator]];
 
@@ -152,6 +157,24 @@
 	return [keysMatchingSearch count];
 }
 
+- (NSNumber *)indicatorValidity:(GPGValidity)validity {
+	if (validity >= GPGValidityInvalid) {
+		return @1;
+	}
+	switch (validity) {
+		case GPGValidityUltimate:
+			return @4;
+		case GPGValidityFull:
+			return @3.1;
+		case GPGValidityMarginal:
+			return @3;
+		case GPGValidityNever:
+			return @1.1;
+		default:
+			return @2;
+	}
+}
+
 - (id)tableView:(NSTableView *)tableView 
 objectValueForTableColumn:(NSTableColumn *)tableColumn
 			row:(NSInteger)row {
@@ -160,20 +183,20 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	
 	if([iden isEqualToString:@"comment"])
 		return [key comment];
-	else if([iden isEqualToString:@"fingerprint"])
-		return [key fingerprint];
-	else if([iden isEqualToString:@"length"])
+	else if([iden isEqualToString:@"fingerprint"]) {
+		return [self.fingerprintTransformer transformedValue:key.fingerprint];
+	} else if([iden isEqualToString:@"length"])
 		return [NSNumber numberWithInt:[key length]];
 	else if([iden isEqualToString:@"creationDate"])
 		return [key creationDate];
 	else if([iden isEqualToString:@"keyID"])
-		return [key keyID];
+		return [self.fingerprintTransformer transformedValue:key.keyID];
 	else if([iden isEqualToString:@"name"])
 		return [key name];
 	else if([iden isEqualToString:@"algorithm"])
 		return [key algorithmDescription];
 	else if([iden isEqualToString:@"shortKeyID"])
-		return key.keyID.shortKeyID;
+		return [self.fingerprintTransformer transformedValue:key.shortKeyID];
 	else if([iden isEqualToString:@"email"])
 		return [key email];
 	else if([iden isEqualToString:@"expirationDate"])
@@ -183,44 +206,12 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	} else if([iden isEqualToString:@"ownerTrust"]) {
         return [GPGKey validityDescription:[key ownerTrust]];
 	} else if([iden isEqualToString:@"ownerTrustIndicator"]) {
-        int i = 0;
-        switch([key ownerTrust]) {
-            case GPGValidityUnknown:
-            case GPGValidityUndefined:
-                i = 0; break;
-            case GPGValidityNever:
-                i = 1; break;
-            case GPGValidityMarginal: 
-                i = 2; break;
-            case GPGValidityFull:
-            case GPGValidityUltimate:
-                i = 3; break;
-			default:
-				break;
-        }
-        
-		return [NSNumber numberWithInt:i];
+		return [self indicatorValidity:key.ownerTrust];
 	} else if([iden isEqualToString:@"validity"]) {
         //return GPGValidityDescription([key overallValidity]);
         return [GPGKey validityDescription:[key overallValidity]];
 	} else if([iden isEqualToString:@"validityIndicator"]) {
-        int i = 0;
-        switch([key overallValidity]) {
-            case GPGValidityUnknown:
-            case GPGValidityUndefined:
-                i = 0; break;
-            case GPGValidityNever:
-                i = 1; break;
-            case GPGValidityMarginal: 
-                i = 2; break;
-            case GPGValidityFull:
-            case GPGValidityUltimate:
-                i = 3; break;
-			default:
-				break;
-        }
-        
-		return [NSNumber numberWithInt:i];
+		return [self indicatorValidity:key.overallValidity];
 	} else if([iden isEqualToString:@"useKey"]) {
         GPGKey *k = [keysMatchingSearch objectAtIndex:row];
 		NSNumber *result = [NSNumber numberWithBool:[self.selectedKeys containsObject:k]];
@@ -313,20 +304,23 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 
 //Next two methods borrowed from GPGKeychain
 - (void)generateContextMenuForTable:(NSTableView *)table {
-	NSMenuItem *menuItem;
-	NSString *title;
 	NSMenu *contextMenu = [[NSMenu alloc] initWithTitle:@""];
-	[[keyTableView headerView] setMenu:contextMenu];
+	keyTableView.headerView.menu = contextMenu;
 	
 	NSArray *columns = [keyTableView tableColumns];
 	for (NSTableColumn *column in columns) {
-        if([[column identifier] isEqualToString:@"useKey"] == NO) {
-            title = [[column headerCell] title];
-            if (![title isEqualToString:@""]) {
-                menuItem = [contextMenu addItemWithTitle:title action:@selector(selectHeaderVisibility:) keyEquivalent:@""];
-                [menuItem setTarget:self];
-                [menuItem setRepresentedObject:column];
-                [menuItem setState:[column isHidden] ? NSOffState : NSOnState];
+        if (![column.identifier isEqualToString:@"useKey"]) {
+			NSString *title;
+			if ([column respondsToSelector:@selector(alternativeTitle)]) {
+				title = [(GPGAltTitleTableColumn *)column alternativeTitle];
+			} else {
+				title = column.title;
+			}
+            if (title.length > 0) {
+                NSMenuItem *menuItem = [contextMenu addItemWithTitle:title action:@selector(selectHeaderVisibility:) keyEquivalent:@""];
+				menuItem.target = self;
+				menuItem.representedObject = column;
+				menuItem.state = column.isHidden ? NSOffState : NSOnState;
             }
 		}
 	}

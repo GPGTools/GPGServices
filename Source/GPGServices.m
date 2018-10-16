@@ -118,6 +118,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 
 	[GrowlApplicationBridge setGrowlDelegate:self];
 	_inProgressCtlr = [[InProgressWindowController alloc] init];
+	
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
@@ -306,7 +307,6 @@ NSString *localizedWithFormat(NSString *key, ...) {
 
 	GPGController *ctx = [GPGController gpgController];
 	ctx.useArmor = YES;
-	ctx.useTextMode = YES; // Propably not needed
 
 	@try {
 		NSData *keyData = [ctx exportKeys:[NSArray arrayWithObject:selectedPrivateKey] allowSecret:NO fullExport:NO];
