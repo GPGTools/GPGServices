@@ -1521,12 +1521,13 @@ NSString *localizedWithFormat(NSString *key, ...) {
 	}
 
 	
-	dummyController.isActive = NO;
 
-	
-	[self displayOperationFinishedNotificationWithTitle:title message:message];
-
-	[dummyController runModal]; // thread-safe
+	if (dummyController) {
+		dummyController.isActive = NO;
+		[dummyController performSelectorOnMainThread:@selector(runModal) withObject:nil waitUntilDone:NO];
+	} else {
+		[self displayOperationFinishedNotificationWithTitle:title message:message];
+	}
 }
 
 - (void)verifyFiles:(NSArray *)files {
@@ -2202,13 +2203,12 @@ NSString *localizedWithFormat(NSString *key, ...) {
 	NSString *userID = sig.userIDDescription;
 	NSString *validity = [GPGKey validityDescription:[sig trust]];
 
-	[[NSAlert alertWithMessageText:NSLocalizedString(@"Verification successful", nil)
-					 defaultButton:nil
-				   alternateButton:nil
-					   otherButton:nil
-		 informativeTextWithFormat:NSLocalizedString(@"Good signature (%@ trust):\n\"%@\"", @"arg1:validity arg2:userID"),
-	  validity, userID]
-	 runModal];
+	NSAlert *alert = [NSAlert new];
+	alert.messageText = NSLocalizedString(@"Verification successful", nil);
+	alert.informativeText = [NSString stringWithFormat:NSLocalizedString(@"Good signature (%@ trust):\n\"%@\"", @"arg1:validity arg2:userID"), validity, userID];
+	
+	[NSApp activateIgnoringOtherApps:YES];
+	[alert runModal];
 }
 
 

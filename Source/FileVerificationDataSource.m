@@ -99,6 +99,14 @@
 		NSAttributedString *trustString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ trust", validityDesc] attributes:attributes];
 		[resultString appendAttributedString:trustString];
 		
+		NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+		style.lineBreakMode = NSLineBreakByTruncatingMiddle;
+		[resultString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, resultString.length)];
+		
+		//let attributes = [NSParagraphStyleAttributeName:style]
+		
+		//attributedString.addAttributes(attributes, range:  range )
+
 		
 		verificationResult = resultString;
 		
