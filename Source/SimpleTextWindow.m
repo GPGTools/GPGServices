@@ -2,40 +2,33 @@
 #import "SimpleTextView.h"
 
 @interface SimpleTextWindow ()
-@property (strong) NSString *text, *title;
+@property (nonatomic, strong) NSAttributedString *text;
+@property (nonatomic, strong) NSString *title;
 @end
 
 @implementation SimpleTextWindow
-@synthesize text, title, delegate;
 
 
 + (void)showText:(NSString *)text withTitle:(NSString *)title andDelegate:(NSObject <SimpleTextWindowDelegate> *)delegate {
 	SimpleTextWindow *simpleTextWindow = [[SimpleTextWindow alloc] initWithWindowNibName:@"SimpleTextWindow"];
-	simpleTextWindow.text = text;
+	
+	NSDictionary *attributes = @{NSForegroundColorAttributeName: [NSColor labelColor], NSFontAttributeName: [NSFont userFixedPitchFontOfSize:12]};
+
+	simpleTextWindow.text = [[NSAttributedString alloc] initWithString:text attributes:attributes];
 	simpleTextWindow.title = title;
 	simpleTextWindow.delegate = delegate;
 	[simpleTextWindow.window makeKeyAndOrderFront:nil];
 }
 
-- (id)initWithWindow:(NSWindow *)window {
-	if ((self = [super initWithWindow:window])) {
-	}
-	return self;
-}
-
 - (void)windowWillClose:(NSNotification *)notification {
 	selfReference = nil;
-	[[self delegate] simpleTextWindowWillClose:self];
+	[self.delegate simpleTextWindowWillClose:self];
 }
 
 - (void)setWindow:(NSWindow *)window {
 	selfReference = self;
 	window.level = NSFloatingWindowLevel;
-	[super setWindow:window];
-}
-
-- (void) windowDidLoad {
-    textView.textStorage.font = [NSFont userFixedPitchFontOfSize:12];
+	super.window = window;
 }
 
 @end

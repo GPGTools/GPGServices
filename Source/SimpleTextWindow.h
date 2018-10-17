@@ -7,12 +7,13 @@
 @end
 
 @interface SimpleTextWindow : NSWindowController <NSWindowDelegate> {
-	NSString *text, *title;
-    IBOutlet SimpleTextView * textView;
+    IBOutlet SimpleTextView *textView;
 	id selfReference;
 }
-@property (strong) NSObject <SimpleTextWindowDelegate> *delegate;
-@property (strong, readonly) NSString *text, *title;
+@property (nonatomic, strong) NSObject <SimpleTextWindowDelegate> *delegate;
+@property (nonatomic, strong, readonly) NSAttributedString *text;
+@property (nonatomic, strong, readonly) NSString *title;
+
 + (void)showText:(NSString *)text withTitle:(NSString *)title andDelegate:(NSObject <SimpleTextWindowDelegate> *)delegate;
 @end
 
