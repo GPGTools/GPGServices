@@ -80,11 +80,6 @@
 	<key>NSServices</key>
 	<array>
 		<dict>
-			<key>NSKeyEquivalent</key>
-			<dict>
-				<key>default</key>
-				<string>V</string>
-			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -106,11 +101,6 @@
 			</array>
 		</dict>
 		<dict>
-			<key>NSKeyEquivalent</key>
-			<dict>
-				<key>default</key>
-				<string>R</string>
-			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -195,11 +185,6 @@
 			<string>showInWindow</string>
 		</dict>
 		<dict>
-			<key>NSKeyEquivalent</key>
-			<dict>
-				<key>default</key>
-				<string>E</string>
-			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -248,11 +233,6 @@
 			<string>showInWindow</string>
 		</dict>
 		<dict>
-			<key>NSKeyEquivalent</key>
-			<dict>
-				<key>default</key>
-				<string>D</string>
-			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -301,11 +281,6 @@
 			<string>showInWindow</string>
 		</dict>
 		<dict>
-			<key>NSKeyEquivalent</key>
-			<dict>
-				<key>default</key>
-				<string>K</string>
-			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -327,11 +302,6 @@
 			<string>600000</string>
 		</dict>
 		<dict>
-			<key>NSKeyEquivalent</key>
-			<dict>
-				<key>default</key>
-				<string>F</string>
-			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -353,11 +323,6 @@
 			<string>600000</string>
 		</dict>
 		<dict>
-			<key>NSKeyEquivalent</key>
-			<dict>
-				<key>default</key>
-				<string>I</string>
-			</dict>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
