@@ -1,0 +1,238 @@
+/* arg:path */
+"%@ — Cannot import directory" = "%@ — Não é possível importar o diretório";
+
+/* Filename for Archive.zip.gpg */
+"Archive" = "Arquivo comprimido";
+
+/* arg:userID */
+"Bad signature by %@" = "Assinatura de %@ inválida";
+
+/* for saving a file */
+"Choose Destination" = "Escolher Destino";
+
+/* arg:shortKeyID */
+"Could not export key %@" = "Não foi possível exportar a chave %@";
+
+/* no comment */
+"Could not read file" = "Não foi possível ler o arquivo";
+
+/* no comment */
+"Could not write to directory" = "Não foi possível gravar no diretório";
+
+"Could not open TextEdit" = "Não foi possível abrir o Editor de Texto";
+
+/* arg1:successCount arg2:totalCount */
+"Decrypted %1$u of %2$u files" = "%1$u de %2$u arquivos descriptografados";
+
+/* arg:filename */
+"Decrypted %@" = "%@ descriptografado";
+
+/* arg:filename */
+"Decrypting %@" = "Descriptografando %@";
+
+/* arg:count */
+"Decrypting %u files" = "Descriptografando %u arquivos";
+
+/* No comment provided by engineer. */
+"Decryption failed" = "Falha ao descriptografar";
+
+/* No comment provided by engineer. */
+"Decryption finished" = "Descriptografia concluída";
+
+/* No comment provided by engineer. */
+"Decryption finished (partially)" = "Descriptografia concluída (parcialmente)";
+
+/* arg:filename */
+"Encrypting %@" = "Criptografando %@";
+
+/* arg:count */
+"Encrypting %u files" = "Criptografando %u arquivos";
+
+/* No comment provided by engineer. */
+"Encryption canceled" = "Criptografia cancelada";
+
+/* No comment provided by engineer. */
+"Encryption failed" = "Falha ao criptografar";
+
+/* No comment provided by engineer. */
+"Encryption finished" = "Criptografia concluída";
+
+/* No comment provided by engineer. */
+"Export failed" = "Falha ao exportar";
+
+/* Matched in \"Verification FAILED:\" */
+"FAILED" = "FALHOU";
+
+/* arg:filename */
+"Failed decrypting %@" = "Falha ao descriptografar %@";
+
+/* arg:filename */
+"Failed importing %@" = "Falha ao importar %@";
+
+/* arg:filename */
+"Failed signing %@" = "Falha ao assinar %@";
+
+/* No comment provided by engineer. */
+"File doesn't exist" = "O arquivo não existe";
+
+/* arg1:validity arg2:userID */
+"Good signature (%@ trust):\n\"%@\"" = "Assinatura válida (confiança %1$@):\n“%2$@”";
+
+/* Pasteboard could not supply the string in an acceptible format. */
+"GPGServices did not get usable data from the pasteboard." = "Os GPGServices não obtiveram dados usáveis da área de transferência.";
+
+/* No comment provided by engineer. */
+"Import failed" = "Falha ao importar";
+
+/* No comment provided by engineer. */
+"Import finished" = "Importação concluída";
+
+/* No comment provided by engineer. */
+"Import finished (partially)" = "Importação concluída (parcialmente)";
+
+/* No comment provided by engineer. */
+"Import result" = "Resultado da importação";
+
+/* arg1:successCount arg2:totalCount */
+"Imported %1$u of %2$u files" = "%1$u de %2$u arquivos importados";
+
+/* arg:filename */
+"Imported %@" = "%@ importado";
+
+/* arg:filename */
+"Importing %@" = "Importando %@";
+
+/* arg:count */
+"Importing %u files" = "Importando %u arquivos";
+
+/* No comment provided by engineer. */
+"No encryptable text was found within the selection" = "Nenhum texto criptografável encontrado na seleção";
+
+/* No comment provided by engineer. */
+"No private key selected for signing" = "Nenhuma chave privada selecionada para assinar";
+
+/* No comment provided by engineer. */
+"No private key selected to add to recipients" = "Nenhuma chave privada selecionada para adicionar a destinatários";
+
+/* No comment provided by engineer. */
+"No signable text was found within the selection" = "Nenhum texto assinável encontrado na seleção";
+
+/* No comment provided by engineer. */
+"No signatures found" = "Nenhuma assinatura encontrada";
+
+/* No comment provided by engineer. */
+"No signatures found within the selection" = "Nenhuma assinatura encontrada na seleção";
+
+/* No comment provided by engineer. */
+"No valid recipients found" = "Nenhum destinatário válido encontrado";
+
+/* No comment provided by engineer. */
+"No verifiable data found" = "Nenhum dado verificável encontrado";
+
+/* No comment provided by engineer. */
+"No verifiable text was found within the selection" = "Nenhum texto verificável encontrado na seleção";
+
+/* No comment provided by engineer. */
+"Please try again" = "Tente novamente";
+
+/* No comment provided by engineer. */
+"Selection" = "Seleção";
+
+/* arg1:successCount; arg2:totalCount */
+"Signed %1$u of %2$u files" = "%1$u de %2$u arquivos assinados";
+
+/* arg:filename */
+"Signed %@" = "%@ assinado";
+
+/* arg:filename */
+"Signing %@" = "Assinando %@";
+
+/* arg:count */
+"Signing %u files" = "Assinando %u arquivos";
+
+/* No comment provided by engineer. */
+"Signing failed" = "Falha ao assinar";
+
+/* No comment provided by engineer. */
+"Signing finished" = "Assinatura concluída";
+
+/* No comment provided by engineer. */
+"Signing finished (partially)" = "Assinatura concluída (parcialmente)";
+
+/* no comment */
+"TextEdit did not respond to service request." = "O Editor de Texto não respondeu à solicitação do serviço.";
+
+/* No comment provided by engineer. */
+"The default secret key is unusable" = "A chave secreta padrão não é usável";
+
+/* No comment provided by engineer. */
+"The passphrase is incorrect" = "Senha incorreta";
+
+/* No comment provided by engineer. */
+"Unexpected decrypt error" = "Erro de descriptografia inesperado";
+
+/* arg:GPGSignature status */
+"Unexpected GPG signature status %i" = "Estado de assinatura GPG inesperado %i";
+
+/* No comment provided by engineer. */
+"Unexpected import error" = "Erro de importação inesperado";
+
+/* No comment provided by engineer. */
+"Verification failed" = "Falha ao verificar";
+
+/* No comment provided by engineer. */
+"Verification FAILED: No signatures found" = "Falha ao verificar: nenhuma assinatura encontrada";
+
+/* arg:filename */
+"Verification for %@" = "Verificação de %@";
+
+/* arg:count */
+"Verification for %u files" = "Verificação de %u arquivos";
+
+/* No comment provided by engineer. */
+"Verification successful" = "Verificação bem-sucedida";
+
+/* arg:filename */
+"Verifying signature of %@" = "Verificando assinatura de %@";
+
+/* arg:count */
+"Verifying signatures of %u files" = "Verificando assinatura de %u arquivos";
+
+"Version: %@" = "Versão: %@";
+
+"Build: %@" = "Fase: %@";
+
+LIBMACGPG_NOT_FOUND_TITLE = "Libmacgpg não encontrado";
+LIBMACGPG_NOT_FOUND_MESSAGE = "O Libmacgpg não foi encontrado no sistema. Reinstale a GPG Suite de https://www.gpgtools.org.";
+CODE_SIGN_ERROR_TITLE = "Alguém adulterou a instalação dos GPGServices!";
+CODE_SIGN_ERROR_MESSAGE = "Para manter sua segurança, os GPGServices serão encerrados.\n\nPara certificar‑se de que você possui a versão original, transfira e reinstale os GPGServices de https://gpgtools.org.";
+
+SelectedKeysDescription = "%i de %i chaves selecionadas";
+
+BIG_FILE_ENCRYPTION_WARNING_TITLE = "Aviso: antes de remover os arquivos criptografados, certifique-se de que eles não estejam danificados.";
+BIG_FILE_ENCRYPTION_WARNING_MSG = "Em arquivos com mais de 100 MB, é recomendável usar o Terminal. Os GPGServices ainda precisam de alguns ajustes (nos quais estamos trabalhando), mas até serem totalmente confiáveis, este aviso será exibido. Você pode continuar criptografando arquivos, mas antes de remover os arquivos sem criptografia, descriptografe os arquivos criptografados ao menos uma vez. Se isso funcionar sem erros, ótimo. Se um erro ocorrer, os arquivos criptografados estão danificados e você deve buscar uma outra solução. Experimente usar o Terminal ou uma imagem de disco criptografada, a qual está disponível através do Utilitário de Disco do macOS.";
+BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "Cancelar";
+BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Continuar";
+
+
+NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Aviso: a integridade do arquivo criptografado não está protegida.";
+NO_MDC_DECRYPT_FILE_WARNING_MSG = "Sem a proteção de integridade (falta o código de detecção de modificação), não é possível determinar se os dados criptografados foram modificados.\n\nPara saber mais sobre como lidar com arquivos sem proteção de integridade, visite:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nCaso tenha certeza de que o arquivo não foi modificado, você pode optar por continuar.";
+NO_MDC_DECRYPT_FILE_WARNING_YES = "Continuar";
+NO_MDC_DECRYPT_FILE_WARNING_NO = "Cancelar";
+
+NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Aviso: a integridade do texto criptografado não está protegida.";
+NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Sem a proteção de integridade (falta o código de detecção de modificação), não é possível determinar se os dados criptografados foram modificados.\n\nPara saber mais sobre como lidar com arquivos sem proteção de integridade, visite:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nCaso tenha certeza de que o texto não foi modificado, você pode optar por continuar.";
+NO_MDC_DECRYPT_TEXT_WARNING_YES = "Continuar";
+NO_MDC_DECRYPT_TEXT_WARNING_NO = "Cancelar";
+
+NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Não foi possível descriptografar o arquivo “%@”";
+NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "A chave secreta necessária para descriptografar o arquivo não está disponível.\nO arquivo está criptografado com as chaves das seguintes impressões digitais:\n\n%@\n\nCaso não reconheça nenhuma dessas impressões digitais, é possível que o remetente não tenha usado a sua chave pública para criptografar este arquivo.";
+
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Não foi possível descriptografar o conteúdo selecionado";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "A chave secreta necessária para descriptografar o conteúdo não está disponível.\nO conteúdo está criptografado com as chaves das seguintes impressões digitais:\n\n%@\n\nCaso não reconheça nenhuma dessas impressões digitais, é possível que o remetente não tenha usado a sua chave pública para criptografar este arquivo.";
+
+
+"and" = "e";
+KeyDescriptionAndMore = "%1$@ e mais %2$lu";
+
+

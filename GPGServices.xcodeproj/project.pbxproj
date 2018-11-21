@@ -165,10 +165,28 @@
 		305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InProgressWindow.xib; sourceTree = "<group>"; };
 		30753EA120DA839400C667CA /* GKFingerprintTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GKFingerprintTransformer.h; path = Source/GKFingerprintTransformer.h; sourceTree = "<group>"; };
 		30753EA220DA839400C667CA /* GKFingerprintTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GKFingerprintTransformer.m; path = Source/GKFingerprintTransformer.m; sourceTree = "<group>"; };
+		3086A47821A56C960004387C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3086A47F21A56C980004387C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleTextWindow.xib; sourceTree = "<group>"; };
 		30CC112215D7ECAF000DC2C5 /* SimpleTextWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextWindow.h; path = Source/SimpleTextWindow.h; sourceTree = "<group>"; };
 		30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextWindow.m; path = Source/SimpleTextWindow.m; sourceTree = "<group>"; };
 		30E6C9B91AB30EF4001541A3 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		30FE4A1A21A56CBB0013D508 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		30FE4A2121A56CCF0013D508 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		30FE4A2221A56CD70013D508 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		30FE4A2321A56CDD0013D508 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		30FE4A2421A56CDE0013D508 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		30FE4A2521A56CDF0013D508 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		30FE4A2621A56CE00013D508 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		30FE4A2721A56CF70013D508 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/VerificationResultsWindow.strings; sourceTree = "<group>"; };
+		30FE4A2821A56CF80013D508 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/VerificationResultsWindow.strings; sourceTree = "<group>"; };
+		30FE4A2921A56CF90013D508 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/VerificationResultsWindow.strings; sourceTree = "<group>"; };
+		30FE4A2A21A56CFD0013D508 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/RecipientWindow.strings; sourceTree = "<group>"; };
+		30FE4A2B21A56CFE0013D508 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/RecipientWindow.strings; sourceTree = "<group>"; };
+		30FE4A2C21A56CFF0013D508 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/RecipientWindow.strings; sourceTree = "<group>"; };
+		30FE4A2D21A56D010013D508 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/PrivateKeyChooserWindow.strings; sourceTree = "<group>"; };
+		30FE4A2E21A56D020013D508 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/PrivateKeyChooserWindow.strings; sourceTree = "<group>"; };
+		30FE4A2F21A56D030013D508 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/PrivateKeyChooserWindow.strings; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* GPGServices_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGServices_Prefix.pch; path = Source/GPGServices_Prefix.pch; sourceTree = "<group>"; };
 		451D886A156ABFAD00A0B890 /* GPGTempFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGTempFile.h; path = Source/GPGTempFile.h; sourceTree = "<group>"; };
 		451D886B156ABFAD00A0B890 /* GPGTempFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GPGTempFile.m; path = Source/GPGTempFile.m; sourceTree = "<group>"; };
@@ -482,14 +500,13 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
 				en,
 				it,
 				de,
 				Base,
+				cs,
+				pt,
+				sv,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* GPGServices */;
 			projectDirPath = "";
@@ -691,6 +708,9 @@
 				301E96BC21760B3E0081B43D /* Base */,
 				301E96C321760B9F0081B43D /* de */,
 				301E96C421760BA20081B43D /* it */,
+				30FE4A2D21A56D010013D508 /* cs */,
+				30FE4A2E21A56D020013D508 /* pt */,
+				30FE4A2F21A56D030013D508 /* sv */,
 			);
 			name = PrivateKeyChooserWindow.xib;
 			sourceTree = "<group>";
@@ -701,6 +721,9 @@
 				301E96BD21760B3E0081B43D /* Base */,
 				301E96C121760B880081B43D /* de */,
 				301E96C221760B8F0081B43D /* it */,
+				30FE4A2A21A56CFD0013D508 /* cs */,
+				30FE4A2B21A56CFE0013D508 /* pt */,
+				30FE4A2C21A56CFF0013D508 /* sv */,
 			);
 			name = RecipientWindow.xib;
 			sourceTree = "<group>";
@@ -711,6 +734,9 @@
 				301E96BE21760B3E0081B43D /* Base */,
 				301E96C521760BAF0081B43D /* de */,
 				301E96C621760BB30081B43D /* it */,
+				30FE4A2721A56CF70013D508 /* cs */,
+				30FE4A2821A56CF80013D508 /* pt */,
+				30FE4A2921A56CF90013D508 /* sv */,
 			);
 			name = VerificationResultsWindow.xib;
 			sourceTree = "<group>";
@@ -720,6 +746,10 @@
 			children = (
 				45715A0D156D4BD100E5E7DD /* en */,
 				45715A0F156D4BDD00E5E7DD /* de */,
+				30FE4A2321A56CDD0013D508 /* it */,
+				30FE4A2421A56CDE0013D508 /* cs */,
+				30FE4A2521A56CDF0013D508 /* pt */,
+				30FE4A2621A56CE00013D508 /* sv */,
 			);
 			name = ServicesMenu.strings;
 			sourceTree = "<group>";
@@ -728,6 +758,11 @@
 			isa = PBXVariantGroup;
 			children = (
 				45CC89001569365300928F5B /* en */,
+				3086A47821A56C960004387C /* it */,
+				3086A47F21A56C980004387C /* de */,
+				30FE4A1A21A56CBB0013D508 /* cs */,
+				30FE4A2121A56CCF0013D508 /* pt */,
+				30FE4A2221A56CD70013D508 /* sv */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

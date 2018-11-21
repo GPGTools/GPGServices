@@ -1,0 +1,21 @@
+/* 
+  ServicesMenu.strings
+  GPGServices
+
+  Copyright (c) 2012 Chris Fraire. All rights reserved.
+*/
+"OpenPGP: Verify" = "OpenPGP: Verifiera signatur för markering";
+"OpenPGP: Sign" = "OpenPGP: Signera markering";
+"OpenPGP: Sign Selection to New Window" = "OpenPGP: Signera markering till nytt fönster";
+"OpenPGP: Encrypt" = "OpenPGP: Kryptera markering";
+"OpenPGP: Encrypt Selection to New Window" = "OpenPGP: Kryptera markering till nytt fönster";
+"OpenPGP: Decrypt" = "OpenPGP: Dekryptera markering";
+"OpenPGP: Decrypt Selection to New Window" = "OpenPGP: Dekryptera markering till nytt fönster";
+"OpenPGP: Insert my key" = "OpenPGP: Klistra in min nyckel";
+"OpenPGP: Insert my fingerprint" = "OpenPGP: Klistra in mitt fingeravtryck";
+"OpenPGP: Import key" = "OpenPGP: Importera nyckel från markering";
+"OpenPGP: Sign File" = "OpenPGP: Signera fil";
+"OpenPGP: Encrypt File" = "OpenPGP: Kryptera fil";
+"OpenPGP: Decrypt File" = "OpenPGP: Dekryptera fil";
+"OpenPGP: Validate" = "OpenPGP: Verifiera signatur för fil";
+"OpenPGP: Import" = "OpenPGP: Importera nyckel från fil";

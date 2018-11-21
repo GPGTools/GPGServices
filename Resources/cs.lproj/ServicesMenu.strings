@@ -1,0 +1,21 @@
+/* 
+  ServicesMenu.strings
+  GPGServices
+
+  Copyright (c) 2012 Chris Fraire. All rights reserved.
+*/
+"OpenPGP: Verify" = "OpenPGP: Ověřit podpis výběru";
+"OpenPGP: Sign" = "OpenPGP: Podepsat výběr";
+"OpenPGP: Sign Selection to New Window" = "OpenPGP: Podepsat výběr v novém okně";
+"OpenPGP: Encrypt" = "OpenPGP: Zašifrovat výběr";
+"OpenPGP: Encrypt Selection to New Window" = "OpenPGP: Zašifrovat výběr v novém okně";
+"OpenPGP: Decrypt" = "OpenPGP: Dešifrovat výběr";
+"OpenPGP: Decrypt Selection to New Window" = "OpenPGP: Dešifrovat výběr v novém okně";
+"OpenPGP: Insert my key" = "OpenPGP: Vložit můj klíč";
+"OpenPGP: Insert my fingerprint" = "OpenPGP: Vložit můj otisk";
+"OpenPGP: Import key" = "OpenPGP: Importovat klíč z výběru";
+"OpenPGP: Sign File" = "OpenPGP: Podepsat soubor";
+"OpenPGP: Encrypt File" = "OpenPGP: Zašifrovat soubor";
+"OpenPGP: Decrypt File" = "OpenPGP: Dešifrovat soubor";
+"OpenPGP: Validate" = "OpenPGP: Ověřit podpis souboru";
+"OpenPGP: Import" = "OpenPGP: Importovat klíč ze souboru";
