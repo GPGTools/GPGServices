@@ -140,8 +140,8 @@ Gw
                                             </textFieldCell>
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="validity" ascending="NO"/>
                                         </tableColumn>
-                                        <tableColumn identifier="ownerTrustIndicator" editable="NO" width="80" minWidth="50" maxWidth="100" hidden="YES" id="158" userLabel="Owner Trust Indicator" customClass="GPGAltTitleTableColumn">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Owner Trust">
+                                        <tableColumn identifier="ownerTrustIndicator" editable="NO" width="80" minWidth="50" maxWidth="100" hidden="YES" id="158" userLabel="Ownertrust Indicator" customClass="GPGAltTitleTableColumn">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Ownertrust">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -151,11 +151,11 @@ Gw
                                             </levelIndicatorCell>
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="ownerTrust" ascending="NO"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="alternativeTitle" value="Owner Trust Indicator"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="alternativeTitle" value="Ownertrust Indicator" localized="YES"/>
                                             </userDefinedRuntimeAttributes>
                                         </tableColumn>
                                         <tableColumn identifier="ownerTrust" editable="NO" width="90" minWidth="50" maxWidth="100" hidden="YES" id="138">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Owner Trust">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Ownertrust">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>

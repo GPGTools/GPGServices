@@ -13,9 +13,10 @@
 "53.headerCell.title" = "Validity";
 "106.title" = "Add to Recipients";
 "118.title" = "Your Key:";
-"138.headerCell.title" = "Owner Trust";
+"138.headerCell.title" = "Ownertrust";
 "147.headerCell.title" = "Name";
-"158.headerCell.title" = "Owner Trust";
+"158.headerCell.title" = "Ownertrust";
+"158.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Ownertrust Indicator";
 "160.headerCell.title" = "Validity";
 "179.title" = "Encrypt with password";
 "UM4-uK-US3.title" = "Select Recipients…";
