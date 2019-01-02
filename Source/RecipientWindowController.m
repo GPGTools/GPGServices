@@ -136,13 +136,15 @@
     
 	[keyTableView setDoubleAction:@selector(doubleClickAction:)];
 	[keyTableView setTarget:self];
-    
-    NSSortDescriptor* sd = [NSSortDescriptor sortDescriptorWithKey:@"name"
-                                                         ascending:YES
-                                                          selector:@selector(localizedCaseInsensitiveCompare:)];
-    [keyTableView setSortDescriptors:[NSArray arrayWithObject:sd]];
-    [self tableView:keyTableView sortDescriptorsDidChange:@[]];
-    
+	
+	if (keyTableView.sortDescriptors.count == 0) {
+		NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"name"
+															 ascending:YES
+															  selector:@selector(localizedCaseInsensitiveCompare:)];
+		keyTableView.sortDescriptors = @[sd];
+		[self tableView:keyTableView sortDescriptorsDidChange:@[]];
+	}
+	
     [self generateContextMenuForTable:keyTableView];
     
     NSUInteger idx = [keyTableView columnWithIdentifier:@"useKey"];
