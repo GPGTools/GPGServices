@@ -235,4 +235,10 @@ NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "The secret key required to decrypt the cont
 "and" = "and";
 KeyDescriptionAndMore = "%1$@ and %2$lu more";
 
+"trust" = "trust";
+
+"Signed by: %1$@ (%2$@) – " = "Signed by: %1$@ (%2$@) – ";
+
+"Verification %1$@: %2$@ (Code: %3$i)" = "Verification %1$@: %2$@ (Code: %3$i)";
+
 

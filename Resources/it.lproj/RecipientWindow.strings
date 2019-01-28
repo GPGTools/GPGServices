@@ -11,6 +11,7 @@
 "26.headerCell.title" = "✔";
 "28.headerCell.title" = "Commento";
 "53.headerCell.title" = "Validità";
+"53.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Validity Indicator";
 "106.title" = "Aggiungi ai Destinatari";
 "118.title" = "La Sua Chiave:";
 "138.headerCell.title" = "Ownertrust";

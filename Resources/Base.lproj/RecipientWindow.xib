@@ -124,7 +124,7 @@ Gw
                                             </levelIndicatorCell>
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="validity"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="alternativeTitle" value="Validity Indicator"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="alternativeTitle" value="Validity Indicator" localized="YES"/>
                                             </userDefinedRuntimeAttributes>
                                         </tableColumn>
                                         <tableColumn identifier="validity" editable="NO" width="90" minWidth="50" maxWidth="100" hidden="YES" id="160">

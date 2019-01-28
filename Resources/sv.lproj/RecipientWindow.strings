@@ -11,6 +11,7 @@
 "26.headerCell.title" = "✔";
 "28.headerCell.title" = "Kommentar";
 "53.headerCell.title" = "Status";
+"53.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Validity Indicator";
 "106.title" = "Lägg till i mottagare";
 "118.title" = "Din nyckel:";
 "138.headerCell.title" = "Ownertrust";

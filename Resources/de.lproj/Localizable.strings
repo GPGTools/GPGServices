@@ -235,4 +235,10 @@ NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Der zum Entschlüsseln des Inhalts nötige 
 "and" = "und";
 KeyDescriptionAndMore = "%1$@ und %2$lu mehr";
 
+"trust" = "Vertrauen";
+
+"Signed by: %1$@ (%2$@) – " = "Signiert von: %1$@ (%2$@) – ";
+
+"Verification %1$@: %2$@ (Code: %3$i)" = "Verifizierung %1$@: %2$@ (Code: %3$i)";
+
 

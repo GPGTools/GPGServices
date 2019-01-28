@@ -11,12 +11,13 @@
 "26.headerCell.title" = "✔";
 "28.headerCell.title" = "Comentário";
 "53.headerCell.title" = "Validade";
+"53.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Validity Indicator";
 "106.title" = "Adicionar a destinatários";
 "118.title" = "Sua chave:";
-"138.headerCell.title" = "Ownertrust";
+"138.headerCell.title" = "Confiança de Propriedade";
 "147.headerCell.title" = "Nome";
-"158.headerCell.title" = "Ownertrust";
-"158.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Ownertrust Indicator";
+"158.headerCell.title" = "Confiança de Propriedade";
+"158.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Indicador de Confiança de Propriedade";
 "160.headerCell.title" = "Validade";
 "179.title" = "Criptografar com senha";
 "UM4-uK-US3.title" = "Selecionar Destinatários…";

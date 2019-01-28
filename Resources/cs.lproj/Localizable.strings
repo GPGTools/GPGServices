@@ -205,34 +205,40 @@
 LIBMACGPG_NOT_FOUND_TITLE = "Komponenta Libmacgpg nebyla nalezena";
 LIBMACGPG_NOT_FOUND_MESSAGE = "Komponenta Libmacgpg nebyla ve vašem systému nalezena. Nainstalujte jej prosím. Naleznete ji např. v instalaci GPGTools na adrese https://www.gpgtools.org.";
 CODE_SIGN_ERROR_TITLE = "Někdo měnil vaši instalaci GPGServices!";
-CODE_SIGN_ERROR_MESSAGE = "Chcete-li být v bezpečí, GPGServices nyní skončí! \n\nStáhněte a nainstalujte nejnovější verzi GPG Suite z https://gpgtools.org, abyste měli jistotu, že máte originální verzi od nás!";
+CODE_SIGN_ERROR_MESSAGE = "Chcete-li být v bezpečí, GPGServices se nyní ukončí! \n\nZkopírujte a nainstalujte si nejnovější verzi GPG Suite z https://gpgtools.org, abyste měli jistotu, že máte originální verzi!";
 
 SelectedKeysDescription = "Vybráno %i z %i klíčů";
 
 BIG_FILE_ENCRYPTION_WARNING_TITLE = "Upozornění: Před odstraněním původních nezašifrovaných souborů zajistěte, aby šifrovaný soubor(y) nebyl poškozen.";
-BIG_FILE_ENCRYPTION_WARNING_MSG = "U souborů větších než 100 MB doporučujeme používat terminál. GPGServices stále potřebuje trochu vyladit a pracujeme na tom. Ale dokud nebude skutečně spolehlivý, uvidíte toto varování. Můžete pokračovat a zašifrovat soubory. Před odstraněním nešifrovaných souborů nejprve jednou dešifrujte šifrovaný soubor. Pokud to funguje bez jakékoliv chyby, je to vpořádku. Pokud dojde k chybě, šifrovaný soubor je poškozen a měli byste hledat jiné řešení. Buď vyzkoušejte terminál nebo použijte šifrovaný obraz disku. Ten je k dispozici prostřednictvím nástroje Disk Utility v OS X.";
+BIG_FILE_ENCRYPTION_WARNING_MSG = "U souborů větších než 100 MB doporučujeme používat Terminál. GPGServices stále potřebuje trochu vyladit a pracujeme na tom. Ale dokud nebude skutečně spolehlivý, uvidíte toto varování. Můžete pokračovat a zašifrovat soubory. Před odstraněním nešifrovaných souborů nejprve šifrovaný soubor dešifrujte. Pokud to jde bez chyby, je to v pořádku. Pokud dojde k chybě, šifrovaný soubor je poškozen a měli byste hledat jiné řešení. Buď vyzkoušejte Terminál, nebo použijte šifrovaný obraz disku. Ten je k dispozici v nástroji Disková utilita v macOS..";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "Zrušit";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Pokračovat";
 
 
-NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Upozornění: šifrovaný soubor nebyl chráněn proti celistvosti!";
-NO_MDC_DECRYPT_FILE_WARNING_MSG = "Bez ochrany integrity (chybějící kód detekce modifikací) není možné určit, zda byly šifrované údaje změněny či nikoliv. \n\nChcete-li se dozvědět více o tom, jak zacházet se soubory bez ochrany integrity, navštivte: https://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors \n\nPokud jste si zcela jisti, že soubor nebyl změněn, můžete pokračovat.";
+NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Upozornění: Šifrovaný soubor nebyl chráněn proti ztrátě integrity!";
+NO_MDC_DECRYPT_FILE_WARNING_MSG = "Bez ochrany integrity (chybějící kód detekce změn) není možné určit, zda byly šifrované údaje změněny či nikoliv.\n\nChcete-li se dozvědět více o tom, jak zacházet se soubory bez ochrany integrity, navštivte:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nPokud jste si zcela jisti, že soubor nebyl změněn, můžete pokračovat.";
 NO_MDC_DECRYPT_FILE_WARNING_YES = "Pokračovat";
 NO_MDC_DECRYPT_FILE_WARNING_NO = "Přerušit";
 
-NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Upozornění: Šifrovaný text nebyl chráněn před celistvostí!";
-NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Bez ochrany integrity (chybějící kód detekce modifikací) není možné určit, zda byly šifrované údaje změněny či nikoliv. \n\nChcete-li se dozvědět více o tom, jak zacházet se soubory bez ochrany integrity, navštivte: https://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nPokud jste si naprosto jisti, že text nebyl změněn, můžete pokračovat.";
+NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Upozornění: Šifrovaný text nebyl chráněn proti ztrátě integrity!";
+NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Bez ochrany integrity (chybějící kód detekce změn) není možné určit, zda byly šifrované údaje změněny či nikoliv.\n\nChcete-li se dozvědět více o tom, jak zacházet se soubory bez ochrany integrity, navštivte:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nPokud jste si naprosto jisti, že text nebyl změněn, můžete pokračovat.";
 NO_MDC_DECRYPT_TEXT_WARNING_YES = "Pokračovat";
 NO_MDC_DECRYPT_TEXT_WARNING_NO = "Přerušit";
 
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Nelze dešifrovat soubor „%@“";
-NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Tajný klíč potřebný pro dešifrování tohoto souboru není k dispozici. Soubor je zašifrován na klíče s následujícími otisky prstů: \n\n%@\n\nPokud nepoznáte žádný z těchto otisků prstů, je možné, že odesílatel nepoužívá veřejný klíč k šifrování tohoto souboru.";
+NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Tajný klíč potřebný pro dešifrování tohoto souboru není k dispozici.\nSoubor je zašifrován klíči s následujícími otisky: \n\n%@\n\nPokud nepoznáte žádný z těchto otisků, je možné, že odesílatel nepoužívá veřejný klíč k šifrování tohoto souboru.";
 
 NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Nelze dešifrovat vybraný obsah";
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Tajný klíč, který je potřebný pro dešifrování obsahu, není k dispozici. Obsah je zašifrován na klíče s následujícími otisky prstů:\n\n%@\n\nPokud nepoznáte žádný z těchto otisků prstů, je možné, že odesílatel nepoužívá veřejný klíč k šifrování tohoto souboru.";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Tajný klíč, potřebný pro dešifrování obsahu, není k dispozici.\nObsah je zašifrován klíči s následujícími otisky:\n\n%@\n\nPokud nepoznáte žádný z těchto otisků, je možné, že odesílatel nepoužívá veřejný klíč k šifrování tohoto souboru.";
 
 
 "and" = "a";
 KeyDescriptionAndMore = "%1$@ a %2$lu více";
+
+"trust" = "trust";
+
+"Signed by: %1$@ (%2$@) – " = "Signed by: %1$@ (%2$@) – ";
+
+"Verification %1$@: %2$@ (Code: %3$i)" = "Verification %1$@: %2$@ (Code: %3$i)";
 
 

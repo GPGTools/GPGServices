@@ -235,4 +235,10 @@ NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "A chave secreta necessária para descriptog
 "and" = "e";
 KeyDescriptionAndMore = "%1$@ e mais %2$lu";
 
+"trust" = "trust";
+
+"Signed by: %1$@ (%2$@) – " = "Signed by: %1$@ (%2$@) – ";
+
+"Verification %1$@: %2$@ (Code: %3$i)" = "Verification %1$@: %2$@ (Code: %3$i)";
+
 
