@@ -17,6 +17,7 @@
 		301E96B02175F2310081B43D /* GPGAltTitleTableColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = 301E96AF2175F2310081B43D /* GPGAltTitleTableColumn.m */; };
 		3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3021FB1415D83ED300510CA8 /* SimpleTextView.m */; };
 		302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D316D41BCF00C05409 /* Libmacgpg.framework */; };
+		303B51E621FF09C50061CE1F /* Localization.m in Sources */ = {isa = PBXBuildFile; fileRef = 303B51E521FF09C50061CE1F /* Localization.m */; };
 		305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */; };
 		30753EA320DA839400C667CA /* GKFingerprintTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 30753EA220DA839400C667CA /* GKFingerprintTransformer.m */; };
 		30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */; };
@@ -162,6 +163,8 @@
 		3021FB1315D83ED300510CA8 /* SimpleTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextView.h; path = Source/SimpleTextView.h; sourceTree = "<group>"; };
 		3021FB1415D83ED300510CA8 /* SimpleTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextView.m; path = Source/SimpleTextView.m; sourceTree = "<group>"; };
 		302D33D316D41BCF00C05409 /* Libmacgpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Libmacgpg.framework; path = /Library/Frameworks/Libmacgpg.framework; sourceTree = "<absolute>"; };
+		303B51E421FF09C50061CE1F /* Localization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Localization.h; path = Source/Localization.h; sourceTree = "<group>"; };
+		303B51E521FF09C50061CE1F /* Localization.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Localization.m; path = Source/Localization.m; sourceTree = "<group>"; };
 		305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InProgressWindow.xib; sourceTree = "<group>"; };
 		30753EA120DA839400C667CA /* GKFingerprintTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GKFingerprintTransformer.h; path = Source/GKFingerprintTransformer.h; sourceTree = "<group>"; };
 		30753EA220DA839400C667CA /* GKFingerprintTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GKFingerprintTransformer.m; path = Source/GKFingerprintTransformer.m; sourceTree = "<group>"; };
@@ -273,6 +276,8 @@
 				45DD3DE015657C4900C9A4C1 /* ServiceWrappedOperation.m */,
 				45FC40D91566D2D80020A12B /* ServiceWrappedArgs.h */,
 				45FC40DA1566D2D80020A12B /* ServiceWrappedArgs.m */,
+				303B51E421FF09C50061CE1F /* Localization.h */,
+				303B51E521FF09C50061CE1F /* Localization.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -675,6 +680,7 @@
 				45DD3DDA1565729000C9A4C1 /* InProgressWindowController.m in Sources */,
 				45DD3DDE156579FF00C9A4C1 /* ServiceWorker.m in Sources */,
 				45DD3DE115657C4900C9A4C1 /* ServiceWrappedOperation.m in Sources */,
+				303B51E621FF09C50061CE1F /* Localization.m in Sources */,
 				45C2B9E31565AEC300B3571A /* WorkerProgressViewItem.m in Sources */,
 				45FC40DB1566D2D80020A12B /* ServiceWrappedArgs.m in Sources */,
 				451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */,

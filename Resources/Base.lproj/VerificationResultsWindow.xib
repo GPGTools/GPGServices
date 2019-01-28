@@ -19,22 +19,22 @@
         <window title="Verification Results" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" visibleAtLaunch="NO" frameAutosaveName="verificationResults" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="364" y="458" width="937" height="253"/>
+            <rect key="contentRect" x="364" y="458" width="1050" height="253"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <value key="minSize" type="size" width="480" height="205"/>
             <view key="contentView" misplaced="YES" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="937" height="253"/>
+                <rect key="frame" x="0.0" y="0.0" width="1050" height="253"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="16">
-                        <rect key="frame" x="20" y="60" width="897" height="173"/>
+                        <rect key="frame" x="20" y="60" width="1010" height="173"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="lX9-Bh-zph">
-                            <rect key="frame" x="1" y="0.0" width="895" height="172"/>
+                            <rect key="frame" x="1" y="0.0" width="1008" height="172"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveName="recipientTable" headerView="20" id="19">
-                                    <rect key="frame" x="0.0" y="0.0" width="895" height="149"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="1008" height="149"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -60,7 +60,7 @@
                                                 </binding>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="result" editable="NO" width="729" minWidth="300" maxWidth="1000" id="68">
+                                        <tableColumn identifier="result" editable="NO" width="842" minWidth="300" maxWidth="1000" id="68">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Result">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -93,12 +93,12 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="20">
-                            <rect key="frame" x="0.0" y="0.0" width="895" height="23"/>
+                            <rect key="frame" x="0.0" y="0.0" width="1008" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
                     <button verticalHuggingPriority="750" id="55">
-                        <rect key="frame" x="827" y="12" width="96" height="32"/>
+                        <rect key="frame" x="940" y="12" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="56">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

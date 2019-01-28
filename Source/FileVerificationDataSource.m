@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 //#import <MacGPGME/MacGPGME.h>
 #import "Libmacgpg/Libmacgpg.h"
+#import "Localization.h"
 
 #import "FileVerificationDataSource.h"
 
@@ -58,45 +59,36 @@
     NSColor* bgColor = nil;
     
     if([sig status] == GPGErrorNoError) {
-        GPGValidity validity = [sig trust]; 
-        NSString* validityDesc = nil;
-        // We should have a validity description method, like [sig validityDescription]
+        GPGValidity validity = sig.trust;
 
-        switch(validity) {
-            case GPGValidityUnknown:
-                bgColor = [NSColor clearColor];
-                validityDesc = @"unknown";
-                break;
-            case GPGValidityUndefined:
-                bgColor = [NSColor clearColor];
-                validityDesc = @"undefined";
-                break;
+        switch (validity) {
             case GPGValidityNever:
                 bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
-                validityDesc = @"never";
                 break;
             case GPGValidityMarginal: 
                 bgColor = [NSColor colorWithCalibratedRed:0.9 green:0.8 blue:0.0 alpha:1.0];
-                validityDesc = @"marginal";
                 break;
             case GPGValidityFull:
                 bgColor = [NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0];
-                validityDesc = @"full";
                 break;
             case GPGValidityUltimate:
                 bgColor = [NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0];
-                validityDesc = @"ultimate";
                 break;
             default:
                 bgColor = [NSColor clearColor];
-        }
+				break;
+       }
         
 		
-		NSString *string1 = [NSString stringWithFormat:@"Signed by: %@ (%@) – ", sig.userIDDescription, sig.fingerprint.keyID];
+		NSString *formattedFingerprint = [[GPGFingerprintTransformer new] transformedValue:sig.fingerprint];
+		
+		NSString *string1 = localizedWithFormat(@"Signed by: %1$@ (%2$@) – ", sig.userIDDescription, formattedFingerprint);
 		NSMutableAttributedString *resultString = [[NSMutableAttributedString alloc] initWithString:string1 attributes:nil];
 		
 		NSDictionary *attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:[NSFont systemFontSize]], NSBackgroundColorAttributeName: bgColor};
-		NSAttributedString *trustString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ trust", validityDesc] attributes:attributes];
+		
+		NSString *validityDesc = [NSString stringWithFormat:@"%@ %@", [[GPGValidityDescriptionTransformer new] transformedValue:@(validity)], localized(@"trust")];
+		NSAttributedString *trustString = [[NSAttributedString alloc] initWithString:validityDesc attributes:attributes];
 		[resultString appendAttributedString:trustString];
 		
 		NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
@@ -114,10 +106,12 @@
         bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
         
         // Should really call GPGErrorDescription but Libmacgpg nolonger offer that.
-        verificationResult = [NSString stringWithFormat:@"Verification FAILED: %@ (Code: %i)", sig.humanReadableDescription, sig.status];
-        NSMutableAttributedString* tmp = [[NSMutableAttributedString alloc] initWithString:verificationResult 
+		NSString *failed = localized(@"FAILED");
+		verificationResult = localizedWithFormat(@"Verification %1$@: %2$@ (Code: %3$i)", failed, sig.humanReadableDescription, sig.status);
+		
+        NSMutableAttributedString* tmp = [[NSMutableAttributedString alloc] initWithString:verificationResult
                                                                                  attributes:nil];
-        NSRange range = [verificationResult rangeOfString:@"FAILED"];
+        NSRange range = [verificationResult rangeOfString:failed];
         [tmp addAttribute:NSFontAttributeName 
                     value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
                     range:range];

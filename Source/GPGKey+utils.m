@@ -10,25 +10,6 @@
 
 @implementation GPGKey (GPGKey_utils)
 
-+ (NSString*)validityDescription:(GPGValidity)validity {
-    switch(validity) {
-        case GPGValidityUndefined:
-            return @"Undefined";
-        case GPGValidityNever:
-            return @"Never";
-        case GPGValidityMarginal:
-            return @"Marginal";
-        case GPGValidityFull:
-            return @"Full";
-        case GPGValidityUltimate:
-            return @"Ultimate";
-        default:
-            return @"Unknown";
-    }
-    
-    return @"Unknown";
-}
-
 - (GPGValidity)overallValidity {
     GPGValidity val = [self validity];
     

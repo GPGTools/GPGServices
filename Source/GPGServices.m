@@ -26,6 +26,7 @@
 #import "ZipKit/ZKArchive.h"
 #import "NSPredicate+negate.h"
 #import "GPGKey+utils.h"
+#import "Localization.h"
 
 #define SIZE_WARNING_LEVEL_IN_MB 10
 static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
@@ -75,38 +76,6 @@ static NSUInteger const suffixLen = 5;
 - (void)growlVerificationResultsFor:(NSString *)file signatures:(NSArray *)signatures;
 
 @end
-
-NSString *localized(NSString *key) {
-	if (!key) {
-		return nil;
-	}
-	static NSBundle *bundle = nil, *englishBundle = nil;
-	if (!bundle) {
-		bundle = [NSBundle mainBundle];
-		englishBundle = [NSBundle bundleWithPath:[bundle pathForResource:@"en" ofType:@"lproj"]];
-	}
-	
-	NSString *notFoundValue = @"~#*?*#~";
-	NSString *localized = [bundle localizedStringForKey:key value:notFoundValue table:nil];
-	if (localized == notFoundValue) {
-		localized = [englishBundle localizedStringForKey:key value:nil table:nil];
-	}
-	
-	return localized;
-}
-
-NSString *localizedWithFormat(NSString *key, ...) {
-	va_list args;
-	va_start(args, key);
-	
-	NSString *format = localized(key);
-	NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
-	NSLog(@"");
-	va_end(args);
-
-	return message;
-}
-
 
 @implementation GPGServices
 
@@ -270,12 +239,12 @@ NSString *localizedWithFormat(NSString *key, ...) {
 												  message:[ex description]];
 		return;
 	} @catch (NSException *ex) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Import failed", nil)
+		[self displayOperationFailedNotificationWithTitle:localized(@"Import failed")
 												  message:[ex description]];
 		return;
 	}
 
-	[self displayOperationFinishedNotificationWithTitle:NSLocalizedString(@"Import result", nil)
+	[self displayOperationFinishedNotificationWithTitle:localized(@"Import result")
 												message:importText];
 }
 
@@ -416,9 +385,9 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		NSData *keyData = [ctx exportKeys:[NSArray arrayWithObject:selectedPrivateKey] allowSecret:NO fullExport:NO];
 
 		if (keyData == nil) {
-			NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"Could not export key %@", @"arg:keyID"),
-							 selectedPrivateKey.keyID];
-			[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Export failed", nil)
+			
+			NSString *msg = localizedWithFormat(@"Could not export key %@", selectedPrivateKey.keyID);
+			[self displayOperationFailedNotificationWithTitle:localized(@"Export failed")
 													  message:msg];
 			return nil;
 		} else {
@@ -426,7 +395,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 										  encoding:NSUTF8StringEncoding];
 		}
 	} @catch (NSException *localException) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Export failed", nil)
+		[self displayOperationFailedNotificationWithTitle:localized(@"Export failed")
 												  message:localException.reason];
 	}
 
@@ -456,24 +425,24 @@ NSString *localizedWithFormat(NSString *key, ...) {
 	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
 
 	if (rcp.encryptForOwnKeyToo && !privateKey) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil)
-												  message:NSLocalizedString(@"No private key selected to add to recipients", nil)];
+		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption canceled")
+												  message:localized(@"No private key selected to add to recipients")];
 		return nil;
 	}
 	if (rcp.sign && !privateKey) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil)
-												  message:NSLocalizedString(@"No private key selected for signing", nil)];
+		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption canceled")
+												  message:localized(@"No private key selected for signing")];
 		return nil;
 	}
 
 	if (validRecipients.count == 0 && !rcp.symetricEncryption) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
-												  message:NSLocalizedString(@"No valid recipients found", nil)];
+		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
+												  message:localized(@"No valid recipients found")];
 		return nil;
 	}
 	if (mode == 0) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
-												  message:NSLocalizedString(@"Nothing to do", nil)];
+		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
+												  message:localized(@"Nothing to do")];
 		return nil;
 	}
 
@@ -501,20 +470,20 @@ NSString *localizedWithFormat(NSString *key, ...) {
 												  message:[localException description]];
 		return nil;
 	} @catch (NSException *localException) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
+		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
 												  message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
 		/*
 		 * switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
 		 * {
 		 *  case GPGErrorNoData:
-		 *      [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
-		 *                                                message:NSLocalizedString(@"No encryptable text was found within the selection", nil)];
+		 *      [self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
+		 *                                                message:localized(@"No encryptable text was found within the selection")];
 		 *      break;
 		 *  case GPGErrorCancelled:
 		 *      break;
 		 *  default: {
 		 *      GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-		 *      [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
+		 *      [self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
 		 *                                                message:GPGErrorDescription(error)];
 		 *  }
 		 * }
@@ -558,7 +527,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 			GPGErrorCode status = sig.status;
 			GPGDebugLog(@"sig.status: %i", status);
 			if ([GrowlApplicationBridge isGrowlRunning]) {
-				[self growlVerificationResultsFor:NSLocalizedString(@"Selection", nil) signatures:sigs];
+				[self growlVerificationResultsFor:localized(@"Selection") signatures:sigs];
 			} else if ([sig status] == GPGErrorNoError) {
 				[self displaySignatureVerificationForSig:sig];
 			} else {
@@ -607,7 +576,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 
 		return nil;
 	} @catch (NSException *localException) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Decryption failed", nil)
+		[self displayOperationFailedNotificationWithTitle:localized(@"Decryption failed")
 												  message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
 
 		return nil;
@@ -662,13 +631,13 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		 * switch(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue]))
 		 * {
 		 *  case GPGErrorNoData:
-		 *      errorMessage = NSLocalizedString(@"No signable text was found within the selection", nil);
+		 *      errorMessage = localized(@"No signable text was found within the selection");
 		 *      break;
 		 *  case GPGErrorBadPassphrase:
-		 *      errorMessage = NSLocalizedString(@"The passphrase is incorrect", nil);
+		 *      errorMessage = localized(@"The passphrase is incorrect");
 		 *      break;
 		 *  case GPGErrorUnusableSecretKey:
-		 *      errorMessage = NSLocalizedString(@"The default secret key is unusable", nil);
+		 *      errorMessage = localized(@"The default secret key is unusable");
 		 *      break;
 		 *  case GPGErrorCancelled:
 		 *      break;
@@ -680,7 +649,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		 */
 		NSString *errorMessage = [[[localException userInfo] valueForKey:@"gpgTask"] errText];
 		if (errorMessage != nil) {
-			[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Signing failed", nil)
+			[self displayOperationFailedNotificationWithTitle:localized(@"Signing failed")
 													  message:errorMessage];
 		}
 
@@ -711,7 +680,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 			GPGErrorCode status = sig.status;
 			GPGDebugLog(@"sig.status: %i", status);
 			if ([GrowlApplicationBridge isGrowlRunning]) {
-				[self growlVerificationResultsFor:NSLocalizedString(@"Selection", nil) signatures:sigs];
+				[self growlVerificationResultsFor:localized(@"Selection") signatures:sigs];
 			} else if ([sig status] == GPGErrorNoError) {
 				[self displaySignatureVerificationForSig:sig];
 			} else {
@@ -731,25 +700,25 @@ NSString *localizedWithFormat(NSString *key, ...) {
 			}
 		} else {
 			// Looks like sigs.count == 0 when we have encrypted text but no signature
-			[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed", nil)
-													  message:NSLocalizedString(@"No signatures found within the selection", nil)];
+			[self displayOperationFailedNotificationWithTitle:localized(@"Verification failed")
+													  message:localized(@"No signatures found within the selection")];
 		}
 	} @catch (NSException *localException) {
 		NSLog(@"localException: %@", [localException userInfo]);
 
 		// TODO: Implement correct error handling (might be a problem on libmacgpg's side)
 		if ([[[localException userInfo] valueForKey:@"errorCode"] intValue] != GPGErrorNoError) {
-			[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed", nil)
+			[self displayOperationFailedNotificationWithTitle:localized(@"Verification failed")
 													  message:[localException description]];
 		}
 
 		/*
 		 * if(GPGErrorCodeFromError([[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue])==GPGErrorNoData)
-		 *  [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed", nil)
-		 *                                            message:NSLocalizedString(@"No verifiable text was found within the selection", nil)];
+		 *  [self displayOperationFailedNotificationWithTitle:localized(@"Verification failed")
+		 *                                            message:localized(@"No verifiable text was found within the selection")];
 		 * else {
 		 *  GPGError error = [[[localException userInfo] objectForKey:@"GPGErrorKey"] intValue];
-		 *  [self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Verification failed", nil)
+		 *  [self displayOperationFailedNotificationWithTitle:localized(@"Verification failed")
 		 *                                            message:GPGErrorDescription(error)];
 		 * }
 		 */
@@ -899,7 +868,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		}
 
 		if (!dataToSign) {
-			[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Could not read file", nil)
+			[self displayOperationFailedNotificationWithTitle:localized(@"Could not read file")
 													  message:file];
 			return nil;
 		}
@@ -910,7 +879,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 								 [file stringByAppendingString:tempTemplate]
 													   suffixLen:suffixLen error:&error];
 		if (error) {
-			[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Could not write to directory", nil)
+			[self displayOperationFailedNotificationWithTitle:localized(@"Could not write to directory")
 													  message:[file stringByDeletingLastPathComponent]];
 			return nil;
 		}
@@ -957,7 +926,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		}
 	} @catch (NSException *e) {
 		if ([GrowlApplicationBridge isGrowlRunning]) { // This is in a loop, so only display Growl...
-			[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Signing failed", nil)
+			[self displayOperationFailedNotificationWithTitle:localized(@"Signing failed")
 													  message:[file lastPathComponent]];  // no e.reason?
 		}
 	}
@@ -970,8 +939,8 @@ NSString *localizedWithFormat(NSString *key, ...) {
 
 	worker.delegate = self;
 	worker.workerDescription = [self describeOperationForFiles:files
-												 singleFileFmt:NSLocalizedString(@"Signing %@", @"arg:filename")
-												pluralFilesFmt:NSLocalizedString(@"Signing %u files", @"arg:count")];
+												 singleFileFmt:localized(@"Signing %@" /*arg:filename*/)
+												pluralFilesFmt:localized(@"Signing %u files" /*arg:count*/)];
 	[_inProgressCtlr addObjectToServiceWorkerArray:worker];
 	[_inProgressCtlr showWindow:nil];
 	[worker start:files];
@@ -1035,15 +1004,15 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		NSUInteger innCount = [files count];
 		NSUInteger outCount = [signedFiles count];
 		NSString *title = (innCount == outCount
-						   ? NSLocalizedString(@"Signing finished", nil)
+						   ? localized(@"Signing finished")
 						   : (outCount > 0
-							  ? NSLocalizedString(@"Signing finished (partially)", nil)
-							  : NSLocalizedString(@"Signing failed", nil)));
+							  ? localized(@"Signing finished (partially)")
+							  : localized(@"Signing failed")));
 		NSString *message = [self describeCompletionForFiles:files
 												successCount:outCount
-											   singleFileFmt:NSLocalizedString(@"Signed %@", @"arg:filename")
-											   singleFailFmt:NSLocalizedString(@"Failed signing %@", @"arg:filename")
-											  pluralFilesFmt:NSLocalizedString(@"Signed %1$u of %2$u files", @"arg1:successCount; arg2:totalCount")];
+											   singleFileFmt:localized(@"Signed %@" /*arg:filename*/)
+											   singleFailFmt:localized(@"Failed signing %@" /*arg:filename*/)
+											  pluralFilesFmt:localized(@"Signed %1$u of %2$u files" /*arg1:successCount; arg2:totalCount*/)];
 		[self displayOperationFinishedNotificationWithTitle:title message:message];
 	}
 }
@@ -1053,8 +1022,8 @@ NSString *localizedWithFormat(NSString *key, ...) {
 
 	worker.delegate = self;
 	worker.workerDescription = [self describeOperationForFiles:files
-												 singleFileFmt:NSLocalizedString(@"Encrypting %@", @"arg:filename")
-												pluralFilesFmt:NSLocalizedString(@"Encrypting %u files", @"arg:count")];
+												 singleFileFmt:localized(@"Encrypting %@" /*arg:filename*/)
+												pluralFilesFmt:localized(@"Encrypting %u files" /*arg:count*/)];
 	[_inProgressCtlr addObjectToServiceWorkerArray:worker];
 	[_inProgressCtlr showWindow:nil];
 	[worker start:files];
@@ -1101,23 +1070,23 @@ NSString *localizedWithFormat(NSString *key, ...) {
 	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
 
 	if (rcp.encryptForOwnKeyToo && !privateKey) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil)
-												  message:NSLocalizedString(@"No private key selected to add to recipients", nil)];
+		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption canceled")
+												  message:localized(@"No private key selected to add to recipients")];
 		return;
 	}
 	if (rcp.sign && !privateKey) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption canceled", nil)
-												  message:NSLocalizedString(@"No private key selected for signing", nil)];
+		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption canceled")
+												  message:localized(@"No private key selected for signing")];
 		return;
 	}
 	if (validRecipients.count == 0 && !rcp.symetricEncryption) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
-												  message:NSLocalizedString(@"No valid recipients found", nil)];
+		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
+												  message:localized(@"No valid recipients found")];
 		return;
 	}
 	if (mode == 0) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
-												  message:NSLocalizedString(@"Nothing to do", nil)];
+		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
+												  message:localized(@"Nothing to do")];
 		return;
 	}
 
@@ -1142,8 +1111,8 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		BOOL isDirectory = YES;
 
 		if (![fmgr fileExistsAtPath:file isDirectory:&isDirectory]) {
-			[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"File doesn't exist", nil)
-													  message:NSLocalizedString(@"Please try again", nil)];
+			[self displayOperationFailedNotificationWithTitle:localized(@"File doesn't exist")
+													  message:localized(@"Please try again")];
 			return;
 		}
 		if (isDirectory) {
@@ -1169,7 +1138,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		}
 	} else if (files.count > 1) {
 		megabytes = [[self sizeOfFiles:files] unsignedLongLongValue] / kBytesInMB;
-		originalName = [NSLocalizedString(@"Archive", @"Filename for Archive.zip.gpg") stringByAppendingString:@".zip"];
+		originalName = [localized(@"Archive" /*Filename for Archive.zip.gpg*/) stringByAppendingString:@".zip"];
 		destination = [[[files objectAtIndex:0] stringByDeletingLastPathComponent]
 						stringByAppendingPathComponent:[originalName stringByAppendingString:@".gpg"]];
 		dataProvider = ^{
@@ -1213,7 +1182,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 							 [destination stringByAppendingString:tempTemplate]
 												   suffixLen:suffixLen error:&error];
 	if (error) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Could not write to directory", nil)
+		[self displayOperationFailedNotificationWithTitle:localized(@"Could not write to directory")
 												  message:[destination stringByDeletingLastPathComponent]];
 		return;
 	}
@@ -1247,7 +1216,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 												  message:[localException description]];
 		return;
 	} @catch (NSException *localException) {
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
+		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
 												  message:[[[localException userInfo] valueForKey:@"gpgTask"] errText]];
 		return;
 	}
@@ -1263,13 +1232,13 @@ NSString *localizedWithFormat(NSString *key, ...) {
 	if (error) {
 		[tempFile deleteFile];
 		// We should probably show the file from the exception too.
-		[self displayOperationFailedNotificationWithTitle:NSLocalizedString(@"Encryption failed", nil)
+		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
 												  message:[destination lastPathComponent]];
 		return;
 	}
 
 	tempFile.shouldDeleteFileOnDealloc = NO;
-	[self displayOperationFinishedNotificationWithTitle:NSLocalizedString(@"Encryption finished", nil)
+	[self displayOperationFinishedNotificationWithTitle:localized(@"Encryption finished")
 												message:[destination lastPathComponent]];
 }
 
@@ -1278,8 +1247,8 @@ NSString *localizedWithFormat(NSString *key, ...) {
 
 	worker.delegate = self;
 	worker.workerDescription = [self describeOperationForFiles:files
-												 singleFileFmt:NSLocalizedString(@"Decrypting %@", @"arg:filename")
-												pluralFilesFmt:NSLocalizedString(@"Decrypting %u files", @"arg:count")];
+												 singleFileFmt:localized(@"Decrypting %@" /*arg:filename*/)
+												pluralFilesFmt:localized(@"Decrypting %u files" /*arg:count*/)];
 	[_inProgressCtlr addObjectToServiceWorkerArray:worker];
 	[_inProgressCtlr showWindow:nil];
 	[worker start:files];
@@ -1331,7 +1300,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 															   suffixLen:suffixLen error:&error];
 				if (error) {
 					[self displayOperationFailedNotificationWithTitle:
-					 NSLocalizedString(@"Could not write to directory", nil)
+					 localized(@"Could not write to directory")
 															  message:[file stringByDeletingLastPathComponent]];
 					return;
 				}
@@ -1419,7 +1388,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 					// Add a line to mention that the file isn't signed
 					[dummyController addResults:[NSDictionary dictionaryWithObjectsAndKeys:
 												 [file lastPathComponent], @"filename",
-												 NSLocalizedString(@"No signatures found", nil), @"verificationResult",
+												 localized(@"No signatures found"), @"verificationResult",
 												 nil]];
 				}
 			}
@@ -1499,7 +1468,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 				msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent], ex];
 			} else {
 				msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent],
-					   NSLocalizedString(@"Unexpected decrypt error", nil)];
+					   localized(@"Unexpected decrypt error")];
 				NSLog(@"decryptData ex: %@", ex);
 			}
 			
@@ -1509,9 +1478,9 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		NSMutableString *mutableMessage = [NSMutableString stringWithString:
 									[self describeCompletionForFiles:files
 														successCount:outCount
-													   singleFileFmt:NSLocalizedString(@"Decrypted %@", @"arg:filename")
-													   singleFailFmt:NSLocalizedString(@"Failed decrypting %@", @"arg:filename")
-													  pluralFilesFmt:NSLocalizedString(@"Decrypted %1$u of %2$u files", @"arg1:successCount arg2:totalCount")]];
+													   singleFileFmt:localized(@"Decrypted %@" /*arg:filename*/)
+													   singleFailFmt:localized(@"Failed decrypting %@" /*arg:filename*/)
+													  pluralFilesFmt:localized(@"Decrypted %1$u of %2$u files" /*arg1:successCount arg2:totalCount*/)]];
 		if (errorMsgs.count) {
 			[mutableMessage appendString:@"\n\n"];
 			[mutableMessage appendString:[errorMsgs componentsJoinedByString:@"\n"]];
@@ -1535,8 +1504,8 @@ NSString *localizedWithFormat(NSString *key, ...) {
 
 	worker.delegate = self;
 	worker.workerDescription = [self describeOperationForFiles:files
-												 singleFileFmt:NSLocalizedString(@"Verifying signature of %@", @"arg:filename")
-												pluralFilesFmt:NSLocalizedString(@"Verifying signatures of %u files", @"arg:count")];
+												 singleFileFmt:localized(@"Verifying signature of %@" /*arg:filename*/)
+												pluralFilesFmt:localized(@"Verifying signatures of %u files" /*arg:count*/)];
 	[_inProgressCtlr addObjectToServiceWorkerArray:worker];
 	[_inProgressCtlr showWindow:nil];
 	[worker start:files];
@@ -1642,11 +1611,11 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		} else if (sigs != nil) {
 			if (sigs.count == 0) {
 				id verificationResult = nil; // NSString or NSAttributedString
-				verificationResult = NSLocalizedString(@"Verification FAILED: No signatures found", nil);
+				verificationResult = localized(@"Verification FAILED: No signatures found");
 
 				NSColor *bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
 
-				NSRange range = [verificationResult rangeOfString:NSLocalizedString(@"FAILED", @"Matched in \"Verification FAILED:\"")];
+				NSRange range = [verificationResult rangeOfString:localized(@"FAILED" /*@"Matched in "Verification FAILED:"*/)];
 				verificationResult = [[NSMutableAttributedString alloc]
 									  initWithString:verificationResult];
 
@@ -1672,7 +1641,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		} else {
 			[fvc addResults:[NSDictionary dictionaryWithObjectsAndKeys:
 							 [signedFile lastPathComponent], @"filename",
-							 NSLocalizedString(@"No verifiable data found", nil), @"verificationResult",
+							 localized(@"No verifiable data found"), @"verificationResult",
 							 nil]];
 		}
 	}
@@ -1686,15 +1655,15 @@ NSString *localizedWithFormat(NSString *key, ...) {
 	}
 
 	NSString *title = [self describeOperationForFiles:[NSArray arrayWithObject:file]
-										singleFileFmt:NSLocalizedString(@"Verification for %@", @"arg:filename")
-									   pluralFilesFmt:NSLocalizedString(@"Verification for %u files", @"arg:count")];
+										singleFileFmt:localized(@"Verification for %@" /*arg:filename*/)
+									   pluralFilesFmt:localized(@"Verification for %u files" /*arg:count*/)];
 	NSMutableString *summary = [NSMutableString string];
 	if ([signatures count] > 0) {
 		for (GPGSignature *gpgSig in signatures) {
 			[summary appendFormat:@"%@\n", [gpgSig humanReadableDescription]];
 		}
 	} else {
-		[summary appendString:NSLocalizedString(@"No signatures found", nil)];
+		[summary appendString:localized(@"No signatures found")];
 	}
 
 	[self displayOperationFinishedNotificationWithTitle:title message:summary];
@@ -1714,7 +1683,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
  *      return;
  *  }
  *
- *  [[NSAlert alertWithMessageText:NSLocalizedString(@"Import result", nil)
+ *  [[NSAlert alertWithMessageText:localized(@"Import result")
  *                   defaultButton:nil
  *                 alternateButton:nil
  *                     otherButton:nil
@@ -1729,8 +1698,8 @@ NSString *localizedWithFormat(NSString *key, ...) {
 
 	worker.delegate = self;
 	worker.workerDescription = [self describeOperationForFiles:files
-												 singleFileFmt:NSLocalizedString(@"Importing %@", @"arg:filename")
-												pluralFilesFmt:NSLocalizedString(@"Importing %u files", @"arg:count")];
+												 singleFileFmt:localized(@"Importing %@" /*arg:filename*/)
+												pluralFilesFmt:localized(@"Importing %u files" /*arg:count*/)];
 	[_inProgressCtlr addObjectToServiceWorkerArray:worker];
 	[_inProgressCtlr showWindow:nil];
 	[worker start:files];
@@ -1765,7 +1734,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 		}
 
 		if ([[self isDirectoryPredicate] evaluateWithObject:file] == YES) {
-			NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"%@ — Cannot import directory", @"arg:path"),
+			NSString *msg = [NSString stringWithFormat:localized(@"%@ — Cannot import directory" /*arg:path*/),
 							 [file lastPathComponent]];
 			[errorMsgs addObject:msg];
 			continue;
@@ -1791,7 +1760,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 				msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent], ex];
 			} else {
 				msg = [NSString stringWithFormat:@"%@ — %@", [file lastPathComponent],
-					   NSLocalizedString(@"Unexpected import error", nil)];
+					   localized(@"Unexpected import error")];
 				NSLog(@"importFromData ex: %@", ex);
 			}
 			[errorMsgs addObject:msg];
@@ -1801,16 +1770,16 @@ NSString *localizedWithFormat(NSString *key, ...) {
 	NSUInteger innCount = [files count];
 	NSUInteger outCount = [importedFiles count];
 	NSString *title = (innCount == outCount
-					   ? NSLocalizedString(@"Import finished", nil)
+					   ? localized(@"Import finished")
 					   : (outCount > 0
-						  ? NSLocalizedString(@"Import finished (partially)", nil)
-						  : NSLocalizedString(@"Import failed", nil)));
+						  ? localized(@"Import finished (partially)")
+						  : localized(@"Import failed")));
 	NSMutableString *message = [NSMutableString stringWithString:
 								[self describeCompletionForFiles:files
 													successCount:outCount
-												   singleFileFmt:NSLocalizedString(@"Imported %@", @"arg:filename")
-												   singleFailFmt:NSLocalizedString(@"Failed importing %@", @"arg:filename")
-												  pluralFilesFmt:NSLocalizedString(@"Imported %1$u of %2$u files", @"arg1:successCount arg2:totalCount")]];
+												   singleFileFmt:localized(@"Imported %@" /*arg:filename*/)
+												   singleFailFmt:localized(@"Failed importing %@" /*arg:filename*/)
+												  pluralFilesFmt:localized(@"Imported %1$u of %2$u files" /*arg1:successCount arg2:totalCount*/)]];
 	if ([errorMsgs count]) {
 		[message appendString:@"\n\n"];
 		[message appendString:[errorMsgs componentsJoinedByString:@"\n"]];
@@ -1875,7 +1844,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 													 NSPasteboardTypeString,
 													 NSPasteboardTypeRTF,
 													 nil]];
-			NSString *myerror = NSLocalizedString(@"GPGServices did not get usable data from the pasteboard.", @"Pasteboard could not supply the string in an acceptible format.");
+			NSString *myerror = localized(@"GPGServices did not get usable data from the pasteboard." /*Pasteboard could not supply the string in an acceptible format.*/);
 			
 			if ([pbtype isEqualToString:NSPasteboardTypeString]) {
 				if (!(pboardString = [pboard stringForType:NSPasteboardTypeString])) {
@@ -2095,7 +2064,7 @@ NSString *localizedWithFormat(NSString *key, ...) {
 						  withSuggestedExtension:(NSString *)ext {
 	NSSavePanel *savePanel = [NSSavePanel savePanel];
 
-	savePanel.title = NSLocalizedString(@"Choose Destination", @"for saving a file");
+	savePanel.title = localized(@"Choose Destination" /*for saving a file*/);
 	savePanel.directoryURL = [NSURL fileURLWithPath:[path stringByDeletingLastPathComponent]];
 	
 
@@ -2201,11 +2170,11 @@ NSString *localizedWithFormat(NSString *key, ...) {
 	 */
 
 	NSString *userID = sig.userIDDescription;
-	NSString *validity = [GPGKey validityDescription:[sig trust]];
+	NSString *validity = [[GPGValidityDescriptionTransformer new] transformedValue:@(sig.trust)];
 
 	NSAlert *alert = [NSAlert new];
-	alert.messageText = NSLocalizedString(@"Verification successful", nil);
-	alert.informativeText = [NSString stringWithFormat:NSLocalizedString(@"Good signature (%@ trust):\n\"%@\"", @"arg1:validity arg2:userID"), validity, userID];
+	alert.messageText = localized(@"Verification successful");
+	alert.informativeText = localizedWithFormat(@"Good signature (%@ trust):\n\"%@\"", validity, userID);
 	
 	[NSApp activateIgnoringOtherApps:YES];
 	[alert runModal];
@@ -2250,11 +2219,6 @@ NSString *localizedWithFormat(NSString *key, ...) {
 	}
 }
 
-
-
-+ (NSString *)localizedStringForKey:(NSString *)key {
-	return localized(key);
-}
 
 
 - (BOOL)checkFileSizeAndWarn:(NSArray *)files {

@@ -21,6 +21,7 @@
 	NSSet *availableKeys;
 	NSArray *keysMatchingSearch;
     NSArray *_sortDescriptors;
+	GPGValidityDescriptionTransformer *_validityTransformer;
 	
     NSMutableSet *selectedKeys;
 	

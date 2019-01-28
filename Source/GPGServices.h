@@ -140,6 +140,4 @@ typedef enum {
 - (void)goneIn60Seconds;
 - (void)selfQuit:(NSTimer *)timer;
 
-+ (NSString *)localizedStringForKey:(NSString *)key;
-
 @end

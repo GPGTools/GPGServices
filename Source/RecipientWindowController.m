@@ -9,6 +9,7 @@
 #import "RecipientWindowController.h"
 #import "GPGAltTitleTableColumn.h"
 #import "GPGServices.h"
+#import "Localization.h"
 
 #import "GPGKey+utils.h"
 
@@ -40,7 +41,7 @@
 	return [NSSet setWithObjects:@"selectedKeys", @"availableKeys", nil];
 }
 - (NSString *)selectedCountDescription {
-	return [NSString stringWithFormat:[GPGServices localizedStringForKey:@"SelectedKeysDescription"], selectedKeys.count, availableKeys.count];
+	return [NSString stringWithFormat:localized(@"SelectedKeysDescription"), selectedKeys.count, availableKeys.count];
 }
 
 + (NSSet *)keyPathsForValuesAffectingSelectAll {
@@ -84,13 +85,13 @@
 
 
 - (NSString *)versionDescription {
-	NSString *format = NSLocalizedString(@"Version: %@", nil);
+	NSString *format = localized(@"Version: %@");
 	NSString *versionDescription = [NSString stringWithFormat:format, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 	
 	return versionDescription;
 }
 - (NSString *)buildDescription {
-	NSString *format = NSLocalizedString(@"Build: %@", nil);
+	NSString *format = localized(@"Build: %@");
 	NSString *buildDescription = [NSString stringWithFormat:format, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
 	
 	return buildDescription;
@@ -113,7 +114,8 @@
 	self.fingerprintTransformer = [GPGFingerprintTransformer new];
 	
     dataSource = [[KeyChooserDataSource alloc] initWithValidator:[GPGServices canSignValidator]];
-
+	
+	_validityTransformer = [GPGValidityDescriptionTransformer new];
 	
 	availableKeys = [[[GPGKeyManager sharedInstance] allKeys] objectsPassingTest:^BOOL(GPGKey *key, BOOL *stop) {
 		return key.canAnyEncrypt && key.validity < GPGValidityInvalid;
@@ -206,12 +208,11 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	else if([iden isEqualToString:@"type"]) {
 		return key.secret ? @"sec" : @"pub";
 	} else if([iden isEqualToString:@"ownerTrust"]) {
-        return [GPGKey validityDescription:[key ownerTrust]];
+		return [_validityTransformer transformedValue:@(key.ownerTrust)];
 	} else if([iden isEqualToString:@"ownerTrustIndicator"]) {
 		return [self indicatorValidity:key.ownerTrust];
 	} else if([iden isEqualToString:@"validity"]) {
-        //return GPGValidityDescription([key overallValidity]);
-        return [GPGKey validityDescription:[key overallValidity]];
+		return [_validityTransformer transformedValue:@(key.overallValidity)];
 	} else if([iden isEqualToString:@"validityIndicator"]) {
 		return [self indicatorValidity:key.overallValidity];
 	} else if([iden isEqualToString:@"useKey"]) {

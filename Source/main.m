@@ -9,8 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <Libmacgpg/Libmacgpg.h>
 #import "GPGServices.h"
-
-#define localized(key) [GPGServices localizedStringForKey:(key)]
+#import "Localization.h"
 
 int main(int argc, char *argv[]) {
     @autoreleasepool {
