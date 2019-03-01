@@ -122,7 +122,7 @@ Gw
                                             <levelIndicatorCell key="dataCell" state="on" alignment="left" maxValue="4" warningValue="3" criticalValue="1" id="140">
                                                 <font key="font" metaFont="system"/>
                                             </levelIndicatorCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="validity"/>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="compareGPGValidity:" sortKey="validity" ascending="NO"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="string" keyPath="alternativeTitle" value="Validity Indicator" localized="YES"/>
                                             </userDefinedRuntimeAttributes>
@@ -138,7 +138,7 @@ Gw
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="validity" ascending="NO"/>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="compareGPGValidity:" sortKey="validity" ascending="NO"/>
                                         </tableColumn>
                                         <tableColumn identifier="ownerTrustIndicator" editable="NO" width="80" minWidth="50" maxWidth="100" hidden="YES" id="158" userLabel="Ownertrust Indicator" customClass="GPGAltTitleTableColumn">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Ownertrust">
@@ -149,7 +149,7 @@ Gw
                                             <levelIndicatorCell key="dataCell" state="on" alignment="left" maxValue="4" warningValue="3" criticalValue="1" id="159">
                                                 <font key="font" metaFont="system"/>
                                             </levelIndicatorCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="ownerTrust" ascending="NO"/>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="compareGPGValidity:" sortKey="ownerTrust" ascending="NO"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="string" keyPath="alternativeTitle" value="Ownertrust Indicator" localized="YES"/>
                                             </userDefinedRuntimeAttributes>
@@ -165,7 +165,7 @@ Gw
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="ownerTrust" ascending="NO"/>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="compareGPGValidity:" sortKey="ownerTrust" ascending="NO"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
                                         <tableColumn identifier="keyID" editable="NO" width="180" minWidth="50" maxWidth="250" hidden="YES" id="21">
