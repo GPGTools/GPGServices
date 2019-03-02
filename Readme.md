@@ -36,6 +36,12 @@ Have a look at System Preferences > Keyboard > Keyboard Shortcuts > Services > T
 Enjoy your custom GPGServices.
 
 
+Uninstalling
+------------
+
+Navigate to `/Library/Services/` and remove `GPGServices.service.app`.
+
+
 System Requirements
 -------------------
 
