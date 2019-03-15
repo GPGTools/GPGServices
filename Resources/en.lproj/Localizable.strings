@@ -209,12 +209,12 @@ BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Continue";
 NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Warning: The encrypted file was not integrity protected!";
 NO_MDC_DECRYPT_FILE_WARNING_MSG = "Without integrity protection (missing modification detection code) it is not possible to determine whether or not the encrypted data has been modified.\n\nTo learn more about how to deal with files without integrity protection visit:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nIf you are absolutely sure that the file has not been modified, you may choose to continue.";
 NO_MDC_DECRYPT_FILE_WARNING_YES = "Continue";
-NO_MDC_DECRYPT_FILE_WARNING_NO = "Abort";
+NO_MDC_DECRYPT_FILE_WARNING_NO = "Cancel";
 
 NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Warning: The encrypted text was not integrity protected!";
 NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Without integrity protection (missing modification detection code) it is not possible to determine whether or not the encrypted data has been modified.\n\nTo learn more about how to deal with files without integrity protection visit:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nIf you are absolutely sure that the text has not been modified, you may choose to continue.";
 NO_MDC_DECRYPT_TEXT_WARNING_YES = "Continue";
-NO_MDC_DECRYPT_TEXT_WARNING_NO = "Abort";
+NO_MDC_DECRYPT_TEXT_WARNING_NO = "Cancel";
 
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Unable to decrypt the file \"%@\"";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "The secret key required to decrypt this file is not available.\nThe file is encrypted to the keys with the following fingerprints:\n\n%@\n\nIf you don't recognize any one of these fingerprints, it is possible that the sender didn't use your public key to encrypt this file.";
