@@ -33,7 +33,7 @@
 
 
 @implementation RecipientWindowController
-@synthesize dataSource, selectedKeys, sign, symetricEncryption, encryptForOwnKeyToo, keysMatchingSearch, sortDescriptors=_sortDescriptors;
+@synthesize dataSource, selectedKeys, symetricEncryption, keysMatchingSearch, sortDescriptors=_sortDescriptors;
 
 
 
@@ -70,8 +70,11 @@
 + (NSSet *)keyPathsForValuesAffectingOkEnabled {
 	return [NSSet setWithObjects:@"encryptForOwnKeyToo", @"symetricEncryption", @"selectedKeys", nil];
 }
+/*
+ * Only let the user click OK, if the choice is valid.
+ */
 - (BOOL)okEnabled {
-	return encryptForOwnKeyToo || symetricEncryption || self.selectedKeys.count > 0;
+	return self.encryptForOwnKeyToo || symetricEncryption || self.selectedKeys.count > 0;
 }
 
 
@@ -97,6 +100,22 @@
 	return buildDescription;
 }
 
+
+/*
+ * Disable the checkboxes, if there is no private key selected.
+ */
+- (BOOL)encryptForOwnKeyToo {
+	return _encryptForOwnKeyToo && self.dataSource.selectedKey;
+}
+- (BOOL)sign {
+	return _sign && self.dataSource.selectedKey;
+}
++ (NSSet *)keyPathsForValuesAffectingEncryptForOwnKeyToo {
+	return [NSSet setWithObjects:@"dataSource.selectedKey", nil];
+}
++ (NSSet *)keyPathsForValuesAffectingSign {
+	return [NSSet setWithObjects:@"dataSource.selectedKey", nil];
+}
 
 
 

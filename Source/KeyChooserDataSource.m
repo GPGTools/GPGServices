@@ -46,6 +46,13 @@
     self.selectedKey = keyobject;
 }
 
+- (BOOL)isEmpty {
+	return availableKeys.count == 0;
+}
++ (NSSet *)keyPathsForValuesAffectingIsEmpty {
+	return [NSSet setWithObjects:@"availableKeys", nil];
+}
+
 - (id)init {
     return [self initWithValidator:nil];
 }

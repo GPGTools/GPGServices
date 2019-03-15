@@ -109,12 +109,6 @@
 "No encryptable text was found within the selection" = "No encryptable text was found within the selection";
 
 /* No comment provided by engineer. */
-"No private key selected for signing" = "No private key selected for signing";
-
-/* No comment provided by engineer. */
-"No private key selected to add to recipients" = "No private key selected to add to recipients";
-
-/* No comment provided by engineer. */
 "No signable text was found within the selection" = "No signable text was found within the selection";
 
 /* No comment provided by engineer. */
@@ -122,9 +116,6 @@
 
 /* No comment provided by engineer. */
 "No signatures found within the selection" = "No signatures found within the selection";
-
-/* No comment provided by engineer. */
-"No valid recipients found" = "No valid recipients found";
 
 /* No comment provided by engineer. */
 "No verifiable data found" = "No verifiable data found";

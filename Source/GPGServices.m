@@ -418,33 +418,11 @@ static NSUInteger const suffixLen = 5;
 	NSSet *validRecipients = rcp.selectedKeys;
 	GPGKey *privateKey = rcp.selectedPrivateKey;
 
-	if (rcp.encryptForOwnKeyToo && privateKey) {
+	if (rcp.encryptForOwnKeyToo) {
 		validRecipients = [validRecipients setByAddingObject:privateKey];
 	}
 
 	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
-
-	if (rcp.encryptForOwnKeyToo && !privateKey) {
-		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption canceled")
-												  message:localized(@"No private key selected to add to recipients")];
-		return nil;
-	}
-	if (rcp.sign && !privateKey) {
-		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption canceled")
-												  message:localized(@"No private key selected for signing")];
-		return nil;
-	}
-
-	if (validRecipients.count == 0 && !rcp.symetricEncryption) {
-		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
-												  message:localized(@"No valid recipients found")];
-		return nil;
-	}
-	if (mode == 0) {
-		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
-												  message:localized(@"Nothing to do")];
-		return nil;
-	}
 
 
 	@try {
@@ -1063,33 +1041,11 @@ static NSUInteger const suffixLen = 5;
 	NSSet *validRecipients = rcp.selectedKeys;
 	GPGKey *privateKey = rcp.selectedPrivateKey;
 
-	if (rcp.encryptForOwnKeyToo && privateKey) {
+	if (rcp.encryptForOwnKeyToo) {
 		validRecipients = [validRecipients setByAddingObject:privateKey];
 	}
 
 	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
-
-	if (rcp.encryptForOwnKeyToo && !privateKey) {
-		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption canceled")
-												  message:localized(@"No private key selected to add to recipients")];
-		return;
-	}
-	if (rcp.sign && !privateKey) {
-		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption canceled")
-												  message:localized(@"No private key selected for signing")];
-		return;
-	}
-	if (validRecipients.count == 0 && !rcp.symetricEncryption) {
-		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
-												  message:localized(@"No valid recipients found")];
-		return;
-	}
-	if (mode == 0) {
-		[self displayOperationFailedNotificationWithTitle:localized(@"Encryption failed")
-												  message:localized(@"Nothing to do")];
-		return;
-	}
-
 
 
 	// check before starting an operation

@@ -299,7 +299,12 @@ Gw
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="self.sign" id="131"/>
+                            <binding destination="-2" name="enabled" keyPath="dataSource.selectedKey" id="UBv-zl-oL4">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="-2" name="value" keyPath="sign" id="FM7-gE-bd6"/>
                             <outlet property="nextKeyView" destination="105" id="126"/>
                         </connections>
                     </button>
@@ -318,7 +323,7 @@ Gw
                             <outlet property="nextKeyView" destination="74" id="124"/>
                         </connections>
                     </searchField>
-                    <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="74">
+                    <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="74" userLabel="Private Key selection">
                         <rect key="frame" x="83" y="92" width="709" height="26"/>
                         <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="79" id="75">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -326,14 +331,17 @@ Gw
                             <menu key="menu" title="OtherViews" id="76">
                                 <items>
                                     <menuItem title="Item 1" state="on" id="79"/>
-                                    <menuItem title="Item 2" id="78"/>
-                                    <menuItem title="Item 3" id="77"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
                         <connections>
-                            <binding destination="-2" name="contentValues" keyPath="self.dataSource.keyDescriptions" id="176"/>
-                            <binding destination="-2" name="selectedIndex" keyPath="self.dataSource.selectedIndex" previousBinding="176" id="177"/>
+                            <binding destination="-2" name="contentValues" keyPath="dataSource.keyDescriptions" id="EdG-La-hB1"/>
+                            <binding destination="-2" name="enabled" keyPath="dataSource.isEmpty" id="dhp-FZ-nis">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="-2" name="selectedIndex" keyPath="dataSource.selectedIndex" previousBinding="EdG-La-hB1" id="Jdy-HP-s3c"/>
                             <outlet property="nextKeyView" destination="7" id="125"/>
                         </connections>
                     </popUpButton>
@@ -350,7 +358,12 @@ Gw
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="self.encryptForOwnKeyToo" id="107"/>
+                            <binding destination="-2" name="enabled" keyPath="dataSource.selectedKey" id="sOt-aY-L20">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="-2" name="value" keyPath="encryptForOwnKeyToo" id="ZRy-Tn-zen"/>
                             <outlet property="nextKeyView" destination="8" id="127"/>
                         </connections>
                     </button>

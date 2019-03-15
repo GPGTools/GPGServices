@@ -27,6 +27,9 @@
 @property (assign) NSInteger selectedIndex;
 @property (strong) NSArray* keyDescriptions;
 @property (copy) KeyValidatorT keyValidator;
+@property (nonatomic, readonly) BOOL isEmpty;
+
+
 
 - (id)initWithValidator:(KeyValidatorT)validator;
 - (void)updateDescriptions;
