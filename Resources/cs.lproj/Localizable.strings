@@ -79,7 +79,7 @@
 "Good signature (%@ trust):\n\"%@\"" = "Správný podpis (%1$@ důvěryhodný):\n„%2$@“";
 
 /* Pasteboard could not supply the string in an acceptible format. */
-"GPGServices did not get usable data from the pasteboard." = "Aplikace GPGServices nedostala ze Schránky žádné použitelné údaje.";
+"GPGServices did not get usable data from the pasteboard." = "Aplikace GPG Services nedostala ze Schránky žádné použitelné údaje.";
 
 /* No comment provided by engineer. */
 "Import failed" = "Import selhal";
@@ -109,12 +109,6 @@
 "No encryptable text was found within the selection" = "V rámci výběru nebyl nalezen šifrovatelný text";
 
 /* No comment provided by engineer. */
-"No private key selected for signing" = "Žádný soukromý klíč nebyl vybrán pro podepisování";
-
-/* No comment provided by engineer. */
-"No private key selected to add to recipients" = "Žádný soukromý klíč nebyl vybrán pro přidání příjemců";
-
-/* No comment provided by engineer. */
 "No signable text was found within the selection" = "Ve výběru nebyl nalezen žádný vyhovující text";
 
 /* No comment provided by engineer. */
@@ -122,9 +116,6 @@
 
 /* No comment provided by engineer. */
 "No signatures found within the selection" = "V rámci výběru nebyly nalezeny žádné podpisy";
-
-/* No comment provided by engineer. */
-"No valid recipients found" = "Nebyli nalezeni platní příjemci";
 
 /* No comment provided by engineer. */
 "No verifiable data found" = "Nebyla nalezena ověřitelná data";
@@ -203,14 +194,14 @@
 "Build: %@" = "Sestavení: %@";
 
 LIBMACGPG_NOT_FOUND_TITLE = "Komponenta Libmacgpg nebyla nalezena";
-LIBMACGPG_NOT_FOUND_MESSAGE = "Komponenta Libmacgpg nebyla ve vašem systému nalezena. Nainstalujte jej prosím. Naleznete ji např. v instalaci GPGTools na adrese https://www.gpgtools.org.";
-CODE_SIGN_ERROR_TITLE = "Někdo měnil vaši instalaci GPGServices!";
-CODE_SIGN_ERROR_MESSAGE = "Chcete-li být v bezpečí, GPGServices se nyní ukončí! \n\nZkopírujte a nainstalujte si nejnovější verzi GPG Suite z https://gpgtools.org, abyste měli jistotu, že máte originální verzi!";
+LIBMACGPG_NOT_FOUND_MESSAGE = "Libmacgpg was not found on your system. Please visit https://gpgtools.org to download and re-install GPG Suite.";
+CODE_SIGN_ERROR_TITLE = "Někdo měnil vaši instalaci GPG Services!";
+CODE_SIGN_ERROR_MESSAGE = "Chcete-li být v bezpečí, GPG Services se nyní ukončí! \n\nZkopírujte a nainstalujte si nejnovější verzi GPG Suite z https://gpgtools.org, abyste měli jistotu, že máte originální verzi!";
 
 SelectedKeysDescription = "Vybráno %i z %i klíčů";
 
 BIG_FILE_ENCRYPTION_WARNING_TITLE = "Upozornění: Před odstraněním původních nezašifrovaných souborů zajistěte, aby šifrovaný soubor(y) nebyl poškozen.";
-BIG_FILE_ENCRYPTION_WARNING_MSG = "U souborů větších než 100 MB doporučujeme používat Terminál. GPGServices stále potřebuje trochu vyladit a pracujeme na tom. Ale dokud nebude skutečně spolehlivý, uvidíte toto varování. Můžete pokračovat a zašifrovat soubory. Před odstraněním nešifrovaných souborů nejprve šifrovaný soubor dešifrujte. Pokud to jde bez chyby, je to v pořádku. Pokud dojde k chybě, šifrovaný soubor je poškozen a měli byste hledat jiné řešení. Buď vyzkoušejte Terminál, nebo použijte šifrovaný obraz disku. Ten je k dispozici v nástroji Disková utilita v macOS..";
+BIG_FILE_ENCRYPTION_WARNING_MSG = "U souborů větších než 100 MB doporučujeme používat Terminál. GPG Services stále potřebuje trochu vyladit a pracujeme na tom. Ale dokud nebude skutečně spolehlivý, uvidíte toto varování. Můžete pokračovat a zašifrovat soubory. Před odstraněním nešifrovaných souborů nejprve šifrovaný soubor dešifrujte. Pokud to jde bez chyby, je to v pořádku. Pokud dojde k chybě, šifrovaný soubor je poškozen a měli byste hledat jiné řešení. Buď vyzkoušejte Terminál, nebo použijte šifrovaný obraz disku. Ten je k dispozici v nástroji Disková utilita v macOS..";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "Zrušit";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Pokračovat";
 
@@ -218,12 +209,12 @@ BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Pokračovat";
 NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Upozornění: Šifrovaný soubor nebyl chráněn proti ztrátě integrity!";
 NO_MDC_DECRYPT_FILE_WARNING_MSG = "Bez ochrany integrity (chybějící kód detekce změn) není možné určit, zda byly šifrované údaje změněny či nikoliv.\n\nChcete-li se dozvědět více o tom, jak zacházet se soubory bez ochrany integrity, navštivte:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nPokud jste si zcela jisti, že soubor nebyl změněn, můžete pokračovat.";
 NO_MDC_DECRYPT_FILE_WARNING_YES = "Pokračovat";
-NO_MDC_DECRYPT_FILE_WARNING_NO = "Přerušit";
+NO_MDC_DECRYPT_FILE_WARNING_NO = "Zrušit";
 
 NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Upozornění: Šifrovaný text nebyl chráněn proti ztrátě integrity!";
 NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Bez ochrany integrity (chybějící kód detekce změn) není možné určit, zda byly šifrované údaje změněny či nikoliv.\n\nChcete-li se dozvědět více o tom, jak zacházet se soubory bez ochrany integrity, navštivte:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nPokud jste si naprosto jisti, že text nebyl změněn, můžete pokračovat.";
 NO_MDC_DECRYPT_TEXT_WARNING_YES = "Pokračovat";
-NO_MDC_DECRYPT_TEXT_WARNING_NO = "Přerušit";
+NO_MDC_DECRYPT_TEXT_WARNING_NO = "Zrušit";
 
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Nelze dešifrovat soubor „%@“";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Tajný klíč potřebný pro dešifrování tohoto souboru není k dispozici.\nSoubor je zašifrován klíči s následujícími otisky: \n\n%@\n\nPokud nepoznáte žádný z těchto otisků, je možné, že odesílatel nepoužívá veřejný klíč k šifrování tohoto souboru.";

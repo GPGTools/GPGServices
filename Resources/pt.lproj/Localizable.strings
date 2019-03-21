@@ -61,7 +61,7 @@
 "Export failed" = "Falha ao exportar";
 
 /* Matched in \"Verification FAILED:\" */
-"FAILED" = "FALHOU";
+"FAILED" = "Falha ao";
 
 /* arg:filename */
 "Failed decrypting %@" = "Falha ao descriptografar %@";
@@ -79,7 +79,7 @@
 "Good signature (%@ trust):\n\"%@\"" = "Assinatura válida (confiança %1$@):\n“%2$@”";
 
 /* Pasteboard could not supply the string in an acceptible format. */
-"GPGServices did not get usable data from the pasteboard." = "Os GPGServices não obtiveram dados usáveis da área de transferência.";
+"GPGServices did not get usable data from the pasteboard." = "Os GPG Services não obtiveram dados usáveis da área de transferência.";
 
 /* No comment provided by engineer. */
 "Import failed" = "Falha ao importar";
@@ -109,12 +109,6 @@
 "No encryptable text was found within the selection" = "Nenhum texto criptografável encontrado na seleção";
 
 /* No comment provided by engineer. */
-"No private key selected for signing" = "Nenhuma chave privada selecionada para assinar";
-
-/* No comment provided by engineer. */
-"No private key selected to add to recipients" = "Nenhuma chave privada selecionada para adicionar a destinatários";
-
-/* No comment provided by engineer. */
 "No signable text was found within the selection" = "Nenhum texto assinável encontrado na seleção";
 
 /* No comment provided by engineer. */
@@ -122,9 +116,6 @@
 
 /* No comment provided by engineer. */
 "No signatures found within the selection" = "Nenhuma assinatura encontrada na seleção";
-
-/* No comment provided by engineer. */
-"No valid recipients found" = "Nenhum destinatário válido encontrado";
 
 /* No comment provided by engineer. */
 "No verifiable data found" = "Nenhum dado verificável encontrado";
@@ -200,17 +191,17 @@
 
 "Version: %@" = "Versão: %@";
 
-"Build: %@" = "Fase: %@";
+"Build: %@" = "Compilação: %@";
 
 LIBMACGPG_NOT_FOUND_TITLE = "Libmacgpg não encontrado";
-LIBMACGPG_NOT_FOUND_MESSAGE = "O Libmacgpg não foi encontrado no sistema. Reinstale a GPG Suite de https://www.gpgtools.org.";
-CODE_SIGN_ERROR_TITLE = "Alguém adulterou a instalação dos GPGServices!";
-CODE_SIGN_ERROR_MESSAGE = "Para manter sua segurança, os GPGServices serão encerrados.\n\nPara certificar‑se de que você possui a versão original, transfira e reinstale os GPGServices de https://gpgtools.org.";
+LIBMACGPG_NOT_FOUND_MESSAGE = "O Libmacgpg não foi encontrado no sistema. Reinstale a GPG Suite de https://gpgtools.org.";
+CODE_SIGN_ERROR_TITLE = "Alguém adulterou a instalação dos GPG Services!";
+CODE_SIGN_ERROR_MESSAGE = "Para manter sua segurança, os GPG Services serão encerrados.\n\nPara certificar‑se de que você possua a versão original, transfira e reinstale a GPG Suite de https://gpgtools.org.";
 
 SelectedKeysDescription = "%i de %i chaves selecionadas";
 
 BIG_FILE_ENCRYPTION_WARNING_TITLE = "Aviso: antes de remover os arquivos criptografados, certifique-se de que eles não estejam danificados.";
-BIG_FILE_ENCRYPTION_WARNING_MSG = "Em arquivos com mais de 100 MB, é recomendável usar o Terminal. Os GPGServices ainda precisam de alguns ajustes (nos quais estamos trabalhando), mas até serem totalmente confiáveis, este aviso será exibido. Você pode continuar criptografando arquivos, mas antes de remover os arquivos sem criptografia, descriptografe os arquivos criptografados ao menos uma vez. Se isso funcionar sem erros, ótimo. Se um erro ocorrer, os arquivos criptografados estão danificados e você deve buscar uma outra solução. Experimente usar o Terminal ou uma imagem de disco criptografada, a qual está disponível através do Utilitário de Disco do macOS.";
+BIG_FILE_ENCRYPTION_WARNING_MSG = "Em arquivos com mais de 100 MB, é recomendável usar o Terminal. Os GPG Services ainda precisam de alguns ajustes (nos quais estamos trabalhando), mas até serem totalmente confiáveis, este aviso será exibido. Você pode continuar criptografando arquivos, mas antes de remover os arquivos sem criptografia, descriptografe os arquivos criptografados ao menos uma vez. Se isso funcionar sem erros, ótimo. Se um erro ocorrer, os arquivos criptografados estão danificados e você deve buscar uma outra solução. Experimente usar o Terminal ou uma imagem de disco criptografada, a qual está disponível através do Utilitário de Disco do macOS.";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "Cancelar";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Continuar";
 
@@ -235,10 +226,10 @@ NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "A chave secreta necessária para descriptog
 "and" = "e";
 KeyDescriptionAndMore = "%1$@ e mais %2$lu";
 
-"trust" = "trust";
+"trust" = "confiança";
 
-"Signed by: %1$@ (%2$@) – " = "Signed by: %1$@ (%2$@) – ";
+"Signed by: %1$@ (%2$@) – " = "Assinado por: %1$@ (%2$@) – ";
 
-"Verification %1$@: %2$@ (Code: %3$i)" = "Verification %1$@: %2$@ (Code: %3$i)";
+"Verification %1$@: %2$@ (Code: %3$i)" = "%1$@ verificar: %2$@ (Código: %3$i)";
 
 

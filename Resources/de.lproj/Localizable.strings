@@ -79,7 +79,7 @@
 "Good signature (%@ trust):\n\"%@\"" = "Gute Signatur (%1$@ Vertrauen):\n\"%2$@\"";
 
 /* Pasteboard could not supply the string in an acceptible format. */
-"GPGServices did not get usable data from the pasteboard." = "GPGServices erhielt keine verwendbaren Daten aus der Zwischenablage.";
+"GPGServices did not get usable data from the pasteboard." = "GPG Services hat keine brauchbaren Daten aus der Zwischenablage erhalten.";
 
 /* No comment provided by engineer. */
 "Import failed" = "Import fehlgeschlagen";
@@ -109,12 +109,6 @@
 "No encryptable text was found within the selection" = "Innerhalb der Auswahl wurde kein verschlüsselbarer Text gefunden";
 
 /* No comment provided by engineer. */
-"No private key selected for signing" = "Es wurde kein privater Schlüssel zum Signieren ausgewählt";
-
-/* No comment provided by engineer. */
-"No private key selected to add to recipients" = "Es wurde kein privater Schlüssel zum Hinzufügen von Empfängern ausgewählt";
-
-/* No comment provided by engineer. */
 "No signable text was found within the selection" = "Innerhalb der Auswahl wurde kein signierbarer Text gefunden";
 
 /* No comment provided by engineer. */
@@ -122,9 +116,6 @@
 
 /* No comment provided by engineer. */
 "No signatures found within the selection" = "Innerhalb der Auswahl wurden keine Signaturen gefunden";
-
-/* No comment provided by engineer. */
-"No valid recipients found" = "Keine gültigen Empfänger gefunden";
 
 /* No comment provided by engineer. */
 "No verifiable data found" = "Keine verifizierbaren Daten gefunden";
@@ -203,33 +194,33 @@
 "Build: %@" = "Build: %@";
 
 LIBMACGPG_NOT_FOUND_TITLE = "Libmacgpg wurde nicht gefunden";
-LIBMACGPG_NOT_FOUND_MESSAGE = "Libmacgpg wurde auf Ihrem System nicht gefunden. Installieren Sie es. Sie können es z. B bei GPGTools Installer auf https://www.gpgtools.org finden.";
-CODE_SIGN_ERROR_TITLE = "Jemand hat sich an Ihrer Installation von GPGServices zu schaffen gemacht!";
-CODE_SIGN_ERROR_MESSAGE = "Zu Ihrer Sicherheit wird GPGServices jetzt beendet!\n\nBitte laden Sie die aktuellste Version der GPG Suite von https://gpgtools.org herunter und installieren Sie diese, so dass Sie sicher eine Originalversion von uns benutzen!";
+LIBMACGPG_NOT_FOUND_MESSAGE = "Libmacgpg wurde auf deinem System nicht gefunden. Bitte besuche https://gpgtools.org um GPG Suite erneut zu lade und installieren.";
+CODE_SIGN_ERROR_TITLE = "Jemand hat sich an deiner Installation von GPG Services zu schaffen gemacht!";
+CODE_SIGN_ERROR_MESSAGE = "Zu deiner Sicherheit wird GPG Services jetzt beendet!\n\nBitte lade die aktuellste Version der GPG Suite von https://gpgtools.org herunter und installiere diese, um sicher zu sein, dass du eine Originalversion von uns verwendest! ";
 
 SelectedKeysDescription = "%i von %i Schlüsseln ausgewählt";
 
 BIG_FILE_ENCRYPTION_WARNING_TITLE = "Warnung: Bitte stellen Sie vor dem Entfernen ihrer unverschlüsselten Originaldatei(en) sicher, das ihre verschlüsselte Datei nicht beschädigt ist.";
-BIG_FILE_ENCRYPTION_WARNING_MSG = "Für Dateien größer als 100MB empfehlen wir die Verwendung des Terminals. GPGServices braucht noch ein wenig Optimierung, an der wir momentan arbeiten. Bis es wirklich verlässlich ist, wird diese Warnung angezeigt. Sie können mit der Verschlüsselung Ihrer Datei(en) aber fortfahren.  Bitte entschlüsseln Sie probehalber einmal die verschlüsselte Datei. Nur wenn das fehlerfrei funktioniert, ist alles in Ordnung und Sie können die unverschlüsselten Dateien löschen. Falls Sie einen Fehler angezeigt bekommen, ist ihre verschlüsselte Datei unbrauchbar. Verwenden Sie in diesem Fall zum Beispiel das Terminal oder ein verschlüsseltes Datenträgerimage. Letzteres erhalten Sie über das Festplattendienstprogramm in OS X.";
+BIG_FILE_ENCRYPTION_WARNING_MSG = "Für Dateien größer als 100MB empfehlen wir die Verwendung des Terminals. GPG Services braucht noch ein wenig Optimierung, an der wir momentan arbeiten. Bis es wirklich verlässlich ist, wird diese Warnung angezeigt. Du kannst mit der Verschlüsselung deiner Datei(en) aber fortfahren. Bitte entschlüssel testweise jedoch einmal die verschlüsselte Datei. Nur wenn das fehlerfrei funktioniert, ist alles in Ordnung und die unverschlüsselten Dateien können bei Bedarf gelöscht werden. Falls du einen Fehler angezeigt bekommst, ist die verschlüsselte Datei unbrauchbar. Verwende in diesem Fall zum Beispiel das Terminal oder ein verschlüsseltes Datenträgerimage. Letzteres erhälst du über das Festplattendienstprogramm in macOS.";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "Abbrechen";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Fortfahren";
 
 
 NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Warnung: Die verschlüsselte Datei ist nicht integritätsgeschützt!";
-NO_MDC_DECRYPT_FILE_WARNING_MSG = "Ohne Integritätsschutz (fehlender Modification Detection Code) kann nicht festgestellt werden, ob die die verschlüsselten Daten verändert wurden.\n\nMehr über den Umgang mit Dateien ohne Integritätsschutz zu erfahren Sie auf:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nWenn Sie absolut sicher sind, dass der Text nicht verändert wurde, können sie fortfahren.";
+NO_MDC_DECRYPT_FILE_WARNING_MSG = "Ohne Integritätsschutz (fehlender Modification Detection Code) kann nicht festgestellt werden, ob die verschlüsselten Daten verändert wurden.\n\nUm mehr über den Umgang mit Dateien ohne Integritätsschutz zu erfahren, besuche:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nFalls du absolut sicher bist, dass die Datei nicht modifiziert worden ist, könntest du entscheiden fortzufahren.";
 NO_MDC_DECRYPT_FILE_WARNING_YES = "Fortfahren";
 NO_MDC_DECRYPT_FILE_WARNING_NO = "Abbrechen";
 
 NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Warnung: Der verschlüsselte Text wurde nicht integritätsgeschützt!";
-NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Ohne Integritätsschutz (fehlender Modification Detection Code) ist es nicht möglich festzustellen ob die die verschlüsselten Daten verändert wurden.\n\nMehr über den Umgang mit Dateien ohne Integritätsschutz zu erfahren Sie auf:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nWenn Sie absolut sicher sind, dass der Text nicht verändert wurde, können sie fortfahren.";
+NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Ohne Integritätsschutz (fehlender Modification Detection Code) ist es nicht möglich festzustellen, ob die verschlüsselten Daten verändert wurden.\n\nUm mehr  über den Umgang mit Dateien ohne Integritätsschutz zu lernen besuche:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nFalls du absolut sicher bist, dass der Text nicht verändert wurde, könntest du entscheiden fortzufahren.";
 NO_MDC_DECRYPT_TEXT_WARNING_YES = "Fortfahren";
 NO_MDC_DECRYPT_TEXT_WARNING_NO = "Abbrechen";
 
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Die Datei \"%@\" kann nicht entschlüsselt werden";
-NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Der zum Entschlüsseln der Datei nötige geheime Schlüssel ist nicht verfügbar.\nDer Inhalt ist für die Schlüssel mit den folgenden Fingerabdrücken verschlüsselt:\n\n%@\n\nWenn Sie keinen dieser Fingerabdrücke kennen, hat der Absender möglicherweise nicht Ihren öffentlichen Schlüssel zum Verschlüsseln dieser Datei verwendet.";
+NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Der zum Entschlüsseln der Datei nötige geheime Schlüssel ist nicht verfügbar.\nDer Inhalt ist für die Schlüssel mit folgenden Fingerabdrücken verschlüsselt:\n\n%@\n\nFalls du keinen dieser Fingerabdrücke kennst, hat der Absender möglicherweise nicht deinen öffentlichen Schlüssel zum Verschlüsseln dieser Datei verwendet.";
 
 NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Der ausgewählte Inhalt konnte nicht entschlüsselt werden";
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Der zum Entschlüsseln des Inhalts nötige geheime Schlüssel ist nicht verfügbar.\nDer Inhalt ist mit den Schlüsseln mit den folgenden Fingerabdrücken verschlüsselt:\n\n%@\n\nWenn Sie keinen dieser Fingerabdrücke kennen, hatder Absender möglicherweise nicht Ihren öffentlichen Schlüssel zum Verschlüsseln dieser Datei verwendet.";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Der zum Entschlüsseln des Inhalts nötige geheime Schlüssel ist nicht verfügbar.\nDer Inhalt ist für die Schlüssel mit folgenden Fingerabdrücken verschlüsselt:\n\n%@\n\nFalls du keinen dieser Fingerabdrücke kennen, hat der Absender möglicherweise nicht deinen öffentlichen Schlüssel zum Verschlüsseln dieser Datei verwendet.";
 
 
 "and" = "und";

@@ -79,7 +79,7 @@
 "Good signature (%@ trust):\n\"%@\"" = "Good signature (%1$@ trust):\n\"%2$@\"";
 
 /* Pasteboard could not supply the string in an acceptible format. */
-"GPGServices did not get usable data from the pasteboard." = "GPGServices did not get usable data from the pasteboard.";
+"GPGServices did not get usable data from the pasteboard." = "GPG Services did not get usable data from the pasteboard.";
 
 /* No comment provided by engineer. */
 "Import failed" = "Importen misslyckades";
@@ -109,12 +109,6 @@
 "No encryptable text was found within the selection" = "Ingen text att kryptera hittades i markeringen";
 
 /* No comment provided by engineer. */
-"No private key selected for signing" = "No private key selected for signing";
-
-/* No comment provided by engineer. */
-"No private key selected to add to recipients" = "No private key selected to add to recipients";
-
-/* No comment provided by engineer. */
 "No signable text was found within the selection" = "Ingen text att signera hittades i markeringen";
 
 /* No comment provided by engineer. */
@@ -122,9 +116,6 @@
 
 /* No comment provided by engineer. */
 "No signatures found within the selection" = "No signatures found within the selection";
-
-/* No comment provided by engineer. */
-"No valid recipients found" = "Inga giltiga mottagare hittades";
 
 /* No comment provided by engineer. */
 "No verifiable data found" = "No verifiable data found";
@@ -203,14 +194,14 @@
 "Build: %@" = "Build: %@";
 
 LIBMACGPG_NOT_FOUND_TITLE = "Libmacgpg hittades inte";
-LIBMACGPG_NOT_FOUND_MESSAGE = "Libmacgpg was not found on your system. Please install it. Find it e.g. in the GPGTools Installer on https://www.gpgtools.org.";
-CODE_SIGN_ERROR_TITLE = "Someone tampered with your installation of GPGServices!";
-CODE_SIGN_ERROR_MESSAGE = "To keep you safe, GPGServices will exit now!\n\nPlease download and install the latest version of GPG Suite from https://gpgtools.org to be sure you have an original version from us!";
+LIBMACGPG_NOT_FOUND_MESSAGE = "Libmacgpg was not found on your system. Please visit https://gpgtools.org to download and re-install GPG Suite.";
+CODE_SIGN_ERROR_TITLE = "Someone tampered with your installation of GPG Services!";
+CODE_SIGN_ERROR_MESSAGE = "To keep you safe, GPG Services will exit now!\n\nPlease download and install the latest version of GPG Suite from https://gpgtools.org to be sure you have an original version from us!";
 
 SelectedKeysDescription = "%i av %i nycklar markerade";
 
 BIG_FILE_ENCRYPTION_WARNING_TITLE = "Warning: Please ensure your encrypted file is not damaged before removing the original unencrypted file(s).";
-BIG_FILE_ENCRYPTION_WARNING_MSG = "For files bigger than 100MB, we recommend to use the Terminal. GPGServices still needs a bit of tweaking and we are on it. But until it is really reliable, you will see this warning. You may continue and encrypt your file(s). Before removing the unencrypted files, at least decrypt the encrypted file once. If that works without any error, you are good. If you run into an error, the encrypted file is damaged and you should look for another solution. Either try the terminal or use an encrypted disk image. The latter is available via the on board Disk Utility in OS X.";
+BIG_FILE_ENCRYPTION_WARNING_MSG = "For files bigger than 100MB, we recommend to use the Terminal. GPG Services still needs a bit of tweaking and we are on it. But until it is really reliable, you will see this warning. You may continue and encrypt your file(s). Before removing the unencrypted files, at least decrypt the encrypted file once. If that works without any error, you are good. If you run into an error, the encrypted file is damaged and you should look for another solution. Either try the terminal or use an encrypted disk image. The latter is available via the on-board Disk Utility in macOS.";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "Avbryt";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Fortsätt";
 
@@ -218,12 +209,12 @@ BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Fortsätt";
 NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Warning: The encrypted file was not integrity protected!";
 NO_MDC_DECRYPT_FILE_WARNING_MSG = "Without integrity protection (missing modification detection code) it is not possible to determine whether or not the encrypted data has been modified.\n\nTo learn more about how to deal with files without integrity protection visit:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nIf you are absolutely sure that the file has not been modified, you may choose to continue.";
 NO_MDC_DECRYPT_FILE_WARNING_YES = "Fortsätt";
-NO_MDC_DECRYPT_FILE_WARNING_NO = "Avbryt";
+NO_MDC_DECRYPT_FILE_WARNING_NO = "Cancel";
 
 NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Warning: The encrypted text was not integrity protected!";
 NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Without integrity protection (missing modification detection code) it is not possible to determine whether or not the encrypted data has been modified.\n\nTo learn more about how to deal with files without integrity protection visit:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nIf you are absolutely sure that the text has not been modified, you may choose to continue.";
 NO_MDC_DECRYPT_TEXT_WARNING_YES = "Fortsätt";
-NO_MDC_DECRYPT_TEXT_WARNING_NO = "Avbryt";
+NO_MDC_DECRYPT_TEXT_WARNING_NO = "Cancel";
 
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Unable to decrypt the file \"%@\"";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "The secret key required to decrypt this file is not available.\nThe file is encrypted to the keys with the following fingerprints:\n\n%@\n\nIf you don't recognize any one of these fingerprints, it is possible that the sender didn't use your public key to encrypt this file.";
