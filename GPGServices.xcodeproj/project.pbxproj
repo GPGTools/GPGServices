@@ -20,11 +20,11 @@
 		303B51E621FF09C50061CE1F /* Localization.m in Sources */ = {isa = PBXBuildFile; fileRef = 303B51E521FF09C50061CE1F /* Localization.m */; };
 		305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */; };
 		30753EA320DA839400C667CA /* GKFingerprintTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 30753EA220DA839400C667CA /* GKFingerprintTransformer.m */; };
+		30843DF522F9C3F2001F9D4F /* GPGServices.icns in Resources */ = {isa = PBXBuildFile; fileRef = 30843DF422F9C3F2001F9D4F /* GPGServices.icns */; };
 		30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */; };
 		30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CE14D56C6400AA8881 /* RecipientWindow.xib */; };
 		30B2057314D56F1E00AE9583 /* VerificationResultsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7D114D56C6700AA8881 /* VerificationResultsWindow.xib */; };
 		30B2057514D56F1E00AE9583 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */; };
-		30B2057614D56F2A00AE9583 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2260756C12EBA0B50026DBEA /* Icon.icns */; };
 		30B2057714D56F2A00AE9583 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
 		30B2057814D56F2A00AE9583 /* lock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990C135CAB60004C89D5 /* lock.icns */; };
 		30B2057914D56F2A00AE9583 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
@@ -143,7 +143,6 @@
 		1BB1F50C199285D4004BCB19 /* PLWeakCompatibility-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PLWeakCompatibility-Prefix.pch"; sourceTree = "<group>"; };
 		1BB1F50D199285D4004BCB19 /* PLWeakCompatibilityStubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLWeakCompatibilityStubs.h; sourceTree = "<group>"; };
 		1BB1F50E199285D4004BCB19 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
-		2260756C12EBA0B50026DBEA /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		22D6D9C913267E0C00622189 /* RecipientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecipientWindowController.h; path = Source/RecipientWindowController.h; sourceTree = "<group>"; };
 		22D6D9CA13267E0C00622189 /* RecipientWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecipientWindowController.m; path = Source/RecipientWindowController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
@@ -168,6 +167,7 @@
 		305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InProgressWindow.xib; sourceTree = "<group>"; };
 		30753EA120DA839400C667CA /* GKFingerprintTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GKFingerprintTransformer.h; path = Source/GKFingerprintTransformer.h; sourceTree = "<group>"; };
 		30753EA220DA839400C667CA /* GKFingerprintTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GKFingerprintTransformer.m; path = Source/GKFingerprintTransformer.m; sourceTree = "<group>"; };
+		30843DF422F9C3F2001F9D4F /* GPGServices.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = GPGServices.icns; sourceTree = "<group>"; };
 		3086A47821A56C960004387C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3086A47F21A56C980004387C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleTextWindow.xib; sourceTree = "<group>"; };
@@ -395,7 +395,7 @@
 		300B934814D56B97005016A7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				2260756C12EBA0B50026DBEA /* Icon.icns */,
+				30843DF422F9C3F2001F9D4F /* GPGServices.icns */,
 				8ED7990D135CAB60004C89D5 /* asc.icns */,
 				8ED7990C135CAB60004C89D5 /* lock.icns */,
 				8ED7990B135CAB60004C89D5 /* sig.icns */,
@@ -596,8 +596,8 @@
 				30B2057314D56F1E00AE9583 /* VerificationResultsWindow.xib in Resources */,
 				30B2057514D56F1E00AE9583 /* Growl Registration Ticket.growlRegDict in Resources */,
 				1BB1F50F199285D4004BCB19 /* InfoPlist.strings in Resources */,
-				30B2057614D56F2A00AE9583 /* Icon.icns in Resources */,
 				30B2057714D56F2A00AE9583 /* asc.icns in Resources */,
+				30843DF522F9C3F2001F9D4F /* GPGServices.icns in Resources */,
 				30B2057814D56F2A00AE9583 /* lock.icns in Resources */,
 				30B2057914D56F2A00AE9583 /* sig.icns in Resources */,
 				45715A0C156D4BD100E5E7DD /* ServicesMenu.strings in Resources */,

@@ -56,7 +56,7 @@
 	<key>CFBundleExecutable</key>
 	<string>GPGServices</string>
 	<key>CFBundleIconFile</key>
-	<string>Icon.icns</string>
+	<string>GPGServices</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.gpgtools.gpgservices</string>
 	<key>CFBundleInfoDictionaryVersion</key>
