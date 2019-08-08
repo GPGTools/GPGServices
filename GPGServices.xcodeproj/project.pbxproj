@@ -24,7 +24,6 @@
 		30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */; };
 		30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CE14D56C6400AA8881 /* RecipientWindow.xib */; };
 		30B2057314D56F1E00AE9583 /* VerificationResultsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7D114D56C6700AA8881 /* VerificationResultsWindow.xib */; };
-		30B2057514D56F1E00AE9583 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */; };
 		30B2057714D56F2A00AE9583 /* asc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990D135CAB60004C89D5 /* asc.icns */; };
 		30B2057814D56F2A00AE9583 /* lock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990C135CAB60004C89D5 /* lock.icns */; };
 		30B2057914D56F2A00AE9583 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
@@ -44,13 +43,11 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */; };
 		8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */; };
-		8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
 		8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E935E64135128C6004E3E4F /* FileVerificationController.m */; };
 		8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */; };
 		8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDC40F7133F6C5500D0A101 /* ZipOperation.m */; };
 		8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */; };
-		8EF7A61D1334C05300FD8C5B /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7341A21334BC1C003CBCEB /* Growl.framework */; };
 		8EFFC2271360FBAC00712940 /* FileVerificationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFC2261360FBAC00712940 /* FileVerificationDataSource.m */; };
 		8EFFC22A1361009400712940 /* DummyVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFC2291361009400712940 /* DummyVerificationController.m */; };
 /* End PBXBuildFile section */
@@ -122,7 +119,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */,
-				8EF7A61D1334C05300FD8C5B /* Growl.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -215,7 +211,6 @@
 		8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GPGKey+utils.m"; path = "Source/GPGKey+utils.m"; sourceTree = "<group>"; };
 		8E472FE91361CED5009462E4 /* ShortcutHandlingFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShortcutHandlingFields.h; path = Source/ShortcutHandlingFields.h; sourceTree = "<group>"; };
 		8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShortcutHandlingFields.m; path = Source/ShortcutHandlingFields.m; sourceTree = "<group>"; };
-		8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		8E7341A21334BC1C003CBCEB /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyChooserWindowController.h; path = Source/KeyChooserWindowController.h; sourceTree = "<group>"; };
 		8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChooserWindowController.m; path = Source/KeyChooserWindowController.m; sourceTree = "<group>"; };
@@ -246,7 +241,6 @@
 				302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */,
 				2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				8E7341A41334BC1C003CBCEB /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +371,6 @@
 				30B2057A14D56F3500AE9583 /* Strings */,
 				300B934814D56B97005016A7 /* Images */,
 				8D1107310486CEB800E47090 /* Info.plist */,
-				8E7341A11334BC1C003CBCEB /* Growl Registration Ticket.growlRegDict */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -603,7 +596,6 @@
 				30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */,
 				30E6C9BA1AB30EF4001541A3 /* MainMenu.xib in Resources */,
 				30B2057314D56F1E00AE9583 /* VerificationResultsWindow.xib in Resources */,
-				30B2057514D56F1E00AE9583 /* Growl Registration Ticket.growlRegDict in Resources */,
 				1BB1F50F199285D4004BCB19 /* InfoPlist.strings in Resources */,
 				30B2057714D56F2A00AE9583 /* asc.icns in Resources */,
 				30843DF522F9C3F2001F9D4F /* GPGServices.icns in Resources */,
@@ -794,7 +786,6 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/Frameworks",
 					"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION",
 					/Library/Frameworks,
 					"$(HOME)/Library/Frameworks",
@@ -823,7 +814,6 @@
 				DEPLOYMENT_POSTPROCESSING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/Frameworks",
 					"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION",
 					/Library/Frameworks,
 					"$(HOME)/Library/Frameworks",

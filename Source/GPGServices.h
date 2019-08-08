@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 //#import <MacGPGME/MacGPGME.h>
 #import "Libmacgpg/Libmacgpg.h"
-#import <Growl/Growl.h>
 #import "ServiceWorkerDelegate.h"
 #import "SimpleTextWindow.h"
 
@@ -34,14 +33,10 @@ typedef enum {
 } FileServiceModeEnum;
 
 
-#pragma mark Growl Constants
-
-#define gpgGrowlOperationSucceededName (@"Operation Succeeded")
-#define gpgGrowlOperationFailedName (@"Operation Failed")
 
 @class InProgressWindowController;
 
-@interface GPGServices : NSObject <NSApplicationDelegate, ServiceWorkerDelegate, GrowlApplicationBridgeDelegate, SimpleTextWindowDelegate> {
+@interface GPGServices : NSObject <NSApplicationDelegate, ServiceWorkerDelegate, SimpleTextWindowDelegate> {
 	IBOutlet NSWindow *recipientWindow;
 		
 	NSTimer *currentTerminateTimer;

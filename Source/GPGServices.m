@@ -72,9 +72,6 @@ static NSUInteger const suffixLen = 5;
 - (void)importFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
 - (NSString *)detachedSignFileWrapped:(ServiceWrappedArgs *)wrappedArgs file:(NSString *)file withKeys:(NSArray *)keys;
 
-// If growl is active, produce one for a file's signatures
-- (void)growlVerificationResultsFor:(NSString *)file signatures:(NSArray *)signatures;
-
 @end
 
 @implementation GPGServices
@@ -85,7 +82,6 @@ static NSUInteger const suffixLen = 5;
 	// NSUpdateDynamicServices();
 	currentTerminateTimer = nil;
 
-	[GrowlApplicationBridge setGrowlDelegate:self];
 	_inProgressCtlr = [[InProgressWindowController alloc] init];
 	
 }
@@ -504,9 +500,7 @@ static NSUInteger const suffixLen = 5;
 			GPGSignature *sig = [sigs objectAtIndex:0];
 			GPGErrorCode status = sig.status;
 			GPGDebugLog(@"sig.status: %i", status);
-			if ([GrowlApplicationBridge isGrowlRunning]) {
-				[self growlVerificationResultsFor:localized(@"Selection") signatures:sigs];
-			} else if ([sig status] == GPGErrorNoError) {
+			if ([sig status] == GPGErrorNoError) {
 				[self displaySignatureVerificationForSig:sig];
 			} else {
 				NSString *errorMessage = nil;
@@ -657,9 +651,7 @@ static NSUInteger const suffixLen = 5;
 			GPGSignature *sig = [sigs objectAtIndex:0];
 			GPGErrorCode status = sig.status;
 			GPGDebugLog(@"sig.status: %i", status);
-			if ([GrowlApplicationBridge isGrowlRunning]) {
-				[self growlVerificationResultsFor:localized(@"Selection") signatures:sigs];
-			} else if ([sig status] == GPGErrorNoError) {
+			if ([sig status] == GPGErrorNoError) {
 				[self displaySignatureVerificationForSig:sig];
 			} else {
 				NSString *errorMessage = nil;
@@ -897,16 +889,8 @@ static NSUInteger const suffixLen = 5;
 			[output close];
 			[tempFile deleteFile];
 		}
-	} @catch (GPGException *e) {
-		if ([GrowlApplicationBridge isGrowlRunning]) { // This is in a loop, so only display Growl...
-			NSString *msg = [NSString stringWithFormat:@"%@\n\n%@", [file lastPathComponent], e];
-			[self displayOperationFailedNotificationWithTitle:[e reason] message:msg];
-		}
 	} @catch (NSException *e) {
-		if ([GrowlApplicationBridge isGrowlRunning]) { // This is in a loop, so only display Growl...
-			[self displayOperationFailedNotificationWithTitle:localized(@"Signing failed")
-													  message:[file lastPathComponent]];  // no e.reason?
-		}
+		// Ignore exception.
 	}
 
 	return nil;
@@ -1323,11 +1307,7 @@ static NSUInteger const suffixLen = 5;
 				//
 				// Show any signatures encountered
 				//
-				if ([GrowlApplicationBridge isGrowlRunning]) {
-					if ([ctx.signatures count] > 0) {
-						[self growlVerificationResultsFor:file signatures:ctx.signatures];
-					}
-				} else if (ctx.signatures.count > 0) {
+				if (ctx.signatures.count > 0) {
 					GPGDebugLog(@"found signatures: %@", ctx.signatures);
 
 					if (dummyController == nil) {
@@ -1485,12 +1465,10 @@ static NSUInteger const suffixLen = 5;
 	// has thread-safe methods as used here
 	DummyVerificationController *fvc = nil;
 
-	if ([GrowlApplicationBridge isGrowlRunning] == NO) {
-		fvc = [[DummyVerificationController alloc]
-				initWithWindowNibName:@"VerificationResultsWindow"];
-		[fvc showWindow:self]; // now thread-safe
-		fvc.isActive = YES; // now thread-safe
-	}
+	fvc = [[DummyVerificationController alloc]
+			initWithWindowNibName:@"VerificationResultsWindow"];
+	[fvc showWindow:self]; // now thread-safe
+	fvc.isActive = YES; // now thread-safe
 
 	for (NSString *serviceFile in files) {
 		// check before operation
@@ -1562,9 +1540,7 @@ static NSUInteger const suffixLen = 5;
 			}
 		}
 
-		if ([GrowlApplicationBridge isGrowlRunning]) {
-			[self growlVerificationResultsFor:serviceFile signatures:sigs];
-		} else if (sigs != nil) {
+		if (sigs != nil) {
 			if (sigs.count == 0) {
 				id verificationResult = nil; // NSString or NSAttributedString
 				verificationResult = localized(@"Verification FAILED: No signatures found");
@@ -1603,26 +1579,6 @@ static NSUInteger const suffixLen = 5;
 	}
 
 	[fvc runModal]; // thread-safe
-}
-
-- (void)growlVerificationResultsFor:(NSString *)file signatures:(NSArray *)signatures {
-	if ([GrowlApplicationBridge isGrowlRunning] != YES) {
-		return;
-	}
-
-	NSString *title = [self describeOperationForFiles:[NSArray arrayWithObject:file]
-										singleFileFmt:localized(@"Verification for %@" /*arg:filename*/)
-									   pluralFilesFmt:localized(@"Verification for %u files" /*arg:count*/)];
-	NSMutableString *summary = [NSMutableString string];
-	if ([signatures count] > 0) {
-		for (GPGSignature *gpgSig in signatures) {
-			[summary appendFormat:@"%@\n", [gpgSig humanReadableDescription]];
-		}
-	} else {
-		[summary appendString:localized(@"No signatures found")];
-	}
-
-	[self displayOperationFinishedNotificationWithTitle:title message:summary];
 }
 
 // Skip fixing this for now. We need better handling of imports in libmacgpg.
@@ -2074,17 +2030,7 @@ static NSUInteger const suffixLen = 5;
 	NSString *title = [args objectAtIndex:0];
 	NSString *body = [args objectAtIndex:1];
 
-	if ([GrowlApplicationBridge isGrowlRunning]) {
-		[GrowlApplicationBridge notifyWithTitle:title
-									description:body
-							   notificationName:gpgGrowlOperationSucceededName
-									   iconData:nil
-									   priority:0
-									   isSticky:NO
-								   clickContext:NULL];
-	} else {
-		[self displayMessageWindowWithTitleText:title bodyText:body];
-	}
+	[self displayMessageWindowWithTitleText:title bodyText:body];
 }
 
 - (void)displayOperationFailedNotificationWithTitle:(NSString *)title message:(NSString *)body {
@@ -2098,17 +2044,7 @@ static NSUInteger const suffixLen = 5;
 	NSString *title = [args objectAtIndex:0];
 	NSString *body = [args objectAtIndex:1];
 
-	if ([GrowlApplicationBridge isGrowlRunning]) {
-		[GrowlApplicationBridge notifyWithTitle:title
-									description:body
-							   notificationName:gpgGrowlOperationFailedName
-									   iconData:nil
-									   priority:0
-									   isSticky:NO
-								   clickContext:NULL];
-	} else {
-		[self displayMessageWindowWithTitleText:title bodyText:body];
-	}
+	[self displayMessageWindowWithTitleText:title bodyText:body];
 }
 
 - (void)displaySignatureVerificationForSig:(GPGSignature *)sig {
