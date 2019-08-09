@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1B57171217A812B300B96393 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B57171117A812B300B96393 /* Security.framework */; };
-		1BB1F50F199285D4004BCB19 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1BB1F505199285D4004BCB19 /* InfoPlist.strings */; };
-		1BB1F512199285D4004BCB19 /* PLWeakCompatibility-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1BB1F50B199285D4004BCB19 /* PLWeakCompatibility-Info.plist */; };
-		1BB1F513199285D4004BCB19 /* PLWeakCompatibilityStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1F50E199285D4004BCB19 /* PLWeakCompatibilityStubs.m */; };
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
@@ -130,15 +127,6 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1B34FA9017A80FE00078B93A /* Libmacgpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Libmacgpg.xcodeproj; path = Dependencies/Libmacgpg/Libmacgpg.xcodeproj; sourceTree = "<group>"; };
 		1B57171117A812B300B96393 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		1BB1F506199285D4004BCB19 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1BB1F507199285D4004BCB19 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1BB1F508199285D4004BCB19 /* MAZeroingWeakRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAZeroingWeakRef.h; sourceTree = "<group>"; };
-		1BB1F509199285D4004BCB19 /* MAZeroingWeakRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAZeroingWeakRef.m; sourceTree = "<group>"; };
-		1BB1F50A199285D4004BCB19 /* MAZeroingWeakRefNativeZWRNotAllowedTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAZeroingWeakRefNativeZWRNotAllowedTable.h; sourceTree = "<group>"; };
-		1BB1F50B199285D4004BCB19 /* PLWeakCompatibility-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PLWeakCompatibility-Info.plist"; sourceTree = "<group>"; };
-		1BB1F50C199285D4004BCB19 /* PLWeakCompatibility-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PLWeakCompatibility-Prefix.pch"; sourceTree = "<group>"; };
-		1BB1F50D199285D4004BCB19 /* PLWeakCompatibilityStubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLWeakCompatibilityStubs.h; sourceTree = "<group>"; };
-		1BB1F50E199285D4004BCB19 /* PLWeakCompatibilityStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLWeakCompatibilityStubs.m; sourceTree = "<group>"; };
 		22D6D9C913267E0C00622189 /* RecipientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecipientWindowController.h; path = Source/RecipientWindowController.h; sourceTree = "<group>"; };
 		22D6D9CA13267E0C00622189 /* RecipientWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecipientWindowController.m; path = Source/RecipientWindowController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
@@ -315,27 +303,9 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1BB1F504199285D4004BCB19 /* PLWeakCompatibility */ = {
-			isa = PBXGroup;
-			children = (
-				1BB1F505199285D4004BCB19 /* InfoPlist.strings */,
-				1BB1F507199285D4004BCB19 /* main.m */,
-				1BB1F508199285D4004BCB19 /* MAZeroingWeakRef.h */,
-				1BB1F509199285D4004BCB19 /* MAZeroingWeakRef.m */,
-				1BB1F50A199285D4004BCB19 /* MAZeroingWeakRefNativeZWRNotAllowedTable.h */,
-				1BB1F50B199285D4004BCB19 /* PLWeakCompatibility-Info.plist */,
-				1BB1F50C199285D4004BCB19 /* PLWeakCompatibility-Prefix.pch */,
-				1BB1F50D199285D4004BCB19 /* PLWeakCompatibilityStubs.h */,
-				1BB1F50E199285D4004BCB19 /* PLWeakCompatibilityStubs.m */,
-			);
-			name = PLWeakCompatibility;
-			path = Dependencies/PLWeakCompatibility/PLWeakCompatibility;
-			sourceTree = "<group>";
-		};
 		22CA686C12DFD8B400ED919C /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				1BB1F504199285D4004BCB19 /* PLWeakCompatibility */,
 				1B34FA9017A80FE00078B93A /* Libmacgpg.xcodeproj */,
 				8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */,
 			);
@@ -592,12 +562,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BB1F512199285D4004BCB19 /* PLWeakCompatibility-Info.plist in Resources */,
 				30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */,
 				30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */,
 				30E6C9BA1AB30EF4001541A3 /* MainMenu.xib in Resources */,
 				30B2057314D56F1E00AE9583 /* VerificationResultsWindow.xib in Resources */,
-				1BB1F50F199285D4004BCB19 /* InfoPlist.strings in Resources */,
 				30B2057714D56F2A00AE9583 /* asc.icns in Resources */,
 				30843DF522F9C3F2001F9D4F /* GPGServices.icns in Resources */,
 				30B2057814D56F2A00AE9583 /* lock.icns in Resources */,
@@ -695,7 +663,6 @@
 				8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */,
 				8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */,
 				8EFFC2271360FBAC00712940 /* FileVerificationDataSource.m in Sources */,
-				1BB1F513199285D4004BCB19 /* PLWeakCompatibilityStubs.m in Sources */,
 				8EFFC22A1361009400712940 /* DummyVerificationController.m in Sources */,
 				8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */,
 				45DD3DDA1565729000C9A4C1 /* InProgressWindowController.m in Sources */,
@@ -721,14 +688,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1BB1F505199285D4004BCB19 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1BB1F506199285D4004BCB19 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
