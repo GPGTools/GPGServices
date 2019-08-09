@@ -473,6 +473,7 @@
 				4B1906FF0A4CBD8A00052798 /* Copy Frameworks */,
 				303870EF16A864E6006B79F7 /* Fill Info.plist */,
 				30DC10051A98C06100B21E49 /* Copy "How to get the source code" into Resources */,
+				3071695E22FD6ABA00AAA496 /* Libmacgpg without rpath */,
 			);
 			buildRules = (
 			);
@@ -641,6 +642,25 @@
 			shellScript = "if [[ -d \"$DEPLOY_RESOURCES_DIR\" ]] ;then\nsource \"$DEPLOY_RESOURCES_DIR/config/versioning.sh\"\nelse\nsource \"$SRCROOT/Version.config\"\nfi\n[[ -n \"$VERSION\" ]] || { echo \"Missing Version!\"; exit 1; }\n\n\n/usr/libexec/PlistBuddy \\\n-c \"Set CommitHash '${COMMIT_HASH:--}'\" \\\n-c \"Set BuildNumber '${BUILD_NUMBER:-0}'\" \\\n-c \"Set CFBundleVersion '${BUILD_VERSION:-0n}'\" \\\n-c \"Set CFBundleShortVersionString '$VERSION'\" \\\n\"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\" || exit 2\n";
 			showEnvVarsInLog = 0;
 		};
+		3071695E22FD6ABA00AAA496 /* Libmacgpg without rpath */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Libmacgpg without rpath";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# Only release builds use an absolute path to Libmacgpg\n[[ \"$CONFIGURATION\" == \"Release\" ]] || exit 0\n\nlibmacgpgRpath=$(otool -L \"$TARGET_BUILD_DIR/$EXECUTABLE_PATH\" | sed -nE 's#.*@rpath(/Libmacgpg[^ ]+) .*#\\1#p')\nif [[ -n \"$libmacgpgRpath\" ]]; then\n    # Change the rpath to an absolute path.\n    echo \"Removing rpath for Libmacgpg\"\n    install_name_tool -change \"@rpath$libmacgpgRpath\" \"/Library/Frameworks$libmacgpgRpath\" \"$TARGET_BUILD_DIR/$EXECUTABLE_PATH\"\nfi\n\n";
+			showEnvVarsInLog = 0;
+		};
 		30DC10051A98C06100B21E49 /* Copy "How to get the source code" into Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -787,9 +807,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION",
+					"$(SRCROOT)/Dependencies/Libmacgpg/build/$(CONFIGURATION)",
 					/Library/Frameworks,
 					"$(HOME)/Library/Frameworks",
-					"$(SRCROOT)/Dependencies/Libmacgpg/build/$(CONFIGURATION)",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -815,9 +835,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION",
+					"$(SRCROOT)/Dependencies/Libmacgpg/build/$(CONFIGURATION)",
 					/Library/Frameworks,
 					"$(HOME)/Library/Frameworks",
-					"$(SRCROOT)/Dependencies/Libmacgpg/build/$(CONFIGURATION)",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
