@@ -14,9 +14,9 @@
 "53.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Validity Indicator";
 "106.title" = "Lägg till i mottagare";
 "118.title" = "Din nyckel:";
-"138.headerCell.title" = "Ownertrust";
+"138.headerCell.title" = "Ägarförtroende";
 "147.headerCell.title" = "Namn";
-"158.headerCell.title" = "Ownertrust";
+"158.headerCell.title" = "Ägarförtroende";
 "158.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Ownertrust Indicator";
 "160.headerCell.title" = "Status";
 "179.title" = "Kryptera med lösenord";

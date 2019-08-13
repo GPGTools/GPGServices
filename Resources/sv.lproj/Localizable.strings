@@ -11,7 +11,7 @@
 "Choose Destination" = "Välj plats";
 
 /* arg:shortKeyID */
-"Could not export key %@" = "Could not export key %@";
+"Could not export key %@" = "Kunde inte exportera nyckeln %@";
 
 /* no comment */
 "Could not read file" = "Kunde inte läsa fil";
@@ -34,7 +34,7 @@
 "Decrypting %u files" = "Dekrypterar %u filer";
 
 /* No comment provided by engineer. */
-"Decryption failed" = "Decryption failed";
+"Decryption failed" = "Dekryptering misslyckades";
 
 /* No comment provided by engineer. */
 "Decryption finished" = "Dekrypteringen slutfördes";
@@ -49,7 +49,7 @@
 "Encrypting %u files" = "Krypterar %u filer";
 
 /* No comment provided by engineer. */
-"Encryption canceled" = "Encryption canceled";
+"Encryption canceled" = "Kryptering avbröts";
 
 /* No comment provided by engineer. */
 "Encryption failed" = "Krypteringen misslyckades";
@@ -76,19 +76,19 @@
 "File doesn't exist" = "Filen existerar inte";
 
 /* arg1:validity arg2:userID */
-"Good signature (%@ trust):\n\"%@\"" = "Good signature (%1$@ trust):\n\"%2$@\"";
+"Good signature (%@ trust):\n\"%@\"" = "Bra signatur (%1$@ tillit):\n\"%2$@\"";
 
 /* Pasteboard could not supply the string in an acceptible format. */
-"GPGServices did not get usable data from the pasteboard." = "GPG Services did not get usable data from the pasteboard.";
+"GPGServices did not get usable data from the pasteboard." = "GPG Services fick inte några användbara data från urklipp.";
 
 /* No comment provided by engineer. */
 "Import failed" = "Importen misslyckades";
 
 /* No comment provided by engineer. */
-"Import finished" = "Import finished";
+"Import finished" = "Import slutförd";
 
 /* No comment provided by engineer. */
-"Import finished (partially)" = "Import finished (partially)";
+"Import finished (partially)" = "Import slutförd (delvis)";
 
 /* No comment provided by engineer. */
 "Import result" = "Importresultat";
@@ -97,7 +97,7 @@
 "Imported %1$u of %2$u files" = "Imported %1$u of %2$u files";
 
 /* arg:filename */
-"Imported %@" = "Imported %@";
+"Imported %@" = "Importerade %@";
 
 /* arg:filename */
 "Importing %@" = "Importerar %@";
@@ -118,7 +118,7 @@
 "No signatures found within the selection" = "No signatures found within the selection";
 
 /* No comment provided by engineer. */
-"No verifiable data found" = "No verifiable data found";
+"No verifiable data found" = "Inga data att verifiera hittades";
 
 /* No comment provided by engineer. */
 "No verifiable text was found within the selection" = "No verifiable text was found within the selection";
@@ -130,10 +130,10 @@
 "Selection" = "Markering";
 
 /* arg1:successCount; arg2:totalCount */
-"Signed %1$u of %2$u files" = "Signed %1$u of %2$u files";
+"Signed %1$u of %2$u files" = "Signerade %1$u av %2$u filer";
 
 /* arg:filename */
-"Signed %@" = "Signed %@";
+"Signed %@" = "Signerade %@";
 
 /* arg:filename */
 "Signing %@" = "Signerar %@";
@@ -145,7 +145,7 @@
 "Signing failed" = "Signeringen misslyckades";
 
 /* No comment provided by engineer. */
-"Signing finished" = "Signing finished";
+"Signing finished" = "Signering slutförd";
 
 /* No comment provided by engineer. */
 "Signing finished (partially)" = "Signing finished (partially)";
@@ -178,10 +178,10 @@
 "Verification for %@" = "Verifiering för %@";
 
 /* arg:count */
-"Verification for %u files" = "Verification for %u files";
+"Verification for %u files" = "Verifiering för %u filer";
 
 /* No comment provided by engineer. */
-"Verification successful" = "Verification successful";
+"Verification successful" = "Verifiering lyckades";
 
 /* arg:filename */
 "Verifying signature of %@" = "Verifierar signatur för %@";
@@ -209,14 +209,14 @@ BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Fortsätt";
 NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Warning: The encrypted file was not integrity protected!";
 NO_MDC_DECRYPT_FILE_WARNING_MSG = "Without integrity protection (missing modification detection code) it is not possible to determine whether or not the encrypted data has been modified.\n\nTo learn more about how to deal with files without integrity protection visit:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nIf you are absolutely sure that the file has not been modified, you may choose to continue.";
 NO_MDC_DECRYPT_FILE_WARNING_YES = "Fortsätt";
-NO_MDC_DECRYPT_FILE_WARNING_NO = "Cancel";
+NO_MDC_DECRYPT_FILE_WARNING_NO = "Avbryt";
 
 NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Warning: The encrypted text was not integrity protected!";
 NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Without integrity protection (missing modification detection code) it is not possible to determine whether or not the encrypted data has been modified.\n\nTo learn more about how to deal with files without integrity protection visit:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nIf you are absolutely sure that the text has not been modified, you may choose to continue.";
 NO_MDC_DECRYPT_TEXT_WARNING_YES = "Fortsätt";
-NO_MDC_DECRYPT_TEXT_WARNING_NO = "Cancel";
+NO_MDC_DECRYPT_TEXT_WARNING_NO = "Avbryt";
 
-NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Unable to decrypt the file \"%@\"";
+NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Kunde inte dekryptera filen \"%@\"";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "The secret key required to decrypt this file is not available.\nThe file is encrypted to the keys with the following fingerprints:\n\n%@\n\nIf you don't recognize any one of these fingerprints, it is possible that the sender didn't use your public key to encrypt this file.";
 
 NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Unable to decrypt the selected contents";
