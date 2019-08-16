@@ -117,6 +117,20 @@ static NSUInteger const suffixLen = 5;
 		
 		GPGPacketParser *parser = [GPGPacketParser packetParserWithStream:unArmoredStream];
 		GPGPacket *packet = [parser nextPacket];
+        // Bug #257: If the first packet is not a known packet GPG Services
+        //           starts encrypt operation.
+        //
+        // GPG Services only checks the first packet it finds for known packets.
+        // If no match is found it's assumed that the file is not a OpenPGP related file
+        // and thus the user wants to encrypt the file instead.
+        //
+        // In some cases however the first packet is a marker packet instead. In this case
+        // GPG Services will skip that packet and check the next one.
+        // TODO: Should maybe enhanced to loop through additional packets, if not too expensive.
+        if(packet.tag == GPGMarkerPacketTag) {
+            packet = [parser nextPacket];
+        }
+        
 		BOOL verify = NO;
 		BOOL import = NO;
 		BOOL decrypt = NO;
