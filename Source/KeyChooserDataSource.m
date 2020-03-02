@@ -102,6 +102,10 @@
 	
     for (GPGKey *key in self.availableKeys) {
 		NSString *name = key.name;
+		if (name.length > 80) {
+			// Truncate very long names.
+			name = [NSString stringWithFormat:@"%@…%@", [name substringToIndex:35], [name substringFromIndex:name.length - 35]];
+		}
 		NSString *email = key.email;
 		
 		NSString *description = nil;

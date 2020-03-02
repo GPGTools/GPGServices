@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment version="101200" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RecipientWindowController">
@@ -16,12 +15,13 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="GPG Services" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" deferred="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="3" userLabel="RecipientsWin">
+        <window title="GPG Services" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" deferred="NO" releasedWhenClosed="NO" animationBehavior="default" id="3" userLabel="RecipientsWin">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="656" y="619" width="1007" height="416"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="690" height="290"/>
+            <value key="maxSize" type="size" width="1400" height="1200"/>
             <view key="contentView" id="4">
                 <rect key="frame" x="0.0" y="0.0" width="1007" height="416"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -62,13 +62,13 @@ Gw
                         </connections>
                     </button>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5">
-                        <rect key="frame" x="20" y="165" width="967" height="199"/>
+                        <rect key="frame" x="20" y="164" width="967" height="201"/>
                         <clipView key="contentView" id="tqc-Tj-z3S">
-                            <rect key="frame" x="1" y="0.0" width="965" height="198"/>
+                            <rect key="frame" x="1" y="0.0" width="965" height="200"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveName="recipientTable" headerView="14" id="15">
-                                    <rect key="frame" x="0.0" y="0.0" width="965" height="175"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="965" height="177"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -309,7 +309,7 @@ Gw
                         </connections>
                     </button>
                     <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="57" customClass="ShortcutHandlingSearchField">
-                        <rect key="frame" x="244" y="135" width="519" height="22"/>
+                        <rect key="frame" x="244" y="133" width="519" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="1" constant="519" id="IYO-gM-VZ3"/>
                         </constraints>
@@ -323,8 +323,8 @@ Gw
                             <outlet property="nextKeyView" destination="74" id="124"/>
                         </connections>
                     </searchField>
-                    <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="74" userLabel="Private Key selection">
-                        <rect key="frame" x="83" y="92" width="709" height="26"/>
+                    <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="74" userLabel="Private Key selection">
+                        <rect key="frame" x="83" y="92" width="709" height="25"/>
                         <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="79" id="75">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -335,18 +335,18 @@ Gw
                             </menu>
                         </popUpButtonCell>
                         <connections>
-                            <binding destination="-2" name="contentValues" keyPath="dataSource.keyDescriptions" id="EdG-La-hB1"/>
                             <binding destination="-2" name="enabled" keyPath="dataSource.isEmpty" id="dhp-FZ-nis">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
+                            <binding destination="-2" name="contentValues" keyPath="dataSource.keyDescriptions" id="EdG-La-hB1"/>
                             <binding destination="-2" name="selectedIndex" keyPath="dataSource.selectedIndex" previousBinding="EdG-La-hB1" id="Jdy-HP-s3c"/>
                             <outlet property="nextKeyView" destination="7" id="125"/>
                         </connections>
                     </popUpButton>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="104">
-                        <rect key="frame" x="0.0" y="123" width="1007" height="5"/>
+                        <rect key="frame" x="0.0" y="122" width="1007" height="5"/>
                     </box>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="PJN-4n-NCj">
                         <rect key="frame" x="0.0" y="83" width="1007" height="5"/>
@@ -368,7 +368,7 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="117">
-                        <rect key="frame" x="18" y="98" width="61" height="17"/>
+                        <rect key="frame" x="18" y="98" width="61" height="16"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your Key:" id="118">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -397,7 +397,7 @@ Gw
                         </connections>
                     </textField>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="KK0-ch-TBV">
-                        <rect key="frame" x="23" y="136" width="78" height="18"/>
+                        <rect key="frame" x="23" y="135" width="78" height="18"/>
                         <buttonCell key="cell" type="check" title="Select all" bezelStyle="regularSquare" imagePosition="left" alignment="center" inset="2" id="let-n1-Qac">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -407,7 +407,7 @@ Gw
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eSG-y1-Fdt">
-                        <rect key="frame" x="837" y="137" width="152" height="17"/>
+                        <rect key="frame" x="837" y="136" width="152" height="16"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="###X of Y keys selected" id="bjE-FG-bLm">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -418,7 +418,7 @@ Gw
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pft-MU-k8I">
-                        <rect key="frame" x="18" y="379" width="119" height="17"/>
+                        <rect key="frame" x="18" y="380" width="120" height="16"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select Recipients…" id="UM4-uK-US3">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
