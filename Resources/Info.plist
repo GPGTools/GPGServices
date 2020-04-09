@@ -463,5 +463,7 @@
 	<string>1</string>
 	<key>NSRequiresAquaSystemAppearance</key>
 	<false/>
+	<key>LSMinimumSystemVersion</key>
+	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 </dict>
 </plist>
