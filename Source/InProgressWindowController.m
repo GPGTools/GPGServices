@@ -99,7 +99,7 @@ static const NSUInteger kMaxVisibleItems = 4;
     NSRect frame = NSMakeRect (0, 0, 100, 100);    
     NSRect contentRect;
     contentRect = [NSWindow contentRectForFrameRect: frame
-                                          styleMask: NSTitledWindowMask];    
+                                          styleMask: NSWindowStyleMaskTitled];
     return (frame.size.height - contentRect.size.height);
 } 
 

@@ -363,7 +363,7 @@ static NSUInteger const suffixLen = 5;
 	ctx.useArmor = YES;
 
 	RecipientWindowController *rcp = [[RecipientWindowController alloc] init];
-	int ret = [rcp runModal];
+	NSInteger ret = [rcp runModal];
 
 	if (ret != 0) {
 		return nil;  // User pressed 'cancel'
@@ -976,7 +976,7 @@ static NSUInteger const suffixLen = 5;
 	GPGDebugLog(@"Output as ASCII: %@", useASCII ? @"YES" : @"NO");
 	NSString *fileExtension = useASCII ? @"asc" : @"gpg";
 	RecipientWindowController *rcp = [[RecipientWindowController alloc] init];
-	int ret = [rcp runModal]; // thread-safe
+	NSInteger ret = [rcp runModal]; // thread-safe
 	if (ret != 0) {
 		return;  // User pressed 'cancel'
 	}
@@ -1001,8 +1001,8 @@ static NSUInteger const suffixLen = 5;
 
 	NSFileManager *fmgr = [[NSFileManager alloc] init];
 
-	typedef GPGStream *(^DataProvider)();
-	DataProvider dataProvider = nil;
+	typedef GPGStream *(^DataProvider)(void);
+	DataProvider dataProvider;
 
 	if (files.count == 1) {
 		NSString *file = [files objectAtIndex:0];
@@ -1243,7 +1243,7 @@ static NSUInteger const suffixLen = 5;
 					fileName = ctx.statusDict[@"PLAINTEXT"][0][2];
 				}
 				if (fileName.length && ![fileName isEqualToString:@"_CONSOLE"] && [fileName rangeOfString:@"/"].length == 0) {
-					fileName = [fileName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+					fileName = [fileName stringByRemovingPercentEncoding];
 					outputFile = [[file stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
 				} else {
 					outputFile = [file stringByDeletingPathExtension];
@@ -1841,7 +1841,7 @@ static NSUInteger const suffixLen = 5;
 		if (!data) {
 			serializationError = [NSError errorWithDomain:@"GPGServices" code:1 userInfo:@{NSLocalizedDescriptionKey: @"No files found!"}];
 		} else {
-			filenames = [NSPropertyListSerialization propertyListWithData:data options:nil format:nil error:&serializationError];
+			filenames = [NSPropertyListSerialization propertyListWithData:data options:0 format:nil error:&serializationError];
 		}
 		
 		
@@ -1944,7 +1944,7 @@ static NSUInteger const suffixLen = 5;
 	[savePanel setNameFieldStringValue:[[path lastPathComponent]
 										stringByAppendingString:ext]];
 
-	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+	if ([savePanel runModal] == NSModalResponseOK) {
 		return savePanel.URL;
 	} else {
 		return nil;
@@ -2117,7 +2117,7 @@ static NSUInteger const suffixLen = 5;
 	if (warningSize <= 0) {
 		__block BOOL result = YES;
 		
-		void (^alertBlock)() = ^{
+		void (^alertBlock)(void) = ^{
 			NSAlert *alert = [NSAlert new];
 			
 			alert.messageText = localized(@"BIG_FILE_ENCRYPTION_WARNING_TITLE");
@@ -2158,7 +2158,7 @@ static NSUInteger const suffixLen = 5;
 	
 	__block BOOL shouldDecryptWithoutMDC = NO;
 	
-	void (^alertBlock)() = ^{
+	void (^alertBlock)(void) = ^{
 		NSAlert *alert = [NSAlert new];
 		
 		NSString *baseString = [gpgc.userInfo[@"type"] isEqualToString:@"file"] ? @"NO_MDC_DECRYPT_FILE_WARNING_" : @"NO_MDC_DECRYPT_TEXT_WARNING_";

@@ -44,7 +44,7 @@ static const int kInvalidDescriptor = -1;
         if (suffixLength > 0) {
             NSString *suffix = [template substringFromIndex:[template length] - suffixLength];
             const char *utfSuffix = [fileMgr fileSystemRepresentationWithPath:suffix];
-            utfSuffixLength = strlen(utfSuffix);
+            utfSuffixLength = (int)strlen(utfSuffix);
         }
 
         _fd = mkstemps(utfTemplate, utfSuffixLength);

@@ -14,14 +14,20 @@
 int main(int argc, char *argv[]) {
     @autoreleasepool {
         if (![GPGController class]) {
-            NSRunAlertPanel(localized(@"LIBMACGPG_NOT_FOUND_TITLE"), localized(@"LIBMACGPG_NOT_FOUND_MESSAGE"), nil, nil, nil);
+			NSAlert *alert = [NSAlert new];
+			alert.messageText = localized(@"LIBMACGPG_NOT_FOUND_TITLE");
+			alert.informativeText = localized(@"LIBMACGPG_NOT_FOUND_MESSAGE");
+			[alert runModal];
             return 1;
         }
 #ifdef CODE_SIGN_CHECK
         /* Check the validity of the code signature. */
         NSBundle *bundle = [NSBundle mainBundle];
         if (![bundle respondsToSelector:@selector(isValidSigned)] || !bundle.isValidSigned) {
-            NSRunAlertPanel(localized(@"CODE_SIGN_ERROR_TITLE"), localized(@"CODE_SIGN_ERROR_MESSAGE"), nil, nil, nil);
+			NSAlert *alert = [NSAlert new];
+			alert.messageText = localized(@"CODE_SIGN_ERROR_TITLE");
+			alert.informativeText = localized(@"CODE_SIGN_ERROR_MESSAGE");
+			[alert runModal];
             return 1;
         }
 #endif
