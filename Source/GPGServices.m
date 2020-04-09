@@ -31,6 +31,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
+	[self cancelTerminateTimer];
 	BOOL failed = NO;
 	
 	NSMutableArray *filesToImport = [NSMutableArray new];
@@ -170,6 +171,7 @@ static NSUInteger const suffixLen = 5;
 		[NSApp replyToOpenOrPrint:NSApplicationDelegateReplySuccess];
 	}
 	
+	[self goneIn60Seconds];
 }
 
 #pragma mark -
@@ -855,14 +857,13 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)signFiles:(NSArray *)files {
+	[self cancelTerminateTimer];
 	ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(signFilesSync:)];
 
 	worker.delegate = self;
 	worker.workerDescription = [self describeOperationForFiles:files
 												 singleFileFmt:localized(@"Signing %@" /*arg:filename*/)
 												pluralFilesFmt:localized(@"Signing %u files" /*arg:count*/)];
-	[_inProgressCtlr addObjectToServiceWorkerArray:worker];
-	[_inProgressCtlr showWindow:nil];
 	[worker start:files];
 }
 
@@ -901,6 +902,9 @@ static NSUInteger const suffixLen = 5;
 
 	if (chosenKey != nil) {
 		NSMutableArray *signedFiles = [NSMutableArray arrayWithCapacity:[files count]];
+		
+		[self addWorkerToProgressWindow:wrappedArgs.worker];
+		
 
 		for (NSString *file in files) {
 			// check before starting an operation
@@ -938,14 +942,13 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)encryptFiles:(NSArray *)files {
+	[self cancelTerminateTimer];
 	ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(encryptFilesSync:)];
 
 	worker.delegate = self;
 	worker.workerDescription = [self describeOperationForFiles:files
 												 singleFileFmt:localized(@"Encrypting %@" /*arg:filename*/)
 												pluralFilesFmt:localized(@"Encrypting %u files" /*arg:count*/)];
-	[_inProgressCtlr addObjectToServiceWorkerArray:worker];
-	[_inProgressCtlr showWindow:nil];
 	[worker start:files];
 }
 
@@ -994,6 +997,8 @@ static NSUInteger const suffixLen = 5;
 	if (wrappedArgs.worker.amCanceling) {
 		return;
 	}
+	
+	[self addWorkerToProgressWindow:wrappedArgs.worker];
 
 	long double megabytes = 0;
 	NSString *destination = nil;
@@ -1141,14 +1146,14 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)decryptFiles:(NSArray *)files {
+	[self cancelTerminateTimer];
 	ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(decryptFilesSync:)];
 
 	worker.delegate = self;
 	worker.workerDescription = [self describeOperationForFiles:files
 												 singleFileFmt:localized(@"Decrypting %@" /*arg:filename*/)
 												pluralFilesFmt:localized(@"Decrypting %u files" /*arg:count*/)];
-	[_inProgressCtlr addObjectToServiceWorkerArray:worker];
-	[_inProgressCtlr showWindow:nil];
+	[self addWorkerToProgressWindow:worker];
 	[worker start:files];
 }
 
@@ -1392,14 +1397,14 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)verifyFiles:(NSArray *)files {
+	[self cancelTerminateTimer];
 	ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(verifyFilesSync:)];
 
 	worker.delegate = self;
 	worker.workerDescription = [self describeOperationForFiles:files
 												 singleFileFmt:localized(@"Verifying signature of %@" /*arg:filename*/)
 												pluralFilesFmt:localized(@"Verifying signatures of %u files" /*arg:count*/)];
-	[_inProgressCtlr addObjectToServiceWorkerArray:worker];
-	[_inProgressCtlr showWindow:nil];
+	[self addWorkerToProgressWindow:worker];
 	[worker start:files];
 }
 
@@ -1561,14 +1566,14 @@ static NSUInteger const suffixLen = 5;
 
 
 - (void)importFiles:(NSArray *)files {
+	[self cancelTerminateTimer];
 	ServiceWorker *worker = [ServiceWorker serviceWorkerWithTarget:self andAction:@selector(importFilesSync:)];
 
 	worker.delegate = self;
 	worker.workerDescription = [self describeOperationForFiles:files
 												 singleFileFmt:localized(@"Importing %@" /*arg:filename*/)
 												pluralFilesFmt:localized(@"Importing %u files" /*arg:count*/)];
-	[_inProgressCtlr addObjectToServiceWorkerArray:worker];
-	[_inProgressCtlr showWindow:nil];
+	[self addWorkerToProgressWindow:worker];
 	[worker start:files];
 }
 
@@ -1665,6 +1670,7 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)removeWorker:(id)worker {
+	[self goneIn60Seconds];
 	[_inProgressCtlr removeObjectFromServiceWorkerArray:worker];
 	if ([_inProgressCtlr.serviceWorkerArray count] < 1) {
 		[_inProgressCtlr.window orderOut:nil];
@@ -1716,18 +1722,15 @@ static NSUInteger const suffixLen = 5;
 			if ([pbtype isEqualToString:NSPasteboardTypeString]) {
 				if (!(pboardString = [pboard stringForType:NSPasteboardTypeString])) {
 					*error = myerror;
-					[self goneIn60Seconds];
 					return;
 				}
 			} else if ([pbtype isEqualToString:NSPasteboardTypeRTF]) {
 				if (!(pboardString = [pboard stringForType:NSPasteboardTypeString])) {
 					*error = myerror;
-					[self goneIn60Seconds];
 					return;
 				}
 			} else {
 				*error = myerror;
-				[self goneIn60Seconds];
 				return;
 			}
 			
@@ -1765,13 +1768,12 @@ static NSUInteger const suffixLen = 5;
 				break;
 		}
 		
-		BOOL shouldExitServiceRequest = YES;
 		
 		if (newString != nil) {
 			static NSString *const kServiceShowInWindow = @"showInWindow";
 			if ([userData isEqualToString:kServiceShowInWindow]) {
+				[self cancelTerminateTimer];
 				[SimpleTextWindow showText:newString withTitle:@"GPGServices" andDelegate:self];
-				shouldExitServiceRequest = NO;
 			} else {
 				[pboard clearContents];
 				
@@ -1808,14 +1810,12 @@ static NSUInteger const suffixLen = 5;
 			}
 		}
 		
-		if (shouldExitServiceRequest) {
-			[self goneIn60Seconds];
-		}
-		
 	} @catch (NSException *exception) {
 		NSLog(@"An exception(1) occured: '%@'\nException class: %@\nBacktrace: '%@'",
 			  exception.description, exception.className, exception.callStackSymbols);
 		GPGDebugLog(@"Pasteboard: '%@'\nuserData: '%@'\nmode: %i", pboard, userData, mode);
+	} @finally {
+		[self goneIn60Seconds];
 	}
 	
 }
@@ -1867,11 +1867,12 @@ static NSUInteger const suffixLen = 5;
 			}
 		}
 		
-		[self goneIn60Seconds];
 	} @catch (NSException *exception) {
 		NSLog(@"An exception(2) occured: '%@'\nException class: %@\nBacktrace: '%@'",
 			  exception.description, exception.className, exception.callStackSymbols);
 		GPGDebugLog(@"Pasteboard: '%@'\nuserData: '%@'\nmode: %i", pboard, userData, mode);
+	} @finally {
+		[self goneIn60Seconds];
 	}
 
 }
@@ -1924,8 +1925,19 @@ static NSUInteger const suffixLen = 5;
 	[self dealWithFilesPasteboard:pboard userData:userData mode:ImportFileService error:error];
 }
 
+
+
 #pragma mark -
 #pragma mark UI Helper
+
+- (void)addWorkerToProgressWindow:(ServiceWorker *)worker {
+	[self performSelectorOnMainThread:@selector(addWorkerToProgressWindowOnMain:) withObject:worker waitUntilDone:NO];
+}
+- (void)addWorkerToProgressWindowOnMain:(ServiceWorker *)worker {
+	[_inProgressCtlr addObjectToServiceWorkerArray:worker];
+	[_inProgressCtlr delayedShowWindow];
+}
+
 
 - (NSURL *)getFilenameForSavingWithSuggestedPath:(NSString *)path
 						  withSuggestedExtension:(NSString *)ext {
