@@ -44,20 +44,19 @@ static const NSUInteger kMaxVisibleItems = 4;
     [self adjustWindowSize];
 }
 
-- (void)addObjectToServiceWorkerArray:(id)worker {
+- (void)addObjectToServiceWorkerArray:(ServiceWorker *)worker {
     [self insertObject:worker inServiceWorkerArrayAtIndex:[serviceWorkerArray count]];
 }
 
-- (void)removeObjectFromServiceWorkerArray:(id)worker {
+- (void)removeObjectFromServiceWorkerArray:(ServiceWorker *)worker {
     NSUInteger x = [serviceWorkerArray indexOfObject:worker];
-    if (x != NSNotFound)
+	if (x != NSNotFound) {
         [self removeObjectFromServiceWorkerArrayAtIndex:x];
+	}
 }
 
-- (void)delayedShowWindow
-{
-    if (!_delayTimer)
-    {
+- (void)delayedShowWindow {
+    if (!_delayTimer) {
         _delayTimer = [NSTimer timerWithTimeInterval:kShowWindowDelaySeconds 
                                                target:self 
                                              selector:@selector(showWindowCallback:)
@@ -66,8 +65,7 @@ static const NSUInteger kMaxVisibleItems = 4;
     }
 }
 
-- (void)showWindowCallback:(id)sender
-{
+- (void)showWindowCallback:(id)sender {
     _delayTimer = nil;
     [self showWindow:nil];
 }

@@ -23,7 +23,6 @@ static NSUInteger const suffixLen = 5;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
 	[NSApp setServicesProvider:self];
-	// NSUpdateDynamicServices();
 	currentTerminateTimer = nil;
 
 	_inProgressCtlr = [[InProgressWindowController alloc] init];
@@ -901,10 +900,11 @@ static NSUInteger const suffixLen = 5;
 	}
 
 	if (chosenKey != nil) {
-		NSMutableArray *signedFiles = [NSMutableArray arrayWithCapacity:[files count]];
 		
 		[self addWorkerToProgressWindow:wrappedArgs.worker];
 		
+		
+		NSMutableArray *signedFiles = [NSMutableArray new];
 
 		for (NSString *file in files) {
 			// check before starting an operation
@@ -1174,10 +1174,9 @@ static NSUInteger const suffixLen = 5;
 	}
 
 
-	NSFileManager *fmgr = [[NSFileManager alloc] init];
-
-	NSMutableArray *decryptedFiles = [NSMutableArray arrayWithCapacity:[files count]];
-	NSMutableArray<NSDictionary *> *errors = [NSMutableArray array];
+	NSFileManager *fmgr = [NSFileManager defaultManager];
+	NSMutableArray *decryptedFiles = [NSMutableArray new];
+	NSMutableArray<NSDictionary *> *errors = [NSMutableArray new];
 	NSUInteger cancelledCount = 0;
 	
 	// has thread-safe methods as used here

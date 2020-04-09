@@ -16,13 +16,13 @@
 
 @property (weak) IBOutlet NSCollectionView *collectionView;
 @property (strong) IBOutlet NSArrayController *arrayController;
-@property (strong) IBOutlet NSMutableArray *serviceWorkerArray;
+@property (strong) IBOutlet NSMutableArray<ServiceWorker *> *serviceWorkerArray;
 
 - (void)insertObject:(ServiceWorker *)w inServiceWorkerArrayAtIndex:(NSUInteger)index;
 - (void)removeObjectFromServiceWorkerArrayAtIndex:(NSUInteger)index;
 
-- (void)addObjectToServiceWorkerArray:(id)worker;
-- (void)removeObjectFromServiceWorkerArray:(id)worker;
+- (void)addObjectToServiceWorkerArray:(ServiceWorker *)worker;
+- (void)removeObjectFromServiceWorkerArray:(ServiceWorker *)worker;
 
 - (void)delayedShowWindow;
 - (void)hideWindow;

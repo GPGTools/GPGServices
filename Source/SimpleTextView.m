@@ -21,17 +21,18 @@
 @implementation SimpleTextView
 
 - (BOOL)performKeyEquivalent:(NSEvent *)event {
-    if (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) == NSCommandKeyMask) {
+    if (([event modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask) == NSEventModifierFlagCommand) {
         // The command key is the ONLY modifier key being pressed.
-        if ([[event charactersIgnoringModifiers] isEqualToString:@"c"]) {
+		NSString *characters = event.charactersIgnoringModifiers;
+        if ([characters isEqualToString:@"c"]) {
 			[self copy:self];
 			return YES;
         }
-		else if ([[event charactersIgnoringModifiers] isEqualToString:@"a"]) {
+		else if ([characters isEqualToString:@"a"]) {
 			[self selectAll:self];
 			return YES;
         }
-		else if ([[event charactersIgnoringModifiers] isEqualToString:@"w"] || [[event charactersIgnoringModifiers] isEqualToString:@"q"]) {
+		else if ([characters isEqualToString:@"w"] || [characters isEqualToString:@"q"]) {
 			[[self window] close];
 			return YES;
         }
@@ -40,7 +41,7 @@
 }
 
 - (void)copy:(id)sender {
-	if ([[[self selectedRanges] objectAtIndex:0] rangeValue].length == 0) {
+	if (self.selectedRanges[0].rangeValue.length == 0) {
 		[[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
 		[[NSPasteboard generalPasteboard] setString:self.string forType:NSStringPboardType];
 	}

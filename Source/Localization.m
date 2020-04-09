@@ -33,7 +33,6 @@ NSString *localizedWithFormat(NSString *key, ...) {
 	
 	NSString *format = localized(key);
 	NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
-	NSLog(@"");
 	va_end(args);
 	
 	return message;

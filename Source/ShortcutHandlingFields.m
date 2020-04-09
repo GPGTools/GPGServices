@@ -11,17 +11,22 @@
 @implementation ShortcutHandlingTextField
 
 - (BOOL)performKeyEquivalent:(NSEvent *)event {
-    if (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) == NSCommandKeyMask) {
+    if (([event modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask) == NSEventModifierFlagCommand) {
         // The command key is the ONLY modifier key being pressed.
-        if ([[event charactersIgnoringModifiers] isEqualToString:@"x"]) {
-            return [NSApp sendAction:@selector(cut:) to:[[self window] firstResponder] from:self];
-        } else if ([[event charactersIgnoringModifiers] isEqualToString:@"c"]) {
-            return [NSApp sendAction:@selector(copy:) to:[[self window] firstResponder] from:self];
-        } else if ([[event charactersIgnoringModifiers] isEqualToString:@"v"]) {
-            return [NSApp sendAction:@selector(paste:) to:[[self window] firstResponder] from:self];
-        } else if ([[event charactersIgnoringModifiers] isEqualToString:@"a"]) {
-            return [NSApp sendAction:@selector(selectAll:) to:[[self window] firstResponder] from:self];
+		SEL selector = nil;
+		NSString *characters = event.charactersIgnoringModifiers;
+        if ([characters isEqualToString:@"x"]) {
+			selector = @selector(cut:);
+        } else if ([characters isEqualToString:@"c"]) {
+			selector = @selector(copy:);
+        } else if ([characters isEqualToString:@"v"]) {
+			selector = @selector(paste:);
+        } else if ([characters isEqualToString:@"a"]) {
+			selector = @selector(selectAll:);
         }
+		if (selector) {
+            return [NSApp sendAction:selector to:self.window.firstResponder from:self];
+		}
     }
     return [super performKeyEquivalent:event];
 }
@@ -31,17 +36,22 @@
 @implementation ShortcutHandlingSearchField
 
 - (BOOL)performKeyEquivalent:(NSEvent *)event {
-    if (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) == NSCommandKeyMask) {
+    if (([event modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask) == NSEventModifierFlagCommand) {
         // The command key is the ONLY modifier key being pressed.
-        if ([[event charactersIgnoringModifiers] isEqualToString:@"x"]) {
-            return [NSApp sendAction:@selector(cut:) to:[[self window] firstResponder] from:self];
-        } else if ([[event charactersIgnoringModifiers] isEqualToString:@"c"]) {
-            return [NSApp sendAction:@selector(copy:) to:[[self window] firstResponder] from:self];
-        } else if ([[event charactersIgnoringModifiers] isEqualToString:@"v"]) {
-            return [NSApp sendAction:@selector(paste:) to:[[self window] firstResponder] from:self];
-        } else if ([[event charactersIgnoringModifiers] isEqualToString:@"a"]) {
-            return [NSApp sendAction:@selector(selectAll:) to:[[self window] firstResponder] from:self];
+		SEL selector = nil;
+		NSString *characters = event.charactersIgnoringModifiers;
+        if ([characters isEqualToString:@"x"]) {
+			selector = @selector(cut:);
+        } else if ([characters isEqualToString:@"c"]) {
+			selector = @selector(copy:);
+        } else if ([characters isEqualToString:@"v"]) {
+			selector = @selector(paste:);
+        } else if ([characters isEqualToString:@"a"]) {
+			selector = @selector(selectAll:);
         }
+		if (selector) {
+            return [NSApp sendAction:selector to:self.window.firstResponder from:self];
+		}
     }
     return [super performKeyEquivalent:event];
 }
