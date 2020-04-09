@@ -72,6 +72,13 @@ static const NSUInteger kMaxVisibleItems = 4;
     [self showWindow:nil];
 }
 
+- (void)showWindow:(id)sender {
+	if (serviceWorkerArray.count > 0) {
+		// Only show the window, if there is something to show.
+		[super showWindow:sender];
+	}
+}
+
 - (void)hideWindow
 {
     if (_delayTimer) {
