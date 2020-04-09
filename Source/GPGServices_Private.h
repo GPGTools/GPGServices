@@ -15,6 +15,7 @@
 #import "GPGTempFile.h"
 #import "GKFingerprintTransformer.h"
 #import "SimpleTextWindow.h"
+#import "GPGSAlert.h"
 
 #import "Libmacgpg/GPGFileStream.h"
 #import "Libmacgpg/GPGMemoryStream.h"

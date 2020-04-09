@@ -11,6 +11,8 @@
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
+		301D929A243B32C400E667F9 /* GPGSAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 301D9298243B32C400E667F9 /* GPGSAlert.m */; };
+		301D929B243B32C400E667F9 /* GPGSAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 301D9299243B32C400E667F9 /* GPGSAlert.xib */; };
 		301E96B02175F2310081B43D /* GPGAltTitleTableColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = 301E96AF2175F2310081B43D /* GPGAltTitleTableColumn.m */; };
 		3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3021FB1415D83ED300510CA8 /* SimpleTextView.m */; };
 		302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D316D41BCF00C05409 /* Libmacgpg.framework */; };
@@ -132,6 +134,9 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		301D9297243B32C400E667F9 /* GPGSAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPGSAlert.h; path = Source/GPGSAlert.h; sourceTree = "<group>"; };
+		301D9298243B32C400E667F9 /* GPGSAlert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GPGSAlert.m; path = Source/GPGSAlert.m; sourceTree = "<group>"; };
+		301D9299243B32C400E667F9 /* GPGSAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GPGSAlert.xib; sourceTree = "<group>"; };
 		301E96AE2175F2310081B43D /* GPGAltTitleTableColumn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPGAltTitleTableColumn.h; path = Source/GPGAltTitleTableColumn.h; sourceTree = "<group>"; };
 		301E96AF2175F2310081B43D /* GPGAltTitleTableColumn.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GPGAltTitleTableColumn.m; path = Source/GPGAltTitleTableColumn.m; sourceTree = "<group>"; };
 		301E96BC21760B3E0081B43D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PrivateKeyChooserWindow.xib; sourceTree = "<group>"; };
@@ -380,6 +385,7 @@
 		30B2057B14D56F3900AE9583 /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				301D9299243B32C400E667F9 /* GPGSAlert.xib */,
 				30E6C9B91AB30EF4001541A3 /* MainMenu.xib */,
 				3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */,
 				3058B7CE14D56C6400AA8881 /* RecipientWindow.xib */,
@@ -417,6 +423,8 @@
 				45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */,
 				301E96AE2175F2310081B43D /* GPGAltTitleTableColumn.h */,
 				301E96AF2175F2310081B43D /* GPGAltTitleTableColumn.m */,
+				301D9297243B32C400E667F9 /* GPGSAlert.h */,
+				301D9298243B32C400E667F9 /* GPGSAlert.m */,
 			);
 			name = "UI Classes";
 			sourceTree = "<group>";
@@ -564,6 +572,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				301D929B243B32C400E667F9 /* GPGSAlert.xib in Resources */,
 				30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */,
 				30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */,
 				30E6C9BA1AB30EF4001541A3 /* MainMenu.xib in Resources */,
@@ -668,6 +677,7 @@
 				8EFFC22A1361009400712940 /* DummyVerificationController.m in Sources */,
 				8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */,
 				45DD3DDA1565729000C9A4C1 /* InProgressWindowController.m in Sources */,
+				301D929A243B32C400E667F9 /* GPGSAlert.m in Sources */,
 				45DD3DDE156579FF00C9A4C1 /* ServiceWorker.m in Sources */,
 				45DD3DE115657C4900C9A4C1 /* ServiceWrappedOperation.m in Sources */,
 				303B51E621FF09C50061CE1F /* Localization.m in Sources */,
