@@ -7,72 +7,16 @@
 //
 
 #import "GPGServices.h"
+#import "GPGServices_Private.h"
 
-#import "RecipientWindowController.h"
-#import "KeyChooserWindowController.h"
-#import "FileVerificationController.h"
-#import "DummyVerificationController.h"
-#import "InProgressWindowController.h"
-#import "ServiceWorker.h"
-#import "ServiceWorkerDelegate.h"
-#import "ServiceWrappedArgs.h"
-#import "GPGTempFile.h"
-#import "GKFingerprintTransformer.h"
-
-#import "Libmacgpg/GPGFileStream.h"
-#import "Libmacgpg/GPGMemoryStream.h"
-#import <Libmacgpg/Libmacgpg.h>
-#import "ZipOperation.h"
-#import "ZipKit/ZKArchive.h"
-#import "NSPredicate+negate.h"
-#import "GPGKey+utils.h"
-#import "Localization.h"
-
-#define SIZE_WARNING_LEVEL_IN_MB 10
 static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 static NSString *const tempTemplate = @"_gpg(XXX).tmp";
 static NSUInteger const suffixLen = 5;
 
 
-@interface GPGServices () <GPGControllerDelegate>
-- (void)removeWorker:(id)worker;
-- (void)displayOperationFinishedNotificationWithTitleOnMain:(NSArray *)args;
-- (void)displayOperationFailedNotificationWithTitleOnMain:(NSArray *)args;
-- (void)displaySignatureVerificationForSigOnMain:(GPGSignature *)sig;
 
-// Pass in an array of files.
-// singleFmt should include %@ for the file name (e.g., "Decrypting %@");
-// pluralFmt should include %u for [files count] (e.g., "Decrypting %u files");
-- (NSString *)describeOperationForFiles:(NSArray *)files
-						  singleFileFmt:(NSString *)singleFmt
-						 pluralFilesFmt:(NSString *)pluralFmt;
 
-// Pass in an array of files and successCount
-// singleFmt should include %@ for the file name (e.g., "Decrypted %@");
-// singleFailFmt should include %@ for the file name (e.g., "Failed to decrypt %@")
-// pluralFmt should include %1$u for successCount and %2$u for [files count]
-// (e.g., "Decrypted %1$u of %2$u files");
-- (NSString *)describeCompletionForFiles:(NSArray *)files
-							successCount:(NSUInteger)successCount
-						   singleFileFmt:(NSString *)singleFmt
-						   singleFailFmt:(NSString *)singleFailFmt
-						  pluralFilesFmt:(NSString *)pluralFmt;
-- (void)signFilesSync:(ServiceWrappedArgs *)wrappedArgs;
-- (void)decryptFilesSync:(ServiceWrappedArgs *)wrappedArgs;
-- (void)encryptFilesSync:(ServiceWrappedArgs *)wrappedArgs;
-- (void)verifyFilesSync:(ServiceWrappedArgs *)wrappedArgs;
-- (void)importFilesSync:(ServiceWrappedArgs *)wrappedArgs;
 
-// to allow easily putting under a new NSAutoreleasePool
-
-- (void)signFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
-- (void)encryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
-- (void)decryptFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
-- (void)verifyFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
-- (void)importFilesWrapped:(ServiceWrappedArgs *)wrappedArgs;
-- (NSString *)detachedSignFileWrapped:(ServiceWrappedArgs *)wrappedArgs file:(NSString *)file withKeys:(NSArray *)keys;
-
-@end
 
 @implementation GPGServices
 

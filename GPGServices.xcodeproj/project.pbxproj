@@ -154,6 +154,7 @@
 		30843DF422F9C3F2001F9D4F /* GPGServices.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = GPGServices.icns; sourceTree = "<group>"; };
 		3086A47821A56C960004387C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3086A47F21A56C980004387C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		309604BA2434BE9A00AC25CF /* GPGServices_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPGServices_Private.h; path = Source/GPGServices_Private.h; sourceTree = "<group>"; };
 		30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleTextWindow.xib; sourceTree = "<group>"; };
 		30CC112215D7ECAF000DC2C5 /* SimpleTextWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextWindow.h; path = Source/SimpleTextWindow.h; sourceTree = "<group>"; };
 		30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextWindow.m; path = Source/SimpleTextWindow.m; sourceTree = "<group>"; };
@@ -240,6 +241,7 @@
 			children = (
 				8E1BC3D6134B977500C1BFD6 /* UI Classes */,
 				4B1908BF0A4CBF0B00052798 /* GPGServices.h */,
+				309604BA2434BE9A00AC25CF /* GPGServices_Private.h */,
 				4B1908C00A4CBF0B00052798 /* GPGServices.m */,
 				30753EA120DA839400C667CA /* GKFingerprintTransformer.h */,
 				30753EA220DA839400C667CA /* GKFingerprintTransformer.m */,

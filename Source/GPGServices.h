@@ -4,55 +4,26 @@
 //
 //  Created by Robert Goldsmith on 24/06/2006.
 //  Copyright 2006 far-blue.co.uk. All rights reserved.
+//  Modified by Mento © 2020.
 //
 
 #import <Cocoa/Cocoa.h>
-//#import <MacGPGME/MacGPGME.h>
 #import "Libmacgpg/Libmacgpg.h"
-#import "ServiceWorkerDelegate.h"
-#import "SimpleTextWindow.h"
+#import <UserNotifications/UserNotifications.h>
 
 typedef BOOL(^KeyValidatorT)(GPGKey* key);
 
-typedef enum {
-    SignService, 
-    EncryptService, 
-    DecryptService, 
-    VerifyService, 
-    MyKeyService, 
-    MyFingerprintService, 
-    ImportKeyService,
-} ServiceModeEnum;
-
-typedef enum {
-    SignFileService, 
-    EncryptFileService, 
-    DecryptFileService, 
-    VerifyFileService,
-    ImportFileService,
-} FileServiceModeEnum;
+@interface GPGServices : NSObject
 
 
 
-@class InProgressWindowController;
-
-@interface GPGServices : NSObject <NSApplicationDelegate, ServiceWorkerDelegate, SimpleTextWindowDelegate> {
-	IBOutlet NSWindow *recipientWindow;
-		
-	NSTimer *currentTerminateTimer;
-	int terminateCounter;
-
-    InProgressWindowController *_inProgressCtlr;
-}
-
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
+- (void)cancelTerminateTimer;
+- (void)goneIn60Seconds;
 
 
 #pragma mark -
 #pragma mark GPG-Helper
 
-- (void)importKeyFromData:(NSData*)inputData;
-- (void)importKey:(NSString *)inputString;
 + (NSSet*)myPrivateKeys;
 + (GPGKey*)myPrivateKey;
 + (NSString *)myPrivateFingerprint;
@@ -64,47 +35,9 @@ typedef enum {
 + (KeyValidatorT)canEncryptValidator;
 + (KeyValidatorT)isActiveValidator;
 
-#pragma mark -
-#pragma mark Text Stuff
-
--(NSString *)myFingerprint;
--(NSString *)myKey;
--(NSString *)signTextString:(NSString *)inputString;
--(NSString *)encryptTextString:(NSString *)inputString;
--(NSString *)decryptTextString:(NSString *)inputString;
--(void)verifyTextString:(NSString *)inputString;
-
-
-#pragma mark -
-#pragma mark File Stuff
-
-- (NSString*)normalizedAndUniquifiedPathFromPath:(NSString*)path;
-- (NSNumber*)folderSize:(NSString *)folderPath;
-- (NSNumber*)sizeOfFiles:(NSArray*)files;
-
-- (void)signFiles:(NSArray*)files;
-- (void)encryptFiles:(NSArray*)files;
-- (void)decryptFiles:(NSArray*)files; 
-- (void)verifyFiles:(NSArray*)files;
-- (void)importFiles:(NSArray*)files;
-
-#pragma mark NSPredicates for filtering file arrays
-
-- (NSPredicate*)fileExistsPredicate;
-- (NSPredicate*)isDirectoryPredicate;
-//- (NSPredicate*)isZipPredicate;
 
 #pragma mark -
 #pragma mark Service handling routines
-
--(void)dealWithPasteboard:(NSPasteboard *)pboard
-                 userData:(NSString *)userData 
-                     mode:(ServiceModeEnum)mode
-                    error:(NSString **)error;
--(void)dealWithFilesPasteboard:(NSPasteboard *)pboard
-                      userData:(NSString *)userData
-                          mode:(FileServiceModeEnum)mode
-                         error:(NSString **)error;
 
 -(void)sign:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)encrypt:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
@@ -114,25 +47,10 @@ typedef enum {
 -(void)myFingerprint:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 -(void)importKey:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 
--(void)signFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
--(void)encryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
--(void)decryptFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
--(void)validateFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
--(void)importFile:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error;
 
 #pragma mark -
 #pragma mark UI Helpher
 
-- (void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body;
-- (void)displayOperationFinishedNotificationWithTitle:(NSString*)title message:(NSString*)body;
-- (void)displayOperationFailedNotificationWithTitle:(NSString*)title message:(NSString*)body;
-- (void)displaySignatureVerificationForSig:(GPGSignature*)sig;
-- (IBAction)closeModalWindow:(id)sender;
-- (NSURL*)getFilenameForSavingWithSuggestedPath:(NSString*)path
-                         withSuggestedExtension:(NSString*)ext;
 
-- (void)cancelTerminateTimer;
-- (void)goneIn60Seconds;
-- (void)selfQuit:(NSTimer *)timer;
 
 @end
