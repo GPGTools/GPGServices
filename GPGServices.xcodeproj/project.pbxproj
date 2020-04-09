@@ -43,7 +43,6 @@
 		8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */; };
 		8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E472FEA1361CED6009462E4 /* ShortcutHandlingFields.m */; };
 		8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */; };
-		8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E935E64135128C6004E3E4F /* FileVerificationController.m */; };
 		8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */; };
 		8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDC40F7133F6C5500D0A101 /* ZipOperation.m */; };
 		8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */; };
@@ -208,8 +207,6 @@
 		8E7341A21334BC1C003CBCEB /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		8E8837C513311F5B0044EFFF /* KeyChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyChooserWindowController.h; path = Source/KeyChooserWindowController.h; sourceTree = "<group>"; };
 		8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChooserWindowController.m; path = Source/KeyChooserWindowController.m; sourceTree = "<group>"; };
-		8E935E63135128C6004E3E4F /* FileVerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileVerificationController.h; path = Source/FileVerificationController.h; sourceTree = "<group>"; };
-		8E935E64135128C6004E3E4F /* FileVerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileVerificationController.m; path = Source/FileVerificationController.m; sourceTree = "<group>"; };
 		8EC096F213381AAC00958E8D /* KeyChooserDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyChooserDataSource.h; path = Source/KeyChooserDataSource.h; sourceTree = "<group>"; };
 		8EC096F313381AAC00958E8D /* KeyChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChooserDataSource.m; path = Source/KeyChooserDataSource.m; sourceTree = "<group>"; };
 		8ED7990B135CAB60004C89D5 /* sig.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = sig.icns; sourceTree = "<group>"; };
@@ -409,8 +406,6 @@
 				8E8837C613311F5B0044EFFF /* KeyChooserWindowController.m */,
 				22D6D9C913267E0C00622189 /* RecipientWindowController.h */,
 				22D6D9CA13267E0C00622189 /* RecipientWindowController.m */,
-				8E935E63135128C6004E3E4F /* FileVerificationController.h */,
-				8E935E64135128C6004E3E4F /* FileVerificationController.m */,
 				8EFFC2251360FBAC00712940 /* FileVerificationDataSource.h */,
 				8EFFC2261360FBAC00712940 /* FileVerificationDataSource.m */,
 				8EFFC2281361009400712940 /* DummyVerificationController.h */,
@@ -676,7 +671,6 @@
 				8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */,
 				8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */,
 				8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */,
-				8E935E65135128C6004E3E4F /* FileVerificationController.m in Sources */,
 				8EFFC2271360FBAC00712940 /* FileVerificationDataSource.m in Sources */,
 				8EFFC22A1361009400712940 /* DummyVerificationController.m in Sources */,
 				8E472FEB1361CED6009462E4 /* ShortcutHandlingFields.m in Sources */,

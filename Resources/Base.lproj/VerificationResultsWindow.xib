@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="FileVerificationController">
+        <customObject id="-2" userLabel="File's Owner" customClass="DummyVerificationController">
             <connections>
                 <outlet property="dataSource" destination="112" id="113"/>
                 <outlet property="indicator" destination="73" id="110"/>

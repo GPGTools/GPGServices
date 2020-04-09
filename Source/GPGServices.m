@@ -1436,10 +1436,10 @@ static NSUInteger const suffixLen = 5;
 
 		// Do the file stuff here to be able to check if file is already in verification
 		NSString *signedFile = serviceFile;
-		NSString *signatureFile = [FileVerificationController searchSignatureFileForFile:signedFile];
+		NSString *signatureFile = [GPGServices searchSignatureFileForFile:signedFile];
 		if (signatureFile == nil) {
 			signatureFile = serviceFile;
-			signedFile = [FileVerificationController searchFileForSignatureFile:signatureFile];
+			signedFile = [GPGServices searchFileForSignatureFile:signatureFile];
 		}
 		if (signedFile == nil) {
 			signedFile = serviceFile;
@@ -2286,6 +2286,34 @@ static NSUInteger const suffixLen = 5;
 	}
 	
 	return descriptions.copy;
+}
+
+
+
++ (NSString*)searchFileForSignatureFile:(NSString*)sigFile {
+    NSFileManager* fmgr = [[NSFileManager alloc] init];
+    
+    NSString* file = [sigFile stringByDeletingPathExtension];
+    BOOL isDir = NO;
+    if([fmgr fileExistsAtPath:file isDirectory:&isDir] && !isDir)
+        return file;
+    else
+        return nil;
+}
+
++ (NSString*)searchSignatureFileForFile:(NSString*)sigFile {
+    NSFileManager* fmgr = [[NSFileManager alloc] init];
+    
+    NSSet* exts = [NSSet setWithObjects:@".sig", @".asc", nil];
+    
+    for(NSString* ext in exts) {
+        NSString* file = [sigFile stringByAppendingString:ext];
+        BOOL isDir = NO;
+        if([fmgr fileExistsAtPath:file isDirectory:&isDir] && !isDir)
+            return file;
+    }
+    
+    return nil;
 }
 
 
