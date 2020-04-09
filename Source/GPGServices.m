@@ -1272,7 +1272,6 @@ static NSUInteger const suffixLen = 5;
 						dummyController = [[DummyVerificationController alloc]
 										   initWithWindowNibName:@"VerificationResultsWindow"];
 						[dummyController showWindow:self]; // now thread-safe
-						dummyController.isActive = YES; // now thread-safe
 					}
 
 					for (GPGSignature *sig in ctx.signatures) {
@@ -1386,7 +1385,6 @@ static NSUInteger const suffixLen = 5;
 	
 
 	if (dummyController) {
-		dummyController.isActive = NO;
 		[dummyController performSelectorOnMainThread:@selector(runModal) withObject:nil waitUntilDone:NO];
 	} else {
 		[self displayOperationFinishedNotificationWithTitle:title message:message];
@@ -1426,7 +1424,6 @@ static NSUInteger const suffixLen = 5;
 	fvc = [[DummyVerificationController alloc]
 			initWithWindowNibName:@"VerificationResultsWindow"];
 	[fvc showWindow:self]; // now thread-safe
-	fvc.isActive = YES; // now thread-safe
 
 	for (NSString *serviceFile in files) {
 		// check before operation

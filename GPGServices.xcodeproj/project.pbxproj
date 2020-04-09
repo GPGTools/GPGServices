@@ -20,6 +20,7 @@
 		305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */; };
 		30753EA320DA839400C667CA /* GKFingerprintTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 30753EA220DA839400C667CA /* GKFingerprintTransformer.m */; };
 		30843DF522F9C3F2001F9D4F /* GPGServices.icns in Resources */ = {isa = PBXBuildFile; fileRef = 30843DF422F9C3F2001F9D4F /* GPGServices.icns */; };
+		3093A2F02428B3970031A764 /* VerificationResultsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3093A2EF2428B3970031A764 /* VerificationResultsWindow.m */; };
 		30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */; };
 		30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CE14D56C6400AA8881 /* RecipientWindow.xib */; };
 		30B2057314D56F1E00AE9583 /* VerificationResultsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7D114D56C6700AA8881 /* VerificationResultsWindow.xib */; };
@@ -158,6 +159,8 @@
 		30843DF422F9C3F2001F9D4F /* GPGServices.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = GPGServices.icns; sourceTree = "<group>"; };
 		3086A47821A56C960004387C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3086A47F21A56C980004387C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3093A2EE2428B3970031A764 /* VerificationResultsWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VerificationResultsWindow.h; path = Source/VerificationResultsWindow.h; sourceTree = "<group>"; };
+		3093A2EF2428B3970031A764 /* VerificationResultsWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VerificationResultsWindow.m; path = Source/VerificationResultsWindow.m; sourceTree = "<group>"; };
 		309604BA2434BE9A00AC25CF /* GPGServices_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPGServices_Private.h; path = Source/GPGServices_Private.h; sourceTree = "<group>"; };
 		30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleTextWindow.xib; sourceTree = "<group>"; };
 		30CC112215D7ECAF000DC2C5 /* SimpleTextWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextWindow.h; path = Source/SimpleTextWindow.h; sourceTree = "<group>"; };
@@ -420,6 +423,8 @@
 				301E96AF2175F2310081B43D /* GPGAltTitleTableColumn.m */,
 				301D9297243B32C400E667F9 /* GPGSAlert.h */,
 				301D9298243B32C400E667F9 /* GPGSAlert.m */,
+				3093A2EE2428B3970031A764 /* VerificationResultsWindow.h */,
+				3093A2EF2428B3970031A764 /* VerificationResultsWindow.m */,
 			);
 			name = "UI Classes";
 			sourceTree = "<group>";
@@ -670,6 +675,7 @@
 				8EC096F413381AAC00958E8D /* KeyChooserDataSource.m in Sources */,
 				8EDC40F8133F6C5500D0A101 /* ZipOperation.m in Sources */,
 				8EE8998B1348B92B004A3266 /* NSPredicate+negate.m in Sources */,
+				3093A2F02428B3970031A764 /* VerificationResultsWindow.m in Sources */,
 				8E1BC428134D013600C1BFD6 /* GPGKey+utils.m in Sources */,
 				8EFFC2271360FBAC00712940 /* FileVerificationDataSource.m in Sources */,
 				8EFFC22A1361009400712940 /* DummyVerificationController.m in Sources */,

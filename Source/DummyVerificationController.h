@@ -11,20 +11,23 @@
 @class FileVerificationDataSource;
 @class GPGSignature;
 
-@interface DummyVerificationController : NSWindowController {
+@interface DummyVerificationController : NSWindowController <NSWindowDelegate> {
 @private
     IBOutlet NSTableView* tableView;
     IBOutlet NSProgressIndicator* indicator;
     IBOutlet FileVerificationDataSource* dataSource;
     
-    BOOL _isActive;
+	BOOL _terminateCanceled; // YES when the controller already called GPGServices -cancelTerminateTimer.
+	id __strong _selfRetain; // Used to stay alive as long as the window is visiable.
 }
 
-// thread-safe
-@property (assign, nonatomic) BOOL isActive;
+@property (nonatomic, weak) IBOutlet NSScrollView *scrollView;
+@property (nonatomic, weak) IBOutlet NSView *scrollIndicator;
+@property (nonatomic, weak) IBOutlet NSButton *okButton;
 
 // thread-safe
 - (void)showWindow:(id)sender;
++ (instancetype)verificationController;
 // thread-safe
 - (void)addResults:(NSDictionary*)results;
 // thread-safe
