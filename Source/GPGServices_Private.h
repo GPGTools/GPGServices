@@ -25,6 +25,7 @@
 #import "NSPredicate+negate.h"
 #import "GPGKey+utils.h"
 #import "Localization.h"
+#import <UserNotifications/UserNotifications.h>
 
 typedef enum {
     SignService,

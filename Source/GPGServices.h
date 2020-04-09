@@ -51,6 +51,7 @@ typedef BOOL(^KeyValidatorT)(GPGKey* key);
 #pragma mark -
 #pragma mark UI Helpher
 
+- (void)displayNotificationWithTitle:(NSString *)title message:(NSString *)message files:(NSArray *)files userInfo:(NSDictionary *)userInfo failed:(BOOL)failed;
 
 
 @end

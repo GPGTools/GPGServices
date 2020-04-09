@@ -30,6 +30,7 @@
 		30CC110C15D7E6BF000DC2C5 /* SimpleTextWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */; };
 		30CC112415D7ECAF000DC2C5 /* SimpleTextWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */; };
 		30E6C9BA1AB30EF4001541A3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30E6C9B91AB30EF4001541A3 /* MainMenu.xib */; };
+		30E834A02355BAF300332482 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E834992355BAF300332482 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D886B156ABFAD00A0B890 /* GPGTempFile.m */; };
 		45715A0C156D4BD100E5E7DD /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45715A0E156D4BD100E5E7DD /* ServicesMenu.strings */; };
 		45C2B9E31565AEC300B3571A /* WorkerProgressViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2B9E21565AEC300B3571A /* WorkerProgressViewItem.m */; };
@@ -166,6 +167,7 @@
 		30CC112215D7ECAF000DC2C5 /* SimpleTextWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextWindow.h; path = Source/SimpleTextWindow.h; sourceTree = "<group>"; };
 		30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextWindow.m; path = Source/SimpleTextWindow.m; sourceTree = "<group>"; };
 		30E6C9B91AB30EF4001541A3 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		30E834992355BAF300332482 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		30FE4A1A21A56CBB0013D508 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		30FE4A2121A56CCF0013D508 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		30FE4A2221A56CD70013D508 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30E834A02355BAF300332482 /* UserNotifications.framework in Frameworks */,
 				1B57171217A812B300B96393 /* Security.framework in Frameworks */,
 				302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */,
 				2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */,
@@ -355,6 +358,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				30E834992355BAF300332482 /* UserNotifications.framework */,
 				1B57171117A812B300B96393 /* Security.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,

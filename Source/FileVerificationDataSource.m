@@ -9,127 +9,56 @@
 #import <Cocoa/Cocoa.h>
 //#import <MacGPGME/MacGPGME.h>
 #import "Libmacgpg/Libmacgpg.h"
-#import "Localization.h"
 
 #import "FileVerificationDataSource.h"
 
-@interface FileVerificationDataSource ()
-
-- (void)addResultsOnMain:(NSDictionary*)results;
-- (void)addResultFromSigOnMain:(NSArray *)args;
-
+@interface FileVerificationDataSource () <NSTableViewDataSource, NSTableViewDelegate>
+@property (nonatomic, weak) IBOutlet NSTableView *tableView;
+@property (nonatomic, strong) NSMutableArray *verificationResults;
 @end
 
 @implementation FileVerificationDataSource
 
-@synthesize isActive, verificationResults;
-
 - (id)init {
     self = [super init];
     
-    verificationResults = [[NSMutableArray alloc] init];
+    _verificationResults = [NSMutableArray new];
     
     return self;
 }
 
-
-- (void)addResults:(NSDictionary*)results {
-    [self performSelectorOnMainThread:@selector(addResultsOnMain:) withObject:results waitUntilDone:NO];
+- (void)setTableView:(NSTableView *)tableView {
+	_tableView = tableView;
+	_tableView.intercellSpacing = NSMakeSize(3, 8);
+	_tableView.usesAutomaticRowHeights = YES;
 }
 
-// called by addResults:
-- (void)addResultsOnMain:(NSDictionary*)results {
-    [self willChangeValueForKey:@"verificationResults"];
-    [verificationResults addObject:results];
-    [self didChangeValueForKey:@"verificationResults"];
+
+- (void)addResults:(NSArray<NSDictionary *> *)results {
+	NSAssert([NSThread isMainThread], @"-addResultsFromSigs:forFile: called on background thread.");
+	
+	[_verificationResults addObjectsFromArray:results];
 }
 
-- (void)addResultFromSig:(GPGSignature*)sig forFile:(NSString*)file {
-    [self performSelectorOnMainThread:@selector(addResultFromSigOnMain:) 
-                           withObject:[NSArray arrayWithObjects:sig, file, nil] 
-                        waitUntilDone:NO];
+
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+	return _verificationResults.count;
 }
-
-- (void)addResultFromSigOnMain:(NSArray *)args {
-    GPGSignature *sig = [args objectAtIndex:0];
-    NSString *file = [args objectAtIndex:1];
-    NSDictionary* result = nil;
-    
-    id verificationResult = nil;
-    NSColor* bgColor = nil;
-    
-    if([sig status] == GPGErrorNoError) {
-        GPGValidity validity = sig.trust;
-
-        switch (validity) {
-            case GPGValidityNever:
-                bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
-                break;
-            case GPGValidityMarginal: 
-                bgColor = [NSColor colorWithCalibratedRed:0.9 green:0.8 blue:0.0 alpha:1.0];
-                break;
-            case GPGValidityFull:
-                bgColor = [NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0];
-                break;
-            case GPGValidityUltimate:
-                bgColor = [NSColor colorWithCalibratedRed:0.0 green:0.8 blue:0.0 alpha:1.0];
-                break;
-            default:
-                bgColor = [NSColor clearColor];
-				break;
-       }
-        
-		
-		NSString *formattedFingerprint = [[GPGFingerprintTransformer new] transformedValue:sig.fingerprint];
-		
-		NSString *string1 = localizedWithFormat(@"Signed by: %1$@ (%2$@) – ", sig.userIDDescription, formattedFingerprint);
-		NSMutableAttributedString *resultString = [[NSMutableAttributedString alloc] initWithString:string1 attributes:nil];
-		
-		NSDictionary *attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:[NSFont systemFontSize]], NSBackgroundColorAttributeName: bgColor};
-		
-		NSString *validityDesc = [NSString stringWithFormat:@"%@ %@", [[GPGValidityDescriptionTransformer new] transformedValue:@(validity)], localized(@"trust")];
-		NSAttributedString *trustString = [[NSAttributedString alloc] initWithString:validityDesc attributes:attributes];
-		[resultString appendAttributedString:trustString];
-		
-		NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-		style.lineBreakMode = NSLineBreakByTruncatingMiddle;
-		[resultString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, resultString.length)];
-		
-		//let attributes = [NSParagraphStyleAttributeName:style]
-		
-		//attributedString.addAttributes(attributes, range:  range )
-
-		
-		verificationResult = resultString;
-		
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+	NSString *identifier = tableColumn.identifier;
+	NSTableCellView *cellView = [tableView makeViewWithIdentifier:identifier owner:self];
+	
+	if ([identifier isEqualToString:@"filename"]) {
+		cellView.textField.stringValue = _verificationResults[row][@"filename"];
+	} else if ([identifier isEqualToString:@"result"]) {
+		cellView.textField.attributedStringValue = _verificationResults[row][@"verificationResult"];
 	} else {
-        bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
-        
-        // Should really call GPGErrorDescription but Libmacgpg nolonger offer that.
-		NSString *failed = localized(@"FAILED");
-		verificationResult = localizedWithFormat(@"Verification %1$@: %2$@ (Code: %3$i)", failed, sig.humanReadableDescription, sig.status);
-		
-        NSMutableAttributedString* tmp = [[NSMutableAttributedString alloc] initWithString:verificationResult
-                                                                                 attributes:nil];
-        NSRange range = [verificationResult rangeOfString:failed];
-        [tmp addAttribute:NSFontAttributeName 
-                    value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]           
-                    range:range];
-        [tmp addAttribute:NSBackgroundColorAttributeName 
-                    value:bgColor
-                    range:range];
-        
-        verificationResult = (NSString*)tmp;
-    }
-    
-    
-    //Add to results
-    result = [NSDictionary dictionaryWithObjectsAndKeys:
-              [file lastPathComponent], @"filename",
-              verificationResult, @"verificationResult", 
-              nil];
-    
-    [self addResults:result];
+		NSAssert(NO, @"Unkown column identifier!");
+		return nil;
+	}
+	
+	return cellView;
 }
 
 @end

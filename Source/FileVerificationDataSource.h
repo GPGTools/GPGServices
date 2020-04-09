@@ -10,17 +10,11 @@
 
 @class GPGSignature;
 
-@interface FileVerificationDataSource : NSObject {
-    NSMutableArray* verificationResults;
-    BOOL isActive;
-}
+@interface FileVerificationDataSource : NSObject
 
-@property(readonly) NSArray* verificationResults;
-@property(assign) BOOL isActive;
+@property (nonatomic, readonly) NSArray *verificationResults;
 
-// thread-safe
-- (void)addResults:(NSDictionary*)results;
-// thread-safe
-- (void)addResultFromSig:(GPGSignature*)sig forFile:(NSString*)file;
+// not thread-safe
+- (void)addResults:(NSArray<NSDictionary *> *)results;
 
 @end

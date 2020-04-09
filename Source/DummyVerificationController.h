@@ -25,16 +25,18 @@
 @property (nonatomic, weak) IBOutlet NSView *scrollIndicator;
 @property (nonatomic, weak) IBOutlet NSButton *okButton;
 
+- (IBAction)okClicked:(id)sender;
+
+
+// thread-safe
++ (instancetype)verificationController;
+
+// thread-safe
+- (id)initWithWindowNibName:(NSString *)windowNibName;
 // thread-safe
 - (void)showWindow:(id)sender;
-+ (instancetype)verificationController;
 // thread-safe
-- (void)addResults:(NSDictionary*)results;
-// thread-safe
-- (void)addResultFromSig:(GPGSignature*)sig forFile:(NSString*)file;
-// thread-safe
-- (NSInteger)runModal;
+- (void)addResults:(NSArray<NSDictionary *> *)results;
 
-- (IBAction)okClicked:(id)sender;
 
 @end

@@ -13,8 +13,6 @@
 @interface DummyVerificationController (ThreadSafety)
 
 - (void)showWindowOnMain:(id)sender;
-- (void)addResultsOnMain:(NSDictionary *)results;
-- (void)addResultFromSigOnMain:(NSArray *)args;
 - (void)runModalOnMain:(NSMutableArray *)resHolder;
 
 @end
@@ -76,27 +74,18 @@
 	}
 }
 
-- (void)addResults:(NSDictionary*)results {
-    [self performSelectorOnMainThread:@selector(addResultsOnMain:) withObject:results waitUntilDone:NO];
+
+- (void)addResults:(NSArray<NSDictionary *> *)results {
+    [self performSelectorOnMainThread:@selector(addResultsOnMain:)
+						   withObject:results
+						waitUntilDone:NO];
+}
+- (void)addResultsOnMain:(NSArray<NSDictionary *> *)results {
+	[dataSource addResults:results];
+	[self adjustTableColumns];
+	[self showWindowOnMain:nil];
 }
 
-// called by addResults:
-- (void)addResultsOnMain:(NSDictionary *)results {
-    [dataSource addResults:results];
-}
-     
-- (void)addResultFromSig:(GPGSignature*)sig forFile:(NSString*)file {
-    [self performSelectorOnMainThread:@selector(addResultFromSigOnMain:) 
-                           withObject:[NSArray arrayWithObjects:sig, file, nil] 
-                        waitUntilDone:NO];
-}
-
-// called by addResultFromSig:forFile:
-- (void)addResultFromSigOnMain:(NSArray *)args {
-    GPGSignature *sig = [args objectAtIndex:0];
-    NSString *file = [args objectAtIndex:1];
-    [dataSource addResultFromSig:sig forFile:file];
-}
 
 - (IBAction)okClicked:(id)sender {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];

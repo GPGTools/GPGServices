@@ -13,8 +13,14 @@ static const float kBytesInMB = 1.e6; // Apple now uses this vs 2^20
 static NSString *const tempTemplate = @"_gpg(XXX).tmp";
 static NSUInteger const suffixLen = 5;
 
+static NSString *const showInFinderActionIdentifier = @"SHOW_IN_FINDER_ACTION";
+static NSString *const fileCategoryIdentifier = @"FILE_CATEGORY";
 
+static NSString *const VERIFICATION_RESULTS_KEY = @"verificationResults";
+static NSString *const OPERATION_IDENTIFIER_KEY = @"operationIdentifier";
+static NSString *const VERIFICATION_CONTROLLER_KEY = @"verificationController";
 
+static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDelay";
 
 
 
@@ -27,7 +33,44 @@ static NSUInteger const suffixLen = 5;
 
 	_inProgressCtlr = [[InProgressWindowController alloc] init];
 	
+	
+	if (@available(macOS 10.14, *)) {
+		UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+		center.delegate = self; // Without a working delegate, the notifications are only visible in the notification center and not on screen.
+
+		UNNotificationAction* showInFinderAction = [UNNotificationAction
+			  actionWithIdentifier:showInFinderActionIdentifier
+			  title:localized(@"Show in Finder")
+			  options:UNNotificationActionOptionNone];
+
+		UNNotificationCategory *fileNotificationCategory = [UNNotificationCategory
+			  categoryWithIdentifier:fileCategoryIdentifier
+			  actions:@[showInFinderAction]
+			  intentIdentifiers:@[]
+			  options:UNNotificationCategoryOptionCustomDismissAction];
+
+		[center setNotificationCategories:[NSSet setWithObjects:fileNotificationCategory, nil]];
+		
+		// Request authorization to show notifications.
+		[center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionAlert | UNAuthorizationOptionSound)
+							  completionHandler:^(BOOL granted, NSError * _Nullable error) {}];
+		
+		
+		UNNotificationResponse *response = aNotification.userInfo[NSApplicationLaunchUserNotificationKey];
+		if (response && [response isKindOfClass:[UNNotificationResponse class]]) {
+			[self performSelectorOnMainThread:@selector(handleNotificationResponseOnMain:)
+			   withObject:response
+			waitUntilDone:NO];
+		}
+	}
 }
+- (void)handleNotificationResponseOnMain:(UNNotificationResponse *)response __OSX_AVAILABLE(10.14) {
+	[self userNotificationCenter:[UNUserNotificationCenter currentNotificationCenter]
+  didReceiveNotificationResponse:response
+		   withCompletionHandler:^{}];
+}
+
+
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
 	[self cancelTerminateTimer];
@@ -657,6 +700,11 @@ static NSUInteger const suffixLen = 5;
 #pragma mark -
 #pragma mark File Stuff
 
+/**
+* @param files Pass in an array of files
+* @param singleFileFmt should include %@ for the file name (e.g., "Decrypting %@")
+* @param pluralFilesFmt should include %u for [files count] (e.g., "Decrypting %u files")
+*/
 - (NSString *)describeOperationForFiles:(NSArray *)files
 						  singleFileFmt:(NSString *)singleFmt
 						 pluralFilesFmt:(NSString *)pluralFmt {
@@ -671,6 +719,12 @@ static NSUInteger const suffixLen = 5;
 	return [NSString stringWithFormat:pluralFmt, fcount];
 }
 
+/**
+* @param files Pass in an array of files and successCount
+* @param singleFmt should include %@ for the file name (e.g., "Decrypted %@")
+* @param singleFailFmt should include %@ for the file name (e.g., "Failed to decrypt %@")
+* @param should include %1$u for successCount and %2$u for [files count] (e.g., "Decrypted %1$u of %2$u files")
+*/
 - (NSString *)describeCompletionForFiles:(NSArray *)files
 							successCount:(NSUInteger)successCount
 						   singleFileFmt:(NSString *)singleFmt
@@ -905,6 +959,7 @@ static NSUInteger const suffixLen = 5;
 		
 		
 		NSMutableArray *signedFiles = [NSMutableArray new];
+		NSMutableArray *sigFiles = [NSMutableArray new];
 
 		for (NSString *file in files) {
 			// check before starting an operation
@@ -922,6 +977,7 @@ static NSUInteger const suffixLen = 5;
 
 			if (sigFile != nil) {
 				[signedFiles addObject:file];
+				[sigFiles addObject:sigFile];
 			}
 		}
 
@@ -937,7 +993,9 @@ static NSUInteger const suffixLen = 5;
 											   singleFileFmt:localized(@"Signed %@" /*arg:filename*/)
 											   singleFailFmt:localized(@"Failed signing %@" /*arg:filename*/)
 											  pluralFilesFmt:localized(@"Signed %1$u of %2$u files" /*arg1:successCount; arg2:totalCount*/)];
-		[self displayOperationFinishedNotificationWithTitle:title message:message];
+		[self displayOperationFinishedNotificationWithTitle:title
+													message:message
+													  files:sigFiles];
 	}
 }
 
@@ -1074,10 +1132,7 @@ static NSUInteger const suffixLen = 5;
 	
 	ctx.forceFilename = originalName;
 
-	GPGStream *gpgData = nil;
-	if (dataProvider != nil) {
-		gpgData = dataProvider();
-	}
+	GPGStream *gpgData = dataProvider();
 
 	// write to a temporary location in the target directory
 	NSError *error = nil;
@@ -1142,7 +1197,8 @@ static NSUInteger const suffixLen = 5;
 
 	tempFile.shouldDeleteFileOnDealloc = NO;
 	[self displayOperationFinishedNotificationWithTitle:localized(@"Encryption finished")
-												message:[destination lastPathComponent]];
+												message:[destination lastPathComponent]
+												  files:@[destination]];
 }
 
 - (void)decryptFiles:(NSArray *)files {
@@ -1179,8 +1235,10 @@ static NSUInteger const suffixLen = 5;
 	NSMutableArray<NSDictionary *> *errors = [NSMutableArray new];
 	NSUInteger cancelledCount = 0;
 	
-	// has thread-safe methods as used here
-	DummyVerificationController *dummyController = nil;
+	NSMutableArray *allVerificationResults = [NSMutableArray new];
+	NSString *identifier = [NSUUID UUID].UUIDString; // A random identifier for this operation.
+	__block DummyVerificationController *verificationController = nil;
+	
 
 	for (NSString *file in files) {
 		// check before starting an operation
@@ -1197,12 +1255,10 @@ static NSUInteger const suffixLen = 5;
 
 				// write to a temporary location in the target directory
 				NSError *error = nil;
-				GPGTempFile *tempFile = [GPGTempFile tempFileForTemplate:
-										 [file stringByAppendingString:tempTemplate]
+				GPGTempFile *tempFile = [GPGTempFile tempFileForTemplate:[file stringByAppendingString:tempTemplate]
 															   suffixLen:suffixLen error:&error];
 				if (error) {
-					[self displayOperationFailedNotificationWithTitle:
-					 localized(@"Could not write to directory")
+					[self displayOperationFailedNotificationWithTitle:localized(@"Could not write to directory")
 															  message:[file stringByDeletingLastPathComponent]];
 					return;
 				}
@@ -1262,32 +1318,54 @@ static NSUInteger const suffixLen = 5;
 					[tempFile deleteFile];
 				} else {
 					tempFile.shouldDeleteFileOnDealloc = NO;
-					[decryptedFiles addObject:file];
+					[decryptedFiles addObject:outputFile];
 				}
 				
 
-				//
-				// Show any signatures encountered
-				//
-				if (ctx.signatures.count > 0) {
-					GPGDebugLog(@"found signatures: %@", ctx.signatures);
-
-					if (dummyController == nil) {
-						dummyController = [[DummyVerificationController alloc]
-										   initWithWindowNibName:@"VerificationResultsWindow"];
-						[dummyController showWindow:self]; // now thread-safe
+				
+				
+				
+				
+				if (!verificationController) {
+					// A click on a notification can show a verification controller. Get that controller, if it exists already.
+					NSDictionary *verificationOperation = [self verificationOperationForKey:identifier];
+					DummyVerificationController *tmp = verificationOperation[VERIFICATION_CONTROLLER_KEY];
+					if (tmp) {
+						verificationController = tmp;
 					}
-
-					for (GPGSignature *sig in ctx.signatures) {
-						[dummyController addResultFromSig:sig forFile:file];
-					}
-				} else if (dummyController != nil) {
-					// Add a line to mention that the file isn't signed
-					[dummyController addResults:[NSDictionary dictionaryWithObjectsAndKeys:
-												 [file lastPathComponent], @"filename",
-												 localized(@"No signatures found"), @"verificationResult",
-												 nil]];
 				}
+				
+				NSArray *results = [self verificationResultsFromSigs:ctx.signatures forFile:outputFile];
+				[allVerificationResults addObjectsFromArray:results];
+				
+				// Add the results to a, possible existing, verification controller. Most likely verificationController is nil here.
+				[verificationController addResults:results];
+
+				[self setVerificationOperation:[NSDictionary dictionaryWithObjectsAndKeys:
+												allVerificationResults.copy, VERIFICATION_RESULTS_KEY,
+												verificationController, VERIFICATION_CONTROLLER_KEY, nil]
+										forKey:identifier];
+
+				if (ctx.signatures.count > 0) {
+					[self displayNotificationWithVerficationResults:results
+														fullResults:allVerificationResults
+												operationIdentifier:identifier
+												  completionHandler:^(BOOL notificationDidShow) {
+						if (!notificationDidShow && !verificationController) {
+							// Can't show notifications and no verification controller is visible.
+							// Show a new verification controller.
+							verificationController = [DummyVerificationController verificationController]; // thread-safe
+							[verificationController addResults:allVerificationResults];
+							
+							// Remember the controller for this operation.
+							[self setVerificationOperation:[NSDictionary dictionaryWithObjectsAndKeys:
+															allVerificationResults.copy, VERIFICATION_RESULTS_KEY,
+															verificationController, VERIFICATION_CONTROLLER_KEY, nil]
+													forKey:identifier];
+						}
+					}];
+				}
+				
 			}
 		} @catch (NSException *ex) {
 			[errors addObject:@{@"exception": ex, @"file": file}];
@@ -1346,10 +1424,6 @@ static NSUInteger const suffixLen = 5;
 				default:
 					break;
 			}
-			
-			
-			
-			
 		}
 	}
 	
@@ -1387,12 +1461,10 @@ static NSUInteger const suffixLen = 5;
 	}
 
 	
-
-	if (dummyController) {
-		[dummyController performSelectorOnMainThread:@selector(runModal) withObject:nil waitUntilDone:NO];
-	} else {
-		[self displayOperationFinishedNotificationWithTitle:title message:message];
-	}
+	[self displayOperationFinishedNotificationWithTitle:title
+												message:message
+												  files:decryptedFiles.copy];
+	
 }
 
 - (void)verifyFiles:(NSArray *)files {
@@ -1415,19 +1487,17 @@ static NSUInteger const suffixLen = 5;
 }
 
 - (void)verifyFilesWrapped:(ServiceWrappedArgs *)wrappedArgs {
+
 	// files, though autoreleased, is safe here even when called async
 	// because it's retained by NSOperation that is wrapping the process
 	NSArray *files = wrappedArgs.arg1;
 
-	NSMutableSet *filesInVerification = [NSMutableSet set];
-	NSFileManager *fmgr = [[NSFileManager alloc] init];
-
-	// has thread-safe methods as used here
-	DummyVerificationController *fvc = nil;
-
-	fvc = [[DummyVerificationController alloc]
-			initWithWindowNibName:@"VerificationResultsWindow"];
-	[fvc showWindow:self]; // now thread-safe
+	NSMutableSet *filesInVerification = [NSMutableSet new];
+	NSFileManager *fmgr = [NSFileManager defaultManager];
+	NSMutableArray *allVerificationResults = [NSMutableArray new];
+	NSString *identifier = [NSUUID UUID].UUIDString; // A random identifier for this operation.
+	__block DummyVerificationController *verificationController = nil;
+	
 
 	for (NSString *serviceFile in files) {
 		// check before operation
@@ -1499,70 +1569,52 @@ static NSUInteger const suffixLen = 5;
 			}
 		}
 
-		if (sigs != nil) {
-			if (sigs.count == 0) {
-				id verificationResult = nil; // NSString or NSAttributedString
-				verificationResult = localized(@"Verification FAILED: No signatures found");
-
-				NSColor *bgColor = [NSColor colorWithCalibratedRed:0.8 green:0.0 blue:0.0 alpha:0.7];
-
-				NSRange range = [verificationResult rangeOfString:localized(@"FAILED" /*@"Matched in "Verification FAILED:"*/)];
-				verificationResult = [[NSMutableAttributedString alloc]
-									  initWithString:verificationResult];
-
-				if (range.location != NSNotFound) {
-					[verificationResult addAttribute:NSFontAttributeName
-											   value:[NSFont boldSystemFontOfSize:[NSFont systemFontSize]]
-											   range:range];
-					[verificationResult addAttribute:NSBackgroundColorAttributeName
-											   value:bgColor
-											   range:range];
-				}
-
-				NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
-										[signedFile lastPathComponent], @"filename",
-										verificationResult, @"verificationResult",
-										nil];
-				[fvc addResults:result];
-			} else if (sigs.count > 0) {
-				for (GPGSignature *sig in sigs) {
-					[fvc addResultFromSig:sig forFile:signedFile];
-				}
+		
+		
+		
+		if (!verificationController) {
+			// A click on a notification can show a verification controller. Get that controller, if it exists already.
+			NSDictionary *verificationOperation = [self verificationOperationForKey:identifier];
+			DummyVerificationController *tmp = verificationOperation[VERIFICATION_CONTROLLER_KEY];
+			if (tmp) {
+				verificationController = tmp;
 			}
-		} else {
-			[fvc addResults:[NSDictionary dictionaryWithObjectsAndKeys:
-							 [signedFile lastPathComponent], @"filename",
-							 localized(@"No verifiable data found"), @"verificationResult",
-							 nil]];
 		}
+		
+		
+		NSArray *results = [self verificationResultsFromSigs:sigs forFile:signedFile];
+		[allVerificationResults addObjectsFromArray:results];
+		
+		// Add the results to a, possible existing, verification controller. Most likely verificationController is nil here.
+		[verificationController addResults:results];
+		
+		[self setVerificationOperation:[NSDictionary dictionaryWithObjectsAndKeys:
+										allVerificationResults.copy, VERIFICATION_RESULTS_KEY,
+										verificationController, VERIFICATION_CONTROLLER_KEY, nil]
+								forKey:identifier];
+		
+		
+		[self displayNotificationWithVerficationResults:results
+											fullResults:allVerificationResults
+									operationIdentifier:identifier
+									  completionHandler:^(BOOL notificationDidShow) {
+			if (!notificationDidShow && !verificationController) {
+				// Can't show notifications and no verification controller is visible.
+				// Show a new verification controller.
+				verificationController = [DummyVerificationController verificationController]; // thread-safe
+				[verificationController addResults:allVerificationResults];
+				
+				// Remember the controller for this operation.
+				[self setVerificationOperation:[NSDictionary dictionaryWithObjectsAndKeys:
+												allVerificationResults.copy, VERIFICATION_RESULTS_KEY,
+												verificationController, VERIFICATION_CONTROLLER_KEY, nil]
+										forKey:identifier];
+			}
+		}];
+		
 	}
-
-	[fvc runModal]; // thread-safe
+	
 }
-
-// Skip fixing this for now. We need better handling of imports in libmacgpg.
-/*
- * - (void)importKeyFromData:(NSData*)data {
- *  GPGController* ctx = [[[GPGController alloc] init] autorelease];
- *
- *  NSString* importText = nil;
- *  @try {
- *      importText = [ctx importFromData:data fullImport:NO];
- *  } @catch(GPGException* ex) {
- *      [self displayOperationFailedNotificationWithTitle:[ex reason]
- *                                                message:[ex description]];
- *      return;
- *  }
- *
- *  [[NSAlert alertWithMessageText:localized(@"Import result")
- *                   defaultButton:nil
- *                 alternateButton:nil
- *                     otherButton:nil
- *       informativeTextWithFormat:importText]
- *   runModal];
- * }
- */
-
 
 - (void)importFiles:(NSArray *)files {
 	[self cancelTerminateTimer];
@@ -1655,7 +1707,8 @@ static NSUInteger const suffixLen = 5;
 		[message appendString:@"\n\n"];
 		[message appendString:[errorMsgs componentsJoinedByString:@"\n"]];
 	}
-	[self displayOperationFinishedNotificationWithTitle:title message:message];
+	[self displayOperationFinishedNotificationWithTitle:title
+												message:message];
 }
 
 #pragma mark - ServiceWorkerDelegate
@@ -1959,89 +2012,7 @@ static NSUInteger const suffixLen = 5;
 	}
 }
 
-- (void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body {
-	void (^alertBlock)() = ^{
-		NSAlert *alert = [NSAlert new];
-		alert.messageText = title;
-		alert.informativeText = body;
-		
-		NSWindow *window = alert.window;
-		NSView *contentView = window.contentView;
-		NSDictionary *views = @{@"content": contentView};
-		
-		// Add minimum width constraint
-		NSString *format = [NSString stringWithFormat:@"[content(>=%i@999)]", 470];
-		NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:format options:0 metrics:nil views:views];
-		[contentView addConstraints:constraints];
-		
-		[NSApp activateIgnoringOtherApps:YES];
-		[alert runModal];
-	};
-	
-	if ([NSThread isMainThread]) {
-		alertBlock();
-	} else {
-		dispatch_sync(dispatch_get_main_queue(), alertBlock);
-	}
-}
 
-- (void)displayOperationFinishedNotificationWithTitle:(NSString *)title message:(NSString *)body {
-	[self performSelectorOnMainThread:@selector(displayOperationFinishedNotificationWithTitleOnMain:)
-						   withObject:[NSArray arrayWithObjects:title, body, nil]
-						waitUntilDone:NO];
-}
-
-// called by displayOperationFinishedNotificationWithTitle:message:
-- (void)displayOperationFinishedNotificationWithTitleOnMain:(NSArray *)args {
-	NSString *title = [args objectAtIndex:0];
-	NSString *body = [args objectAtIndex:1];
-
-	[self displayMessageWindowWithTitleText:title bodyText:body];
-}
-
-- (void)displayOperationFailedNotificationWithTitle:(NSString *)title message:(NSString *)body {
-	[self performSelectorOnMainThread:@selector(displayOperationFailedNotificationWithTitleOnMain:)
-						   withObject:[NSArray arrayWithObjects:title, body, nil]
-						waitUntilDone:NO];
-}
-
-// called by displayOperationFailedNotificationWithTitle:message:
-- (void)displayOperationFailedNotificationWithTitleOnMain:(NSArray *)args {
-	NSString *title = [args objectAtIndex:0];
-	NSString *body = [args objectAtIndex:1];
-
-	[self displayMessageWindowWithTitleText:title bodyText:body];
-}
-
-- (void)displaySignatureVerificationForSig:(GPGSignature *)sig {
-	[self performSelectorOnMainThread:@selector(displaySignatureVerificationForSigOnMain:)
-						   withObject:sig
-						waitUntilDone:NO];
-}
-
-// called by displaySignatureVerificationForSig:
-- (void)displaySignatureVerificationForSigOnMain:(GPGSignature *)sig {
-	/*
-	 * GPGContext* aContext = [[[GPGContext alloc] init] autorelease];
-	 * NSString* userID = [[aContext keyFromFingerprint:[sig fingerprint] secretKey:NO] userID];
-	 * NSString* validity = [sig validityDescription];
-	 */
-
-	NSString *userID = sig.userIDDescription;
-	NSString *validity = [[GPGValidityDescriptionTransformer new] transformedValue:@(sig.trust)];
-
-	NSAlert *alert = [NSAlert new];
-	alert.messageText = localized(@"Verification successful");
-	alert.informativeText = localizedWithFormat(@"Good signature (%@ trust):\n\"%@\"", validity, userID);
-	
-	[NSApp activateIgnoringOtherApps:YES];
-	[alert runModal];
-}
-
-
-- (IBAction)closeModalWindow:(id)sender {
-	[NSApp stopModalWithCode:[sender tag]];
-}
 
 - (void)simpleTextWindowWillClose:(SimpleTextWindow *)simpleTextWindow {
 	[self goneIn60Seconds];
@@ -2327,6 +2298,417 @@ static NSUInteger const suffixLen = 5;
 
 
 
+
+
+
+#pragma mark -
+#pragma mark Verification result
+
+- (NSArray<NSDictionary *> *)verificationResultsFromSigs:(NSArray<GPGSignature *> *)sigs forFile:(NSString *)file {
+	NSMutableArray<NSDictionary *> *results = [NSMutableArray new];
+	
+	if (sigs.count > 0) {
+		// TODO: Sort the signatures from good to bad.
+
+		for (GPGSignature *sig in sigs) {
+			[results addObject:[self resultForSignature:sig file:file]];
+		}
+	} else {
+		NSString *resultString = localized(@"No signatures found");
+		[results addObject:@{@"filename": file.lastPathComponent,
+							 @"file": file,
+							 @"verificationResult": resultString,
+							 @"title": resultString,
+							 @"message": file.lastPathComponent}];
+	}
+
+	return results;
+}
+
+- (NSDictionary *)resultForSignature:(GPGSignature *)sig file:(NSString *)file {
+	NSMutableString *resultString = [NSMutableString new];
+	NSMutableString *messageString = [NSMutableString new];
+	NSString *signatureStatus = nil;
+	NSString *userIDDescription = nil;
+	NSString *title;
+
+	switch (sig.status) {
+		case GPGErrorNoError:
+			switch (sig.trust) {
+				case GPGValidityUltimate:
+					signatureStatus = localized(@"Absolute trusted signature");
+					break;
+				case GPGValidityFull:
+					signatureStatus = localized(@"Fully trusted signature");
+					break;
+				case GPGValidityMarginal:
+					signatureStatus = localized(@"Marginal trusted signature");
+					break;
+				case GPGValidityNever:
+					signatureStatus = localized(@"Never trusted signature");
+					break;
+				case GPGValidityUnknown:
+				case GPGValidityUndefined:
+					signatureStatus = localized(@"Untrusted trusted signature");
+					break;
+				default:
+					break;
+			}
+			break;
+		case GPGErrorCertificateRevoked:
+			signatureStatus = localized(@"Revoked signature");
+			break;
+		case GPGErrorSignatureExpired:
+		case GPGErrorKeyExpired:
+			signatureStatus = localized(@"Expired signature");
+			break;
+		case GPGErrorUnknownAlgorithm:
+			signatureStatus = localized(@"Unverifiable signature");
+			break;
+		case GPGErrorNoPublicKey:
+			signatureStatus = localized(@"Signed by stranger");
+			break;
+		case GPGErrorBadSignature:
+			signatureStatus = localized(@"Bad signature");
+			break;
+		default:
+			break;
+	}
+	if (!signatureStatus) {
+		signatureStatus = localized(@"Signature error");
+	}
+	title = signatureStatus;
+	[resultString appendString:signatureStatus];
+	
+	
+	if (sig.name || sig.email) {
+		NSString *name = sig.name;
+		NSString *email = sig.email;
+		
+		const NSUInteger maxLength = 60;
+		// Truncate very long names and emails.
+		if (name.length + email.length > maxLength) {
+			NSUInteger cutLength = maxLength - 10;
+			if (email.length < 30) {
+				// Only truncate name.
+				cutLength -= email.length;
+				name = [NSString stringWithFormat:@"%@…%@", [name substringToIndex:cutLength / 2], [name substringFromIndex:name.length - cutLength / 2]];
+			} else if (name.length < 30) {
+				// Only truncate email.
+				cutLength -= name.length;
+				email = [NSString stringWithFormat:@"%@…%@", [email substringToIndex:cutLength / 2], [email substringFromIndex:email.length - cutLength / 2]];
+			} else {
+				// Truncate both.
+				name = [NSString stringWithFormat:@"%@…%@", [name substringToIndex:cutLength / 4], [name substringFromIndex:name.length - cutLength / 4]];
+				email = [NSString stringWithFormat:@"%@…%@", [email substringToIndex:cutLength / 4], [email substringFromIndex:email.length - cutLength / 4]];
+			}
+		}
+		
+		if (name.length > 0 && email.length > 0) {
+			userIDDescription = [NSString stringWithFormat:@"%@ <%@>", name, email];
+		} else if (name.length > 0) {
+			userIDDescription = name;
+		} else if (email.length > 0) {
+			userIDDescription = email;
+		}
+	}
+	
+	if (userIDDescription.length > 0) {
+		[resultString appendFormat:@"\n%@", userIDDescription];
+		[messageString appendFormat:@"%@", userIDDescription];
+	}
+
+	if (sig.fingerprint) {
+		NSString *fingerprint = [[GPGNoBreakFingerprintTransformer sharedInstance] transformedValue:sig.fingerprint];
+		[resultString appendFormat:@"\n%@", fingerprint];
+		//[messageString appendFormat:@"\n%@", fingerprint];
+	}
+	
+	[messageString appendFormat:messageString.length > 0 ? @"\n%@" :  @"%@", file.lastPathComponent];
+	
+	NSDictionary *result = @{@"filename": file.lastPathComponent,
+							 @"file": file,
+							 @"verificationResult": resultString.copy,
+							 @"title": title,
+							 @"message": messageString.copy
+	};
+	
+	return result;
+}
+
+
+
+#pragma mark -
+#pragma mark Verification operations list
+
+- (void)setVerificationOperation:(NSDictionary *)operation forKey:(NSString *)key {
+	if (!_verificationOperations) {
+		// First call to this method isn't thread safe and, because of that, must be on the main thread.
+		_verificationOperations = [NSMutableDictionary new];
+	}
+	@synchronized (_verificationOperations) {
+		if (operation) {
+			_verificationOperations[key] = operation;
+		} else {
+			[_verificationOperations removeObjectForKey:key];
+		}
+	}
+}
+- (NSDictionary *)verificationOperationForKey:(NSString *)key {
+	if (!_verificationOperations) {
+		// First call to this method isn't thread safe and, because of that, must be on the main thread.
+		_verificationOperations = [NSMutableDictionary new];
+	}
+	@synchronized (_verificationOperations) {
+		return _verificationOperations[key];
+	}
+}
+
+
+
+#pragma mark -
+#pragma mark Notifications
+
+- (void)displaySignatureVerificationForSig:(GPGSignature *)sig {
+	[self performSelectorOnMainThread:@selector(displaySignatureVerificationForSigOnMain:)
+						   withObject:sig
+						waitUntilDone:NO];
+}
+- (void)displaySignatureVerificationForSigOnMain:(GPGSignature *)sig {
+	NSString *userID = sig.userIDDescription;
+	NSString *validity = [[GPGValidityDescriptionTransformer new] transformedValue:@(sig.trust)];
+
+	[self displayOperationFinishedNotificationWithTitle:localized(@"Verification successful")
+												message:localizedWithFormat(@"Good signature (%@ trust):\n\"%@\"", validity, userID)];
+}
+
+
+- (void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body {
+	void (^alertBlock)(void) = ^{
+		GPGSAlert *alert = [GPGSAlert new];
+		alert.messageText = title;
+		alert.informativeText = body;
+		[NSApp activateIgnoringOtherApps:YES];
+		[alert show];
+	};
+	
+	if ([NSThread isMainThread]) {
+		alertBlock();
+	} else {
+		dispatch_sync(dispatch_get_main_queue(), alertBlock);
+	}
+}
+
+
+- (void)displayOperationFinishedNotificationWithTitle:(NSString *)title message:(NSString *)body files:(NSArray *)files {
+	[self performSelectorOnMainThread:@selector(displayOperationFinishedNotificationWithTitleOnMain:)
+						   withObject:[NSArray arrayWithObjects:title, body, files, nil]
+						waitUntilDone:NO];
+}
+- (void)displayOperationFinishedNotificationWithTitle:(NSString *)title message:(NSString *)body {
+	[self performSelectorOnMainThread:@selector(displayOperationFinishedNotificationWithTitleOnMain:)
+						   withObject:[NSArray arrayWithObjects:title, body, nil]
+						waitUntilDone:NO];
+}
+- (void)displayOperationFinishedNotificationWithTitleOnMain:(NSArray *)args {
+	NSString *title = args[0];
+	NSString *body = args[1];
+	NSArray *files = args.count > 2 ? args[2] : nil;
+
+	[self displayNotificationWithTitle:title message:body files:files userInfo:nil failed:NO];
+}
+
+
+- (void)displayOperationFailedNotificationWithTitle:(NSString *)title message:(NSString *)body {
+	[self performSelectorOnMainThread:@selector(displayOperationFailedNotificationWithTitleOnMain:)
+						   withObject:[NSArray arrayWithObjects:title, body, nil]
+						waitUntilDone:NO];
+}
+- (void)displayOperationFailedNotificationWithTitleOnMain:(NSArray *)args {
+	NSString *title = args[0];
+	NSString *body = args[1];
+
+	[self displayNotificationWithTitle:title message:body files:nil userInfo:nil failed:YES];
+}
+
+
+
+- (void)displayNotificationWithTitle:(NSString *)title message:(NSString *)message files:(NSArray *)files userInfo:(NSDictionary *)userInfo failed:(BOOL)failed {
+	 // the parameter "failed" is currently unused. Could be used in the future to use another sound or something.
+
+	if (@available(macOS 10.14, *)) {
+		UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+		
+		content.title = title;
+		content.body = message;
+		content.sound = [UNNotificationSound defaultSound];
+		
+		NSMutableDictionary *newUserInfo = userInfo ? userInfo.mutableCopy : [NSMutableDictionary new];
+		if (files.count > 0) {
+			// Add the files to the userInfo and display "Show in Finder" button.
+			newUserInfo[@"files"] = files.copy;
+			content.categoryIdentifier = fileCategoryIdentifier;
+		}
+		content.userInfo = newUserInfo.copy;
+
+		[self displayNotificationWithContent:content completionHandler:^(BOOL notificationDidShow) {
+			if (!notificationDidShow) {
+				// Fallback to normal dialog.
+				[self displayMessageWindowWithTitleText:title bodyText:message];
+			}
+		}];
+	} else {
+		 // Fallback to normal dialog.
+		 [self displayMessageWindowWithTitleText:title bodyText:message];
+	 }
+}
+
+- (void)displayNotificationWithVerficationResults:(NSArray<NSDictionary *> *)results
+									  fullResults:(NSArray<NSDictionary *> *)fullResults
+							  operationIdentifier:(NSString *)operationIdentifier
+								completionHandler:(void(^)(BOOL notificationDidShow))completionHandler {
+	if (@available(macOS 10.14, *)) {
+		UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+		
+		NSDictionary *result = results[0];
+		content.title = result[@"title"];
+		content.body = result[@"message"];
+		content.sound = [UNNotificationSound defaultSound];
+
+		NSMutableDictionary *userInfo = [NSMutableDictionary new];
+		userInfo[OPERATION_IDENTIFIER_KEY] = operationIdentifier;
+		userInfo[VERIFICATION_RESULTS_KEY] = fullResults.copy;
+		
+		NSString *file = result[@"file"];
+		if (file) {
+			// Add the file to the userInfo and display "Show in Finder" button.
+			userInfo[@"files"] = @[file];
+			content.categoryIdentifier = fileCategoryIdentifier;
+		}
+		
+		content.userInfo = userInfo.copy;
+
+		[self displayNotificationWithContent:content completionHandler:completionHandler];
+	} else {
+		completionHandler(NO);
+	}
+}
+
+/**
+ * Displays a notification if possible.
+ * @param content of the notification to show.
+ * @param completionHandler gets called with a BOOL to indicate if the notificatioin was shown.
+ */
+- (void)displayNotificationWithContent:(UNNotificationContent *)content
+					 completionHandler:(void(^)(BOOL notificationDidShow))completionHandler __OSX_AVAILABLE(10.14) {
+	UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+	
+	[center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+		
+		if (settings.authorizationStatus == UNAuthorizationStatusDenied ||
+			settings.alertStyle == UNAlertStyleNone ||
+			[[[NSUserDefaults alloc] initWithSuiteName:@"com.apple.notificationcenterui"] boolForKey:@"doNotDisturb"]) {
+			
+			// User has disabled notifications for GPGServices or "Do not disturb" enabled.
+			completionHandler(NO);
+			return;
+		}
+		
+		NSString *identifier = [NSUUID UUID].UUIDString; // A random identifier for this notificaton.
+		UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:nil];
+		
+		[center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+			if (error) {
+				completionHandler(NO);
+			} else {
+				completionHandler(YES);
+				
+				if (settings.alertStyle == UNAlertStyleAlert) {
+					// Hide the notification alert after 30 seconds. (Allow override using user defaults.)
+					// This only works with UNAlertStyleAlert. UNAlertStyleBanner will only show for 5 seconds.
+					NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+					NSInteger delay = [defaults integerForKey:NotificationDismissalDelayKey];
+					if (delay < 5 || delay > 1000000) {
+						delay = 30;
+					}
+					
+					dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+						UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+						[center removeDeliveredNotificationsWithIdentifiers:@[identifier]];
+					});
+				}
+			}
+		}];
+	}];
+}
+
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+	   willPresentNotification:(UNNotification *)notification
+		 withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler __OSX_AVAILABLE(10.14) {
+	if (@available(macOS 10.14, *)) {
+		// This is required to show the notification on screen.
+		completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
+	}
+}
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+		 withCompletionHandler:(void(^)(void))completionHandler __OSX_AVAILABLE(10.14) {
+	if (@available(macOS 10.14, *)) {
+		UNNotificationContent *content = response.notification.request.content;
+		NSDictionary *userInfo = content.userInfo;
+		
+		if ([response.actionIdentifier isEqualToString:UNNotificationDefaultActionIdentifier]) {
+			NSString *operationIdentifier = userInfo[OPERATION_IDENTIFIER_KEY];
+			if (operationIdentifier) {
+				NSDictionary *operation = [self verificationOperationForKey:operationIdentifier];
+				DummyVerificationController *verificationController;
+				
+				if (operation) {
+					// The operation is still running.
+					verificationController = operation[VERIFICATION_CONTROLLER_KEY];
+					NSArray *verificationResults = operation[VERIFICATION_RESULTS_KEY];
+					
+					if (!verificationController) {
+						// Create and show a new verificaiton controller.
+						verificationController = [DummyVerificationController verificationController]; // thread-safe
+						[verificationController addResults:verificationResults];
+						
+						// Remember the new verificaiton controller.
+						[self setVerificationOperation:@{VERIFICATION_CONTROLLER_KEY: verificationController,
+															VERIFICATION_RESULTS_KEY: verificationResults}
+												forKey:operationIdentifier];
+					} else {
+						// Only show the existing controller.
+						[verificationController showWindow:nil];
+					}
+				} else {
+					// No operation running. Create and show a new verification controller.
+					NSArray *verificationResults = userInfo[VERIFICATION_RESULTS_KEY];
+					
+					verificationController = [DummyVerificationController verificationController]; // thread-safe
+					[verificationController addResults:verificationResults];
+				}
+			} else {
+				NSString *title = content.title;
+				NSString *body = content.body;
+				// Display the notification content in a dialog.
+				[self displayMessageWindowWithTitleText:title bodyText:body];
+			}
+		} else if ([response.actionIdentifier isEqualToString:showInFinderActionIdentifier]) {
+			// Show the files in Finder.
+			NSArray *files = userInfo[@"files"];
+			if ([files isKindOfClass:[NSArray class]] && files.count > 0) {
+				NSMutableArray *urls = [NSMutableArray new];
+				for (NSString *file in files) {
+					[urls addObject:[NSURL fileURLWithPath:file]];
+				}
+				[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
+			}
+		}
+		completionHandler();
+	}
+}
 
 
 @end
