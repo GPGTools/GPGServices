@@ -1232,6 +1232,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 
 	NSFileManager *fmgr = [NSFileManager defaultManager];
 	NSMutableArray *decryptedFiles = [NSMutableArray new];
+	NSMutableArray *signedFiles = [NSMutableArray new];
 	NSMutableArray<NSDictionary *> *errors = [NSMutableArray new];
 	NSUInteger cancelledCount = 0;
 	
@@ -1347,6 +1348,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 										forKey:identifier];
 
 				if (ctx.signatures.count > 0) {
+					[signedFiles addObject:outputFile];
 					[self displayNotificationWithVerficationResults:results
 														fullResults:allVerificationResults
 												operationIdentifier:identifier
@@ -1399,7 +1401,13 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	NSMutableArray *errorMsgs = [NSMutableArray new];
 	BOOL showDefaultMessage = YES;
 	
-	if (innCount == 1 && outCount == 0 && errors.count == 1) {
+	if (innCount == outCount && // All files are successfully decrypted
+		[decryptedFiles isEqualToArray:signedFiles]) { // and all of them are signed.
+		
+		// Do not show a additional notification, because for every files there was already a verification notification.
+		
+		showDefaultMessage = NO;
+	} else if (innCount == 1 && outCount == 0 && errors.count == 1) {
 		// Error messages for a single failed decryption.
 		
 		GPGException *ex = errors[0][@"exception"];
