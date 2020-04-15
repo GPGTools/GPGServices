@@ -500,25 +500,13 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		NSArray *sigs = ctx.signatures;
 		if (sigs.count > 0) {
 			GPGSignature *sig = [sigs objectAtIndex:0];
-			GPGErrorCode status = sig.status;
-			GPGDebugLog(@"sig.status: %i", status);
-			if ([sig status] == GPGErrorNoError) {
-				[self displaySignatureVerificationForSig:sig];
-			} else {
-				NSString *errorMessage = nil;
-				switch (status) {
-					case GPGErrorBadSignature:
-						errorMessage = localizedWithFormat(@"Bad signature by %@", sig.userIDDescription);
-						break;
-					case GPGErrorNoPublicKey:
-						errorMessage = localizedWithFormat(@"Unable to verify signature! Missing public key: %@", sig.fingerprint);
-						break;
-					default:
-						errorMessage = localizedWithFormat(@"Unexpected GPG signature status %i", status);
-						break;  // I'm unsure if GPGErrorDescription should cover these signature errors
-				}
-				[self displayOperationFailedNotificationWithTitle:localized(@"Verification failed") message:errorMessage];
-			}
+			NSDictionary *result = [self resultForSignature:sig file:nil];
+			
+			[self displayNotificationWithTitle:result[@"title"]
+									   message:result[@"message"]
+										 files:nil
+									  userInfo:nil
+										failed:NO];
 		}
 
 	} @catch (GPGException *ex) {
@@ -651,25 +639,13 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		}
 		if ([sigs count] > 0) {
 			GPGSignature *sig = [sigs objectAtIndex:0];
-			GPGErrorCode status = sig.status;
-			GPGDebugLog(@"sig.status: %i", status);
-			if ([sig status] == GPGErrorNoError) {
-				[self displaySignatureVerificationForSig:sig];
-			} else {
-				NSString *errorMessage = nil;
-				switch (status) {
-					case GPGErrorBadSignature:
-						errorMessage = localizedWithFormat(@"Bad signature by %@", sig.userIDDescription);
-						break;
-					case GPGErrorNoPublicKey:
-						errorMessage = localizedWithFormat(@"Unable to verify signature! Missing public key: %@", sig.fingerprint);
-						break;
-					default:
-						errorMessage = localizedWithFormat(@"Unexpected GPG signature status %i", status);
-						break;  // I'm unsure if GPGErrorDescription should cover these signature errors
-				}
-				[self displayOperationFailedNotificationWithTitle:localized(@"Verification failed") message:errorMessage];
-			}
+			NSDictionary *result = [self resultForSignature:sig file:nil];
+			
+			[self displayNotificationWithTitle:result[@"title"]
+									   message:result[@"message"]
+										 files:nil
+									  userInfo:nil
+										failed:NO];
 		} else {
 			// Looks like sigs.count == 0 when we have encrypted text but no signature
 			[self displayOperationFailedNotificationWithTitle:localized(@"Verification failed")
@@ -2045,7 +2021,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	if (terminateCounter <= 0) {
 		terminateCounter = 0;
 		[NSApp hide:self];
-		currentTerminateTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(selfQuit:) userInfo:nil repeats:YES];
+		currentTerminateTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(selfQuit:) userInfo:nil repeats:YES];
 	}
 }
 
@@ -2323,11 +2299,16 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		}
 	} else {
 		NSString *resultString = localized(@"No signatures found");
-		[results addObject:@{@"filename": file.lastPathComponent,
-							 @"file": file,
-							 @"verificationResult": resultString,
-							 @"title": resultString,
-							 @"message": file.lastPathComponent}];
+		if (file) {
+			[results addObject:@{@"filename": file.lastPathComponent,
+								 @"file": file,
+								 @"verificationResult": resultString,
+								 @"title": resultString,
+								 @"message": file.lastPathComponent}];
+		} else {
+			[results addObject:@{@"verificationResult": resultString,
+								 @"title": resultString}];
+		}
 	}
 
 	return results;
@@ -2432,14 +2413,24 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		//[messageString appendFormat:@"\n%@", fingerprint];
 	}
 	
-	[messageString appendFormat:messageString.length > 0 ? @"\n%@" :  @"%@", file.lastPathComponent];
+	NSDictionary *result;
 	
-	NSDictionary *result = @{@"filename": file.lastPathComponent,
-							 @"file": file,
-							 @"verificationResult": resultString.copy,
-							 @"title": title,
-							 @"message": messageString.copy
-	};
+	if (file) {
+		[messageString appendFormat:messageString.length > 0 ? @"\n%@" :  @"%@", file.lastPathComponent];
+		
+		result = @{@"filename": file.lastPathComponent,
+				   @"file": file,
+				   @"verificationResult": resultString.copy,
+				   @"title": title,
+				   @"message": messageString.copy
+		};
+	} else {
+		result = @{@"verificationResult": resultString.copy,
+				   @"title": title,
+				   @"message": messageString.copy
+		};
+	}
+	
 	
 	return result;
 }
