@@ -233,3 +233,17 @@ KeyDescriptionAndMore = "%1$@ and %2$lu more";
 "Verification %1$@: %2$@ (Code: %3$i)" = "Verification %1$@: %2$@ (Code: %3$i)";
 
 
+
+"Show in Finder" = "Show in Finder";
+"Absolute trusted signature" = "Absolute trusted signature";
+"Fully trusted signature" = "Fully trusted signature";
+"Marginal trusted signature" = "Marginal trusted signature";
+"Never trusted signature" = "Never trusted signature";
+"Untrusted signature" = "Untrusted signature";
+"Revoked signature" = "Revoked signature";
+"Expired signature" = "Expired signature";
+"Unverifiable signature" = "Unverifiable signature";
+"Signed by stranger" = "Signed by stranger";
+"Bad signature" = "Bad signature";
+"Signature error" = "Signature error";
+

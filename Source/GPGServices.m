@@ -2338,7 +2338,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 					break;
 				case GPGValidityUnknown:
 				case GPGValidityUndefined:
-					signatureStatus = localized(@"Untrusted trusted signature");
+					signatureStatus = localized(@"Untrusted signature");
 					break;
 				default:
 					break;
