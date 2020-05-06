@@ -19,6 +19,7 @@ static NSString *const fileCategoryIdentifier = @"FILE_CATEGORY";
 static NSString *const VERIFICATION_RESULTS_KEY = @"verificationResults";
 static NSString *const OPERATION_IDENTIFIER_KEY = @"operationIdentifier";
 static NSString *const VERIFICATION_CONTROLLER_KEY = @"verificationController";
+static NSString *const DETAILED_MESSAGE_KEY = @"detailsMessage";
 
 static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDelay";
 
@@ -644,7 +645,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 			[self displayNotificationWithTitle:result[@"title"]
 									   message:result[@"message"]
 										 files:nil
-									  userInfo:nil
+									  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:result[DETAILED_MESSAGE_KEY], DETAILED_MESSAGE_KEY, nil]
 										failed:NO];
 		} else {
 			// Looks like sigs.count == 0 when we have encrypted text but no signature
@@ -2315,8 +2316,9 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 }
 
 - (NSDictionary *)resultForSignature:(GPGSignature *)sig file:(NSString *)file {
-	NSMutableString *resultString = [NSMutableString new];
-	NSMutableString *messageString = [NSMutableString new];
+	NSMutableArray *resultLines = [NSMutableArray new];
+	NSMutableArray *messageLines = [NSMutableArray new];
+	NSMutableArray *detailedMessageLines = [NSMutableArray new];
 	NSString *signatureStatus = nil;
 	NSString *userIDDescription = nil;
 	NSString *title;
@@ -2367,7 +2369,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		signatureStatus = localized(@"Signature error");
 	}
 	title = signatureStatus;
-	[resultString appendString:signatureStatus];
+	[resultLines addObject:signatureStatus];
 	
 	
 	if (sig.name || sig.email) {
@@ -2403,31 +2405,42 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	}
 	
 	if (userIDDescription.length > 0) {
-		[resultString appendFormat:@"\n%@", userIDDescription];
-		[messageString appendFormat:@"%@", userIDDescription];
+		[resultLines addObject:userIDDescription];
+		[messageLines addObject:userIDDescription];
+		[detailedMessageLines addObject:userIDDescription];
 	}
 
 	if (sig.fingerprint) {
 		NSString *fingerprint = [[GPGNoBreakFingerprintTransformer sharedInstance] transformedValue:sig.fingerprint];
-		[resultString appendFormat:@"\n%@", fingerprint];
-		//[messageString appendFormat:@"\n%@", fingerprint];
+		[resultLines addObject:fingerprint];
+		[detailedMessageLines addObject:fingerprint];
+		if (!file) {
+			if (fingerprint.length == 50) {
+				fingerprint = [NSString stringWithFormat:@"… %@", [fingerprint substringFromIndex:26]];
+			}
+			[messageLines addObject:fingerprint];
+		}
 	}
 	
 	NSDictionary *result;
 	
 	if (file) {
-		[messageString appendFormat:messageString.length > 0 ? @"\n%@" :  @"%@", file.lastPathComponent];
+		[messageLines addObject:file.lastPathComponent];
+		[detailedMessageLines addObject:file.lastPathComponent];
+
 		
 		result = @{@"filename": file.lastPathComponent,
 				   @"file": file,
-				   @"verificationResult": resultString.copy,
+				   @"verificationResult": [resultLines componentsJoinedByString:@"\n"],
 				   @"title": title,
-				   @"message": messageString.copy
+				   @"message": [messageLines componentsJoinedByString:@"\n"],
+				   DETAILED_MESSAGE_KEY: [detailedMessageLines componentsJoinedByString:@"\n"]
 		};
 	} else {
-		result = @{@"verificationResult": resultString.copy,
+		result = @{@"verificationResult": [resultLines componentsJoinedByString:@"\n"],
 				   @"title": title,
-				   @"message": messageString.copy
+				   @"message": [messageLines componentsJoinedByString:@"\n"],
+				   DETAILED_MESSAGE_KEY: [detailedMessageLines componentsJoinedByString:@"\n"]
 		};
 	}
 	
@@ -2535,6 +2548,11 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 - (void)displayNotificationWithTitle:(NSString *)title message:(NSString *)message files:(NSArray *)files userInfo:(NSDictionary *)userInfo failed:(BOOL)failed {
 	 // the parameter "failed" is currently unused. Could be used in the future to use another sound or something.
 
+	NSString *detailedMessage = userInfo[DETAILED_MESSAGE_KEY];
+	if (detailedMessage.length == 0) {
+		detailedMessage = message;
+	}
+	
 	if (@available(macOS 10.14, *)) {
 		UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
 		
@@ -2553,12 +2571,12 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		[self displayNotificationWithContent:content completionHandler:^(BOOL notificationDidShow) {
 			if (!notificationDidShow) {
 				// Fallback to normal dialog.
-				[self displayMessageWindowWithTitleText:title bodyText:message];
+				[self displayMessageWindowWithTitleText:title bodyText:detailedMessage];
 			}
 		}];
 	} else {
 		 // Fallback to normal dialog.
-		 [self displayMessageWindowWithTitleText:title bodyText:message];
+		 [self displayMessageWindowWithTitleText:title bodyText:detailedMessage];
 	 }
 }
 
@@ -2690,7 +2708,10 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 				}
 			} else {
 				NSString *title = content.title;
-				NSString *body = content.body;
+				NSString *body = userInfo[DETAILED_MESSAGE_KEY];
+				if (body.length == 0) {
+					body = content.body;
+				}
 				// Display the notification content in a dialog.
 				[self displayMessageWindowWithTitleText:title bodyText:body];
 			}
