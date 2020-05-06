@@ -2021,7 +2021,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	if (terminateCounter <= 0) {
 		terminateCounter = 0;
 		[NSApp hide:self];
-		currentTerminateTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(selfQuit:) userInfo:nil repeats:YES];
+		currentTerminateTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(selfQuit:) userInfo:nil repeats:YES];
 	}
 }
 
