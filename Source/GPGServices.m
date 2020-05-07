@@ -2639,21 +2639,6 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 				completionHandler(NO);
 			} else {
 				completionHandler(YES);
-				
-				if (settings.alertStyle == UNAlertStyleAlert) {
-					// Hide the notification alert after 30 seconds. (Allow override using user defaults.)
-					// This only works with UNAlertStyleAlert. UNAlertStyleBanner will only show for 5 seconds.
-					NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-					NSInteger delay = [defaults integerForKey:NotificationDismissalDelayKey];
-					if (delay < 5 || delay > 1000000) {
-						delay = 30;
-					}
-					
-					dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-						UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-						[center removeDeliveredNotificationsWithIdentifiers:@[identifier]];
-					});
-				}
 			}
 		}];
 	}];
