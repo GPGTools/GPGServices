@@ -59,6 +59,7 @@ typedef enum {
 	
 	InProgressWindowController *_inProgressCtlr;
 	NSMutableDictionary *_verificationOperations;
+	UNAlertStyle _alertStyle __OSX_AVAILABLE(10.14);
 }
 
 

@@ -232,18 +232,39 @@ KeyDescriptionAndMore = "%1$@ and %2$lu more";
 
 "Verification %1$@: %2$@ (Code: %3$i)" = "Verification %1$@: %2$@ (Code: %3$i)";
 
-
-
 "Show in Finder" = "Show in Finder";
-"Absolute trusted signature" = "Absolute trusted signature";
-"Fully trusted signature" = "Fully trusted signature";
-"Marginal trusted signature" = "Marginal trusted signature";
-"Never trusted signature" = "Never trusted signature";
-"Untrusted signature" = "Untrusted signature";
-"Revoked signature" = "Revoked signature";
-"Expired signature" = "Expired signature";
-"Unverifiable signature" = "Unverifiable signature";
-"Signed by stranger" = "Signed by stranger";
-"Bad signature" = "Bad signature";
-"Signature error" = "Signature error";
+
+
+
+
+
+ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Absolute trusted signature";
+ABSOLUTE_TRUSTED_SIGNATURE_MESSAGE = "This signature can be trusted";
+
+FULLY_TRUSTED_SIGNATURE_TITLE = "Fully trusted signature";
+FULLY_TRUSTED_SIGNATURE_MESSAGE = "This signature can be trusted";
+
+MARGINAL_TRUSTED_SIGNATURE_TITLE = "Marginal trusted signature";
+
+UNTRUSTED_SIGNATURE_TITLE = "Untrusted signature";
+UNTRUSTED_SIGNATURE_MESSAGE = "This signature is not to be trusted";
+
+REVOKED_SIGNATURE_TITLE = "Revoked signature";
+REVOKED_SIGNATURE_MESSAGE = "The key which was used to sign this message was revoked.\n\nYou should refresh the key with key ID %@ in GPG Keychain to check if a new one is available. If the new one is still revoked, check with the sender why the key was revoked.";
+
+EXPIRED_SIGNATURE_TITLE = "Expired signature";
+EXPIRED_SIGNATURE_MESSAGE = "The key which was used to sign this message is expired.\n\nYou can try to refresh the key with ID %@ in GPG Keychain and ask the sender why the key is expired.";
+
+UNVERIFIABLE_SIGNATURE_TITLE = "Unverifiable signature";
+
+NO_PUBKEY_SIGNATURE_TITLE = "No public key";
+NO_PUBKEY_SIGNATURE_ALERT_TITLE = "The key to verify this signature is not in GPG Keychain";
+NO_PUBKEY_SIGNATURE_MESSAGE = "The message could not be verified. The public key required to verify this signature is not in GPG Keychain.\n\nSearch the key server for fingerprint %@ or ask your contact for their public key. You can retry to verify the signature after adding their public key to GPG Keychain.";
+
+BAD_SIGNATURE_TITLE = "Warning: Invalid signature";
+BAD_SIGNATURE_MESSAGE = "The signature does not match this message. You should not trust this message, because it was manipulated.\n\nMessages can unintentionally be altered after they were signed. Exchange servers or mailing lists are known use-cases, where signatures can be rendered invalid.  Also formatted text like rtf, docx or odt are known to cause problems. Make sure to use txt file format.";
+
+SIGNATURE_ERROR_TITLE = "Signature error";
+SIGNATURE_ERROR_ALERT_TITLE = "Unknown signature error";
+SIGNATURE_ERROR_DESCRIPTION = "Code: %i";
 

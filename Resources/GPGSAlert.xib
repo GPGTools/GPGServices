@@ -19,7 +19,7 @@
             <rect key="contentRect" x="1007" y="982" width="450" height="130"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="450" height="130"/>
-            <value key="maxSize" type="size" width="900" height="800"/>
+            <value key="maxSize" type="size" width="650" height="800"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="450" height="130"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -59,7 +59,7 @@ DQ
                             <binding destination="-2" name="value" keyPath="messageText" id="Yub-jg-heG"/>
                         </connections>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="501" translatesAutoresizingMaskIntoConstraints="NO" id="DTS-gO-8Ic">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="DTS-gO-8Ic">
                         <rect key="frame" x="99" y="76" width="80" height="14"/>
                         <textFieldCell key="cell" controlSize="small" selectable="YES" title="Multiline Label" id="BNt-ap-PJu">
                             <font key="font" metaFont="smallSystem"/>
