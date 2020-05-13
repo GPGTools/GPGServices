@@ -45,11 +45,11 @@ DQ
                     </button>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bm8-V9-Zv6">
                         <rect key="frame" x="20" y="51" width="240" height="60"/>
-                        <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="NcJ-y1-8y8">
+                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="NcJ-y1-8y8">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="60"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="jW0-BP-8l3">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="jW0-BP-8l3">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="60"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -94,7 +94,7 @@ DQ
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="result" editable="NO" width="163" minWidth="40" maxWidth="1000" id="3zq-yA-WW5">
+                                        <tableColumn identifier="result" editable="NO" width="163" minWidth="40" maxWidth="600" id="3zq-yA-WW5">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -107,13 +107,16 @@ DQ
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView id="mu5-11-C4w">
-                                                    <rect key="frame" x="75" y="1" width="37" height="16"/>
+                                                <tableCellView misplaced="YES" id="mu5-11-C4w">
+                                                    <rect key="frame" x="75" y="1" width="163" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="lJp-nj-rPG" userLabel="result">
                                                             <rect key="frame" x="0.0" y="0.0" width="39" height="16"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="result" id="Ke9-sM-GWl" userLabel="result Cell">
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="uOy-cx-xrI"/>
+                                                            </constraints>
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="result" id="Ke9-sM-GWl" userLabel="result Cell">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
