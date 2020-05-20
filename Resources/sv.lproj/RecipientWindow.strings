@@ -11,13 +11,13 @@
 "26.headerCell.title" = "✔";
 "28.headerCell.title" = "Kommentar";
 "53.headerCell.title" = "Status";
-"53.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Validity Indicator";
+"53.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Validitetsindikator";
 "106.title" = "Lägg till i mottagare";
 "118.title" = "Din nyckel:";
 "138.headerCell.title" = "Ägarförtroende";
 "147.headerCell.title" = "Namn";
 "158.headerCell.title" = "Ägarförtroende";
-"158.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Ownertrust Indicator";
+"158.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Ägarförtroende-indikator";
 "160.headerCell.title" = "Status";
 "179.title" = "Kryptera med lösenord";
 "UM4-uK-US3.title" = "Välj mottagare…";

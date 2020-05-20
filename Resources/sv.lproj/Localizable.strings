@@ -1,5 +1,5 @@
 /* arg:path */
-"%@ — Cannot import directory" = "%@ — Cannot import directory";
+"%@ — Cannot import directory" = "%@ – Kan inte importera katalog";
 
 /* Filename for Archive.zip.gpg */
 "Archive" = "Arkiv";
@@ -17,7 +17,7 @@
 "Could not read file" = "Kunde inte läsa fil";
 
 /* no comment */
-"Could not write to directory" = "Could not write to directory";
+"Could not write to directory" = "Kunde inte skriva till katalog";
 
 "Could not open TextEdit" = "Kunde inte öppna Textredigerare";
 
@@ -40,7 +40,7 @@
 "Decryption finished" = "Dekrypteringen slutfördes";
 
 /* No comment provided by engineer. */
-"Decryption finished (partially)" = "Decryption finished (partially)";
+"Decryption finished (partially)" = "Dikryptering avslutades (delvis)";
 
 /* arg:filename */
 "Encrypting %@" = "Krypterar %@";
@@ -58,19 +58,19 @@
 "Encryption finished" = "Krypteringen slutfördes";
 
 /* No comment provided by engineer. */
-"Export failed" = "Export failed";
+"Export failed" = "Export misslyckades";
 
 /* Matched in \"Verification FAILED:\" */
 "FAILED" = "MISSLYCKADES";
 
 /* arg:filename */
-"Failed decrypting %@" = "Failed decrypting %@";
+"Failed decrypting %@" = "Misslyckades att dekryptera %@";
 
 /* arg:filename */
-"Failed importing %@" = "Failed importing %@";
+"Failed importing %@" = "Misslyckades att importera %@";
 
 /* arg:filename */
-"Failed signing %@" = "Failed signing %@";
+"Failed signing %@" = "Misslyckades att signera %@";
 
 /* No comment provided by engineer. */
 "File doesn't exist" = "Filen existerar inte";
@@ -94,7 +94,7 @@
 "Import result" = "Importresultat";
 
 /* arg1:successCount arg2:totalCount */
-"Imported %1$u of %2$u files" = "Imported %1$u of %2$u files";
+"Imported %1$u of %2$u files" = "Importerade %1$u av %2$u filer";
 
 /* arg:filename */
 "Imported %@" = "Importerade %@";
@@ -115,13 +115,13 @@
 "No signatures found" = "Inga signaturer hittades";
 
 /* No comment provided by engineer. */
-"No signatures found within the selection" = "No signatures found within the selection";
+"No signatures found within the selection" = "Inga signaturer hittades i markeringen";
 
 /* No comment provided by engineer. */
 "No verifiable data found" = "Inga data att verifiera hittades";
 
 /* No comment provided by engineer. */
-"No verifiable text was found within the selection" = "No verifiable text was found within the selection";
+"No verifiable text was found within the selection" = "Ingen verifierbar text hittades i markeringen";
 
 /* No comment provided by engineer. */
 "Please try again" = "Försök igen";
@@ -148,10 +148,10 @@
 "Signing finished" = "Signering slutförd";
 
 /* No comment provided by engineer. */
-"Signing finished (partially)" = "Signing finished (partially)";
+"Signing finished (partially)" = "Signering slutförd (delvis)";
 
 /* no comment */
-"TextEdit did not respond to service request." = "TextEdit did not respond to service request.";
+"TextEdit did not respond to service request." = "Textredigerare svarade inte mot begäran.";
 
 /* No comment provided by engineer. */
 "The default secret key is unusable" = "Den förvalda privata nyckeln är oanvändbar";
@@ -163,16 +163,16 @@
 "Unexpected decrypt error" = "Oväntat dekrypteringsfel";
 
 /* arg:GPGSignature status */
-"Unexpected GPG signature status %i" = "Unexpected GPG signature status %i";
+"Unexpected GPG signature status %i" = "Oväntad GPG signaturstatus %i";
 
 /* No comment provided by engineer. */
-"Unexpected import error" = "Unexpected import error";
+"Unexpected import error" = "Oväntat importfel";
 
 /* No comment provided by engineer. */
-"Verification failed" = "Verification failed";
+"Verification failed" = "Verifiering misslyckades";
 
 /* No comment provided by engineer. */
-"Verification FAILED: No signatures found" = "Verification FAILED: No signatures found";
+"Verification FAILED: No signatures found" = "Verifiering MISSLYCKADES: Inga signaturer hittades";
 
 /* arg:filename */
 "Verification for %@" = "Verifiering för %@";
@@ -194,42 +194,77 @@
 "Build: %@" = "Build: %@";
 
 LIBMACGPG_NOT_FOUND_TITLE = "Libmacgpg hittades inte";
-LIBMACGPG_NOT_FOUND_MESSAGE = "Libmacgpg was not found on your system. Please visit https://gpgtools.org to download and re-install GPG Suite.";
-CODE_SIGN_ERROR_TITLE = "Someone tampered with your installation of GPG Services!";
-CODE_SIGN_ERROR_MESSAGE = "To keep you safe, GPG Services will exit now!\n\nPlease download and install the latest version of GPG Suite from https://gpgtools.org to be sure you have an original version from us!";
+LIBMACGPG_NOT_FOUND_MESSAGE = "Libmacgpg hittades inte på ditt system. Besök https://gpgtools.org för att ladda ner och ominstallera GPG Suite.";
+CODE_SIGN_ERROR_TITLE = "Någon har manipulerat din installation av GPG Services!";
+CODE_SIGN_ERROR_MESSAGE = "För att skydda dig, har GPG Services avslutats!\n\nLadda ner och installera senaste versionen av GPG Suite från https://gpgtools.org för att försäkra dig om att du har en originalversion från oss!";
 
 SelectedKeysDescription = "%i av %i nycklar markerade";
 
-BIG_FILE_ENCRYPTION_WARNING_TITLE = "Warning: Please ensure your encrypted file is not damaged before removing the original unencrypted file(s).";
-BIG_FILE_ENCRYPTION_WARNING_MSG = "For files bigger than 100MB, we recommend to use the Terminal. GPG Services still needs a bit of tweaking and we are on it. But until it is really reliable, you will see this warning. You may continue and encrypt your file(s). Before removing the unencrypted files, at least decrypt the encrypted file once. If that works without any error, you are good. If you run into an error, the encrypted file is damaged and you should look for another solution. Either try the terminal or use an encrypted disk image. The latter is available via the on-board Disk Utility in macOS.";
+BIG_FILE_ENCRYPTION_WARNING_TITLE = "Varning: Försäkra dig om att din krypterade fil inte är skadad innan du tar bort den okrypterade originalfilen.";
+BIG_FILE_ENCRYPTION_WARNING_MSG = "För filer större än 100MB, rekommenderar vi att använda Terminal. GPG Services behöver fortfarande lite finjusteringar, och vi jobbar på det. Men tills de är helt pålitliga, kan du få se denna varning. Du kan fortsätta att kryptera din fil. Innan du tar bort den okrypterade filen, dekryptera den krypterade filen åtminstone en gång. Om det fungerar utan fel, är det bra. Om fel uppstår, är den krypterade filen skadad och du borde då hitta en annan lösning. Pröva antingen Terminal, eller använd en krypterad skivavbild. Det senare är tillgängligt i Skivverktyg i macOS.";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "Avbryt";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Fortsätt";
 
 
-NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Warning: The encrypted file was not integrity protected!";
-NO_MDC_DECRYPT_FILE_WARNING_MSG = "Without integrity protection (missing modification detection code) it is not possible to determine whether or not the encrypted data has been modified.\n\nTo learn more about how to deal with files without integrity protection visit:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nIf you are absolutely sure that the file has not been modified, you may choose to continue.";
+NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Varning: Den krypterade filen blev inte integritets-skyddad!";
+NO_MDC_DECRYPT_FILE_WARNING_MSG = "Utan integritets-skydd (saknad modification detection code) är det inte möjligt att avgöra om det krypterade data har modifierats eller inte.\n\nFör att lära mer om att hantera filer utan integritets-skydd, besök:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nOm du är absolut säker på att filen inte modifierats, kan du fortsätta.";
 NO_MDC_DECRYPT_FILE_WARNING_YES = "Fortsätt";
 NO_MDC_DECRYPT_FILE_WARNING_NO = "Avbryt";
 
-NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Warning: The encrypted text was not integrity protected!";
-NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Without integrity protection (missing modification detection code) it is not possible to determine whether or not the encrypted data has been modified.\n\nTo learn more about how to deal with files without integrity protection visit:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nIf you are absolutely sure that the text has not been modified, you may choose to continue.";
+NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Varning: Den krypterade texten blev inte integritets-skyddad!";
+NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Utan integritets-skydd (saknad modification detection code) är det inte möjligt att avgöra om det krypterade data har modifierats eller inte.\n\nFör att lära mer om att hantera filer utan integritets-skydd, besök:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nOm du är absolut säker på att texten inte modifierats, kan du fortsätta.";
 NO_MDC_DECRYPT_TEXT_WARNING_YES = "Fortsätt";
 NO_MDC_DECRYPT_TEXT_WARNING_NO = "Avbryt";
 
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Kunde inte dekryptera filen \"%@\"";
-NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "The secret key required to decrypt this file is not available.\nThe file is encrypted to the keys with the following fingerprints:\n\n%@\n\nIf you don't recognize any one of these fingerprints, it is possible that the sender didn't use your public key to encrypt this file.";
+NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Den hemliga nyckels som behövs för att dekryptera denna fil är inte tillgänglig.\nFilen är krypterad mot nycklarna med följande fingeravtryck:\n\n%@\n\nOm du inte känner igen några av dessa fingeravtryck, är det möjligt att avsändaren inte använde din publika nyckel för att kryptera denna fil.";
 
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Unable to decrypt the selected contents";
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "The secret key required to decrypt the content is not available.\nThe content is encrypted to the keys with the following fingerprints:\n\n%@\n\nIf you don't recognize any one of these fingerprints, it is possible that the sender didn't use your public key to encrypt this file.";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Kunde inte dekryptera det valda innehållet";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Den hemliga nyckels som behövs för att dekryptera innehållet är inte tillgänglig.\nInnehållet är krypterat mot nycklarna med följande fingeravtryck:\n\n%@\n\nOm du inte känner igen några av dessa fingeravtryck, är det möjligt att avsändaren inte använde din publika nyckel för att kryptera innehållet.";
 
 
 "and" = "och";
-KeyDescriptionAndMore = "%1$@ and %2$lu more";
+KeyDescriptionAndMore = "%1$@ och %2$lu mer";
 
-"trust" = "trust";
+"trust" = "lita på";
 
-"Signed by: %1$@ (%2$@) – " = "Signed by: %1$@ (%2$@) – ";
+"Signed by: %1$@ (%2$@) – " = "Signerat av: %1$@ (%2$@) –";
 
-"Verification %1$@: %2$@ (Code: %3$i)" = "Verification %1$@: %2$@ (Code: %3$i)";
+"Verification %1$@: %2$@ (Code: %3$i)" = "Verifiering %1$@: %2$@ (Kod: %3$i)";
 
+"Show in Finder" = "Show in Finder";
+
+
+
+
+
+ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Absolute trusted signature";
+ABSOLUTE_TRUSTED_SIGNATURE_MESSAGE = "This signature can be trusted";
+
+FULLY_TRUSTED_SIGNATURE_TITLE = "Fully trusted signature";
+FULLY_TRUSTED_SIGNATURE_MESSAGE = "This signature can be trusted";
+
+MARGINAL_TRUSTED_SIGNATURE_TITLE = "Marginal trusted signature";
+
+UNTRUSTED_SIGNATURE_TITLE = "Untrusted signature";
+UNTRUSTED_SIGNATURE_MESSAGE = "This signature is not to be trusted";
+
+REVOKED_SIGNATURE_TITLE = "Revoked signature";
+REVOKED_SIGNATURE_MESSAGE = "The key which was used to sign this message was revoked.\n\nYou should refresh the key with key ID %@ in GPG Keychain to check if a new one is available. If the new one is still revoked, check with the sender why the key was revoked.";
+
+EXPIRED_SIGNATURE_TITLE = "Expired signature";
+EXPIRED_SIGNATURE_MESSAGE = "The key which was used to sign this message is expired.\n\nYou can try to refresh the key with ID %@ in GPG Keychain and ask the sender why the key is expired.";
+
+UNVERIFIABLE_SIGNATURE_TITLE = "Unverifiable signature";
+
+NO_PUBKEY_SIGNATURE_TITLE = "No public key";
+NO_PUBKEY_SIGNATURE_ALERT_TITLE = "The key to verify this signature is not in GPG Keychain";
+NO_PUBKEY_SIGNATURE_MESSAGE = "The message could not be verified. The public key required to verify this signature is not in GPG Keychain.\n\nSearch the key server for fingerprint %@ or ask your contact for their public key. You can retry to verify the signature after adding their public key to GPG Keychain.";
+
+BAD_SIGNATURE_TITLE = "Warning: Invalid signature";
+BAD_SIGNATURE_MESSAGE = "The signature does not match this message. You should not trust this message, because it was manipulated.\n\nMessages can unintentionally be altered after they were signed. Exchange servers or mailing lists are known use-cases, where signatures can be rendered invalid.  Also formatted text like rtf, docx or odt are known to cause problems. Make sure to use txt file format.";
+
+SIGNATURE_ERROR_TITLE = "Signature error";
+SIGNATURE_ERROR_ALERT_TITLE = "Unknown signature error";
+SIGNATURE_ERROR_DESCRIPTION = "Code: %i";
 
