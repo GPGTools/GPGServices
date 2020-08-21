@@ -1376,7 +1376,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	
 
 	NSString *title;
-	NSString *message;
+	NSString *message = nil;
 	if (innCount == outCount) {
 		title = localized(@"Decryption finished");
 	} else if (outCount > 0) {
@@ -1456,10 +1456,12 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		message = mutableMessage;
 	}
 
+	if (message) {
+		[self displayOperationFinishedNotificationWithTitle:title
+													message:message
+													  files:decryptedFiles.copy];
+	}
 	
-	[self displayOperationFinishedNotificationWithTitle:title
-												message:message
-												  files:decryptedFiles.copy];
 	
 }
 
