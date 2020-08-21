@@ -20,6 +20,8 @@ static NSString *const ALL_VERIFICATION_RESULTS_KEY = @"verificationResults";
 static NSString *const OPERATION_IDENTIFIER_KEY = @"operationIdentifier";
 static NSString *const VERIFICATION_CONTROLLER_KEY = @"verificationController";
 static NSString *const VERIFICATION_RESULT_KEY = @"verificationResult";
+static NSString *const VERIFICATION_FAILED_KEY = @"verificationFailed";
+
 
 
 static NSString *const NOTIFICATION_TITLE_KEY = @"title";
@@ -2318,10 +2320,14 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 								 @"file": file,
 								 VERIFICATION_RESULT_KEY: resultString,
 								 NOTIFICATION_TITLE_KEY: resultString,
-								 NOTIFICATION_MESSAGE_KEY: file.lastPathComponent}];
+								 NOTIFICATION_MESSAGE_KEY: file.lastPathComponent,
+								 VERIFICATION_FAILED_KEY: @YES
+			}];
 		} else {
 			[results addObject:@{VERIFICATION_RESULT_KEY: resultString,
-								 NOTIFICATION_TITLE_KEY: resultString}];
+								 NOTIFICATION_TITLE_KEY: resultString,
+								 VERIFICATION_FAILED_KEY: @YES
+			}];
 		}
 	}
 
@@ -2338,6 +2344,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	NSString *title;
 	NSString *alertTitle = nil;
 	BOOL signatureError = NO;
+	BOOL verificationFailed = NO;
 	NSString *fingerprint = nil;
 	NSString *knowledgeBaseLink = nil;
 	
@@ -2374,12 +2381,15 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		case GPGErrorUnknownAlgorithm:
 			templatePrefix = @"UNVERIFIABLE_SIGNATURE";
 			signatureError = YES;
+			verificationFailed = YES;
 			break;
 		case GPGErrorNoPublicKey:
 			templatePrefix = @"NO_PUBKEY_SIGNATURE";
+			verificationFailed = YES;
 			break;
 		case GPGErrorBadSignature:
 			templatePrefix = @"BAD_SIGNATURE";
+			verificationFailed = YES;
 			break;
 		default:
 			break;
@@ -2387,6 +2397,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	if (!templatePrefix) {
 		signatureError = YES;
 		templatePrefix = @"SIGNATURE_ERROR";
+		verificationFailed = YES;
 	}
 	
 	
@@ -2544,6 +2555,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	result[NOTIFICATION_MESSAGE_KEY] = [notificationMessage componentsJoinedByString:@"\n"];
 	result[ALERT_MESSAGE_KEY] = [alertMessage componentsJoinedByString:@"\n"];
 	result[ALERT_TITLE_KEY] = alertTitle;
+	result[VERIFICATION_FAILED_KEY] = @(verificationFailed);
 
 	if (file) {
 		result[@"filename"] = file.lastPathComponent;
@@ -2696,27 +2708,40 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 							  operationIdentifier:(NSString *)operationIdentifier
 								completionHandler:(void(^)(BOOL notificationDidShow))completionHandler {
 	if (@available(macOS 10.14, *)) {
-		UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
-		
-		NSDictionary *result = results[0];
-		content.title = result[NOTIFICATION_TITLE_KEY];
-		content.body = result[NOTIFICATION_MESSAGE_KEY];
-		content.sound = [UNNotificationSound defaultSound];
-
-		NSMutableDictionary *userInfo = [NSMutableDictionary new];
-		userInfo[OPERATION_IDENTIFIER_KEY] = operationIdentifier;
-		userInfo[ALL_VERIFICATION_RESULTS_KEY] = fullResults.copy;
-		
-		NSString *file = result[@"file"];
-		if (file) {
-			// Add the file to the userInfo and display "Show in Finder" button.
-			userInfo[@"files"] = @[file];
-			content.categoryIdentifier = fileCategoryIdentifier;
+		BOOL verificationFailed = YES;
+		for (NSDictionary *result in results) {
+			if (![result[VERIFICATION_FAILED_KEY] boolValue]) {
+				verificationFailed = NO;
+				break;
+			}
 		}
 		
-		content.userInfo = userInfo.copy;
+		if (verificationFailed) {
+			// Do not show notification for failed verifications.
+			completionHandler(NO);
+		} else {
+			UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+			
+			NSDictionary *result = results[0];
+			content.title = result[NOTIFICATION_TITLE_KEY];
+			content.body = result[NOTIFICATION_MESSAGE_KEY];
+			content.sound = [UNNotificationSound defaultSound];
 
-		[self displayNotificationWithContent:content completionHandler:completionHandler];
+			NSMutableDictionary *userInfo = [NSMutableDictionary new];
+			userInfo[OPERATION_IDENTIFIER_KEY] = operationIdentifier;
+			userInfo[ALL_VERIFICATION_RESULTS_KEY] = fullResults.copy;
+			
+			NSString *file = result[@"file"];
+			if (file) {
+				// Add the file to the userInfo and display "Show in Finder" button.
+				userInfo[@"files"] = @[file];
+				content.categoryIdentifier = fileCategoryIdentifier;
+			}
+			
+			content.userInfo = userInfo.copy;
+
+			[self displayNotificationWithContent:content completionHandler:completionHandler];
+		}
 	} else {
 		completionHandler(NO);
 	}
