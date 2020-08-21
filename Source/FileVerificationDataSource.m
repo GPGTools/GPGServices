@@ -52,7 +52,22 @@
 	if ([identifier isEqualToString:@"filename"]) {
 		cellView.textField.stringValue = _verificationResults[row][@"filename"];
 	} else if ([identifier isEqualToString:@"result"]) {
-		cellView.textField.attributedStringValue = _verificationResults[row][@"verificationResult"];
+		id encodedVerificationResult = _verificationResults[row][@"verificationResult"];
+		NSMutableAttributedString *attributedVerificationResult;
+		if ([encodedVerificationResult isKindOfClass:[NSString class]]) {
+			attributedVerificationResult = [[NSMutableAttributedString alloc] initWithString:encodedVerificationResult];
+		} else {
+			attributedVerificationResult = [[NSKeyedUnarchiver unarchivedObjectOfClass:[NSAttributedString class] fromData:encodedVerificationResult error:nil] mutableCopy];
+		}
+		
+		NSDictionary *attributes = @{NSFontAttributeName: cellView.textField.font,
+									 NSForegroundColorAttributeName: [NSColor textColor]
+		};
+		[attributedVerificationResult addAttributes:attributes range:NSMakeRange(0, attributedVerificationResult.length)];
+		
+		cellView.textField.allowsEditingTextAttributes = YES;
+		cellView.textField.selectable = YES;
+		cellView.textField.attributedStringValue = attributedVerificationResult;
 	} else {
 		NSAssert(NO, @"Unkown column identifier!");
 		return nil;

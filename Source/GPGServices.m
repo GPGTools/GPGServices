@@ -2339,6 +2339,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	NSString *alertTitle = nil;
 	BOOL signatureError = NO;
 	NSString *fingerprint = nil;
+	NSString *knowledgeBaseLink = nil;
 	
 
 	switch (sig.status) {
@@ -2357,6 +2358,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 				case GPGValidityUnknown:
 				case GPGValidityUndefined:
 					templatePrefix = @"UNTRUSTED_SIGNATURE";
+					knowledgeBaseLink = @"https://support.gpgtools.org/kb/how-to/trusting-keys-and-why-this-signature-is-not-to-be-trusted";
 					break;
 				default:
 					break;
@@ -2448,6 +2450,25 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		alertMessageString = localizedWithFormat(template, fingerprint);
 		if ([alertMessageString isEqualToString:template]) {
 			alertMessageString = nil;
+		} else {
+			NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^(.*)~(.*)~(.*)$" options:0 error:nil];
+			NSTextCheckingResult *match = [regex firstMatchInString:alertMessageString options:0 range:NSMakeRange(0, alertMessageString.length)];
+			if (match) {
+				NSString *subString = [alertMessageString substringWithRange:[match rangeAtIndex:1]];
+				NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:subString];
+				NSDictionary<NSAttributedStringKey, id> *linkAttributes = @{};
+				
+				if (knowledgeBaseLink) {
+					linkAttributes = @{NSLinkAttributeName: knowledgeBaseLink};
+				}
+				subString = [alertMessageString substringWithRange:[match rangeAtIndex:2]];
+				[attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:subString attributes:linkAttributes]];
+				
+				subString = [alertMessageString substringWithRange:[match rangeAtIndex:3]];
+				[attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:subString]];
+				
+				alertMessageString = (NSString *)attributedString;
+			}
 		}
 	}
 	
@@ -2496,8 +2517,29 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	}
 
 	
+	// Concatenate the (attributed) strings to form the verification result.
+	NSMutableAttributedString *attributedVerficationResult = [NSMutableAttributedString new];
+	NSUInteger count = verficationResult.count;
+	NSAttributedString *newLine = [[NSAttributedString alloc] initWithString:@"\n"];
+	for (NSUInteger i = 0; i < count; i++) {
+		id line = verficationResult[i];
+		NSAttributedString *attributedLine = line;
+		if ([line isKindOfClass:[NSString class]]) {
+			attributedLine = [[NSAttributedString alloc] initWithString:line];
+		}
+		[attributedVerficationResult appendAttributedString:attributedLine];
+		
+		if (i + 1 < count) {
+			[attributedVerficationResult appendAttributedString:newLine];
+		}
+	}
+	// Encode it, because a notification user info doesn't allow NSAttributedString.
+	NSData *encodedVerficationResult = [NSKeyedArchiver archivedDataWithRootObject:attributedVerficationResult];
+	
+	
+	
 	NSMutableDictionary *result = [NSMutableDictionary new];
-	result[VERIFICATION_RESULT_KEY] = [verficationResult componentsJoinedByString:@"\n"];
+	result[VERIFICATION_RESULT_KEY] = encodedVerficationResult;
 	result[NOTIFICATION_TITLE_KEY] = title;
 	result[NOTIFICATION_MESSAGE_KEY] = [notificationMessage componentsJoinedByString:@"\n"];
 	result[ALERT_MESSAGE_KEY] = [alertMessage componentsJoinedByString:@"\n"];

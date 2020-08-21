@@ -247,7 +247,7 @@ FULLY_TRUSTED_SIGNATURE_MESSAGE = "This signature can be trusted";
 MARGINAL_TRUSTED_SIGNATURE_TITLE = "Marginal trusted signature";
 
 UNTRUSTED_SIGNATURE_TITLE = "Untrusted signature";
-UNTRUSTED_SIGNATURE_MESSAGE = "This signature is not to be trusted";
+UNTRUSTED_SIGNATURE_MESSAGE = "The signature of this message is valid but untrusted. That means it has not been tampered with. It is untrusted though, because the key has not yet been verified. This ~KB-article~ explains how to verify and sign a public key.";
 
 REVOKED_SIGNATURE_TITLE = "Revoked signature";
 REVOKED_SIGNATURE_MESSAGE = "The key which was used to sign this message was revoked.\n\nYou should refresh the key with key ID %@ in GPG Keychain to check if a new one is available. If the new one is still revoked, check with the sender why the key was revoked.";

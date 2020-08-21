@@ -12,7 +12,7 @@
 
 @interface FileVerificationDataSource : NSObject
 
-@property (nonatomic, readonly) NSArray *verificationResults;
+@property (nonatomic, readonly) NSArray<NSDictionary *> *verificationResults;
 
 // not thread-safe
 - (void)addResults:(NSArray<NSDictionary *> *)results;
