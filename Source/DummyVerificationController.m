@@ -98,6 +98,22 @@
 	}
 }
 
+- (IBAction)showInFinder:(id)sender {
+	NSArray<NSDictionary *> *results = dataSource.verificationResults;
+	NSMutableArray *urls = [NSMutableArray new];
+	for (NSDictionary *result in results) {
+		NSString *file = result[@"file"];
+		if (file) {
+			[urls addObject:[NSURL fileURLWithPath:file]];
+		}
+	}
+	if (urls.count > 0) {
+		[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
+	}
+	[self okClicked:sender];
+}
+
+
 
 
 - (void)boundsDidChange:(NSNotification *)notification {

@@ -11,6 +11,8 @@
 
 @property (nonatomic, strong) NSString *messageText;
 @property (nonatomic, strong) NSString *informativeText;
+@property (nonatomic, copy) NSArray *files;
+
 
 - (void)show;
 

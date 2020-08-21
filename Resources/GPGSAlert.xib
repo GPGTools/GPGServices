@@ -70,12 +70,29 @@ DQ
                             <binding destination="-2" name="value" keyPath="informativeText" id="g1y-0c-unB"/>
                         </connections>
                     </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L90-yz-4Wm">
+                        <rect key="frame" x="215" y="13" width="130" height="32"/>
+                        <buttonCell key="cell" type="push" title="Show in Finder" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Nfc-Up-KmD">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="showFilesInFinder:" target="-2" id="SAD-O9-hoF"/>
+                            <binding destination="-2" name="hidden" keyPath="files.@count" id="yrY-g9-hTG">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="cOC-tP-y9S" firstAttribute="leading" secondItem="L90-yz-4Wm" secondAttribute="trailing" constant="12" id="4Sa-wN-M9i"/>
                     <constraint firstItem="8Q9-QQ-ZGq" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="5qr-K0-alQ"/>
                     <constraint firstItem="cOC-tP-y9S" firstAttribute="top" relation="greaterThanOrEqual" secondItem="DTS-gO-8Ic" secondAttribute="bottom" constant="16" id="646-pm-uBj"/>
                     <constraint firstItem="8Q9-QQ-ZGq" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="16" id="Dbn-8m-Nhh"/>
                     <constraint firstItem="TeV-5t-qoa" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="16" id="LuM-3P-R05"/>
+                    <constraint firstItem="L90-yz-4Wm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8Q9-QQ-ZGq" secondAttribute="trailing" constant="8" id="M2A-Dn-8sv"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DTS-gO-8Ic" secondAttribute="trailing" constant="30" id="M2b-k7-Yvz"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TeV-5t-qoa" secondAttribute="trailing" constant="20" id="NcK-6s-ZU7"/>
                     <constraint firstAttribute="bottom" secondItem="cOC-tP-y9S" secondAttribute="bottom" constant="20" id="S4t-Jb-2g8"/>
@@ -83,6 +100,7 @@ DQ
                     <constraint firstItem="DTS-gO-8Ic" firstAttribute="top" secondItem="TeV-5t-qoa" secondAttribute="bottom" constant="8" id="XON-TR-r3m"/>
                     <constraint firstItem="TeV-5t-qoa" firstAttribute="leading" secondItem="8Q9-QQ-ZGq" secondAttribute="trailing" constant="17" id="gQc-Wi-IRE"/>
                     <constraint firstAttribute="trailing" secondItem="cOC-tP-y9S" secondAttribute="trailing" constant="20" id="gcQ-2r-Bat"/>
+                    <constraint firstItem="L90-yz-4Wm" firstAttribute="firstBaseline" secondItem="cOC-tP-y9S" secondAttribute="firstBaseline" id="nQl-6O-bXy"/>
                 </constraints>
             </view>
             <connections>
@@ -90,6 +108,15 @@ DQ
             </connections>
             <point key="canvasLocation" x="141" y="147"/>
         </window>
+        <button verticalHuggingPriority="750" id="1EF-u8-kbM">
+            <rect key="frame" x="0.0" y="0.0" width="82" height="32"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ihl-jf-Sfj">
+                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                <font key="font" metaFont="system"/>
+            </buttonCell>
+            <point key="canvasLocation" x="210" y="308"/>
+        </button>
     </objects>
     <resources>
         <image name="GPGServices" width="512" height="512"/>

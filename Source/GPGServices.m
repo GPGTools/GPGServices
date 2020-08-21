@@ -2557,11 +2557,12 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 }
 
 
-- (void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body {
+- (void)displayMessageWindowWithTitleText:(NSString *)title bodyText:(NSString *)body files:(NSArray *)files {
 	void (^alertBlock)(void) = ^{
 		GPGSAlert *alert = [GPGSAlert new];
 		alert.messageText = title;
 		alert.informativeText = body;
+		alert.files = files;
 		[NSApp activateIgnoringOtherApps:YES];
 		[alert show];
 	};
@@ -2637,12 +2638,12 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		[self displayNotificationWithContent:content completionHandler:^(BOOL notificationDidShow) {
 			if (!notificationDidShow) {
 				// Fallback to normal dialog.
-				[self displayMessageWindowWithTitleText:alertTitle bodyText:alertMessage];
+				[self displayMessageWindowWithTitleText:alertTitle bodyText:alertMessage files:files];
 			}
 		}];
 	} else {
 		 // Fallback to normal dialog.
-		 [self displayMessageWindowWithTitleText:alertTitle bodyText:alertMessage];
+		[self displayMessageWindowWithTitleText:alertTitle bodyText:alertMessage files:files];
 	 }
 }
 
@@ -2758,6 +2759,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 					[verificationController addResults:verificationResults];
 				}
 			} else {
+				NSArray *files = userInfo[@"files"];
 				NSString *title = userInfo[ALERT_TITLE_KEY];
 				if (title.length == 0) {
 					title = content.title;
@@ -2767,7 +2769,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 					body = content.body;
 				}
 				// Display the notification content in a dialog.
-				[self displayMessageWindowWithTitleText:title bodyText:body];
+				[self displayMessageWindowWithTitleText:title bodyText:body files:files];
 			}
 		} else if ([response.actionIdentifier isEqualToString:showInFinderActionIdentifier]) {
 			// Show the files in Finder.

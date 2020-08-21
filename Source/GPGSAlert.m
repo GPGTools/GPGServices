@@ -37,12 +37,28 @@
 	[self showWindow:nil];
 }
 
-- (void)dismissController:(id)sender {
+- (IBAction)dismissController:(id)sender {
 	[self.window close];
 	[super dismissController:sender];
 	GPGServices *gpgServices = NSApp.delegate;
 	[gpgServices goneIn60Seconds];
 	_selfRetain = nil;
 }
+
+- (IBAction)showFilesInFinder:(id)sender {
+	NSArray *theFiles = self.files;
+	
+	if ([theFiles isKindOfClass:[NSArray class]] && theFiles.count > 0) {
+		NSMutableArray *urls = [NSMutableArray new];
+		for (NSString *file in theFiles) {
+			[urls addObject:[NSURL fileURLWithPath:file]];
+		}
+		[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
+	}
+	
+	[self dismissController:sender];
+}
+
+
 
 @end
