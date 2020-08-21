@@ -238,16 +238,14 @@ KeyDescriptionAndMore = "%1$@ und %2$lu mehr";
 
 
 
-ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Signatur mit absolutem Vertrauen";
-ABSOLUTE_TRUSTED_SIGNATURE_MESSAGE = "Dieser Signatur kann vertraut werden";
+ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
 
-FULLY_TRUSTED_SIGNATURE_TITLE = "Signatur mit vollständigem Vertrauen";
-FULLY_TRUSTED_SIGNATURE_MESSAGE = "Dieser Signatur kann vertraut werden";
+FULLY_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
 
 MARGINAL_TRUSTED_SIGNATURE_TITLE = "Signatur mit geringem Vertrauen";
 
 UNTRUSTED_SIGNATURE_TITLE = "Signature ohne Vertrauen";
-UNTRUSTED_SIGNATURE_MESSAGE = "Dieser Signatur kann nicht vertraut werden";
+UNTRUSTED_SIGNATURE_MESSAGE = "The signature of this message is valid but untrusted. That means it has not been tampered with. It is untrusted though, because the key has not yet been verified. This ~KB-article~ explains how to verify and sign a public key.";
 
 REVOKED_SIGNATURE_TITLE = "Widerrufene Signatur";
 REVOKED_SIGNATURE_MESSAGE = "Der Schlüssel mit dem diese Nachricht signiert wurde, wurde widerrufen.\n\nDu solltest den Schlüssel mit Key ID %@ in GPG Keychain aktualisieren. Sollte der Schlüssel immer noch widerrufen sein, suche nach einem neuen Schlüssel und frage bei dem Schlüsselinhaber nach, warum der Schlüssel widerrrufen wurde.";

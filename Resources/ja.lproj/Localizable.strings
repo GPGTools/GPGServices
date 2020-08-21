@@ -1,79 +1,79 @@
 /* arg:path */
-"%@ — Cannot import directory" = "%@ — Cannot import directory";
+"%@ — Cannot import directory" = "%@ — ディレクトリをインポートできません";
 
 /* Filename for Archive.zip.gpg */
-"Archive" = "Archive";
+"Archive" = "アーカイブ";
 
 /* arg:userID */
-"Bad signature by %@" = "Bad signature by %@";
+"Bad signature by %@" = "%@の不正な署名です";
 
 /* for saving a file */
 "Choose Destination" = "Choose Destination";
 
 /* arg:shortKeyID */
-"Could not export key %@" = "Could not export key %@";
+"Could not export key %@" = "キーをエクスポートできませんでした %@";
 
 /* no comment */
-"Could not read file" = "Could not read file";
+"Could not read file" = "ファイルを読み込めませんでした";
 
 /* no comment */
-"Could not write to directory" = "Could not write to directory";
+"Could not write to directory" = "ディレクトリに書き込むことができませんでした";
 
-"Could not open TextEdit" = "Could not open TextEdit";
+"Could not open TextEdit" = "TextEdit を開くことができませんでした";
 
 /* arg1:successCount arg2:totalCount */
-"Decrypted %1$u of %2$u files" = "Decrypted %1$u of %2$u files";
+"Decrypted %1$u of %2$u files" = "%2$u件のうち%1$u件を復号化しました。";
 
 /* arg:filename */
-"Decrypted %@" = "Decrypted %@";
+"Decrypted %@" = "%@ を復号化しました";
 
 /* arg:filename */
-"Decrypting %@" = "Decrypting %@";
+"Decrypting %@" = "%@を復号化しています";
 
 /* arg:count */
-"Decrypting %u files" = "Decrypting %u files";
+"Decrypting %u files" = "%uつのファイルを復号化しています";
 
 /* No comment provided by engineer. */
-"Decryption failed" = "Decryption failed";
+"Decryption failed" = "復号化が失敗しました";
 
 /* No comment provided by engineer. */
-"Decryption finished" = "Decryption finished";
+"Decryption finished" = "復号化が完了しました";
 
 /* No comment provided by engineer. */
-"Decryption finished (partially)" = "Decryption finished (partially)";
+"Decryption finished (partially)" = "復号化が完了しました (不完全)";
 
 /* arg:filename */
-"Encrypting %@" = "Encrypting %@";
+"Encrypting %@" = "%@を暗号化しています";
 
 /* arg:count */
-"Encrypting %u files" = "Encrypting %u files";
+"Encrypting %u files" = "%uつのファイルを暗号化しています";
 
 /* No comment provided by engineer. */
-"Encryption canceled" = "Encryption canceled";
+"Encryption canceled" = "暗号化がキャンセルさせました";
 
 /* No comment provided by engineer. */
-"Encryption failed" = "Encryption failed";
+"Encryption failed" = "暗号化に失敗しました";
 
 /* No comment provided by engineer. */
-"Encryption finished" = "Encryption finished";
+"Encryption finished" = "暗号化が完了しました";
 
 /* No comment provided by engineer. */
-"Export failed" = "Export failed";
+"Export failed" = "エクスポートが失敗しました";
 
 /* Matched in \"Verification FAILED:\" */
-"FAILED" = "FAILED";
+"FAILED" = "失敗";
 
 /* arg:filename */
-"Failed decrypting %@" = "Failed decrypting %@";
+"Failed decrypting %@" = "%@の暗号化に失敗しました";
 
 /* arg:filename */
-"Failed importing %@" = "Failed importing %@";
+"Failed importing %@" = "%@のインポートに失敗しました";
 
 /* arg:filename */
-"Failed signing %@" = "Failed signing %@";
+"Failed signing %@" = "%@の署名に失敗しました";
 
 /* No comment provided by engineer. */
-"File doesn't exist" = "File doesn't exist";
+"File doesn't exist" = "ファイルが存在しません";
 
 /* arg1:validity arg2:userID */
 "Good signature (%@ trust):\n\"%@\"" = "Good signature (%1$@ trust):\n\"%2$@\"";
@@ -82,28 +82,28 @@
 "GPGServices did not get usable data from the pasteboard." = "GPG Services did not get usable data from the pasteboard.";
 
 /* No comment provided by engineer. */
-"Import failed" = "Import failed";
+"Import failed" = "インポートに失敗しました";
 
 /* No comment provided by engineer. */
-"Import finished" = "Import finished";
+"Import finished" = "インポートが完了しました";
 
 /* No comment provided by engineer. */
-"Import finished (partially)" = "Import finished (partially)";
+"Import finished (partially)" = "インポートが完了しました (不完全)";
 
 /* No comment provided by engineer. */
-"Import result" = "Import result";
+"Import result" = "インポート結果";
 
 /* arg1:successCount arg2:totalCount */
 "Imported %1$u of %2$u files" = "Imported %1$u of %2$u files";
 
 /* arg:filename */
-"Imported %@" = "Imported %@";
+"Imported %@" = "%@をインポートしました";
 
 /* arg:filename */
-"Importing %@" = "Importing %@";
+"Importing %@" = "%@をインポートしています";
 
 /* arg:count */
-"Importing %u files" = "Importing %u files";
+"Importing %u files" = "%uつのファイルをインポートしています";
 
 /* No comment provided by engineer. */
 "No encryptable text was found within the selection" = "No encryptable text was found within the selection";
@@ -112,7 +112,7 @@
 "No signable text was found within the selection" = "No signable text was found within the selection";
 
 /* No comment provided by engineer. */
-"No signatures found" = "No signatures found";
+"No signatures found" = "署名が見つかりませんでした";
 
 /* No comment provided by engineer. */
 "No signatures found within the selection" = "No signatures found within the selection";
@@ -189,32 +189,32 @@
 /* arg:count */
 "Verifying signatures of %u files" = "Verifying signatures of %u files";
 
-"Version: %@" = "Version: %@";
+"Version: %@" = "バージョン: %@";
 
-"Build: %@" = "Build: %@";
+"Build: %@" = "ビルド: %@";
 
-LIBMACGPG_NOT_FOUND_TITLE = "Libmacgpg was not found";
-LIBMACGPG_NOT_FOUND_MESSAGE = "Libmacgpg was not found on your system. Please visit https://gpgtools.org to download and re-install GPG Suite.";
+LIBMACGPG_NOT_FOUND_TITLE = "Libmacgpg が見つかりませんでした";
+LIBMACGPG_NOT_FOUND_MESSAGE = "Libmacgpg がシステム内から見つかりませんでした。 https://gpgtools.org へ行き GPG Suite を再インストールしてください。";
 CODE_SIGN_ERROR_TITLE = "Someone tampered with your installation of GPG Services!";
 CODE_SIGN_ERROR_MESSAGE = "To keep you safe, GPG Services will exit now!\n\nPlease download and install the latest version of GPG Suite from https://gpgtools.org to be sure you have an original version from us!";
 
-SelectedKeysDescription = "%i of %i keys selected";
+SelectedKeysDescription = "%i / %i 鍵が選択されました";
 
 BIG_FILE_ENCRYPTION_WARNING_TITLE = "Warning: Please ensure your encrypted file is not damaged before removing the original unencrypted file(s).";
 BIG_FILE_ENCRYPTION_WARNING_MSG = "For files bigger than 100MB, we recommend to use the Terminal. GPG Services still needs a bit of tweaking and we are on it. But until it is really reliable, you will see this warning. You may continue and encrypt your file(s). Before removing the unencrypted files, at least decrypt the encrypted file once. If that works without any error, you are good. If you run into an error, the encrypted file is damaged and you should look for another solution. Either try the terminal or use an encrypted disk image. The latter is available via the on-board Disk Utility in macOS.";
-BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "Cancel";
-BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Continue";
+BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "キャンセル";
+BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "続行";
 
 
-NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Warning: The encrypted file was not integrity protected!";
+NO_MDC_DECRYPT_FILE_WARNING_TITLE = "警告: この暗号化されたファイルは完全に保護されませんでした!";
 NO_MDC_DECRYPT_FILE_WARNING_MSG = "Without integrity protection (missing modification detection code) it is not possible to determine whether or not the encrypted data has been modified.\n\nTo learn more about how to deal with files without integrity protection visit:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nIf you are absolutely sure that the file has not been modified, you may choose to continue.";
-NO_MDC_DECRYPT_FILE_WARNING_YES = "Continue";
-NO_MDC_DECRYPT_FILE_WARNING_NO = "Cancel";
+NO_MDC_DECRYPT_FILE_WARNING_YES = "続行";
+NO_MDC_DECRYPT_FILE_WARNING_NO = "キャンセル";
 
-NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Warning: The encrypted text was not integrity protected!";
+NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "警告: この暗号化されたテキストは完全に保護されませんでした!";
 NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Without integrity protection (missing modification detection code) it is not possible to determine whether or not the encrypted data has been modified.\n\nTo learn more about how to deal with files without integrity protection visit:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nIf you are absolutely sure that the text has not been modified, you may choose to continue.";
-NO_MDC_DECRYPT_TEXT_WARNING_YES = "Continue";
-NO_MDC_DECRYPT_TEXT_WARNING_NO = "Cancel";
+NO_MDC_DECRYPT_TEXT_WARNING_YES = "続行";
+NO_MDC_DECRYPT_TEXT_WARNING_NO = "キャンセル";
 
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Unable to decrypt the file \"%@\"";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "The secret key required to decrypt this file is not available.\nThe file is encrypted to the keys with the following fingerprints:\n\n%@\n\nIf you don't recognize any one of these fingerprints, it is possible that the sender didn't use your public key to encrypt this file.";
@@ -223,7 +223,7 @@ NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Unable to decrypt the selected contents";
 NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "The secret key required to decrypt the content is not available.\nThe content is encrypted to the keys with the following fingerprints:\n\n%@\n\nIf you don't recognize any one of these fingerprints, it is possible that the sender didn't use your public key to encrypt this file.";
 
 
-"and" = "and";
+"and" = "と";
 KeyDescriptionAndMore = "%1$@ and %2$lu more";
 
 "trust" = "trust";
@@ -232,7 +232,7 @@ KeyDescriptionAndMore = "%1$@ and %2$lu more";
 
 "Verification %1$@: %2$@ (Code: %3$i)" = "Verification %1$@: %2$@ (Code: %3$i)";
 
-"Show in Finder" = "Show in Finder";
+"Show in Finder" = "Finderで表示";
 
 
 
@@ -255,14 +255,14 @@ EXPIRED_SIGNATURE_MESSAGE = "The key which was used to sign this message is expi
 
 UNVERIFIABLE_SIGNATURE_TITLE = "Unverifiable signature";
 
-NO_PUBKEY_SIGNATURE_TITLE = "No public key";
+NO_PUBKEY_SIGNATURE_TITLE = "公開鍵なし";
 NO_PUBKEY_SIGNATURE_ALERT_TITLE = "The key to verify this signature is not in GPG Keychain";
 NO_PUBKEY_SIGNATURE_MESSAGE = "The message could not be verified. The public key required to verify this signature is not in GPG Keychain.\n\nSearch the key server for fingerprint %@ or ask your contact for their public key. You can retry to verify the signature after adding their public key to GPG Keychain.";
 
-BAD_SIGNATURE_TITLE = "Warning: Invalid signature";
+BAD_SIGNATURE_TITLE = "警告: 無効な署名です";
 BAD_SIGNATURE_MESSAGE = "The signature does not match this message. You should not trust this message, because it was manipulated.\n\nMessages can unintentionally be altered after they were signed. Exchange servers or mailing lists are known use-cases, where signatures can be rendered invalid.  Also formatted text like rtf, docx or odt are known to cause problems. Make sure to use txt file format.";
 
-SIGNATURE_ERROR_TITLE = "Signature error";
-SIGNATURE_ERROR_ALERT_TITLE = "Unknown signature error";
-SIGNATURE_ERROR_DESCRIPTION = "Code: %i";
+SIGNATURE_ERROR_TITLE = "署名エラー";
+SIGNATURE_ERROR_ALERT_TITLE = "不明な署名エラー";
+SIGNATURE_ERROR_DESCRIPTION = "コード: %i";
 

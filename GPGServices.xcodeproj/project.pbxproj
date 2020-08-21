@@ -168,6 +168,11 @@
 		30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextWindow.m; path = Source/SimpleTextWindow.m; sourceTree = "<group>"; };
 		30E6C9B91AB30EF4001541A3 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		30E834992355BAF300332482 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		30F37F3924EFB5DD0026F366 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		30F37F4424EFB5DE0026F366 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		30F37F4D24EFB6040026F366 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/PrivateKeyChooserWindow.strings; sourceTree = "<group>"; };
+		30F37F4E24EFB6080026F366 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/RecipientWindow.strings; sourceTree = "<group>"; };
+		30F37F4F24EFB60C0026F366 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/VerificationResultsWindow.strings; sourceTree = "<group>"; };
 		30FE4A1A21A56CBB0013D508 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		30FE4A2121A56CCF0013D508 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		30FE4A2221A56CD70013D508 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -503,6 +508,7 @@
 				cs,
 				pt,
 				sv,
+				ja,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* GPGServices */;
 			projectDirPath = "";
@@ -717,6 +723,7 @@
 				30FE4A2D21A56D010013D508 /* cs */,
 				30FE4A2E21A56D020013D508 /* pt */,
 				30FE4A2F21A56D030013D508 /* sv */,
+				30F37F4D24EFB6040026F366 /* ja */,
 			);
 			name = PrivateKeyChooserWindow.xib;
 			sourceTree = "<group>";
@@ -730,6 +737,7 @@
 				30FE4A2A21A56CFD0013D508 /* cs */,
 				30FE4A2B21A56CFE0013D508 /* pt */,
 				30FE4A2C21A56CFF0013D508 /* sv */,
+				30F37F4E24EFB6080026F366 /* ja */,
 			);
 			name = RecipientWindow.xib;
 			sourceTree = "<group>";
@@ -743,6 +751,7 @@
 				30FE4A2721A56CF70013D508 /* cs */,
 				30FE4A2821A56CF80013D508 /* pt */,
 				30FE4A2921A56CF90013D508 /* sv */,
+				30F37F4F24EFB60C0026F366 /* ja */,
 			);
 			name = VerificationResultsWindow.xib;
 			sourceTree = "<group>";
@@ -756,6 +765,7 @@
 				30FE4A2421A56CDE0013D508 /* cs */,
 				30FE4A2521A56CDF0013D508 /* pt */,
 				30FE4A2621A56CE00013D508 /* sv */,
+				30F37F4424EFB5DE0026F366 /* ja */,
 			);
 			name = ServicesMenu.strings;
 			sourceTree = "<group>";
@@ -769,6 +779,7 @@
 				30FE4A1A21A56CBB0013D508 /* cs */,
 				30FE4A2121A56CCF0013D508 /* pt */,
 				30FE4A2221A56CD70013D508 /* sv */,
+				30F37F3924EFB5DD0026F366 /* ja */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -232,39 +232,37 @@ KeyDescriptionAndMore = "%1$@ och %2$lu mer";
 
 "Verification %1$@: %2$@ (Code: %3$i)" = "Verifiering %1$@: %2$@ (Kod: %3$i)";
 
-"Show in Finder" = "Show in Finder";
+"Show in Finder" = "Visa i Finder";
 
 
 
 
 
-ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Absolute trusted signature";
-ABSOLUTE_TRUSTED_SIGNATURE_MESSAGE = "This signature can be trusted";
+ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
 
-FULLY_TRUSTED_SIGNATURE_TITLE = "Fully trusted signature";
-FULLY_TRUSTED_SIGNATURE_MESSAGE = "This signature can be trusted";
+FULLY_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
 
-MARGINAL_TRUSTED_SIGNATURE_TITLE = "Marginal trusted signature";
+MARGINAL_TRUSTED_SIGNATURE_TITLE = "Marginellt tillförlitlig signatur";
 
-UNTRUSTED_SIGNATURE_TITLE = "Untrusted signature";
-UNTRUSTED_SIGNATURE_MESSAGE = "This signature is not to be trusted";
+UNTRUSTED_SIGNATURE_TITLE = "Signatur utan tillit";
+UNTRUSTED_SIGNATURE_MESSAGE = "The signature of this message is valid but untrusted. That means it has not been tampered with. It is untrusted though, because the key has not yet been verified. This ~KB-article~ explains how to verify and sign a public key.";
 
-REVOKED_SIGNATURE_TITLE = "Revoked signature";
-REVOKED_SIGNATURE_MESSAGE = "The key which was used to sign this message was revoked.\n\nYou should refresh the key with key ID %@ in GPG Keychain to check if a new one is available. If the new one is still revoked, check with the sender why the key was revoked.";
+REVOKED_SIGNATURE_TITLE = "Återkallad signatur";
+REVOKED_SIGNATURE_MESSAGE = "OBS: Nyckeln som användes för att signera detta meddelande har återkallats.\n\nDu bör uppdatera nyckeln med ID %@ i GPG Keychain för att se om det finns en ny. Om den nya nyckeln också är återkallad bör du kontakta avsändaren för information om varför den återkallats.";
 
-EXPIRED_SIGNATURE_TITLE = "Expired signature";
-EXPIRED_SIGNATURE_MESSAGE = "The key which was used to sign this message is expired.\n\nYou can try to refresh the key with ID %@ in GPG Keychain and ask the sender why the key is expired.";
+EXPIRED_SIGNATURE_TITLE = "Signaturen har gått ut";
+EXPIRED_SIGNATURE_MESSAGE = "Nyckeln som användes för att signera detta meddelande har gått ut. \n\nDu kan försöka att uppdatera nyckeln med ID %@ i GPG Keychain och fråga avsändaren varför nyckeln gått ut.";
 
-UNVERIFIABLE_SIGNATURE_TITLE = "Unverifiable signature";
+UNVERIFIABLE_SIGNATURE_TITLE = "Overifierbar signatur";
 
-NO_PUBKEY_SIGNATURE_TITLE = "No public key";
-NO_PUBKEY_SIGNATURE_ALERT_TITLE = "The key to verify this signature is not in GPG Keychain";
-NO_PUBKEY_SIGNATURE_MESSAGE = "The message could not be verified. The public key required to verify this signature is not in GPG Keychain.\n\nSearch the key server for fingerprint %@ or ask your contact for their public key. You can retry to verify the signature after adding their public key to GPG Keychain.";
+NO_PUBKEY_SIGNATURE_TITLE = "Ingen publik nyckel";
+NO_PUBKEY_SIGNATURE_ALERT_TITLE = "Nyckeln för att verifiera den här signaturen finns inte i GPG Keychain";
+NO_PUBKEY_SIGNATURE_MESSAGE = "Meddelandet kunde inte verifieras. Den publika nyckeln som krävs för att verifiera den här signaturen finns inte i GPG Keychain.\n\nSök på nyckelservern efter fingeravtrycket %@ eller fråga din kontakt efter deras publika nyckel. Du kan försöka att verifiera signaturen på nytt efter att du lagt till den publika nyckeln i GPG Keychain.";
 
-BAD_SIGNATURE_TITLE = "Warning: Invalid signature";
+BAD_SIGNATURE_TITLE = "Varning: Ogiltig signatur";
 BAD_SIGNATURE_MESSAGE = "The signature does not match this message. You should not trust this message, because it was manipulated.\n\nMessages can unintentionally be altered after they were signed. Exchange servers or mailing lists are known use-cases, where signatures can be rendered invalid.  Also formatted text like rtf, docx or odt are known to cause problems. Make sure to use txt file format.";
 
-SIGNATURE_ERROR_TITLE = "Signature error";
-SIGNATURE_ERROR_ALERT_TITLE = "Unknown signature error";
-SIGNATURE_ERROR_DESCRIPTION = "Code: %i";
+SIGNATURE_ERROR_TITLE = "Signaturfel";
+SIGNATURE_ERROR_ALERT_TITLE = "Okänt signaturfel";
+SIGNATURE_ERROR_DESCRIPTION = "Kod: %i";
 

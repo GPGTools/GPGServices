@@ -1,0 +1,21 @@
+/* 
+  ServicesMenu.strings
+  GPGServices
+
+  Copyright (c) 2012 Chris Fraire. All rights reserved.
+*/
+"OpenPGP: Verify" = "OpenPGP: Verify Signature of Selection";
+"OpenPGP: Sign" = "OpenPGP: Sign Selection";
+"OpenPGP: Sign Selection to New Window" = "OpenPGP: Sign Selection to New Window";
+"OpenPGP: Encrypt" = "OpenPGP: Encrypt Selection";
+"OpenPGP: Encrypt Selection to New Window" = "OpenPGP: Encrypt Selection to New Window";
+"OpenPGP: Decrypt" = "OpenPGP: Decrypt Selection";
+"OpenPGP: Decrypt Selection to New Window" = "OpenPGP: Decrypt Selection to New Window";
+"OpenPGP: Insert my key" = "OpenPGP: Insert My Key";
+"OpenPGP: Insert my fingerprint" = "OpenPGP: Insert My Fingerprint";
+"OpenPGP: Import key" = "OpenPGP: Import Key from Selection";
+"OpenPGP: Sign File" = "OpenPGP: ファイルを署名";
+"OpenPGP: Encrypt File" = "OpenPGP: ファイルを暗号化";
+"OpenPGP: Decrypt File" = "OpenPGP: ファイルを復号化";
+"OpenPGP: Validate" = "OpenPGP: ファイルの署名を検証";
+"OpenPGP: Import" = "OpenPGP: ファイルから鍵をインポート";
