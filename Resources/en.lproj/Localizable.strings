@@ -238,11 +238,9 @@ KeyDescriptionAndMore = "%1$@ and %2$lu more";
 
 
 
-ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Absolute trusted signature";
-ABSOLUTE_TRUSTED_SIGNATURE_MESSAGE = "This signature can be trusted";
+ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
 
-FULLY_TRUSTED_SIGNATURE_TITLE = "Fully trusted signature";
-FULLY_TRUSTED_SIGNATURE_MESSAGE = "This signature can be trusted";
+FULLY_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
 
 MARGINAL_TRUSTED_SIGNATURE_TITLE = "Marginal trusted signature";
 
