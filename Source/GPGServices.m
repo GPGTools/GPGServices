@@ -2528,22 +2528,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	}
 
 	
-	// Concatenate the (attributed) strings to form the verification result.
-	NSMutableAttributedString *attributedVerficationResult = [NSMutableAttributedString new];
-	NSUInteger count = verficationResult.count;
-	NSAttributedString *newLine = [[NSAttributedString alloc] initWithString:@"\n"];
-	for (NSUInteger i = 0; i < count; i++) {
-		id line = verficationResult[i];
-		NSAttributedString *attributedLine = line;
-		if ([line isKindOfClass:[NSString class]]) {
-			attributedLine = [[NSAttributedString alloc] initWithString:line];
-		}
-		[attributedVerficationResult appendAttributedString:attributedLine];
-		
-		if (i + 1 < count) {
-			[attributedVerficationResult appendAttributedString:newLine];
-		}
-	}
+	NSAttributedString *attributedVerficationResult = verficationResult.attributedLinesJoined;
 	// Encode it, because a notification user info doesn't allow NSAttributedString.
 	NSData *encodedVerficationResult = [NSKeyedArchiver archivedDataWithRootObject:attributedVerficationResult];
 	

@@ -11,6 +11,7 @@
 		2278DFC4133FD70000EE5829 /* ZipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDC4077133F650800D0A101 /* ZipKit.framework */; };
 		22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D6D9CA13267E0C00622189 /* RecipientWindowController.m */; };
+		3018A80724F8F20100C1D8C9 /* NSArray+join.m in Sources */ = {isa = PBXBuildFile; fileRef = 3018A80624F8F20100C1D8C9 /* NSArray+join.m */; };
 		301D929A243B32C400E667F9 /* GPGSAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 301D9298243B32C400E667F9 /* GPGSAlert.m */; };
 		301D929B243B32C400E667F9 /* GPGSAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 301D9299243B32C400E667F9 /* GPGSAlert.xib */; };
 		301E96B02175F2310081B43D /* GPGAltTitleTableColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = 301E96AF2175F2310081B43D /* GPGAltTitleTableColumn.m */; };
@@ -135,6 +136,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		3018A80524F8F20100C1D8C9 /* NSArray+join.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSArray+join.h"; path = "Source/NSArray+join.h"; sourceTree = "<group>"; };
+		3018A80624F8F20100C1D8C9 /* NSArray+join.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSArray+join.m"; path = "Source/NSArray+join.m"; sourceTree = "<group>"; };
 		301D9297243B32C400E667F9 /* GPGSAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPGSAlert.h; path = Source/GPGSAlert.h; sourceTree = "<group>"; };
 		301D9298243B32C400E667F9 /* GPGSAlert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GPGSAlert.m; path = Source/GPGSAlert.m; sourceTree = "<group>"; };
 		301D9299243B32C400E667F9 /* GPGSAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GPGSAlert.xib; sourceTree = "<group>"; };
@@ -266,6 +269,8 @@
 				8E1BC426134D013600C1BFD6 /* GPGKey+utils.h */,
 				8E1BC427134D013600C1BFD6 /* GPGKey+utils.m */,
 				8EE8998A1348B92B004A3266 /* NSPredicate+negate.m */,
+				3018A80524F8F20100C1D8C9 /* NSArray+join.h */,
+				3018A80624F8F20100C1D8C9 /* NSArray+join.m */,
 				45DD3DDC156579FE00C9A4C1 /* ServiceWorker.h */,
 				45DD3DDD156579FF00C9A4C1 /* ServiceWorker.m */,
 				45DD3DF315657EEE00C9A4C1 /* ServiceWorkerDelegate.h */,
@@ -699,6 +704,7 @@
 				45FC40DB1566D2D80020A12B /* ServiceWrappedArgs.m in Sources */,
 				451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */,
 				30CC112415D7ECAF000DC2C5 /* SimpleTextWindow.m in Sources */,
+				3018A80724F8F20100C1D8C9 /* NSArray+join.m in Sources */,
 				3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

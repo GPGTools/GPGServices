@@ -16,6 +16,7 @@
 #import "GKFingerprintTransformer.h"
 #import "SimpleTextWindow.h"
 #import "GPGSAlert.h"
+#import "NSArray+join.h"
 
 #import "Libmacgpg/GPGFileStream.h"
 #import "Libmacgpg/GPGMemoryStream.h"
