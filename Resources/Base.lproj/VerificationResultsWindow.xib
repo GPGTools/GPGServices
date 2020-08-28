@@ -116,7 +116,7 @@ DQ
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="uOy-cx-xrI"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="result" id="Ke9-sM-GWl" userLabel="result Cell">
+                                                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="result" allowsEditingTextAttributes="YES" id="Ke9-sM-GWl" userLabel="result Cell">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

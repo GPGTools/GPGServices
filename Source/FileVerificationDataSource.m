@@ -65,8 +65,6 @@
 		};
 		[attributedVerificationResult addAttributes:attributes range:NSMakeRange(0, attributedVerificationResult.length)];
 		
-		cellView.textField.allowsEditingTextAttributes = YES;
-		cellView.textField.selectable = YES;
 		cellView.textField.attributedStringValue = attributedVerificationResult;
 	} else {
 		NSAssert(NO, @"Unkown column identifier!");
