@@ -2454,8 +2454,8 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	if (signatureError) {
 		NSString *errorDescription = localizedWithFormat(@"SIGNATURE_ERROR_DESCRIPTION", sig.status);
 		[verficationResult addObject:errorDescription];
-		[notificationMessage addObject:errorDescription];
 		[alertMessage addObject:errorDescription];
+		[notificationMessage addObject:errorDescription];
 	} else {
 		NSString *template = [templatePrefix stringByAppendingString:@"_MESSAGE"];
 		alertMessageString = localizedWithFormat(template, fingerprint);
@@ -2485,8 +2485,8 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	
 	if (userIDDescription.length > 0) {
 		[verficationResult addObject:userIDDescription];
-		[notificationMessage addObject:userIDDescription];
 		[alertMessage addObject:userIDDescription];
+		[notificationMessage addObject:userIDDescription];
 	}
 
 	if (fingerprint) {
@@ -2529,16 +2529,19 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 
 	
 	NSAttributedString *attributedVerficationResult = verficationResult.attributedLinesJoined;
+	NSAttributedString *attributedAlertMessage = alertMessage.attributedLinesJoined;
+
 	// Encode it, because a notification user info doesn't allow NSAttributedString.
 	NSData *encodedVerficationResult = [NSKeyedArchiver archivedDataWithRootObject:attributedVerficationResult];
-	
+	NSData *encodedAlertMessage = [NSKeyedArchiver archivedDataWithRootObject:attributedAlertMessage];
+
 	
 	
 	NSMutableDictionary *result = [NSMutableDictionary new];
 	result[VERIFICATION_RESULT_KEY] = encodedVerficationResult;
 	result[NOTIFICATION_TITLE_KEY] = title;
 	result[NOTIFICATION_MESSAGE_KEY] = [notificationMessage componentsJoinedByString:@"\n"];
-	result[ALERT_MESSAGE_KEY] = [alertMessage componentsJoinedByString:@"\n"];
+	result[ALERT_MESSAGE_KEY] = encodedAlertMessage;
 	result[ALERT_TITLE_KEY] = alertTitle;
 	result[VERIFICATION_FAILED_KEY] = @(verificationFailed);
 
@@ -2656,7 +2659,15 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	if (alertTitle.length == 0) {
 		alertTitle = title;
 	}
-	NSString *alertMessage = userInfo[ALERT_MESSAGE_KEY];
+	
+	
+	NSString *alertMessage;
+	id encodedAlertMessage = userInfo[ALERT_MESSAGE_KEY];
+	if (!encodedAlertMessage || [encodedAlertMessage isKindOfClass:[NSString class]]) {
+		alertMessage = encodedAlertMessage;
+	} else {
+		alertMessage = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSAttributedString class] fromData:encodedAlertMessage error:nil];
+	}
 	if (alertMessage.length == 0) {
 		alertMessage = message;
 	}
@@ -2818,12 +2829,20 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 				if (title.length == 0) {
 					title = content.title;
 				}
-				NSString *body = userInfo[ALERT_MESSAGE_KEY];
-				if (body.length == 0) {
-					body = content.body;
+				
+				NSString *alertMessage;
+				id encodedAlertMessage = userInfo[ALERT_MESSAGE_KEY];
+				if (!encodedAlertMessage || [encodedAlertMessage isKindOfClass:[NSString class]]) {
+					alertMessage = encodedAlertMessage;
+				} else {
+					alertMessage = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSAttributedString class] fromData:encodedAlertMessage error:nil];
 				}
+				if (alertMessage.length == 0) {
+					alertMessage = content.body;
+				}
+				
 				// Display the notification content in a dialog.
-				[self displayMessageWindowWithTitleText:title bodyText:body files:files];
+				[self displayMessageWindowWithTitleText:title bodyText:alertMessage files:files];
 			}
 		} else if ([response.actionIdentifier isEqualToString:showInFinderActionIdentifier]) {
 			// Show the files in Finder.
