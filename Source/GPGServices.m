@@ -34,7 +34,6 @@ static NSString *const ALERT_MESSAGE_KEY = @"alertMessage";
 static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDelay";
 
 
-
 @implementation GPGServices
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -441,6 +440,10 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		if (mode & GPGSign) {
 			[ctx addSignerKey:[privateKey description]];
 		}
+		if (mode & GPGSymetricEncrypt) {
+			ctx.passphrase = rcp.password;
+		}
+		
 
 		NSData *outputData = [ctx processData:inputData
 							  withEncryptSignMode:mode
@@ -1026,7 +1029,11 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	BOOL useASCII = [[[GPGOptions sharedOptions] valueForKey:@"UseASCIIOutput"] boolValue];
 	GPGDebugLog(@"Output as ASCII: %@", useASCII ? @"YES" : @"NO");
 	NSString *fileExtension = useASCII ? @"asc" : @"gpg";
-	RecipientWindowController *rcp = [[RecipientWindowController alloc] init];
+	
+	__block RecipientWindowController *rcp;
+	dispatch_sync(dispatch_get_main_queue(), ^{
+		rcp = [[RecipientWindowController alloc] init];
+	});
 	NSInteger ret = [rcp runModal]; // thread-safe
 	if (ret != 0) {
 		return;  // User pressed 'cancel'
@@ -1140,6 +1147,9 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	@try {
 		if (mode & GPGSign) {
 			[ctx addSignerKey:[privateKey description]];
+		}
+		if (mode & GPGSymetricEncrypt) {
+			ctx.passphrase = rcp.password;
 		}
 
 		[ctx processTo:output

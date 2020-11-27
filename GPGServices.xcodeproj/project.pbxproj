@@ -18,6 +18,7 @@
 		3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3021FB1415D83ED300510CA8 /* SimpleTextView.m */; };
 		302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D316D41BCF00C05409 /* Libmacgpg.framework */; };
 		303B51E621FF09C50061CE1F /* Localization.m in Sources */ = {isa = PBXBuildFile; fileRef = 303B51E521FF09C50061CE1F /* Localization.m */; };
+		3050BF68255E6FA900D033A0 /* GKPasswordStrengthIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3050BF60255E6FA900D033A0 /* GKPasswordStrengthIndicator.m */; };
 		305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */; };
 		30753EA320DA839400C667CA /* GKFingerprintTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 30753EA220DA839400C667CA /* GKFingerprintTransformer.m */; };
 		30843DF522F9C3F2001F9D4F /* GPGServices.icns in Resources */ = {isa = PBXBuildFile; fileRef = 30843DF422F9C3F2001F9D4F /* GPGServices.icns */; };
@@ -30,6 +31,8 @@
 		30B2057914D56F2A00AE9583 /* sig.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7990B135CAB60004C89D5 /* sig.icns */; };
 		30CC110C15D7E6BF000DC2C5 /* SimpleTextWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */; };
 		30CC112415D7ECAF000DC2C5 /* SimpleTextWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */; };
+		30D90F452567BE05006149CD /* Zxcvbn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D90F442567BDDC006149CD /* Zxcvbn.framework */; };
+		30D90F462567BE15006149CD /* Zxcvbn.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 30D90F442567BDDC006149CD /* Zxcvbn.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		30E6C9BA1AB30EF4001541A3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30E6C9B91AB30EF4001541A3 /* MainMenu.xib */; };
 		30E834A02355BAF300332482 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E834992355BAF300332482 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		451D886C156ABFAD00A0B890 /* GPGTempFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D886B156ABFAD00A0B890 /* GPGTempFile.m */; };
@@ -82,6 +85,13 @@
 			remoteGlobalIDString = CB6F0A9817484BDE00F91524;
 			remoteInfo = touchzipkit;
 		};
+		30D90F432567BDDC006149CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30D90F392567BDDC006149CD /* Zxcvbn.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D80ECB681BDEAA420055EF0A;
+			remoteInfo = Zxcvbn;
+		};
 		30ED68F11CE0C7D000C074F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1B34FA9017A80FE00078B93A /* Libmacgpg.xcodeproj */;
@@ -119,6 +129,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				30D90F462567BE15006149CD /* Zxcvbn.framework in Copy Frameworks */,
 				2278DFC7133FD71A00EE5829 /* ZipKit.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
@@ -157,6 +168,8 @@
 		302D33D316D41BCF00C05409 /* Libmacgpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Libmacgpg.framework; path = /Library/Frameworks/Libmacgpg.framework; sourceTree = "<absolute>"; };
 		303B51E421FF09C50061CE1F /* Localization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Localization.h; path = Source/Localization.h; sourceTree = "<group>"; };
 		303B51E521FF09C50061CE1F /* Localization.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Localization.m; path = Source/Localization.m; sourceTree = "<group>"; };
+		3050BF60255E6FA900D033A0 /* GKPasswordStrengthIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GKPasswordStrengthIndicator.m; path = Source/GKPasswordStrengthIndicator.m; sourceTree = "<group>"; };
+		3050BF67255E6FA900D033A0 /* GKPasswordStrengthIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GKPasswordStrengthIndicator.h; path = Source/GKPasswordStrengthIndicator.h; sourceTree = "<group>"; };
 		305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InProgressWindow.xib; sourceTree = "<group>"; };
 		30753EA120DA839400C667CA /* GKFingerprintTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GKFingerprintTransformer.h; path = Source/GKFingerprintTransformer.h; sourceTree = "<group>"; };
 		30753EA220DA839400C667CA /* GKFingerprintTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GKFingerprintTransformer.m; path = Source/GKFingerprintTransformer.m; sourceTree = "<group>"; };
@@ -169,6 +182,7 @@
 		30CC110B15D7E6BF000DC2C5 /* SimpleTextWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleTextWindow.xib; sourceTree = "<group>"; };
 		30CC112215D7ECAF000DC2C5 /* SimpleTextWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTextWindow.h; path = Source/SimpleTextWindow.h; sourceTree = "<group>"; };
 		30CC112315D7ECAF000DC2C5 /* SimpleTextWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTextWindow.m; path = Source/SimpleTextWindow.m; sourceTree = "<group>"; };
+		30D90F392567BDDC006149CD /* Zxcvbn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Zxcvbn.xcodeproj; path = Dependencies/Zxcvbn/Zxcvbn.xcodeproj; sourceTree = "<group>"; };
 		30E6C9B91AB30EF4001541A3 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		30E834992355BAF300332482 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		30F37F3924EFB5DD0026F366 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -241,6 +255,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30D90F452567BE05006149CD /* Zxcvbn.framework in Frameworks */,
 				30E834A02355BAF300332482 /* UserNotifications.framework in Frameworks */,
 				1B57171217A812B300B96393 /* Security.framework in Frameworks */,
 				302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */,
@@ -328,6 +343,7 @@
 			children = (
 				1B34FA9017A80FE00078B93A /* Libmacgpg.xcodeproj */,
 				8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */,
+				30D90F392567BDDC006149CD /* Zxcvbn.xcodeproj */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
@@ -410,6 +426,14 @@
 			name = XIBs;
 			sourceTree = "<group>";
 		};
+		30D90F3A2567BDDC006149CD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30D90F442567BDDC006149CD /* Zxcvbn.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8E1BC3D6134B977500C1BFD6 /* UI Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -437,6 +461,8 @@
 				301E96AF2175F2310081B43D /* GPGAltTitleTableColumn.m */,
 				301D9297243B32C400E667F9 /* GPGSAlert.h */,
 				301D9298243B32C400E667F9 /* GPGSAlert.m */,
+				3050BF67255E6FA900D033A0 /* GKPasswordStrengthIndicator.h */,
+				3050BF60255E6FA900D033A0 /* GKPasswordStrengthIndicator.m */,
 				3093A2EE2428B3970031A764 /* VerificationResultsWindow.h */,
 				3093A2EF2428B3970031A764 /* VerificationResultsWindow.m */,
 			);
@@ -526,6 +552,10 @@
 					ProductGroup = 8EDC405C133F650800D0A101 /* Products */;
 					ProjectRef = 8EDC405B133F650800D0A101 /* ZipKit.xcodeproj */;
 				},
+				{
+					ProductGroup = 30D90F3A2567BDDC006149CD /* Products */;
+					ProjectRef = 30D90F392567BDDC006149CD /* Zxcvbn.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -561,6 +591,13 @@
 			fileType = archive.ar;
 			path = libtouchzipkit.a;
 			remoteRef = 304030F61923A42B00955DBC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		30D90F442567BDDC006149CD /* Zxcvbn.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Zxcvbn.framework;
+			remoteRef = 30D90F432567BDDC006149CD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		30ED68F21CE0C7D000C074F8 /* UnitTests.xctest */ = {
@@ -682,6 +719,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				3050BF68255E6FA900D033A0 /* GKPasswordStrengthIndicator.m in Sources */,
 				4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */,
 				22D6D9CB13267E0C00622189 /* RecipientWindowController.m in Sources */,
 				8E8837C713311F5B0044EFFF /* KeyChooserWindowController.m in Sources */,
@@ -803,6 +841,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION",
+					"$(SRCROOT)/Dependencies/Zxcvbn/build/$(CONFIGURATION)",
 					"$(SRCROOT)/Dependencies/Libmacgpg/build/$(CONFIGURATION)",
 					/Library/Frameworks,
 					"$(HOME)/Library/Frameworks",
@@ -831,6 +870,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Dependencies/zipkit/build/$CONFIGURATION",
+					"$(SRCROOT)/Dependencies/Zxcvbn/build/$(CONFIGURATION)",
 					"$(SRCROOT)/Dependencies/Libmacgpg/build/$(CONFIGURATION)",
 					/Library/Frameworks,
 					"$(HOME)/Library/Frameworks",

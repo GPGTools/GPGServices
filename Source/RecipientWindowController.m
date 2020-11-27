@@ -19,6 +19,17 @@
 @property (readonly) BOOL selectAllMixed;
 @property (nonatomic, strong) GPGFingerprintTransformer *fingerprintTransformer;
 
+
+@property (nonatomic, strong, readwrite) NSString *password;
+@property (nonatomic, strong) NSString *confirmPassword;
+@property (nonatomic) double passwordStrength;
+
+@property (nonatomic, weak) IBOutlet NSStackView *passwordStackView;
+@property (nonatomic, weak) IBOutlet NSView *passwordView;
+@property (nonatomic, weak) IBOutlet NSTextField *passwordField;
+
+
+
 - (void)displayItemsMatchingString:(NSString*)s;
 - (void)generateContextMenuForTable:(NSTableView *)table;
 - (void)selectHeaderVisibility:(NSMenuItem *)sender;
@@ -33,7 +44,7 @@
 
 
 @implementation RecipientWindowController
-@synthesize dataSource, selectedKeys, symetricEncryption, keysMatchingSearch, sortDescriptors=_sortDescriptors;
+@synthesize dataSource, selectedKeys, keysMatchingSearch, sortDescriptors=_sortDescriptors;
 
 
 
@@ -68,14 +79,45 @@
 }
 
 + (NSSet *)keyPathsForValuesAffectingOkEnabled {
-	return [NSSet setWithObjects:@"encryptForOwnKeyToo", @"symetricEncryption", @"selectedKeys", nil];
+	return [NSSet setWithObjects:@"encryptForOwnKeyToo", @"symetricEncryption", @"selectedKeys", @"password", @"confirmPassword", nil];
 }
 /*
  * Only let the user click OK, if the choice is valid.
  */
 - (BOOL)okEnabled {
-	return self.encryptForOwnKeyToo || symetricEncryption || self.selectedKeys.count > 0;
+	if (_symetricEncryption) {
+		if (self.password.length == 0 || self.confirmPassword.length == 0) {
+			return NO;
+		}
+		if (![self.password isEqualToString:self.confirmPassword]) {
+			return NO;
+		}
+	}
+	
+	return self.encryptForOwnKeyToo || _symetricEncryption || self.selectedKeys.count > 0;
 }
+
+- (void)setSymetricEncryption:(BOOL)symetricEncryption {
+	_symetricEncryption = symetricEncryption;
+	if (symetricEncryption) {
+		[self.passwordStackView setVisibilityPriority:NSStackViewVisibilityPriorityMustHold forView:self.passwordView];
+		self.passwordField.enabled = YES;
+		self.passwordField.hidden = NO;
+		NSRect frame = self.window.frame;
+		frame.size.height += self.passwordView.frame.size.height;
+		frame.origin.y -= self.passwordView.frame.size.height;
+		[self.window setFrame:frame display:YES animate:NO];
+	} else {
+		[self.passwordStackView setVisibilityPriority:NSStackViewVisibilityPriorityNotVisible forView:self.passwordView];
+		self.passwordField.enabled = NO;
+		self.passwordField.hidden = YES;
+		NSRect frame = self.window.frame;
+		frame.size.height -= self.passwordView.frame.size.height;
+		frame.origin.y += self.passwordView.frame.size.height;
+		[self.window setFrame:frame display:YES animate:NO];
+	}
+}
+
 
 
 - (GPGKey *)selectedPrivateKey {
@@ -99,6 +141,53 @@
 	
 	return buildDescription;
 }
+
+
+
+
+
+
+- (void)setPassword:(NSString *)value {
+	if ([_password isEqualToString:value]) {
+		return;
+	}
+	
+	_password = value;
+
+	if (_password.length == 0 || _password.UTF8Length > 255) {
+		self.passwordStrength = 0;
+	} else {
+		DBResult *result = [self.zxcvbn passwordStrength:_password];
+		
+		double seconds = result.crackTime;
+		double score = log10(seconds * 1000000);
+		score = MAX(score, 1);
+		
+		self.passwordStrength = score;
+	}
+}
+
+- (BOOL)passwordsEqual {
+	if (self.password.length == 0 && self.confirmPassword.length == 0) {
+		return YES;
+	}
+	return [self.password isEqualToString:self.confirmPassword];
+}
++ (NSSet *)keyPathsForValuesAffectingPasswordsEqual {
+	return [NSSet setWithObjects:@"password", @"confirmPassword", nil];
+}
+
+- (BOOL)passwordNotEmpty {
+	return self.password.length != 0 || self.confirmPassword.length != 0;
+}
++ (NSSet *)keyPathsForValuesAffectingPasswordNotEmpty {
+	return [NSSet setWithObjects:@"password", @"confirmPassword", nil];
+}
+
+
+
+
+
 
 
 /*
@@ -145,7 +234,6 @@
 	self.keysMatchingSearch = [availableKeys allObjects];
 
     selectedKeys = [[NSMutableSet alloc] init];
-    [self restoreSelectedKeysAndOptions];
 	
 	return self;
 }
@@ -153,6 +241,7 @@
 - (void)windowDidLoad {
 	[super windowDidLoad];
 
+    [self restoreSelectedKeysAndOptions];
     [self selectedPrivateKey]; // call for _firstUpdate handling
     
 	[keyTableView setDoubleAction:@selector(doubleClickAction:)];
@@ -450,5 +539,15 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	self.encryptForOwnKeyToo = [defaults boolForKey:self.encryptForOwnKeyTooDefaultsKey];
 	self.symetricEncryption = [defaults boolForKey:self.symetricEncryptionDefaultsKey];
 }
-	 
+
+- (DBZxcvbn *)zxcvbn {
+	if (_zxcvbn == nil) {
+		// Lazy load DBZxcvbn.
+		_zxcvbn = [DBZxcvbn new];
+	}
+	return _zxcvbn;
+}
+
+
+
 @end
