@@ -2631,12 +2631,12 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 
 - (void)displayOperationFinishedNotificationWithTitle:(NSString *)title message:(NSString *)body files:(NSArray *)files {
 	[self performSelectorOnMainThread:@selector(displayOperationFinishedNotificationWithTitleOnMain:)
-						   withObject:[NSArray arrayWithObjects:title, body, files, nil]
+						   withObject:[NSArray arrayWithObjects:title ? title : @"Operation finished", body ? body : @"", files, nil]
 						waitUntilDone:NO];
 }
 - (void)displayOperationFinishedNotificationWithTitle:(NSString *)title message:(NSString *)body {
 	[self performSelectorOnMainThread:@selector(displayOperationFinishedNotificationWithTitleOnMain:)
-						   withObject:[NSArray arrayWithObjects:title, body, nil]
+						   withObject:@[title ? title : @"Operation finished", body ? body : @""]
 						waitUntilDone:NO];
 }
 - (void)displayOperationFinishedNotificationWithTitleOnMain:(NSArray *)args {
@@ -2650,7 +2650,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 
 - (void)displayOperationFailedNotificationWithTitle:(NSString *)title message:(NSString *)body {
 	[self performSelectorOnMainThread:@selector(displayOperationFailedNotificationWithTitleOnMain:)
-						   withObject:[NSArray arrayWithObjects:title, body, nil]
+						   withObject:@[title ? title : @"Operation failed", body ? body : @""]
 						waitUntilDone:NO];
 }
 - (void)displayOperationFailedNotificationWithTitleOnMain:(NSArray *)args {
