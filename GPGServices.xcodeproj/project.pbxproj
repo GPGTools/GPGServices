@@ -85,6 +85,13 @@
 			remoteGlobalIDString = CB6F0A9817484BDE00F91524;
 			remoteInfo = touchzipkit;
 		};
+		305942B12571115A002C4985 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30D90F392567BDDC006149CD /* Zxcvbn.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D80ECB671BDEAA420055EF0A;
+			remoteInfo = Zxcvbn;
+		};
 		30D90F432567BDDC006149CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 30D90F392567BDDC006149CD /* Zxcvbn.xcodeproj */;
@@ -498,6 +505,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				305942B22571115A002C4985 /* PBXTargetDependency */,
 				8EDC40F4133F6B3E00D0A101 /* PBXTargetDependency */,
 			);
 			name = GPGServices;
@@ -750,6 +758,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		305942B22571115A002C4985 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Zxcvbn;
+			targetProxy = 305942B12571115A002C4985 /* PBXContainerItemProxy */;
+		};
 		8EDC40F4133F6B3E00D0A101 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ZipKit;
