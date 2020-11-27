@@ -18,6 +18,10 @@
 
 - (instancetype)init {
 	self = [super initWithWindowNibName:@"GPGSAlert"];
+	if (self) {
+		self.messageText = @"";
+		self.informativeText = @"";
+	}
 	return self;
 }
 
@@ -61,6 +65,9 @@
 }
 
 - (void)setInformativeText:(NSString *)informativeText {
+	if (!informativeText) {
+		informativeText = @"";
+	}
 	if (informativeText == _informativeText) {
 		return;
 	}
