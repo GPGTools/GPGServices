@@ -1031,7 +1031,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	NSString *fileExtension = useASCII ? @"asc" : @"gpg";
 	
 	
-	__block BOOL cancelled;
+	__block BOOL cancelled = NO;
 	__block NSSet *validRecipients;
 	__block GPGKey *privateKey;
 	__block GPGEncryptSignMode mode;
