@@ -148,6 +148,7 @@
 
 
 - (void)setPassword:(NSString *)value {
+	_passwordEntered = YES;
 	if ([_password isEqualToString:value]) {
 		return;
 	}
@@ -166,6 +167,10 @@
 		self.passwordStrength = score;
 	}
 }
+- (void)setConfirmPassword:(NSString *)confirmPassword {
+	_passwordEntered = YES;
+	_confirmPassword = confirmPassword;
+}
 
 - (BOOL)passwordsEqual {
 	if (self.password.length == 0 && self.confirmPassword.length == 0) {
@@ -178,7 +183,7 @@
 }
 
 - (BOOL)passwordNotEmpty {
-	return self.password.length != 0 || self.confirmPassword.length != 0;
+	return !_passwordEntered || self.password.length != 0 || self.confirmPassword.length != 0;
 }
 + (NSSet *)keyPathsForValuesAffectingPasswordNotEmpty {
 	return [NSSet setWithObjects:@"password", @"confirmPassword", nil];

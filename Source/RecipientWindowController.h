@@ -28,7 +28,8 @@
     NSMutableSet *selectedKeys;
 	
     BOOL _firstUpdate;
-	
+    BOOL _passwordEntered;
+
 	KeyChooserDataSource *dataSource;
 	
 	DBZxcvbn *_zxcvbn;
