@@ -2784,6 +2784,25 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 			return;
 		}
 		
+		if (@available(macOS 10.16, *)) {
+			// There is no public API on Big Sur to check, if DND is enabled.
+			
+			NSData *dndPrefData = [[[NSUserDefaults alloc] initWithSuiteName:@"com.apple.ncprefs"] objectForKey:@"dnd_prefs"];
+			if ([dndPrefData isKindOfClass:NSData.class]) {
+				NSDictionary *dndPrefs = [NSPropertyListSerialization propertyListWithData:dndPrefData options:NSPropertyListImmutable format:nil error:nil];
+				if ([dndPrefs isKindOfClass:NSDictionary.class]) {
+					NSNumber *dndEnabled = [dndPrefs valueForKeyPath:@"userPref.enabled"];
+					if ([dndEnabled isKindOfClass:NSNumber.class]) {
+						// Do not disturb is enabled.
+						completionHandler(NO);
+						return;
+					}
+				}
+			}
+			
+		}
+		
+		
 		NSString *identifier = [NSUUID UUID].UUIDString; // A random identifier for this notificaton.
 		UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:nil];
 		
