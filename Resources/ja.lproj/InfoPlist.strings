@@ -1,0 +1,7 @@
+/* 
+  InfoPlist.strings
+  GPGServices
+*/
+
+CFBundleDisplayName = "GPG Services";
+CFBundleName = "GPG Services";
