@@ -22,6 +22,7 @@
 		305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */; };
 		30753EA320DA839400C667CA /* GKFingerprintTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 30753EA220DA839400C667CA /* GKFingerprintTransformer.m */; };
 		30843DF522F9C3F2001F9D4F /* GPGServices.icns in Resources */ = {isa = PBXBuildFile; fileRef = 30843DF422F9C3F2001F9D4F /* GPGServices.icns */; };
+		308C85E5260DD1CB00D778B3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 308C85E7260DD1CB00D778B3 /* InfoPlist.strings */; };
 		3093A2F02428B3970031A764 /* VerificationResultsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3093A2EF2428B3970031A764 /* VerificationResultsWindow.m */; };
 		30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CB14D56C5E00AA8881 /* PrivateKeyChooserWindow.xib */; };
 		30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3058B7CE14D56C6400AA8881 /* RecipientWindow.xib */; };
@@ -183,6 +184,7 @@
 		30843DF422F9C3F2001F9D4F /* GPGServices.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = GPGServices.icns; sourceTree = "<group>"; };
 		3086A47821A56C960004387C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3086A47F21A56C980004387C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		308C85E6260DD1CB00D778B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3093A2EE2428B3970031A764 /* VerificationResultsWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VerificationResultsWindow.h; path = Source/VerificationResultsWindow.h; sourceTree = "<group>"; };
 		3093A2EF2428B3970031A764 /* VerificationResultsWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VerificationResultsWindow.m; path = Source/VerificationResultsWindow.m; sourceTree = "<group>"; };
 		309604BA2434BE9A00AC25CF /* GPGServices_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPGServices_Private.h; path = Source/GPGServices_Private.h; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 		30B2057A14D56F3500AE9583 /* Strings */ = {
 			isa = PBXGroup;
 			children = (
+				308C85E7260DD1CB00D778B3 /* InfoPlist.strings */,
 				45CC88FF1569365300928F5B /* Localizable.strings */,
 				45715A0E156D4BD100E5E7DD /* ServicesMenu.strings */,
 			);
@@ -637,6 +640,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				301D929B243B32C400E667F9 /* GPGSAlert.xib in Resources */,
+				308C85E5260DD1CB00D778B3 /* InfoPlist.strings in Resources */,
 				30B2057114D56F1E00AE9583 /* PrivateKeyChooserWindow.xib in Resources */,
 				30B2057214D56F1E00AE9583 /* RecipientWindow.xib in Resources */,
 				30E6C9BA1AB30EF4001541A3 /* MainMenu.xib in Resources */,
@@ -811,6 +815,14 @@
 				30F37F4F24EFB60C0026F366 /* ja */,
 			);
 			name = VerificationResultsWindow.xib;
+			sourceTree = "<group>";
+		};
+		308C85E7260DD1CB00D778B3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				308C85E6260DD1CB00D778B3 /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		45715A0E156D4BD100E5E7DD /* ServicesMenu.strings */ = {
