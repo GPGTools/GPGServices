@@ -40,7 +40,7 @@
 "Decryption finished" = "Dekrypteringen slutfördes";
 
 /* No comment provided by engineer. */
-"Decryption finished (partially)" = "Dikryptering avslutades (delvis)";
+"Decryption finished (partially)" = "Dekryptering slutfördes (delvis)";
 
 /* arg:filename */
 "Encrypting %@" = "Krypterar %@";
@@ -217,10 +217,10 @@ NO_MDC_DECRYPT_TEXT_WARNING_YES = "Fortsätt";
 NO_MDC_DECRYPT_TEXT_WARNING_NO = "Avbryt";
 
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Kunde inte dekryptera filen \"%@\"";
-NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Den hemliga nyckels som behövs för att dekryptera denna fil är inte tillgänglig.\nFilen är krypterad mot nycklarna med följande fingeravtryck:\n\n%@\n\nOm du inte känner igen några av dessa fingeravtryck, är det möjligt att avsändaren inte använde din publika nyckel för att kryptera denna fil.";
+NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Den privata nyckeln som behövs för att dekryptera denna fil är inte tillgänglig.\nFilen är krypterad mot nycklarna med följande fingeravtryck:\n\n%@\n\nOm du inte känner igen några av dessa fingeravtryck, är det möjligt att avsändaren inte använde din publika nyckel för att kryptera denna fil.";
 
 NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Kunde inte dekryptera det valda innehållet";
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Den hemliga nyckels som behövs för att dekryptera innehållet är inte tillgänglig.\nInnehållet är krypterat mot nycklarna med följande fingeravtryck:\n\n%@\n\nOm du inte känner igen några av dessa fingeravtryck, är det möjligt att avsändaren inte använde din publika nyckel för att kryptera innehållet.";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Den privata nyckeln som behövs för att dekryptera innehållet är inte tillgänglig.\nInnehållet är krypterat mot nycklarna med följande fingeravtryck:\n\n%@\n\nOm du inte känner igen några av dessa fingeravtryck, är det möjligt att avsändaren inte använde din publika nyckel för att kryptera denna fil.";
 
 
 "and" = "och";
@@ -238,14 +238,14 @@ KeyDescriptionAndMore = "%1$@ och %2$lu mer";
 
 
 
-ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
+ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Tillförlitlig signatur";
 
-FULLY_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
+FULLY_TRUSTED_SIGNATURE_TITLE = "Tillförlitlig signatur";
 
 MARGINAL_TRUSTED_SIGNATURE_TITLE = "Marginellt tillförlitlig signatur";
 
 UNTRUSTED_SIGNATURE_TITLE = "Signatur utan tillit";
-UNTRUSTED_SIGNATURE_MESSAGE = "The signature of this message is valid but untrusted. That means it has not been tampered with. It is untrusted though, because the key has not yet been verified. This ~KB-article~ explains how to verify and sign a public key.";
+UNTRUSTED_SIGNATURE_MESSAGE = "Detta meddelandes signatur är giltig men inte tillförlitlig. Det betyder att den inte har manipulerats. Den är dock icke tillförlitlig, eftersom nyckeln inte har verifierats ännu. Denna ~KB-artikel~ förklarar hur man verifierar och signerar en publik nyckel.";
 
 REVOKED_SIGNATURE_TITLE = "Återkallad signatur";
 REVOKED_SIGNATURE_MESSAGE = "OBS: Nyckeln som användes för att signera detta meddelande har återkallats.\n\nDu bör uppdatera nyckeln med ID %@ i GPG Keychain för att se om det finns en ny. Om den nya nyckeln också är återkallad bör du kontakta avsändaren för information om varför den återkallats.";
@@ -260,7 +260,7 @@ NO_PUBKEY_SIGNATURE_ALERT_TITLE = "Nyckeln för att verifiera den här signature
 NO_PUBKEY_SIGNATURE_MESSAGE = "Meddelandet kunde inte verifieras. Den publika nyckeln som krävs för att verifiera den här signaturen finns inte i GPG Keychain.\n\nSök på nyckelservern efter fingeravtrycket %@ eller fråga din kontakt efter deras publika nyckel. Du kan försöka att verifiera signaturen på nytt efter att du lagt till den publika nyckeln i GPG Keychain.";
 
 BAD_SIGNATURE_TITLE = "Varning: Ogiltig signatur";
-BAD_SIGNATURE_MESSAGE = "The signature does not match this message. You should not trust this message, because it was manipulated.\n\nMessages can unintentionally be altered after they were signed. Exchange servers or mailing lists are known use-cases, where signatures can be rendered invalid.  Also formatted text like rtf, docx or odt are known to cause problems. Make sure to use txt file format.";
+BAD_SIGNATURE_MESSAGE = "Signaturen stämmer inte med detta meddelande. Du borde inte lita på meddelandet, eftersom det har manipulerats.\n\nMeddelanden kan dock ha förändras oavsiktligt efter att de signerats. Exchange-servrar och e-postlistor är kända för detta, där signaturer kan göras ogiltiga. Även formaterad text – som rtf, docx och odt – är kända för att skapa problem. Se till att använda txt-format.";
 
 SIGNATURE_ERROR_TITLE = "Signaturfel";
 SIGNATURE_ERROR_ALERT_TITLE = "Okänt signaturfel";

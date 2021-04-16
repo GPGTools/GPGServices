@@ -238,14 +238,14 @@ KeyDescriptionAndMore = "%1$@ e mais %2$lu";
 
 
 
-ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
+ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Assinatura confiável";
 
-FULLY_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
+FULLY_TRUSTED_SIGNATURE_TITLE = "Assinatura confiável";
 
 MARGINAL_TRUSTED_SIGNATURE_TITLE = "Assinatura de confiança questionável";
 
 UNTRUSTED_SIGNATURE_TITLE = "Assinatura não confiável";
-UNTRUSTED_SIGNATURE_MESSAGE = "The signature of this message is valid but untrusted. That means it has not been tampered with. It is untrusted though, because the key has not yet been verified. This ~KB-article~ explains how to verify and sign a public key.";
+UNTRUSTED_SIGNATURE_MESSAGE = "A assinatura desta mensagem é válida, mas não confiável. Válida porque não foi adulterada, mas não confiável porque ainda não foi verificada. Este artigo ~KB-article~ explica como verificar e assinar uma chave pública.";
 
 REVOKED_SIGNATURE_TITLE = "Assinatura revogada";
 REVOKED_SIGNATURE_MESSAGE = "A chave usada para assinar esta mensagem foi revogada.\n\nAtualize a chave com o ID %@ no GPG Keychain para verificar se uma nova chave está disponível. Se a chave continuar revogada, verifique o motivo com o remetente.";

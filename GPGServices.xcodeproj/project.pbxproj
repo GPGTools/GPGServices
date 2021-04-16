@@ -155,6 +155,12 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		30090FA22629D45000CE040A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		30090FA92629D45300CE040A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		30090FAA2629D46200CE040A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		30090FAB2629D46600CE040A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/VerificationResultsWindow.strings; sourceTree = "<group>"; };
+		30090FAC2629D46900CE040A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/RecipientWindow.strings; sourceTree = "<group>"; };
+		30090FAD2629D46D00CE040A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/PrivateKeyChooserWindow.strings; sourceTree = "<group>"; };
 		3018A80524F8F20100C1D8C9 /* NSArray+join.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSArray+join.h"; path = "Source/NSArray+join.h"; sourceTree = "<group>"; };
 		3018A80624F8F20100C1D8C9 /* NSArray+join.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSArray+join.m"; path = "Source/NSArray+join.m"; sourceTree = "<group>"; };
 		301D9297243B32C400E667F9 /* GPGSAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPGSAlert.h; path = Source/GPGSAlert.h; sourceTree = "<group>"; };
@@ -557,6 +563,7 @@
 				pt,
 				sv,
 				ja,
+				fr,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* GPGServices */;
 			projectDirPath = "";
@@ -791,6 +798,7 @@
 				30FE4A2E21A56D020013D508 /* pt */,
 				30FE4A2F21A56D030013D508 /* sv */,
 				30F37F4D24EFB6040026F366 /* ja */,
+				30090FAD2629D46D00CE040A /* fr */,
 			);
 			name = PrivateKeyChooserWindow.xib;
 			sourceTree = "<group>";
@@ -805,6 +813,7 @@
 				30FE4A2B21A56CFE0013D508 /* pt */,
 				30FE4A2C21A56CFF0013D508 /* sv */,
 				30F37F4E24EFB6080026F366 /* ja */,
+				30090FAC2629D46900CE040A /* fr */,
 			);
 			name = RecipientWindow.xib;
 			sourceTree = "<group>";
@@ -819,6 +828,7 @@
 				30FE4A2821A56CF80013D508 /* pt */,
 				30FE4A2921A56CF90013D508 /* sv */,
 				30F37F4F24EFB60C0026F366 /* ja */,
+				30090FAB2629D46600CE040A /* fr */,
 			);
 			name = VerificationResultsWindow.xib;
 			sourceTree = "<group>";
@@ -833,6 +843,7 @@
 				307EBE99260DD67B00DDDE15 /* it */,
 				307EBE9A260DD67C00DDDE15 /* sv */,
 				307EBE9B260DD67D00DDDE15 /* pt */,
+				30090FA92629D45300CE040A /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -847,6 +858,7 @@
 				30FE4A2521A56CDF0013D508 /* pt */,
 				30FE4A2621A56CE00013D508 /* sv */,
 				30F37F4424EFB5DE0026F366 /* ja */,
+				30090FAA2629D46200CE040A /* fr */,
 			);
 			name = ServicesMenu.strings;
 			sourceTree = "<group>";
@@ -861,6 +873,7 @@
 				30FE4A2121A56CCF0013D508 /* pt */,
 				30FE4A2221A56CD70013D508 /* sv */,
 				30F37F3924EFB5DD0026F366 /* ja */,
+				30090FA22629D45000CE040A /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

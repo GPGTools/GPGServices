@@ -194,9 +194,9 @@
 "Build: %@" = "Sestavení: %@";
 
 LIBMACGPG_NOT_FOUND_TITLE = "Komponenta Libmacgpg nebyla nalezena";
-LIBMACGPG_NOT_FOUND_MESSAGE = "Libmacgpg was not found on your system. Please visit https://gpgtools.org to download and re-install GPG Suite.";
+LIBMACGPG_NOT_FOUND_MESSAGE = "Komponenta Libmacgpg nebyla na vašem systému nalezena. Navštivte prosím https://gpgtools.org a zkopírujte a nainstalujte GPG Suite.";
 CODE_SIGN_ERROR_TITLE = "Někdo měnil vaši instalaci GPG Services!";
-CODE_SIGN_ERROR_MESSAGE = "Chcete-li být v bezpečí, GPG Services se nyní ukončí! \n\nZkopírujte a nainstalujte si nejnovější verzi GPG Suite z https://gpgtools.org, abyste měli jistotu, že máte originální verzi!";
+CODE_SIGN_ERROR_MESSAGE = "Pro vaše bezpečí-li, se GPG Services nyní ukončí! \n\nZkopírujte a nainstalujte si nejnovější verzi GPG Suite z https://gpgtools.org, abyste měli jistotu, že máte originální verzi!";
 
 SelectedKeysDescription = "Vybráno %i z %i klíčů";
 
@@ -226,43 +226,43 @@ NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Tajný klíč, potřebný pro dešifrován�
 "and" = "a";
 KeyDescriptionAndMore = "%1$@ a %2$lu více";
 
-"trust" = "trust";
+"trust" = "Důvěřovat";
 
-"Signed by: %1$@ (%2$@) – " = "Signed by: %1$@ (%2$@) – ";
+"Signed by: %1$@ (%2$@) – " = "Podepsáno: %1$@ (%2$@) – ";
 
-"Verification %1$@: %2$@ (Code: %3$i)" = "Verification %1$@: %2$@ (Code: %3$i)";
+"Verification %1$@: %2$@ (Code: %3$i)" = "Ověření %1$@: %2$@ (kód: %3$i)";
 
-"Show in Finder" = "Show in Finder";
-
-
+"Show in Finder" = "Zobrazit v programu Finder";
 
 
 
-ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
 
-FULLY_TRUSTED_SIGNATURE_TITLE = "Trusted signature";
 
-MARGINAL_TRUSTED_SIGNATURE_TITLE = "Marginal trusted signature";
+ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Důvěryhodný podpis";
 
-UNTRUSTED_SIGNATURE_TITLE = "Untrusted signature";
-UNTRUSTED_SIGNATURE_MESSAGE = "The signature of this message is valid but untrusted. That means it has not been tampered with. It is untrusted though, because the key has not yet been verified. This ~KB-article~ explains how to verify and sign a public key.";
+FULLY_TRUSTED_SIGNATURE_TITLE = "Důvěryhodný podpis";
 
-REVOKED_SIGNATURE_TITLE = "Revoked signature";
-REVOKED_SIGNATURE_MESSAGE = "The key which was used to sign this message was revoked.\n\nYou should refresh the key with key ID %@ in GPG Keychain to check if a new one is available. If the new one is still revoked, check with the sender why the key was revoked.";
+MARGINAL_TRUSTED_SIGNATURE_TITLE = "Nedostatečně ověřený podpis";
 
-EXPIRED_SIGNATURE_TITLE = "Expired signature";
-EXPIRED_SIGNATURE_MESSAGE = "The key which was used to sign this message is expired.\n\nYou can try to refresh the key with ID %@ in GPG Keychain and ask the sender why the key is expired.";
+UNTRUSTED_SIGNATURE_TITLE = "Nedůvěryhodný podpis";
+UNTRUSTED_SIGNATURE_MESSAGE = "Podpis této zprávy je platný, ale nedůvěryhodný. To znamená, že s ním nebylo manipulováno. Je to nedůvěryhodné, protože klíč ještě nebyl ověřen. Tento ~KB článek~ vysvětluje, jak ověřit a podepsat veřejný klíč.";
 
-UNVERIFIABLE_SIGNATURE_TITLE = "Unverifiable signature";
+REVOKED_SIGNATURE_TITLE = "Zneplatněný podpis";
+REVOKED_SIGNATURE_MESSAGE = "Klíč, který byl použit k podepsání této zprávy, byl zneplatněn.\n\nMěli byste obnovit klíč s ID klíče %@ v GPG Keychain a ověřit, zda je k dispozici nový. Pokud je nový stále zneplatněný, ověřte si u odesílatele, proč byl klíč zneplatněn.";
 
-NO_PUBKEY_SIGNATURE_TITLE = "No public key";
-NO_PUBKEY_SIGNATURE_ALERT_TITLE = "The key to verify this signature is not in GPG Keychain";
-NO_PUBKEY_SIGNATURE_MESSAGE = "The message could not be verified. The public key required to verify this signature is not in GPG Keychain.\n\nSearch the key server for fingerprint %@ or ask your contact for their public key. You can retry to verify the signature after adding their public key to GPG Keychain.";
+EXPIRED_SIGNATURE_TITLE = "Podpis s vypršelou dobou platnosti";
+EXPIRED_SIGNATURE_MESSAGE = "Platnost klíče, který byl použit k podepsání této zprávy, vypršela.\n\nMůžete zkusit obnovit klíč s ID %@ v GPG Keychain a zeptat se odesílatele, proč platnost klíče vypršela.";
 
-BAD_SIGNATURE_TITLE = "Warning: Invalid signature";
-BAD_SIGNATURE_MESSAGE = "The signature does not match this message. You should not trust this message, because it was manipulated.\n\nMessages can unintentionally be altered after they were signed. Exchange servers or mailing lists are known use-cases, where signatures can be rendered invalid.  Also formatted text like rtf, docx or odt are known to cause problems. Make sure to use txt file format.";
+UNVERIFIABLE_SIGNATURE_TITLE = "Neověřitelný podpis";
 
-SIGNATURE_ERROR_TITLE = "Signature error";
-SIGNATURE_ERROR_ALERT_TITLE = "Unknown signature error";
-SIGNATURE_ERROR_DESCRIPTION = "Code: %i";
+NO_PUBKEY_SIGNATURE_TITLE = "Žádný veřejný klíč";
+NO_PUBKEY_SIGNATURE_ALERT_TITLE = "Klíč k ověření tohoto podpisu není v GPG klíčence.";
+NO_PUBKEY_SIGNATURE_MESSAGE = "Zprávu se nepodařilo ověřit. Veřejný klíč požadovaný k ověření tohoto podpisu není v GPG klíčence.\n\nVyhledejte otisk %@ na serveru nebo požádejte odesilatele o jeho veřejný klíč. Po přidání jeho veřejného klíče do GPG klíčenky se můžete znovu pokusit o ověření podpisu.";
+
+BAD_SIGNATURE_TITLE = "Výstraha: Neplatný podpis";
+BAD_SIGNATURE_MESSAGE = "Podpis neodpovídá této zprávě. Této zprávě byste neměli důvěřovat, protože mohla být zmanipulována.\n\nZprávy lze po podepsání změnit neúmyslně. U serverů Exchange nebo e-mailových konferencí jsou známy případy, kdy byly podpisy poškozeny. Je rovněž známo, že problémy způsobuje také formátovaný text jako rtf, docx nebo odt. Ujistěte se, že používáte formát souboru txt.";
+
+SIGNATURE_ERROR_TITLE = "Chyba podpisu";
+SIGNATURE_ERROR_ALERT_TITLE = "Neznámá chyba podpisu";
+SIGNATURE_ERROR_DESCRIPTION = "Kód: %i";
 

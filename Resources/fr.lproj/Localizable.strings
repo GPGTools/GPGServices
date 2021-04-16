@@ -1,0 +1,268 @@
+/* arg:path */
+"%@ — Cannot import directory" = "%@ — Impossible d'importer ce répertoire";
+
+/* Filename for Archive.zip.gpg */
+"Archive" = "Archive";
+
+/* arg:userID */
+"Bad signature by %@" = "Signature de %@ non valide";
+
+/* for saving a file */
+"Choose Destination" = "Choisir la destination";
+
+/* arg:shortKeyID */
+"Could not export key %@" = "Impossible d'exporter la clef %@";
+
+/* no comment */
+"Could not read file" = "Impossible de lire le fichier";
+
+/* no comment */
+"Could not write to directory" = "Impossible d'écrire dans le répertoire";
+
+"Could not open TextEdit" = "Impossible d'ouvrir TextEdit";
+
+/* arg1:successCount arg2:totalCount */
+"Decrypted %1$u of %2$u files" = "%1$u fichiers sur %2$u déchiffrés";
+
+/* arg:filename */
+"Decrypted %@" = "%@ déchiffré";
+
+/* arg:filename */
+"Decrypting %@" = "Déchiffrement de %@";
+
+/* arg:count */
+"Decrypting %u files" = "Déchiffrement de %u fichiers";
+
+/* No comment provided by engineer. */
+"Decryption failed" = "Échec du déchiffrement";
+
+/* No comment provided by engineer. */
+"Decryption finished" = "Déchiffrement terminé";
+
+/* No comment provided by engineer. */
+"Decryption finished (partially)" = "Déchiffrement terminé (partiellement)";
+
+/* arg:filename */
+"Encrypting %@" = "Chiffrement de %@";
+
+/* arg:count */
+"Encrypting %u files" = "Chiffrement de %u fichiers";
+
+/* No comment provided by engineer. */
+"Encryption canceled" = "Chiffrement annulé";
+
+/* No comment provided by engineer. */
+"Encryption failed" = "Échec du chiffrement";
+
+/* No comment provided by engineer. */
+"Encryption finished" = "Chiffrement terminé";
+
+/* No comment provided by engineer. */
+"Export failed" = "Échec de l'exportation";
+
+/* Matched in \"Verification FAILED:\" */
+"FAILED" = "ÉCHEC";
+
+/* arg:filename */
+"Failed decrypting %@" = "Échec du déchiffrement de %@";
+
+/* arg:filename */
+"Failed importing %@" = "Échec de l'importation de %@";
+
+/* arg:filename */
+"Failed signing %@" = "Échec de la signature de %@";
+
+/* No comment provided by engineer. */
+"File doesn't exist" = "Le fichier n'existe pas";
+
+/* arg1:validity arg2:userID */
+"Good signature (%@ trust):\n\"%@\"" = "Signature valide (confiance %1$@) : \"%2$@\"";
+
+/* Pasteboard could not supply the string in an acceptible format. */
+"GPGServices did not get usable data from the pasteboard." = "GPG Services ne peut pas utiliser le contenu du presse-papiers";
+
+/* No comment provided by engineer. */
+"Import failed" = "Échec de l'importation";
+
+/* No comment provided by engineer. */
+"Import finished" = "Importation terminée";
+
+/* No comment provided by engineer. */
+"Import finished (partially)" = "Importation terminée (partiellement)";
+
+/* No comment provided by engineer. */
+"Import result" = "Résultat de l'importation";
+
+/* arg1:successCount arg2:totalCount */
+"Imported %1$u of %2$u files" = "Importation de %1$u fichiers sur %2$u";
+
+/* arg:filename */
+"Imported %@" = "%@ importée";
+
+/* arg:filename */
+"Importing %@" = "Importation de %@";
+
+/* arg:count */
+"Importing %u files" = "Importation de %u fichiers";
+
+/* No comment provided by engineer. */
+"No encryptable text was found within the selection" = "Aucun texte dans la sélection ne peut être chiffré";
+
+/* No comment provided by engineer. */
+"No signable text was found within the selection" = "Aucun texte dans la sélection ne peut être signé";
+
+/* No comment provided by engineer. */
+"No signatures found" = "Aucune signature trouvée";
+
+/* No comment provided by engineer. */
+"No signatures found within the selection" = "Aucune signature trouvée dans la sélection";
+
+/* No comment provided by engineer. */
+"No verifiable data found" = "Aucune donnée vérifiable";
+
+/* No comment provided by engineer. */
+"No verifiable text was found within the selection" = "Aucun texte dans la sélection ne peut être vérifié";
+
+/* No comment provided by engineer. */
+"Please try again" = "Merci d'essayer à nouveau";
+
+/* No comment provided by engineer. */
+"Selection" = "Sélection";
+
+/* arg1:successCount; arg2:totalCount */
+"Signed %1$u of %2$u files" = "%1$u fichiers sur %2$u signés";
+
+/* arg:filename */
+"Signed %@" = "%@ signé";
+
+/* arg:filename */
+"Signing %@" = "Signature de %@";
+
+/* arg:count */
+"Signing %u files" = "Signature de %u fichiers";
+
+/* No comment provided by engineer. */
+"Signing failed" = "Échec de la signature";
+
+/* No comment provided by engineer. */
+"Signing finished" = "Signature terminée";
+
+/* No comment provided by engineer. */
+"Signing finished (partially)" = "Signature terminée (partiellement)";
+
+/* no comment */
+"TextEdit did not respond to service request." = "TextEdit ne répond pas";
+
+/* No comment provided by engineer. */
+"The default secret key is unusable" = "La clé secrète par défaut est inutilisable";
+
+/* No comment provided by engineer. */
+"The passphrase is incorrect" = "La phrase secrète est incorrecte";
+
+/* No comment provided by engineer. */
+"Unexpected decrypt error" = "Erreur imprévue lors du déchiffrement";
+
+/* arg:GPGSignature status */
+"Unexpected GPG signature status %i" = "État %i imprévu pour la signature GPG";
+
+/* No comment provided by engineer. */
+"Unexpected import error" = "Erreur imprévue lors de l'importation";
+
+/* No comment provided by engineer. */
+"Verification failed" = "Échec de la vérification";
+
+/* No comment provided by engineer. */
+"Verification FAILED: No signatures found" = "ÉCHEC de la vérification : aucune signature";
+
+/* arg:filename */
+"Verification for %@" = "Vérification de %@";
+
+/* arg:count */
+"Verification for %u files" = "Vérification de %u fichiers";
+
+/* No comment provided by engineer. */
+"Verification successful" = "Vérification réussie";
+
+/* arg:filename */
+"Verifying signature of %@" = "Vérification de la signature de %@";
+
+/* arg:count */
+"Verifying signatures of %u files" = "Vérification des signatures de %u fichiers";
+
+"Version: %@" = "Version : %@";
+
+"Build: %@" = "Génération : %@";
+
+LIBMACGPG_NOT_FOUND_TITLE = "Libmacgpg introuvable";
+LIBMACGPG_NOT_FOUND_MESSAGE = "Libmacgpg introuvable. Rendez-vous sur https://gpgtools.org pour télécharger et réinstaller GPG Suite.";
+CODE_SIGN_ERROR_TITLE = "GPG Services a été compromis !";
+CODE_SIGN_ERROR_MESSAGE = "Par sécurité, GPG Services va quitter !\n\nMerci de télécharger et d'installer la dernière version de GPG Suite à partir de https://gpgtools.org afin d'être sûr de disposer d'une version officielle.";
+
+SelectedKeysDescription = "%i clés sur %i sont sélectionnées";
+
+BIG_FILE_ENCRYPTION_WARNING_TITLE = "Attention : assurez-vous que le fichier chiffré est en bon état avant d'effacer le(s) fichier(s) en clair.";
+BIG_FILE_ENCRYPTION_WARNING_MSG = "Pour les fichiers de plus de 100 Mo, nous préconisons d'utiliser Terminal. Nous travaillons à l'optimisation de GPG Services. En attendant qu'il soit parfaitement fiable, nous affichons cet avertissement. Vous pouvez continuer à chiffrer vos fichiers, mais avant de supprimer le(s) fichier(s) en clair, vérifiez que vous pouvez déchiffrer la version chiffrée. Si cela fonctionne sans erreur, le chiffrement est correct. Si vous rencontrez une erreur, le fichier chiffré est endommagé et vous devez procéder autrement. Utilisez Terminal ou une image disque chiffrée que vous pouvez créer avec l'Utilitaire de disque de MacOS.";
+BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "Annuler";
+BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Continuer";
+
+
+NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Attention : l'intégrité du fichier chiffré n'était pas protégée !";
+NO_MDC_DECRYPT_FILE_WARNING_MSG = "Sans protection d'intégrité (le code de détection des modifications est absent) il n'est pas possible de savoir si les données chiffrées ont été modifiées.\n\nPour en savoir plus sur les fichiers sans protection d'intégrité, rendez-vous sur:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nSi vous êtes certain que le fichier n'a pas été modifié, vous pouvez continuer.";
+NO_MDC_DECRYPT_FILE_WARNING_YES = "Continuer";
+NO_MDC_DECRYPT_FILE_WARNING_NO = "Annuler";
+
+NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Attention : l'intégrité du texte chiffré n'était pas protégée !";
+NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Sans protection d'intégrité (le code de détection des modifications est absent) il n'est pas possible de savoir si les données chiffrées ont été modifiées.\n\nPour en savoir plus sur les fichiers sans protection d'intégrité, rendez-vous sur:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nSi vous êtes certain que le texte n'a pas été modifié, vous pouvez continuer.";
+NO_MDC_DECRYPT_TEXT_WARNING_YES = "Continuer";
+NO_MDC_DECRYPT_TEXT_WARNING_NO = "Annuler";
+
+NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Déchiffrement du fichier \"%@\" impossible";
+NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "La clé secrète pour déchiffrer ce fichier n'est pas disponible.\nIl est chiffré avec les clés dont les empreintes sont :\n\n%@\n\nSi vous ne connaissez aucune de ces empreintes, il est possible que l'émetteur n'ait pas utilisé votre clé publique pour chiffrer ce fichier.";
+
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Échec du chiffrement du contenu sélectionné";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "La clé secrète pour déchiffrer ce contenu n'est pas disponible.\nIl est chiffré avec les clés dont les empreintes sont :\n\n%@\n\nSi vous ne connaissez aucune de ces empreintes, il est possible que l'émetteur n'ait pas utilisé votre clé publique pour chiffrer ce fichier.";
+
+
+"and" = "et";
+KeyDescriptionAndMore = "%1$@ et %2$lu de plus";
+
+"trust" = "confiance";
+
+"Signed by: %1$@ (%2$@) – " = "Signé par : %1$@ (%2$@) –";
+
+"Verification %1$@: %2$@ (Code: %3$i)" = "Résultat de la vérification : %1$@ — %2$@ (code %3$i)";
+
+"Show in Finder" = "Montrer dans le Finder";
+
+
+
+
+
+ABSOLUTE_TRUSTED_SIGNATURE_TITLE = "Signature de confiance";
+
+FULLY_TRUSTED_SIGNATURE_TITLE = "Signature de confiance";
+
+MARGINAL_TRUSTED_SIGNATURE_TITLE = "Signature de confiance marginale";
+
+UNTRUSTED_SIGNATURE_TITLE = "Signature sans confiance";
+UNTRUSTED_SIGNATURE_MESSAGE = "La signature de ce message est correcte mais sans confiance. Cela signifie que le message n'a pas été altéré, mais que la clé utilisée pour le signer n'a pas été vérifiée. L'article ~KB-article~ explique comment vérifier et signer une clé publique.";
+
+REVOKED_SIGNATURE_TITLE = "Signature révoquée";
+REVOKED_SIGNATURE_MESSAGE = "La clé utilisée pour signer ce message a été révoquée.\n\nVous pouvez mettre à jour la clé avec l'ID %@ dans GPG Keychain afin de vérifier si une nouvelle clé est disponible. Si la clé est toujours révoquée, contactez l'émetteur.";
+
+EXPIRED_SIGNATURE_TITLE = "Signature expirée";
+EXPIRED_SIGNATURE_MESSAGE = "La clé utilisée pour signer ce message a expiré.\n\nVous pouvez mettre à jour la clé avec l'ID %@ dans GPG Keychain afin de vérifier si une nouvelle clé est disponible. Si la clé est toujours expirée, contactez l'émetteur.";
+
+UNVERIFIABLE_SIGNATURE_TITLE = "Signature invérifiable";
+
+NO_PUBKEY_SIGNATURE_TITLE = "Pas de clé publique";
+NO_PUBKEY_SIGNATURE_ALERT_TITLE = "La clé nécessaire à la vérification de cette signature n'est pas dans GPG Keychain";
+NO_PUBKEY_SIGNATURE_MESSAGE = "Le message n'a pas pu être vérifié, la clef nécessaire à cette vérification n'est pas dans GPG Keychain.\n\nRecherchez la clé avec l'empreinte %@ sur les serveurs de clé ou demandez sa clé publique à votre contact. Vous pourrez vérifier la signature après avoir ajouté cette clé publique dans GPG Keychain.";
+
+BAD_SIGNATURE_TITLE = "Attention : signature invalide";
+BAD_SIGNATURE_MESSAGE = "La signature ne correspond pas à ce message, vous ne devriez pas faire confiance à ce message car il a été modifié depuis son envoi.\n\nLes messages peuvent être modifié involontairement après avoir été signés. Les serveurs Exchange et les serveurs de listes de diffusion sont connus pour cela. Les textes formatés comme rtf, docx ou odt sont également connus pour poser problème. Assurez-vous d'utiliser un format txt.";
+
+SIGNATURE_ERROR_TITLE = "Erreur de signature";
+SIGNATURE_ERROR_ALERT_TITLE = "Erreur imprévue de signature";
+SIGNATURE_ERROR_DESCRIPTION = "Code : %i";
+

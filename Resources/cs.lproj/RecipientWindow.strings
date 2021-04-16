@@ -11,7 +11,7 @@
 "26.headerCell.title" = "✔";
 "28.headerCell.title" = "Komentář";
 "53.headerCell.title" = "Platnost";
-"53.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Validity Indicator";
+"53.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Výstraha platnosti";
 "106.title" = "Přidat příjemce";
 "118.title" = "Váš klíč:";
 "138.headerCell.title" = "Důvěryhodnost vlastníka";
@@ -20,5 +20,11 @@
 "158.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Indikátor důvěryhodnosti vlastníka";
 "160.headerCell.title" = "Platnost";
 "179.title" = "Zašifrovat s heslem";
+"NTe-z7-oew.title" = "Please enter a password";
 "UM4-uK-US3.title" = "Vybrat příjemce…";
+"W3a-uw-1gG.ibExternalAccessibilityDescription" = "Password";
+"WgX-k6-rmO.title" = "Strength:";
+"a8O-mR-bUg.title" = "Confirm Password:";
+"gE8-Ej-RmM.ibExternalAccessibilityDescription" = "Confirm";
 "let-n1-Qac.title" = "Vybrat vše";
+"sqN-nX-bT4.title" = "Your passwords must match";

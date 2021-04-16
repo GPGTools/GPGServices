@@ -1,0 +1,21 @@
+/* 
+  ServicesMenu.strings
+  GPGServices
+
+  Copyright (c) 2012 Chris Fraire. All rights reserved.
+*/
+"OpenPGP: Verify" = "OpenPGP : vérifier la signature de la sélection";
+"OpenPGP: Sign" = "OpenPGP : signer la sélection";
+"OpenPGP: Sign Selection to New Window" = "OpenPGP : signer la sélection dans une nouvelle fenêtre";
+"OpenPGP: Encrypt" = "OpenPGP : chiffrer la sélection";
+"OpenPGP: Encrypt Selection to New Window" = "OpenPGP : chiffrer la sélection dans une nouvelle fenêtre";
+"OpenPGP: Decrypt" = "OpenPGP : déchiffrer la sélection";
+"OpenPGP: Decrypt Selection to New Window" = "OpenPGP : déchiffrer la sélection dans une nouvelle fenêtre";
+"OpenPGP: Insert my key" = "OpenPGP : insérer ma clé";
+"OpenPGP: Insert my fingerprint" = "OpenPGP : insérer mon empreinte";
+"OpenPGP: Import key" = "OpenPGP : importer la clé depuis la sélection";
+"OpenPGP: Sign File" = "OpenPGP : signer le fichier";
+"OpenPGP: Encrypt File" = "OpenPGP : chiffrer le fichier";
+"OpenPGP: Decrypt File" = "OpenPGP : déchiffrer le fichier";
+"OpenPGP: Validate" = "OpenPGP : vérifier la signature du fichier";
+"OpenPGP: Import" = "OpenPGP : importer la clé du fichier";
