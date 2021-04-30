@@ -237,10 +237,8 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 - (void)importKeyFromData:(NSData *)data {
 	GPGController *gpgc = [[GPGController alloc] init];
 
-	NSString *importText = nil;
-
 	@try {
-		importText = [gpgc importFromData:data fullImport:NO];
+		[gpgc importFromData:data fullImport:NO];
 
 		if (gpgc.error) {
 			@throw gpgc.error;
@@ -255,8 +253,14 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		return;
 	}
 
-	[self displayOperationFinishedNotificationWithTitle:localized(@"Import result")
-												message:importText];
+	NSDictionary *statusDict = gpgc.statusDict;
+	NSDictionary *result = [self importResultWithStatusDict:statusDict affectedKeys:nil];
+	NSString *title = result[@"title"] ? result[@"title"] : localized(@"KeySearch_ImportResults_Title");;
+	NSString *message = result[@"message"];
+
+	
+	[self displayOperationFinishedNotificationWithTitle:title
+												message:message];
 }
 
 - (void)importKey:(NSString *)inputString {
@@ -2573,6 +2577,171 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	
 	
 	return result.copy;
+}
+
+
+#pragma mark -
+#pragma mark Import result
+
+- (NSDictionary *)importResultWithStatusDict:(NSDictionary *)statusDict affectedKeys:(NSSet **)affectedKeys {
+	const int stateNewKey = 1;
+	const int stateNewUserID = 2;
+	const int stateNewSignature = 4;
+	const int stateNewSubkey = 8;
+	const int statePrivateKey = 16;
+
+	NSInteger publicKeysCount = 0;
+	NSInteger publicKeysOk = 0;
+	NSInteger revocationCount = 0;
+	
+	NSArray *importResList = [statusDict objectForKey:@"IMPORT_RES"];
+	
+	if (importResList.count > 0) {
+		NSArray *importRes = importResList[0];
+		
+		publicKeysCount = [importRes[0] integerValue];
+		publicKeysOk = [importRes[2] integerValue];
+		revocationCount = [importRes[8] integerValue];
+	}
+	
+	
+	NSArray *importOkList = [statusDict objectForKey:@"IMPORT_OK"];
+	NSMutableDictionary *importStates = [NSMutableDictionary new];
+	
+	for (NSArray *importOk in importOkList) {
+		NSInteger status = [importOk[0] integerValue];
+		NSString *fingerprint = importOk[1];
+		
+		NSNumber *oldStatusNumber = importStates[fingerprint];
+		NSInteger oldStatus = [oldStatusNumber integerValue];
+		NSInteger newStatus = oldStatus | status;
+		
+		importStates[fingerprint] = @(newStatus);
+		
+		if (oldStatusNumber) {
+			// gpg2 counts every key block, but we want the count of diffeerent keys.
+			// So decrement the key count for multiple key blocks with the same key.
+			
+			// The new key status is sometimes issued twice. Only decrement a single time.
+			publicKeysCount--;
+		}
+		if (status == 17) {
+			// Do not decrement for IMPORT_OK with status 17, because this line is issued in addition to the others.
+			publicKeysCount++;
+		}
+
+	}
+	
+	
+	
+	if (affectedKeys) {
+		*affectedKeys = [NSSet setWithArray:importStates.allKeys];
+	}
+	
+	NSMutableArray *newKeys = [NSMutableArray new];
+	NSMutableArray *newUserIDs = [NSMutableArray new];
+	NSMutableArray *newSignatures = [NSMutableArray new];
+	NSMutableArray *newSubkeys = [NSMutableArray new];
+	BOOL importSuccessful = NO;
+	
+	
+	
+	for (NSString *fingerprint in importStates) {
+		NSInteger status = [importStates[fingerprint] integerValue];
+		
+		
+		if (status & stateNewKey) {
+			[newKeys addObject:fingerprint];
+			importSuccessful = YES;
+		} else if ((status & ~statePrivateKey) == 0) {
+			// Unchanged.
+		} else {
+			if (status & stateNewUserID) {
+				[newUserIDs addObject:fingerprint];
+				importSuccessful = YES;
+			} else if (status & stateNewSignature) {
+				[newSignatures addObject:fingerprint];
+				importSuccessful = YES;
+			}
+			if (status & stateNewSubkey) {
+				[newSubkeys addObject:fingerprint];
+				importSuccessful = YES;
+			}
+		}
+	}
+	
+	NSMutableString *message = [NSMutableString new];
+	NSString *title = nil;
+	
+	if (newKeys.count > 0) {
+		NSString *descriptions = [self descriptionForKeys:newKeys];
+		NSString *key = newKeys.count == 1 ? @"IMPORT_RESULT_NEW_KEY" : @"IMPORT_RESULT_NEW_KEYS";
+		NSString *string = localizedWithFormat(key, descriptions);
+		
+		[message appendFormat:@"%@\n\n", string];
+	}
+	if (newUserIDs.count > 0) {
+		NSString *descriptions = [self descriptionForKeys:newUserIDs];
+		NSString *key = @"IMPORT_RESULT_NEW_USER_ID";
+		NSString *string = localizedWithFormat(key, descriptions);
+		
+		[message appendFormat:@"%@\n\n", string];
+	}
+	if (newSignatures.count > 0) {
+		NSString *descriptions = [self descriptionForKeys:newSignatures];
+		NSString *key = @"IMPORT_RESULT_NEW_SIGNATURE";
+		NSString *string = localizedWithFormat(key, descriptions);
+		
+		[message appendFormat:@"%@\n\n", string];
+	}
+	if (newSubkeys.count > 0) {
+		NSString *descriptions = [self descriptionForKeys:newSubkeys];
+		NSString *key = @"IMPORT_RESULT_NEW_SUBKEY";
+		NSString *string = localizedWithFormat(key, descriptions);
+		
+		[message appendFormat:@"%@\n\n", string];
+	}
+	
+	
+	if (importResList.count > 0) {
+		
+		NSString *key, *string;
+		if (revocationCount > 0) {
+			key = revocationCount == 1 ? @"IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATE" : @"IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATES";
+			string = localizedWithFormat(key, revocationCount);
+			
+			[message appendFormat:@"%@\n\n", string];
+		}
+		
+		NSInteger processed = publicKeysCount;
+		NSInteger imported = publicKeysOk;
+		
+		if (processed != 1 || imported != 1) {
+			if (processed == 1) {
+				if (imported != 0 || importSuccessful == NO) {
+					// Don't show this message if only parts of a single key were imported.
+					key = @"IMPORT_RESULT_ONE_PROCESSED_AND_X_IMPORTED";
+					string = localizedWithFormat(key, imported);
+					[message appendFormat:@"%@\n", string];
+				}
+			} else if (imported == 1) {
+				key = @"IMPORT_RESULT_X_PROCESSED_AND_ONE_IMPORTED";
+				string = localizedWithFormat(key, processed);
+				[message appendFormat:@"%@\n", string];
+			} else {
+				key = @"IMPORT_RESULT_X_PROCESSED_AND_X_IMPORTED";
+				string = localizedWithFormat(key, processed, imported);
+				[message appendFormat:@"%@\n", string];
+			}
+		}
+	}
+	if (message.length == 0) {
+		title = localized(@"IMPORT_RESULT_NOTHING_IMPORTED");
+		[message appendString:localized(@"IMPORT_RESULT_NOTHING_IMPORTED_MSG")];
+	}
+	
+	// title can be nil. So do not use @{} syntax here.
+	return [NSDictionary dictionaryWithObjectsAndKeys:message, @"message", title, @"title", nil];
 }
 
 
