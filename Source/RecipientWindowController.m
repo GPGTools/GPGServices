@@ -217,30 +217,38 @@
 #pragma mark init, dealloc etc.
 
 - (id)init {
-	self = [super initWithWindowNibName:@"RecipientWindow"];
-	if (!self) {
-		return nil;
-	}
+	__block RecipientWindowController *newSelf = nil;
 	
-	[[NSUserDefaults standardUserDefaults]registerDefaults:@{self.signDefaultsKey: @YES, self.encryptForOwnKeyTooDefaultsKey: @YES}];
-	
-	self.fingerprintTransformer = [GPGFingerprintTransformer new];
-	
-    dataSource = [[KeyChooserDataSource alloc] initWithValidator:[GPGServices canSignValidator]];
-	
-	_validityTransformer = [GPGValidityDescriptionTransformer new];
-	
-	availableKeys = [[[GPGKeyManager sharedInstance] allKeys] objectsPassingTest:^BOOL(GPGKey *key, BOOL *stop) {
-		return key.canAnyEncrypt && key.validity < GPGValidityInvalid;
-	}];
-	
-	
-	
-	self.keysMatchingSearch = [availableKeys allObjects];
+	void (^block)(void) = ^{
+		newSelf = [super initWithWindowNibName:@"RecipientWindow"];
+		if (!newSelf) {
+			return;
+		}
+		
+		[[NSUserDefaults standardUserDefaults]registerDefaults:@{newSelf.signDefaultsKey: @YES, newSelf.encryptForOwnKeyTooDefaultsKey: @YES}];
+		
+		newSelf.fingerprintTransformer = [GPGFingerprintTransformer new];
+		
+		newSelf->dataSource = [[KeyChooserDataSource alloc] initWithValidator:[GPGServices canSignValidator]];
+		
+		newSelf->_validityTransformer = [GPGValidityDescriptionTransformer new];
+		
+		newSelf->availableKeys = [[[GPGKeyManager sharedInstance] allKeys] objectsPassingTest:^BOOL(GPGKey *key, BOOL *stop) {
+			return key.canAnyEncrypt && key.validity < GPGValidityInvalid;
+		}];
+		
+		newSelf.keysMatchingSearch = [newSelf->availableKeys allObjects];
 
-    selectedKeys = [[NSMutableSet alloc] init];
+		newSelf->selectedKeys = [[NSMutableSet alloc] init];
+	};
 	
-	return self;
+	if ([NSThread isMainThread]) {
+		block();
+	} else {
+		dispatch_sync(dispatch_get_main_queue(), block);
+	}
+
+	return newSelf;
 }
 
 - (void)windowDidLoad {

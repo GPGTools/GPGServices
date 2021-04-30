@@ -1035,32 +1035,22 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	NSString *fileExtension = useASCII ? @"asc" : @"gpg";
 	
 	
-	__block BOOL cancelled = NO;
-	__block NSSet *validRecipients;
-	__block GPGKey *privateKey;
-	__block GPGEncryptSignMode mode;
-	__block NSString *password;
-
-	dispatch_sync(dispatch_get_main_queue(), ^{
-		RecipientWindowController *rcp = [[RecipientWindowController alloc] init];
-		if ([rcp runModal] != 0) {
-			cancelled = YES; // User pressed 'cancel'
-			return;
-		}
-		
-		validRecipients = rcp.selectedKeys;
-		privateKey = rcp.selectedPrivateKey;
-		if (rcp.encryptForOwnKeyToo) {
-			validRecipients = [validRecipients setByAddingObject:privateKey];
-		}
-
-		mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
-
-		password = rcp.password;
-	});
-	if (cancelled) {
-		return; // User pressed 'cancel'
+	
+	RecipientWindowController *rcp = [[RecipientWindowController alloc] init];
+	if ([rcp runModal] != 0) {
+		// User pressed 'cancel'
+		return;
 	}
+	
+	NSSet *validRecipients = rcp.selectedKeys;
+	GPGKey *privateKey = rcp.selectedPrivateKey;
+	if (rcp.encryptForOwnKeyToo) {
+		validRecipients = [validRecipients setByAddingObject:privateKey];
+	}
+	GPGEncryptSignMode mode = (rcp.sign ? GPGSign : 0) | (validRecipients.count ? GPGPublicKeyEncrypt : 0) | (rcp.symetricEncryption ? GPGSymetricEncrypt : 0);
+	NSString *password = rcp.password;
+
+	
 
 
 	// check before starting an operation
