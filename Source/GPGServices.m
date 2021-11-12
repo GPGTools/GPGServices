@@ -16,18 +16,27 @@ static NSUInteger const suffixLen = 5;
 static NSString *const showInFinderActionIdentifier = @"SHOW_IN_FINDER_ACTION";
 static NSString *const fileCategoryIdentifier = @"FILE_CATEGORY";
 
-static NSString *const ALL_VERIFICATION_RESULTS_KEY = @"verificationResults";
-static NSString *const OPERATION_IDENTIFIER_KEY = @"operationIdentifier";
-static NSString *const VERIFICATION_CONTROLLER_KEY = @"verificationController";
-static NSString *const VERIFICATION_RESULT_KEY = @"verificationResult";
-static NSString *const VERIFICATION_FAILED_KEY = @"verificationFailed";
+NSString *const ALL_VERIFICATION_RESULTS_KEY = @"verificationResults";
+NSString *const OPERATION_IDENTIFIER_KEY = @"operationIdentifier";
+NSString *const VERIFICATION_CONTROLLER_KEY = @"verificationController";
+NSString *const VERIFICATION_FAILED_KEY = @"verificationFailed";
+NSString *const RESULT_FILENAME_KEY = @"filename";
+NSString *const RESULT_FILE_KEY = @"file";
+
+NSString *const RESULT_ICON_NAME_KEY = @"iconName";
+NSString *const RESULT_ICON_COLOR_KEY = @"iconColor";
+NSString *const RESULT_FINGERPRINT_KEY = @"fingerprint";
+NSString *const RESULT_SIGNEE_KEY = @"signee";
+NSString *const RESULT_SIGNEE_NAME_KEY = @"signee_name";
+NSString *const RESULT_SIGNEE_EMAIL_KEY = @"signee_email";
+NSString *const RESULT_DETAILS_KEY = @"details";
 
 
 
-static NSString *const NOTIFICATION_TITLE_KEY = @"title";
-static NSString *const NOTIFICATION_MESSAGE_KEY = @"message";
-static NSString *const ALERT_TITLE_KEY = @"alertTitle";
-static NSString *const ALERT_MESSAGE_KEY = @"alertMessage";
+NSString *const NOTIFICATION_TITLE_KEY = @"title";
+NSString *const NOTIFICATION_MESSAGE_KEY = @"message";
+NSString *const ALERT_TITLE_KEY = @"alertTitle";
+NSString *const ALERT_MESSAGE_KEY = @"alertMessage"; // Only used when verifying a text signature. TODO: Use the signature dialog also for text signatures.
 
 
 
@@ -1354,10 +1363,8 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 
 				if (ctx.signatures.count > 0) {
 					[signedFiles addObject:outputFile];
-					[self displayNotificationWithVerficationResults:results
-														fullResults:allVerificationResults
-												operationIdentifier:identifier
-												  completionHandler:^(BOOL notificationDidShow) {
+					
+					void (^completionHandler)(BOOL) = ^void(BOOL notificationDidShow) {
 						if (!notificationDidShow && !verificationController) {
 							// Can't show notifications and no verification controller is visible.
 							// Show a new verification controller.
@@ -1370,7 +1377,16 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 															verificationController, VERIFICATION_CONTROLLER_KEY, nil]
 													forKey:identifier];
 						}
-					}];
+					};
+					
+					if (files.count == 1) {
+						[self displayNotificationWithVerficationResults:results
+															fullResults:allVerificationResults
+													operationIdentifier:identifier
+													  completionHandler:completionHandler];
+					} else {
+						completionHandler(NO);
+					}
 				}
 				
 			}
@@ -1573,6 +1589,39 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 
 				GPGFileStream *signedInput = [GPGFileStream fileStreamForReadingAtPath:serviceFile];
 				sigs = [ctx verifySignatureOf:signedInput originalData:nil];
+				
+				if (sigs.count == 0) {
+					GPGStream *streamToParse = [GPGFileStream fileStreamForReadingAtPath:serviceFile];
+					if (streamToParse.isArmored) {
+						GPGUnArmor *unArmor = [GPGUnArmor unArmorWithGPGStream:streamToParse];
+						NSData *headerData = unArmor.decodeHeader;
+						streamToParse = [GPGMemoryStream memoryStreamForReading:headerData];
+					}
+					
+					GPGPacketParser *parser = [GPGPacketParser packetParserWithStream:streamToParse];
+					GPGSignaturePacket *packet = (GPGSignaturePacket *)[parser nextPacket];
+					if (packet.tag == GPGMarkerPacketTag) {
+						packet = (GPGSignaturePacket *)[parser nextPacket];
+					}
+					
+					if (packet.tag == GPGSignaturePacketTag &&
+						packet.version >= 2 && packet.version <= 4 &&
+						(packet.type == GPGBinarySignature || packet.type == GPGTextSignature)) {
+						
+						GPGSignature *sig = [[GPGSignature alloc] initWithFingerprint:nil status:GPGErrorNotFound];
+						NSString *fingerprint = packet.fingerprint;
+						if (fingerprint) {
+							GPGKey *key = [GPGKeyManager.sharedInstance.allKeysAndSubkeys member:packet.fingerprint];
+							if (key) {
+								sig.key = key;
+							}
+							sig.fingerprint = fingerprint;
+						}
+						
+						sigs = @[sig];
+					}
+				}
+				
 			} @catch (NSException *exception) {
 				secondException = exception;
 				sigs = nil;
@@ -1596,7 +1645,6 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 			}
 		}
 		
-		
 		NSArray *results = [self verificationResultsFromSigs:sigs forFile:signedFile];
 		[allVerificationResults addObjectsFromArray:results];
 		
@@ -1607,12 +1655,8 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 										allVerificationResults.copy, ALL_VERIFICATION_RESULTS_KEY,
 										verificationController, VERIFICATION_CONTROLLER_KEY, nil]
 								forKey:identifier];
-		
-		
-		[self displayNotificationWithVerficationResults:results
-											fullResults:allVerificationResults
-									operationIdentifier:identifier
-									  completionHandler:^(BOOL notificationDidShow) {
+				
+		void (^completionHandler)(BOOL) = ^void(BOOL notificationDidShow) {
 			if (!notificationDidShow && !verificationController) {
 				// Can't show notifications and no verification controller is visible.
 				// Show a new verification controller.
@@ -1625,7 +1669,17 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 												verificationController, VERIFICATION_CONTROLLER_KEY, nil]
 										forKey:identifier];
 			}
-		}];
+		};
+		
+		if (files.count == 1) {
+			[self displayNotificationWithVerficationResults:results
+												fullResults:allVerificationResults
+										operationIdentifier:identifier
+										  completionHandler:completionHandler];
+		} else {
+			completionHandler(NO);
+		}
+		
 		
 	}
 	
@@ -2329,31 +2383,28 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 			[results addObject:[self resultForSignature:sig file:file]];
 		}
 	} else {
-		NSString *resultString = localized(@"No signatures found");
-		if (file) {
-			[results addObject:@{@"filename": file.lastPathComponent,
-								 @"file": file,
-								 VERIFICATION_RESULT_KEY: resultString,
-								 NOTIFICATION_TITLE_KEY: resultString,
-								 NOTIFICATION_MESSAGE_KEY: file.lastPathComponent,
-								 VERIFICATION_FAILED_KEY: @YES
-			}];
-		} else {
-			[results addObject:@{VERIFICATION_RESULT_KEY: resultString,
-								 NOTIFICATION_TITLE_KEY: resultString,
-								 VERIFICATION_FAILED_KEY: @YES
-			}];
-		}
+		NSMutableDictionary *result = [NSMutableDictionary new];
+		
+		NSString *title = localized(@"No signatures found");
+		result[ALERT_TITLE_KEY] = title;
+		result[NOTIFICATION_TITLE_KEY] = title;
+		
+		result[VERIFICATION_FAILED_KEY] = @YES;
+
+		result[RESULT_FILE_KEY] = file;
+		result[RESULT_FILENAME_KEY] = file.lastPathComponent;
+		result[NOTIFICATION_MESSAGE_KEY] = file.lastPathComponent;
+
+		[results addObject:result];
 	}
 
 	return results;
 }
 
 - (NSDictionary *)resultForSignature:(GPGSignature *)sig file:(NSString *)file {
-	NSMutableArray *verficationResult = [NSMutableArray new];
 	NSMutableArray *notificationMessage = [NSMutableArray new];
 	NSMutableArray *alertMessage = [NSMutableArray new];
-	NSString *alertMessageString = nil;
+	NSString *detailsMessageString = nil;
 	NSString *templatePrefix = nil;
 	NSString *userIDDescription = nil;
 	NSString *title;
@@ -2363,22 +2414,37 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	NSString *fingerprint = nil;
 	NSString *knowledgeBaseLink = nil;
 	
+	NSString *redColor = @"red";
+	NSString *yellowColor = @"yellow";
+	NSString *greenColor = @"green";
+	NSString *iconColor = redColor;
+	NSString *iconName = @"xmark.seal.fill";
+
+	
 
 	switch (sig.status) {
 		case GPGErrorNoError:
 			switch (sig.trust) {
 				case GPGValidityUltimate:
 					templatePrefix = @"ABSOLUTE_TRUSTED_SIGNATURE";
+					iconName = @"checkmark.seal.fill";
+					iconColor = greenColor;
 					break;
 				case GPGValidityFull:
 					templatePrefix = @"FULLY_TRUSTED_SIGNATURE";
+					iconName = @"checkmark.seal.fill";
+					iconColor = greenColor;
 					break;
 				case GPGValidityMarginal:
 					templatePrefix = @"MARGINAL_TRUSTED_SIGNATURE";
+					iconName = @"checkmark.seal.fill";
+					iconColor = greenColor;
 					break;
 				case GPGValidityNever:
 				case GPGValidityUnknown:
 				case GPGValidityUndefined:
+					iconName = @"checkmark.seal.fill";
+					iconColor = yellowColor;
 					templatePrefix = @"UNTRUSTED_SIGNATURE";
 					knowledgeBaseLink = @"https://support.gpgtools.org/kb/how-to/trusting-keys-and-why-this-signature-is-not-to-be-trusted";
 					break;
@@ -2404,6 +2470,10 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 			break;
 		case GPGErrorBadSignature:
 			templatePrefix = @"BAD_SIGNATURE";
+			verificationFailed = YES;
+			break;
+		case GPGErrorNotFound:
+			templatePrefix = @"SIGNED_FILE_NOT_FOUND";
 			verificationFailed = YES;
 			break;
 		default:
@@ -2464,49 +2534,45 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	
 	
 	
-	[verficationResult addObject:alertTitle];
 	
 	if (signatureError) {
 		NSString *errorDescription = localizedWithFormat(@"SIGNATURE_ERROR_DESCRIPTION", sig.status);
-		[verficationResult addObject:errorDescription];
 		[alertMessage addObject:errorDescription];
 		[notificationMessage addObject:errorDescription];
 	} else {
 		NSString *template = [templatePrefix stringByAppendingString:@"_MESSAGE"];
-		alertMessageString = localizedWithFormat(template, fingerprint);
-		if ([alertMessageString isEqualToString:template]) {
-			alertMessageString = nil;
+		detailsMessageString = localizedWithFormat(template, fingerprint);
+		if ([detailsMessageString isEqualToString:template]) {
+			detailsMessageString = nil;
 		} else {
 			NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^(.*)~(.*)~(.*)$" options:0 error:nil];
-			NSTextCheckingResult *match = [regex firstMatchInString:alertMessageString options:0 range:NSMakeRange(0, alertMessageString.length)];
+			NSTextCheckingResult *match = [regex firstMatchInString:detailsMessageString options:0 range:NSMakeRange(0, detailsMessageString.length)];
 			if (match) {
-				NSString *subString = [alertMessageString substringWithRange:[match rangeAtIndex:1]];
+				NSString *subString = [detailsMessageString substringWithRange:[match rangeAtIndex:1]];
 				NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:subString];
 				NSDictionary<NSAttributedStringKey, id> *linkAttributes = @{};
 				
 				if (knowledgeBaseLink) {
 					linkAttributes = @{NSLinkAttributeName: knowledgeBaseLink};
 				}
-				subString = [alertMessageString substringWithRange:[match rangeAtIndex:2]];
+				subString = [detailsMessageString substringWithRange:[match rangeAtIndex:2]];
 				[attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:subString attributes:linkAttributes]];
 				
-				subString = [alertMessageString substringWithRange:[match rangeAtIndex:3]];
+				subString = [detailsMessageString substringWithRange:[match rangeAtIndex:3]];
 				[attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:subString]];
 				
-				alertMessageString = (NSString *)attributedString;
+				detailsMessageString = (NSString *)attributedString;
 			}
 		}
 	}
 	
 	if (userIDDescription.length > 0) {
-		[verficationResult addObject:userIDDescription];
 		[alertMessage addObject:userIDDescription];
 		[notificationMessage addObject:userIDDescription];
 	}
 
 	if (fingerprint) {
 		if (sig.status != GPGErrorNoPublicKey) {
-			[verficationResult addObject:fingerprint];
 			[alertMessage addObject:fingerprint];
 		}
 		if (!file) {
@@ -2533,36 +2599,57 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 		[alertMessage addObject:file.lastPathComponent];
 	}
 	
-	if (alertMessageString.length > 0) {
+	
+	
+	id encodedDetailsMessage = nil;
+
+	if (detailsMessageString.length > 0) {
 		if (alertMessage.count > 0) {
-			[verficationResult addObject:@""];
 			[alertMessage addObject:@""];
 		}
-		[verficationResult addObject:alertMessageString];
-		[alertMessage addObject:alertMessageString];
+		[alertMessage addObject:detailsMessageString];
+		
+		if ([detailsMessageString isKindOfClass:[NSString class]]) {
+			encodedDetailsMessage = detailsMessageString;
+		} else {
+			encodedDetailsMessage = [NSKeyedArchiver archivedDataWithRootObject:detailsMessageString];
+		}
 	}
 
 	
-	NSAttributedString *attributedVerficationResult = verficationResult.attributedLinesJoined;
 	NSAttributedString *attributedAlertMessage = alertMessage.attributedLinesJoined;
 
 	// Encode it, because a notification user info doesn't allow NSAttributedString.
-	NSData *encodedVerficationResult = [NSKeyedArchiver archivedDataWithRootObject:attributedVerficationResult];
 	NSData *encodedAlertMessage = [NSKeyedArchiver archivedDataWithRootObject:attributedAlertMessage];
 
+		
 	
+	NSString *name = sig.name;
+	NSString *email = sig.email;
+	if (name && email) {
+		email = [NSString stringWithFormat:@"<%@>", email];
+	}
 	
 	NSMutableDictionary *result = [NSMutableDictionary new];
-	result[VERIFICATION_RESULT_KEY] = encodedVerficationResult;
 	result[NOTIFICATION_TITLE_KEY] = title;
 	result[NOTIFICATION_MESSAGE_KEY] = [notificationMessage componentsJoinedByString:@"\n"];
 	result[ALERT_MESSAGE_KEY] = encodedAlertMessage;
 	result[ALERT_TITLE_KEY] = alertTitle;
 	result[VERIFICATION_FAILED_KEY] = @(verificationFailed);
+	result[RESULT_SIGNEE_KEY] = userIDDescription;
+	result[RESULT_SIGNEE_NAME_KEY] = name;
+	result[RESULT_SIGNEE_EMAIL_KEY] = email;
+	result[RESULT_FINGERPRINT_KEY] = fingerprint;
+	result[RESULT_DETAILS_KEY] = encodedDetailsMessage;
+	result[RESULT_ICON_NAME_KEY] = iconName;
+	result[RESULT_ICON_COLOR_KEY] = iconColor;
+
+	
+	
 
 	if (file) {
-		result[@"filename"] = file.lastPathComponent;
-		result[@"file"] = file;
+		result[RESULT_FILENAME_KEY] = file.lastPathComponent;
+		result[RESULT_FILE_KEY] = file;
 	}
 	
 	
@@ -2885,10 +2972,12 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 								completionHandler:(void(^)(BOOL notificationDidShow))completionHandler {
 	if (@available(macOS 10.14, *)) {
 		BOOL verificationFailed = YES;
-		for (NSDictionary *result in results) {
-			if (![result[VERIFICATION_FAILED_KEY] boolValue]) {
-				verificationFailed = NO;
-				break;
+		if (results.count == 1) { // Do not show notification for more than a single singnature.
+			for (NSDictionary *result in results) {
+				if (![result[VERIFICATION_FAILED_KEY] boolValue]) {
+					verificationFailed = NO;
+					break;
+				}
 			}
 		}
 		
@@ -2907,7 +2996,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 			userInfo[OPERATION_IDENTIFIER_KEY] = operationIdentifier;
 			userInfo[ALL_VERIFICATION_RESULTS_KEY] = fullResults.copy;
 			
-			NSString *file = result[@"file"];
+			NSString *file = result[RESULT_FILE_KEY];
 			if (file) {
 				// Add the file to the userInfo and display "Show in Finder" button.
 				userInfo[@"files"] = @[file];

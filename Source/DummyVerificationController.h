@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "GPGVerificationResultCellView.h"
 
 @class FileVerificationDataSource;
 @class GPGSignature;
@@ -14,7 +15,6 @@
 @interface DummyVerificationController : NSWindowController <NSWindowDelegate> {
 @private
     IBOutlet NSTableView* tableView;
-    IBOutlet NSProgressIndicator* indicator;
     IBOutlet FileVerificationDataSource* dataSource;
     
 	BOOL _terminateCanceled; // YES when the controller already called GPGServices -cancelTerminateTimer.
@@ -22,7 +22,6 @@
 }
 
 @property (nonatomic, weak) IBOutlet NSScrollView *scrollView;
-@property (nonatomic, weak) IBOutlet NSView *scrollIndicator;
 @property (nonatomic, weak) IBOutlet NSButton *okButton;
 
 - (IBAction)okClicked:(id)sender;

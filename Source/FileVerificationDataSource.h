@@ -12,6 +12,7 @@
 
 @interface FileVerificationDataSource : NSObject
 
+@property (nonatomic, weak) IBOutlet NSWindow *window;
 @property (nonatomic, readonly) NSArray<NSDictionary *> *verificationResults;
 
 // not thread-safe

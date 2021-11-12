@@ -43,6 +43,17 @@
 }
 
 
+- (void)awakeFromNib {
+	[super awakeFromNib];
+}
+- (void)dealloc {
+	
+}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+}
+
+
+
 
 
 - (void)showWindow:(id)sender {
@@ -51,18 +62,9 @@
                         waitUntilDone:NO];
 }
 - (void)showWindowOnMain:(id)sender {
-	[self adjustTableColumns];
 	
-	if (NSScroller.preferredScrollerStyle == NSScrollerStyleOverlay) {
-		// Hide the scroll indicator, when the user scrolls down.
-		NSClipView *contentView = self.scrollView.contentView;
-		contentView.postsBoundsChangedNotifications = YES;
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(boundsDidChange:) name:NSViewBoundsDidChangeNotification object:contentView];
-	} else {
-		[_scrollIndicator removeFromSuperview];
-		_scrollIndicator = nil;
-	}
-
+	[_scrollView flashScrollers];
+	
     [super showWindow:sender];
 	[NSApp activateIgnoringOtherApps:YES];
 	
@@ -82,7 +84,6 @@
 }
 - (void)addResultsOnMain:(NSArray<NSDictionary *> *)results {
 	[dataSource addResults:results];
-	[self adjustTableColumns];
 	[self showWindowOnMain:nil];
 }
 
@@ -102,7 +103,7 @@
 	NSArray<NSDictionary *> *results = dataSource.verificationResults;
 	NSMutableArray *urls = [NSMutableArray new];
 	for (NSDictionary *result in results) {
-		NSString *file = result[@"file"];
+		NSString *file = result[RESULT_FILE_KEY];
 		if (file) {
 			[urls addObject:[NSURL fileURLWithPath:file]];
 		}
@@ -114,93 +115,6 @@
 }
 
 
-
-
-- (void)boundsDidChange:(NSNotification *)notification {
-	// Hide the scroll indicator, when the user scrolls down.
-	NSClipView *contentView = self.scrollView.contentView;
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewBoundsDidChangeNotification object:contentView];
-	[_scrollIndicator removeFromSuperview];
-	_scrollIndicator = nil;
-}
-
-- (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize {
-	// Hide the scroll indicator, when the window is resized enough.
-	if (_scrollIndicator) {
-		CGFloat oldHeight = sender.frame.size.height;
-		CGFloat newHeight = frameSize.height;
-
-		if (newHeight > oldHeight) {
-			if (self.scrollView.contentView.frame.size.height + newHeight - oldHeight + 30 >= tableView.frame.size.height) {
-				[_scrollIndicator removeFromSuperview];
-				_scrollIndicator = nil;
-			}
-		}
-	}
-
-	return frameSize;
-}
-
-- (void)adjustTableColumns {
-	[tableView reloadData];
-	NSInteger filenameColumn = [tableView columnWithIdentifier:@"filename"];
-	NSInteger resultColumn = [tableView columnWithIdentifier:@"result"];
-
-	NSInteger minWidth = -1;
-	NSUInteger count = tableView.numberOfRows;
-	if (count == 0) {
-		return;
-	}
-	
-	for (NSUInteger row = 0; row < count; row++) {
-		NSTableCellView *cellView = [tableView viewAtColumn:filenameColumn row:row makeIfNecessary:YES];
-		if (cellView) {
-			// The filename column should show the whole filename.
-			minWidth = MAX(cellView.textField.intrinsicContentSize.width, minWidth);
-		}
-		
-		cellView = [tableView viewAtColumn:resultColumn row:row makeIfNecessary:YES];
-		if (cellView) {
-			// The scroll view should not (horizontally) truncate the results
-			NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.scrollView
-																		  attribute:NSLayoutAttributeTrailing
-																		  relatedBy:NSLayoutRelationGreaterThanOrEqual
-																			 toItem:cellView
-																		  attribute:NSLayoutAttributeTrailing
-																		 multiplier:1
-																		   constant:16];
-			[self.window.contentView addConstraint:constraint];
-		}
-	}
-	
-	if (minWidth > -1) {
-		tableView.tableColumns[filenameColumn].width = minWidth + 5;
-		[tableView sizeLastColumnToFit];
-	}
-	
-	
-	const NSUInteger minVisibleRows = 3; // How many results to show without need to scroll down.
-	NSUInteger row = MIN(count - 1, minVisibleRows - 1);
-	NSTableCellView *cellView = [tableView viewAtColumn:resultColumn row:row makeIfNecessary:YES];
-	if (cellView) {
-		// The scroll view should show atleast "minVisibleRows" results.
-		NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.scrollView
-																	  attribute:NSLayoutAttributeBottom
-																	  relatedBy:NSLayoutRelationGreaterThanOrEqual
-																		 toItem:cellView
-																	  attribute:NSLayoutAttributeBottom
-																	 multiplier:1
-																	   constant:10];
-		
-		[self.window.contentView addConstraint:constraint];
-	}
-	
-	
-	if (count > minVisibleRows) {
-		_scrollIndicator.hidden = NO;
-	}
-
-}
 
 
 @end

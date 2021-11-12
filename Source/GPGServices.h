@@ -13,6 +13,28 @@
 
 typedef BOOL(^KeyValidatorT)(GPGKey* key);
 
+
+extern NSString *const ALL_VERIFICATION_RESULTS_KEY;
+extern NSString *const OPERATION_IDENTIFIER_KEY;
+extern NSString *const VERIFICATION_CONTROLLER_KEY;
+extern NSString *const VERIFICATION_FAILED_KEY;
+extern NSString *const NOTIFICATION_TITLE_KEY;
+extern NSString *const NOTIFICATION_MESSAGE_KEY;
+extern NSString *const ALERT_TITLE_KEY;
+extern NSString *const ALERT_MESSAGE_KEY;
+extern NSString *const RESULT_FILENAME_KEY;
+extern NSString *const RESULT_FILE_KEY;
+extern NSString *const RESULT_ICON_NAME_KEY;
+extern NSString *const RESULT_ICON_COLOR_KEY;
+extern NSString *const RESULT_FINGERPRINT_KEY;
+extern NSString *const RESULT_SIGNEE_KEY;
+extern NSString *const RESULT_SIGNEE_NAME_KEY;
+extern NSString *const RESULT_SIGNEE_EMAIL_KEY;
+extern NSString *const RESULT_DETAILS_KEY;
+
+
+
+
 @interface GPGServices : NSObject
 
 
@@ -55,3 +77,9 @@ typedef BOOL(^KeyValidatorT)(GPGKey* key);
 
 
 @end
+
+@interface NSImage (BigSurSFSymbols)
++ (instancetype)imageWithSystemSymbolName:(NSString *)symbolName accessibilityDescription:(NSString *)description;
+@end
+
+

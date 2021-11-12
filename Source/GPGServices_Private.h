@@ -67,3 +67,20 @@ typedef enum {
 
 @end
 
+@interface GPGSignature ()
+
+@property (nonatomic, assign, readwrite) GPGValidity trust;
+@property (nonatomic, assign, readwrite) GPGErrorCode status;
+@property (nonatomic, copy, readwrite) NSString *fingerprint;
+@property (nonatomic, copy, readwrite) NSDate *creationDate;
+@property (nonatomic, assign, readwrite) int signatureClass;
+@property (nonatomic, copy, readwrite) NSDate *expirationDate;
+@property (nonatomic, assign, readwrite) int version;
+@property (nonatomic, assign, readwrite) GPGPublicKeyAlgorithm publicKeyAlgorithm;
+@property (nonatomic, assign, readwrite) GPGHashAlgorithm hashAlgorithm;
+
+@end
+
+
+
+

@@ -18,9 +18,11 @@
 		3021FB1515D83ED300510CA8 /* SimpleTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3021FB1415D83ED300510CA8 /* SimpleTextView.m */; };
 		302D33D516D41BF000C05409 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302D33D316D41BCF00C05409 /* Libmacgpg.framework */; };
 		303B51E621FF09C50061CE1F /* Localization.m in Sources */ = {isa = PBXBuildFile; fileRef = 303B51E521FF09C50061CE1F /* Localization.m */; };
+		304CD75B2657B27700DB2C60 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 304CD75A2657B27700DB2C60 /* Media.xcassets */; };
 		3050BF68255E6FA900D033A0 /* GKPasswordStrengthIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3050BF60255E6FA900D033A0 /* GKPasswordStrengthIndicator.m */; };
 		305E3FE316FFD70000CE05C2 /* InProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */; };
 		30753EA320DA839400C667CA /* GKFingerprintTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 30753EA220DA839400C667CA /* GKFingerprintTransformer.m */; };
+		3083432E26453DB600DF4109 /* GPGVerificationResultCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3083432D26453DB600DF4109 /* GPGVerificationResultCellView.m */; };
 		30843DF522F9C3F2001F9D4F /* GPGServices.icns in Resources */ = {isa = PBXBuildFile; fileRef = 30843DF422F9C3F2001F9D4F /* GPGServices.icns */; };
 		308C85E5260DD1CB00D778B3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 308C85E7260DD1CB00D778B3 /* InfoPlist.strings */; };
 		3093A2F02428B3970031A764 /* VerificationResultsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3093A2EF2428B3970031A764 /* VerificationResultsWindow.m */; };
@@ -182,6 +184,7 @@
 		302D33D316D41BCF00C05409 /* Libmacgpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Libmacgpg.framework; path = /Library/Frameworks/Libmacgpg.framework; sourceTree = "<absolute>"; };
 		303B51E421FF09C50061CE1F /* Localization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Localization.h; path = Source/Localization.h; sourceTree = "<group>"; };
 		303B51E521FF09C50061CE1F /* Localization.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Localization.m; path = Source/Localization.m; sourceTree = "<group>"; };
+		304CD75A2657B27700DB2C60 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		3050BF60255E6FA900D033A0 /* GKPasswordStrengthIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GKPasswordStrengthIndicator.m; path = Source/GKPasswordStrengthIndicator.m; sourceTree = "<group>"; };
 		3050BF67255E6FA900D033A0 /* GKPasswordStrengthIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GKPasswordStrengthIndicator.h; path = Source/GKPasswordStrengthIndicator.h; sourceTree = "<group>"; };
 		305E3FE216FFD70000CE05C2 /* InProgressWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InProgressWindow.xib; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 		307EBE99260DD67B00DDDE15 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		307EBE9A260DD67C00DDDE15 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		307EBE9B260DD67D00DDDE15 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3083432C26453DB600DF4109 /* GPGVerificationResultCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPGVerificationResultCellView.h; path = Source/GPGVerificationResultCellView.h; sourceTree = "<group>"; };
+		3083432D26453DB600DF4109 /* GPGVerificationResultCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GPGVerificationResultCellView.m; path = Source/GPGVerificationResultCellView.m; sourceTree = "<group>"; };
 		30843DF422F9C3F2001F9D4F /* GPGServices.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = GPGServices.icns; sourceTree = "<group>"; };
 		3086A47821A56C960004387C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3086A47F21A56C980004387C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -420,6 +425,7 @@
 				8ED7990D135CAB60004C89D5 /* asc.icns */,
 				8ED7990C135CAB60004C89D5 /* lock.icns */,
 				8ED7990B135CAB60004C89D5 /* sig.icns */,
+				304CD75A2657B27700DB2C60 /* Media.xcassets */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -487,6 +493,8 @@
 				3050BF60255E6FA900D033A0 /* GKPasswordStrengthIndicator.m */,
 				3093A2EE2428B3970031A764 /* VerificationResultsWindow.h */,
 				3093A2EF2428B3970031A764 /* VerificationResultsWindow.m */,
+				3083432C26453DB600DF4109 /* GPGVerificationResultCellView.h */,
+				3083432D26453DB600DF4109 /* GPGVerificationResultCellView.m */,
 			);
 			name = "UI Classes";
 			sourceTree = "<group>";
@@ -662,6 +670,7 @@
 				30843DF522F9C3F2001F9D4F /* GPGServices.icns in Resources */,
 				30B2057814D56F2A00AE9583 /* lock.icns in Resources */,
 				30B2057914D56F2A00AE9583 /* sig.icns in Resources */,
+				304CD75B2657B27700DB2C60 /* Media.xcassets in Resources */,
 				45715A0C156D4BD100E5E7DD /* ServicesMenu.strings in Resources */,
 				45CC89011569365300928F5B /* Localizable.strings in Resources */,
 				30CC110C15D7E6BF000DC2C5 /* SimpleTextWindow.xib in Resources */,
@@ -743,6 +752,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3083432E26453DB600DF4109 /* GPGVerificationResultCellView.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				3050BF68255E6FA900D033A0 /* GKPasswordStrengthIndicator.m in Sources */,
 				4B1908C20A4CBF0B00052798 /* GPGServices.m in Sources */,

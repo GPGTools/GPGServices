@@ -225,7 +225,7 @@
 			return;
 		}
 		
-		[[NSUserDefaults standardUserDefaults]registerDefaults:@{newSelf.signDefaultsKey: @YES, newSelf.encryptForOwnKeyTooDefaultsKey: @YES}];
+		[[NSUserDefaults standardUserDefaults] registerDefaults:@{newSelf.signDefaultsKey: @YES, newSelf.encryptForOwnKeyTooDefaultsKey: @YES}];
 		
 		newSelf.fingerprintTransformer = [GPGFingerprintTransformer new];
 		
