@@ -30,6 +30,7 @@ NSString *const RESULT_SIGNEE_KEY = @"signee";
 NSString *const RESULT_SIGNEE_NAME_KEY = @"signee_name";
 NSString *const RESULT_SIGNEE_EMAIL_KEY = @"signee_email";
 NSString *const RESULT_DETAILS_KEY = @"details";
+NSString *const RESULT_TRUST_KEY = @"trust";
 
 
 
@@ -2643,7 +2644,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	result[RESULT_DETAILS_KEY] = encodedDetailsMessage;
 	result[RESULT_ICON_NAME_KEY] = iconName;
 	result[RESULT_ICON_COLOR_KEY] = iconColor;
-
+	result[RESULT_TRUST_KEY] = @(sig.trust);
 	
 	
 
@@ -2971,17 +2972,19 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 							  operationIdentifier:(NSString *)operationIdentifier
 								completionHandler:(void(^)(BOOL notificationDidShow))completionHandler {
 	if (@available(macOS 10.14, *)) {
-		BOOL verificationFailed = YES;
+		BOOL showNotification = NO;
 		if (results.count == 1) { // Do not show notification for more than a single singnature.
 			for (NSDictionary *result in results) {
-				if (![result[VERIFICATION_FAILED_KEY] boolValue]) {
-					verificationFailed = NO;
+				BOOL failed = [result[VERIFICATION_FAILED_KEY] boolValue];
+				GPGValidity trust = [result[RESULT_TRUST_KEY] intValue];
+				if (!failed && trust >= GPGValidityMarginal && trust <= GPGValidityUltimate) {
+					showNotification = YES;
 					break;
 				}
 			}
 		}
 		
-		if (verificationFailed) {
+		if (!showNotification) {
 			// Do not show notification for failed verifications.
 			completionHandler(NO);
 		} else {

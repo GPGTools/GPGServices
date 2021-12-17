@@ -31,6 +31,7 @@ extern NSString *const RESULT_SIGNEE_KEY;
 extern NSString *const RESULT_SIGNEE_NAME_KEY;
 extern NSString *const RESULT_SIGNEE_EMAIL_KEY;
 extern NSString *const RESULT_DETAILS_KEY;
+extern NSString *const RESULT_TRUST_KEY;
 
 
 
