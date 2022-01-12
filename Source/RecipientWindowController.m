@@ -539,6 +539,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (void)restoreSelectedKeysAndOptions {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
+	[self willChangeValueForKey:@"selectedKeys"];
 	NSArray *keyIDs = [defaults valueForKey:self.selectedKeysDefaultsKey];
 	for (NSString *keyID in keyIDs ) {
 		for (GPGKey *key in availableKeys ) {
@@ -547,6 +548,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 			}
 		}
 	}
+	[self didChangeValueForKey:@"selectedKeys"];
 
 	self.sign = [defaults boolForKey:self.signDefaultsKey];
 	self.encryptForOwnKeyToo = [defaults boolForKey:self.encryptForOwnKeyTooDefaultsKey];
