@@ -556,7 +556,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 				}
 				
 				title = localizedWithFormat(@"NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE");
-				message = localizedWithFormat(@"NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG", [self descriptionForKeys:missingSecKeys]);
+				message = localizedWithFormat(@"NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG", [[GPGKeyManager sharedInstance] descriptionForKeys:missingSecKeys]);
 				break;
 			}
 			default:
@@ -1447,7 +1447,7 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 					}
 
 					title = localizedWithFormat(@"NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE", file.lastPathComponent);
-					message = localizedWithFormat(@"NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG", [self descriptionForKeys:missingSecKeys]);
+					message = localizedWithFormat(@"NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG", [[GPGKeyManager sharedInstance] descriptionForKeys:missingSecKeys]);
 					showDefaultMessage = NO;
 					break;
 				}
@@ -2240,103 +2240,6 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 }
 
 
-- (NSString *)descriptionForKeys:(NSArray *)keys {
-	NSMutableString *descriptions = [NSMutableString string];
-	Class gpgKeyClass = [GPGKey class];
-	NSUInteger i = 0, count = keys.count;
-	NSUInteger lines = 10;
-	if (count == 0) {
-		return @"";
-	}
-	if (lines > 0 && count > lines) {
-		lines = lines - 1;
-	} else {
-		lines = NSUIntegerMax;
-	}
-	BOOL singleKey = count == 1;
-	BOOL indent = NO;
-	
-	
-	NSString *lineBreak = indent ? @"\n\t" : @"\n";
-	if (indent) {
-		[descriptions appendString:@"\t"];
-	}
-	
-	NSString *normalSeperator = [@"," stringByAppendingString:lineBreak];
-	NSString *lastSeperator = [NSString stringWithFormat:@" %@%@", localized(@"and"), lineBreak];
-	NSString *seperator = @"";
-	
-	for (__strong GPGKey *key in keys) {
-		if (i >= lines && i > 0) {
-			[descriptions appendFormat:localized(@"KeyDescriptionAndMore"), lineBreak , count - i];
-			break;
-		}
-		
-		if (![key isKindOfClass:gpgKeyClass]) {
-			NSString *keyID = (id)key;
-			GPGKeyManager *keyManager = [GPGKeyManager sharedInstance];
-			GPGKey *realKey = nil;
-			if (keyID.length == 16) {
-				realKey = keyManager.keysByKeyID[keyID];
-			} else {
-				realKey = [keyManager.allKeysAndSubkeys member:key];
-			}
-
-			if (!realKey) {
-				realKey = [[keyManager keysByKeyID] objectForKey:key.keyID];
-			}
-			if (realKey) {
-				key = realKey;
-			}
-		}
-		
-		if (i > 0) {
-			seperator = normalSeperator;
-			if (i == count - 1) {
-				seperator = lastSeperator;
-			}
-		}
-		
-		
-		BOOL isGPGKey = [key isKindOfClass:gpgKeyClass];
-		
-		if (isGPGKey) {
-			GPGKey *primaryKey = key.primaryKey;
-
-			NSString *name = primaryKey.name;
-			NSString *email = primaryKey.email;
-			NSString *keyID = [[GKFingerprintTransformer sharedInstance] transformedValue:key.fingerprint];
-			
-			if (name.length == 0) {
-				name = email;
-				email = nil;
-			}
-			
-			if (email.length > 0) {
-				if (singleKey) {
-					[descriptions appendFormat:@"%@%@ <%@>%@%@", seperator, name, email, lineBreak, keyID];
-				} else {
-					[descriptions appendFormat:@"%@%@ <%@> (%@)", seperator, name, email, keyID];
-				}
-			} else {
-				if (singleKey) {
-					[descriptions appendFormat:@"%@%@%@%@", seperator, name, lineBreak, keyID];
-				} else {
-					[descriptions appendFormat:@"%@%@ (%@)", seperator, name, keyID];
-				}
-			}
-			
-		} else {
-			[descriptions appendFormat:@"%@%@", seperator, [[GKFingerprintTransformer sharedInstance] transformedValue:key]];
-		}
-		
-		
-		i++;
-	}
-	
-	return descriptions.copy;
-}
-
 
 
 + (NSString*)searchFileForSignatureFile:(NSString*)sigFile {
@@ -2752,28 +2655,28 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	NSString *title = nil;
 	
 	if (newKeys.count > 0) {
-		NSString *descriptions = [self descriptionForKeys:newKeys];
+		NSString *descriptions = [[GPGKeyManager sharedInstance] descriptionForKeys:newKeys];
 		NSString *key = newKeys.count == 1 ? @"IMPORT_RESULT_NEW_KEY" : @"IMPORT_RESULT_NEW_KEYS";
 		NSString *string = localizedWithFormat(key, descriptions);
 		
 		[message appendFormat:@"%@\n\n", string];
 	}
 	if (newUserIDs.count > 0) {
-		NSString *descriptions = [self descriptionForKeys:newUserIDs];
+		NSString *descriptions = [[GPGKeyManager sharedInstance] descriptionForKeys:newUserIDs];
 		NSString *key = @"IMPORT_RESULT_NEW_USER_ID";
 		NSString *string = localizedWithFormat(key, descriptions);
 		
 		[message appendFormat:@"%@\n\n", string];
 	}
 	if (newSignatures.count > 0) {
-		NSString *descriptions = [self descriptionForKeys:newSignatures];
+		NSString *descriptions = [[GPGKeyManager sharedInstance] descriptionForKeys:newSignatures];
 		NSString *key = @"IMPORT_RESULT_NEW_SIGNATURE";
 		NSString *string = localizedWithFormat(key, descriptions);
 		
 		[message appendFormat:@"%@\n\n", string];
 	}
 	if (newSubkeys.count > 0) {
-		NSString *descriptions = [self descriptionForKeys:newSubkeys];
+		NSString *descriptions = [[GPGKeyManager sharedInstance] descriptionForKeys:newSubkeys];
 		NSString *key = @"IMPORT_RESULT_NEW_SUBKEY";
 		NSString *string = localizedWithFormat(key, descriptions);
 		
