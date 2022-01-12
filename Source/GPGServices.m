@@ -833,6 +833,9 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 	@try {
 		GPGController *ctx = [GPGController gpgController];
 		ctx.useArmor = YES;
+		if ([ctx respondsToSelector:@selector(setBatchMode:)]) {
+			ctx.batchMode = YES;
+		}
 		wrappedArgs.worker.runningController = ctx;
 
 		for (GPGKey *k in keys) {
@@ -1137,6 +1140,9 @@ static NSString *const NotificationDismissalDelayKey = @"NotificationDismissalDe
 
 	GPGController *ctx = [GPGController gpgController];
 	
+	if ([ctx respondsToSelector:@selector(setBatchMode:)]) {
+		ctx.batchMode = YES;
+	}
 	ctx.trustAllKeys = YES;
 	// Only use armor for single files. otherwise it doesn't make much sense.
 	ctx.useArmor = useASCII && [destination rangeOfString:@".asc"].location != NSNotFound;
