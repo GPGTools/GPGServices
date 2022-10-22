@@ -260,9 +260,34 @@ NO_PUBKEY_SIGNATURE_ALERT_TITLE = "Klíč k ověření tohoto podpisu není v GP
 NO_PUBKEY_SIGNATURE_MESSAGE = "Zprávu se nepodařilo ověřit. Veřejný klíč požadovaný k ověření tohoto podpisu není v GPG klíčence.\n\nVyhledejte otisk %@ na serveru nebo požádejte odesilatele o jeho veřejný klíč. Po přidání jeho veřejného klíče do GPG klíčenky se můžete znovu pokusit o ověření podpisu.";
 
 BAD_SIGNATURE_TITLE = "Výstraha: Neplatný podpis";
-BAD_SIGNATURE_MESSAGE = "Podpis neodpovídá této zprávě. Této zprávě byste neměli důvěřovat, protože mohla být zmanipulována.\n\nZprávy lze po podepsání změnit neúmyslně. U serverů Exchange nebo e-mailových konferencí jsou známy případy, kdy byly podpisy poškozeny. Je rovněž známo, že problémy způsobuje také formátovaný text jako rtf, docx nebo odt. Ujistěte se, že používáte formát souboru txt.";
+BAD_SIGNATURE_MESSAGE = "Podpis neodpovídá této zprávě. Této zprávě byste neměli důvěřovat, protože mohla být zmanipulována.\nZprávy mohou být po podpisu neúmyslně změněny. Je známo, že servery Exchange nebo e-mailové konference v minulosti způsobily neplatnost elektronických podpisů. Také je známo, že formátovaný text typu rtf, docx nebo odt může způsobovat potíže. Ujistěte se, že používáte pouze textový formát souboru.";
+
+SIGNED_FILE_NOT_FOUND_TITLE = "Podepsaný soubor nebyl nalezen";
+SIGNED_FILE_NOT_FOUND_MESSAGE = "Nebyl nalezen soubor odpovídající tomuto podpisu. Ujistěte se, že soubor a soubor podpisu jsou umístěny ve stejné složce a mají stejný název.";
+
 
 SIGNATURE_ERROR_TITLE = "Chyba podpisu";
 SIGNATURE_ERROR_ALERT_TITLE = "Neznámá chyba podpisu";
 SIGNATURE_ERROR_DESCRIPTION = "Kód: %i";
+
+
+/* For Import-Results */
+IMPORT_RESULT_NEW_KEY = "Následující klíč byl úspěšně importován:\n\n%@";
+IMPORT_RESULT_NEW_KEYS = "Následující klíče byly úspěšně importovány:\n\n%@";
+
+IMPORT_RESULT_NEW_USER_ID = "UserID bylo přidáno k následujícím klíčům:\n\n%@";
+IMPORT_RESULT_NEW_SIGNATURE = "Podpis byl přidán k následujícím klíčum\n\n%@";
+IMPORT_RESULT_NEW_SUBKEY = "Podklíč byl přidán k následujícím klíčům\n\n%@";
+
+IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATE = "1 zneplatněný certifikát byl importován.";
+IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATES = "%i zneplatněných certifikátů bylo importováno.";
+
+IMPORT_RESULT_ONE_PROCESSED_AND_X_IMPORTED = "1 klíč byl zpracovány a %i importovány.";
+IMPORT_RESULT_X_PROCESSED_AND_ONE_IMPORTED = "%i klíče byly zpracovány a 1 importován.";
+IMPORT_RESULT_X_PROCESSED_AND_X_IMPORTED = "%1$i klíče byly zpracovány a %2$i importovány.";
+
+IMPORT_RESULT_NOTHING_IMPORTED = "Žádné klíče nebyly importovány.";
+IMPORT_RESULT_NOTHING_IMPORTED_MSG = "";
+
+KeySearch_ImportResults_Title = "Import byl úspěšný";
 

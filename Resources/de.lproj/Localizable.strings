@@ -220,7 +220,7 @@ NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Die Datei \"%@\" kann nicht entschlüssel
 NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Der zum Entschlüsseln der Datei nötige geheime Schlüssel ist nicht verfügbar.\nDer Inhalt ist für die Schlüssel mit folgenden Fingerabdrücken verschlüsselt:\n\n%@\n\nFalls du keinen dieser Fingerabdrücke kennst, hat der Absender möglicherweise nicht deinen öffentlichen Schlüssel zum Verschlüsseln dieser Datei verwendet.";
 
 NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Der ausgewählte Inhalt konnte nicht entschlüsselt werden";
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Der zum Entschlüsseln des Inhalts nötige geheime Schlüssel ist nicht verfügbar.\nDer Inhalt ist für die Schlüssel mit folgenden Fingerabdrücken verschlüsselt:\n\n%@\n\nFalls du keinen dieser Fingerabdrücke kennen, hat der Absender möglicherweise nicht deinen öffentlichen Schlüssel zum Verschlüsseln dieser Datei verwendet.";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Der zum Entschlüsseln des Inhalts nötige geheime Schlüssel ist nicht verfügbar.\nDer Inhalt ist für die Schlüssel mit folgenden Fingerabdrücken verschlüsselt:\n\n%@\n\nFalls du keinen dieser Fingerabdrücke kennst, hat der Absender möglicherweise nicht deinen öffentlichen Schlüssel zum Verschlüsseln dieser Datei verwendet.";
 
 
 "and" = "und";
@@ -260,9 +260,34 @@ NO_PUBKEY_SIGNATURE_ALERT_TITLE = "Der Schlüssel zur Überprüfung dieser Signa
 NO_PUBKEY_SIGNATURE_MESSAGE = "Die Nachricht konnte nicht überprüft werden. Der öffentliche Schlüssel der zur Überprüfung benötigt wird, befindet sich nicht in GPG Keychain.\n\nSuche auf dem Schlüsselserver nach dem Fingerabdruck %@ oder frage deinen Kontakt nach seinem öffentlichen Schlüssel. Nachdem du den öffentlichen Schlüssel in GPG Keychain importiert hast, kannst du die Überprüfung erneut versuchen.";
 
 BAD_SIGNATURE_TITLE = "Warnung: Ungültige Signatur";
-BAD_SIGNATURE_MESSAGE = "Die Signatur passt nicht zu dieser Nachricht. Du solltest dieser Nachricht nicht vertrauen, da sie manipuliert wurde.\n\nNachrichten können unabsichtlich verändert werden, nachdem sie signiert wurden. Exchange Server oder Mailinglisten sind bekannte Fälle, bei deren Verwendung es zu ungültigen Signaturen kommen kann. Ebenfalls kann formattierter Text wie rtf, docx oder odt zu Problemen führen. Stelle sicher, das txt Format zu verwenden.";
+BAD_SIGNATURE_MESSAGE = "Die Signatur passt nicht zu dieser Nachricht. Du solltest dieser Nachricht nicht vertrauen, da sie manipuliert wurde.\n\nNachrichten können unabsichtlich verändert werden, nachdem sie signiert wurden. Exchange Server oder Mailinglisten sind bekannte Fälle, bei deren Verwendung es zu ungültigen Signaturen kommen kann. Ebenfalls kann formatierter Text wie rtf, docx oder odt zu Problemen führen. Stelle sicher, nur das txt Format zu verwenden.";
+
+SIGNED_FILE_NOT_FOUND_TITLE = "Signierte Datei nicht gefunden";
+SIGNED_FILE_NOT_FOUND_MESSAGE = "Es konnte keine Datei gefunden werden, die zu dieser Signatur passt. Stelle sicher, dass signierte Datei und Signatur-Datei sich im selben Ordner befinden und gleich benannt sind.";
+
 
 SIGNATURE_ERROR_TITLE = "Signatur-Fehler";
 SIGNATURE_ERROR_ALERT_TITLE = "Unbekannter Signatur-Fehler";
 SIGNATURE_ERROR_DESCRIPTION = "Fehlercode: %i";
+
+
+/* For Import-Results */
+IMPORT_RESULT_NEW_KEY = "Der folgende Schlüssel wurde erfolgreich importiert:\n\n%@";
+IMPORT_RESULT_NEW_KEYS = "Die folgenden Schlüssel wurden erfolgreich importiert:\n\n%@";
+
+IMPORT_RESULT_NEW_USER_ID = "Eine Benutzer-ID wurde zu folgenden Schlüsseln hinzugefügt\n\n%@";
+IMPORT_RESULT_NEW_SIGNATURE = "Eine Signatur wurde zu folgenden Schlüsseln hinzugefügt\n\n%@";
+IMPORT_RESULT_NEW_SUBKEY = "Eine Unterschlüssel wurde zu folgenden Schlüsseln hinzugefügt\n\n%@";
+
+IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATE = "1 Widerrufszertifikat wurde importiert.";
+IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATES = "%i Widerrufszertifikate wurden importiert.";
+
+IMPORT_RESULT_ONE_PROCESSED_AND_X_IMPORTED = "1 Schlüssel wurde verarbeitet und %i importiert.";
+IMPORT_RESULT_X_PROCESSED_AND_ONE_IMPORTED = "%i Schlüssel wurden verarbeitet und 1 importiert.";
+IMPORT_RESULT_X_PROCESSED_AND_X_IMPORTED = "%1$i Schlüssel wurden verarbeitet und %2$i importiert.";
+
+IMPORT_RESULT_NOTHING_IMPORTED = "Keine Schlüssel importiert.";
+IMPORT_RESULT_NOTHING_IMPORTED_MSG = "";
+
+KeySearch_ImportResults_Title = "Import erfolgreich";
 

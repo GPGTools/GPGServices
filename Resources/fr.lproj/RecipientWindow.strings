@@ -20,11 +20,11 @@
 "158.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Indicateur de confiance du propriétaire";
 "160.headerCell.title" = "Validité";
 "179.title" = "Chiffrer avec un mot de passe";
-"NTe-z7-oew.title" = "Please enter a password";
+"NTe-z7-oew.title" = "Saisir un mot de passe";
 "UM4-uK-US3.title" = "Choisir les destinataires…";
-"W3a-uw-1gG.ibExternalAccessibilityDescription" = "Password";
-"WgX-k6-rmO.title" = "Strength:";
-"a8O-mR-bUg.title" = "Confirm Password:";
-"gE8-Ej-RmM.ibExternalAccessibilityDescription" = "Confirm";
+"W3a-uw-1gG.ibExternalAccessibilityDescription" = "Mot de passe";
+"WgX-k6-rmO.title" = "Résistance:";
+"a8O-mR-bUg.title" = "Confirmer le mot de passe:";
+"gE8-Ej-RmM.ibExternalAccessibilityDescription" = "Confirmer";
 "let-n1-Qac.title" = "Tout sélectionner";
-"sqN-nX-bT4.title" = "Your passwords must match";
+"sqN-nX-bT4.title" = "Vos mots de passe doivent correspondre";

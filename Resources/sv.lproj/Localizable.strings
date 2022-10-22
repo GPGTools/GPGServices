@@ -37,10 +37,10 @@
 "Decryption failed" = "Dekryptering misslyckades";
 
 /* No comment provided by engineer. */
-"Decryption finished" = "Dekrypteringen slutfördes";
+"Decryption finished" = "Dekryptering slutförd";
 
 /* No comment provided by engineer. */
-"Decryption finished (partially)" = "Dekryptering slutfördes (delvis)";
+"Decryption finished (partially)" = "Dekryptering slutförd (delvis)";
 
 /* arg:filename */
 "Encrypting %@" = "Krypterar %@";
@@ -201,7 +201,7 @@ CODE_SIGN_ERROR_MESSAGE = "För att skydda dig, har GPG Services avslutats!\n\nL
 SelectedKeysDescription = "%i av %i nycklar markerade";
 
 BIG_FILE_ENCRYPTION_WARNING_TITLE = "Varning: Försäkra dig om att din krypterade fil inte är skadad innan du tar bort den okrypterade originalfilen.";
-BIG_FILE_ENCRYPTION_WARNING_MSG = "För filer större än 100MB, rekommenderar vi att använda Terminal. GPG Services behöver fortfarande lite finjusteringar, och vi jobbar på det. Men tills de är helt pålitliga, kan du få se denna varning. Du kan fortsätta att kryptera din fil. Innan du tar bort den okrypterade filen, dekryptera den krypterade filen åtminstone en gång. Om det fungerar utan fel, är det bra. Om fel uppstår, är den krypterade filen skadad och du borde då hitta en annan lösning. Pröva antingen Terminal, eller använd en krypterad skivavbild. Det senare är tillgängligt i Skivverktyg i macOS.";
+BIG_FILE_ENCRYPTION_WARNING_MSG = "För filer större än 100MB rekommenderar vi att Terminal används. GPG Services behöver fortfarande lite finjusteringar, och vi jobbar på det. Men tills det är helt pålitligt, kommer du se denna varning. Du kan fortsätta att kryptera din fil eller dina filer. Innan du tar bort de okrypterade filerna, dekryptera den krypterade filen åtminstone en gång. Om det fungerar utan fel, är det bra. Om fel uppstår, är den krypterade filen skadad och du borde då hitta en annan lösning. Pröva antingen Terminal eller använd en krypterad skivavbild. Det senare är tillgängligt i Skivverktyg i macOS.";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON1 = "Avbryt";
 BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Fortsätt";
 
@@ -212,14 +212,14 @@ NO_MDC_DECRYPT_FILE_WARNING_YES = "Fortsätt";
 NO_MDC_DECRYPT_FILE_WARNING_NO = "Avbryt";
 
 NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Varning: Den krypterade texten blev inte integritets-skyddad!";
-NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Utan integritets-skydd (saknad modification detection code) är det inte möjligt att avgöra om det krypterade data har modifierats eller inte.\n\nFör att lära mer om att hantera filer utan integritets-skydd, besök:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nOm du är absolut säker på att texten inte modifierats, kan du fortsätta.";
+NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Utan integritetsskydd (saknar \"modification detection code\") är det inte möjligt att avgöra om den krypterade datan har modifierats eller inte.\n\nFör att läsa mer om att hantera filer utan integritetsskydd, besök:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nOm du är absolut säker på att texten inte har modifierats, kan du välja att fortsätta.";
 NO_MDC_DECRYPT_TEXT_WARNING_YES = "Fortsätt";
 NO_MDC_DECRYPT_TEXT_WARNING_NO = "Avbryt";
 
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Kunde inte dekryptera filen \"%@\"";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Den privata nyckeln som behövs för att dekryptera denna fil är inte tillgänglig.\nFilen är krypterad mot nycklarna med följande fingeravtryck:\n\n%@\n\nOm du inte känner igen några av dessa fingeravtryck, är det möjligt att avsändaren inte använde din publika nyckel för att kryptera denna fil.";
 
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Kunde inte dekryptera det valda innehållet";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Kunde inte dekryptera det markerade innehållet";
 NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Den privata nyckeln som behövs för att dekryptera innehållet är inte tillgänglig.\nInnehållet är krypterat mot nycklarna med följande fingeravtryck:\n\n%@\n\nOm du inte känner igen några av dessa fingeravtryck, är det möjligt att avsändaren inte använde din publika nyckel för att kryptera denna fil.";
 
 
@@ -260,9 +260,34 @@ NO_PUBKEY_SIGNATURE_ALERT_TITLE = "Nyckeln för att verifiera den här signature
 NO_PUBKEY_SIGNATURE_MESSAGE = "Meddelandet kunde inte verifieras. Den publika nyckeln som krävs för att verifiera den här signaturen finns inte i GPG Keychain.\n\nSök på nyckelservern efter fingeravtrycket %@ eller fråga din kontakt efter deras publika nyckel. Du kan försöka att verifiera signaturen på nytt efter att du lagt till den publika nyckeln i GPG Keychain.";
 
 BAD_SIGNATURE_TITLE = "Varning: Ogiltig signatur";
-BAD_SIGNATURE_MESSAGE = "Signaturen stämmer inte med detta meddelande. Du borde inte lita på meddelandet, eftersom det har manipulerats.\n\nMeddelanden kan dock ha förändras oavsiktligt efter att de signerats. Exchange-servrar och e-postlistor är kända för detta, där signaturer kan göras ogiltiga. Även formaterad text – som rtf, docx och odt – är kända för att skapa problem. Se till att använda txt-format.";
+BAD_SIGNATURE_MESSAGE = "The signature does not match this message. You should not trust this message, because it was manipulated.\nMessages can unintentionally be altered after they were signed. Exchange servers or mailing lists are known to have rendered valid signatures invalid in the past. Formatted text like rtf, docx or odt is also known to cause problems. Make sure to only use txt file format.";
+
+SIGNED_FILE_NOT_FOUND_TITLE = "Signerad fil hittades inte";
+SIGNED_FILE_NOT_FOUND_MESSAGE = "No file that matched this signature could be found. Please make sure file and signature file are located in the same folder and have the same name.";
+
 
 SIGNATURE_ERROR_TITLE = "Signaturfel";
 SIGNATURE_ERROR_ALERT_TITLE = "Okänt signaturfel";
 SIGNATURE_ERROR_DESCRIPTION = "Kod: %i";
+
+
+/* For Import-Results */
+IMPORT_RESULT_NEW_KEY = "Följande nyckel importerades:\n\n%@";
+IMPORT_RESULT_NEW_KEYS = "Följande nycklar importerades:\n\n%@";
+
+IMPORT_RESULT_NEW_USER_ID = "A user ID was added to the following keys \n\n%@";
+IMPORT_RESULT_NEW_SIGNATURE = "A signature was added to the following keys \n\n%@";
+IMPORT_RESULT_NEW_SUBKEY = "A subkey was added to the following keys \n\n%@";
+
+IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATE = "1 återkallelsecertifikat importerades. ";
+IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATES = "%i återkallelsecertifikat importerades.";
+
+IMPORT_RESULT_ONE_PROCESSED_AND_X_IMPORTED = "1 key was processed and %i imported.";
+IMPORT_RESULT_X_PROCESSED_AND_ONE_IMPORTED = "%i keys were processed and 1 imported.";
+IMPORT_RESULT_X_PROCESSED_AND_X_IMPORTED = "%1$i keys were processed and %2$i imported.";
+
+IMPORT_RESULT_NOTHING_IMPORTED = "Inga nycklar importerades.";
+IMPORT_RESULT_NOTHING_IMPORTED_MSG = "";
+
+KeySearch_ImportResults_Title = "Importen lyckades";
 

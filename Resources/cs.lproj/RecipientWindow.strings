@@ -20,11 +20,11 @@
 "158.ibExternalUserDefinedRuntimeAttributesLocalizableStrings[0]" = "Indikátor důvěryhodnosti vlastníka";
 "160.headerCell.title" = "Platnost";
 "179.title" = "Zašifrovat s heslem";
-"NTe-z7-oew.title" = "Please enter a password";
+"NTe-z7-oew.title" = "Zadejte prosím heslo";
 "UM4-uK-US3.title" = "Vybrat příjemce…";
-"W3a-uw-1gG.ibExternalAccessibilityDescription" = "Password";
-"WgX-k6-rmO.title" = "Strength:";
-"a8O-mR-bUg.title" = "Confirm Password:";
-"gE8-Ej-RmM.ibExternalAccessibilityDescription" = "Confirm";
+"W3a-uw-1gG.ibExternalAccessibilityDescription" = "Heslo:";
+"WgX-k6-rmO.title" = "Síla hesla:";
+"a8O-mR-bUg.title" = "Heslo znovu:";
+"gE8-Ej-RmM.ibExternalAccessibilityDescription" = "Potvrdit";
 "let-n1-Qac.title" = "Vybrat vše";
-"sqN-nX-bT4.title" = "Your passwords must match";
+"sqN-nX-bT4.title" = "Obě hesla se musí shodovat";

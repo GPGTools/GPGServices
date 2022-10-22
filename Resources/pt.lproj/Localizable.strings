@@ -82,7 +82,7 @@
 "GPGServices did not get usable data from the pasteboard." = "Os GPG Services não obtiveram dados usáveis da área de transferência.";
 
 /* No comment provided by engineer. */
-"Import failed" = "Falha ao Importar";
+"Import failed" = "Falha ao importar";
 
 /* No comment provided by engineer. */
 "Import finished" = "Importação concluída";
@@ -207,12 +207,12 @@ BIG_FILE_ENCRYPTION_WARNING_BUTTON2 = "Continuar";
 
 
 NO_MDC_DECRYPT_FILE_WARNING_TITLE = "Aviso: a integridade do arquivo criptografado não está protegida.";
-NO_MDC_DECRYPT_FILE_WARNING_MSG = "Sem a proteção de integridade (falta o código de detecção de modificação), não é possível determinar se os dados criptografados foram modificados.\n\nPara saber mais sobre como lidar com arquivos sem proteção de integridade, visite:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nCaso tenha certeza de que o arquivo não foi modificado, você pode optar por continuar.";
+NO_MDC_DECRYPT_FILE_WARNING_MSG = "Sem a proteção de integridade (ausência do código de detecção de modificação), não é possível determinar se os dados criptografados foram modificados.\n\nPara saber mais sobre como lidar com arquivos sem proteção de integridade, visite:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nCaso tenha certeza de que o arquivo não foi modificado, você pode optar por continuar.";
 NO_MDC_DECRYPT_FILE_WARNING_YES = "Continuar";
 NO_MDC_DECRYPT_FILE_WARNING_NO = "Cancelar";
 
 NO_MDC_DECRYPT_TEXT_WARNING_TITLE = "Aviso: a integridade do texto criptografado não está protegida.";
-NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Sem a proteção de integridade (falta o código de detecção de modificação), não é possível determinar se os dados criptografados foram modificados.\n\nPara saber mais sobre como lidar com arquivos sem proteção de integridade, visite:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nCaso tenha certeza de que o texto não foi modificado, você pode optar por continuar.";
+NO_MDC_DECRYPT_TEXT_WARNING_MSG = "Sem a proteção de integridade (ausência do código de detecção de modificação), não é possível determinar se os dados criptografados foram modificados.\n\nPara saber mais sobre como lidar com arquivos sem proteção de integridade, visite:\nhttps://gpgtools.tenderapp.com/kb/faq/modification-detection-code-mdc-errors\n\nCaso tenha certeza de que o texto não foi modificado, você pode optar por continuar.";
 NO_MDC_DECRYPT_TEXT_WARNING_YES = "Continuar";
 NO_MDC_DECRYPT_TEXT_WARNING_NO = "Cancelar";
 
@@ -230,7 +230,7 @@ KeyDescriptionAndMore = "%1$@ e mais %2$lu";
 
 "Signed by: %1$@ (%2$@) – " = "Assinado por: %1$@ (%2$@) – ";
 
-"Verification %1$@: %2$@ (Code: %3$i)" = "%1$@ verificar: %2$@ (Código: %3$i)";
+"Verification %1$@: %2$@ (Code: %3$i)" = "%1$@ ao verificar: %2$@ (Código: %3$i)";
 
 "Show in Finder" = "Mostrar no Finder";
 
@@ -260,9 +260,34 @@ NO_PUBKEY_SIGNATURE_ALERT_TITLE = "A chave para verificar esta assinatura não e
 NO_PUBKEY_SIGNATURE_MESSAGE = "A mensagem não pôde ser verificada. A chave pública necessária para verificar esta assinatura não está no GPG Keychain.\n\nBusque a impressão digital %@ no servidor de chaves ou peça a chave pública ao contato. Você pode tentar verificar a assinatura novamente após adicionar a chave pública ao GPG Keychain.";
 
 BAD_SIGNATURE_TITLE = "Aviso: assinatura inválida";
-BAD_SIGNATURE_MESSAGE = "A assinatura não corresponde a esta mensagem. Você não deve confiar nesta mensagem porque ela foi manipulada.\n\nMensagens podem ser alteradas acidentalmente depois de assinadas. Exemplos disso ocorrem em servidores do Exchange ou malas diretas, onde as assinaturas podem ser inutilizadas. Arquivos de texto formatado, como rtf, docx ou odt, também são conhecidos por causar problemas. Certifique-se de que o formato de arquivo txt seja usado.";
+BAD_SIGNATURE_MESSAGE = "A assinatura não corresponde a esta mensagem. Você não deve confiar nesta mensagem porque ela foi manipulada.\nMensagens podem ser alteradas acidentalmente depois de assinadas. Servidores do Exchange ou malas diretas são conhecidos por terem invalidado assinaturas anteriormente. Arquivos de texto formatado, como rtf, docx ou odt, também são conhecidos por causar problemas. Certifique-se de que apenas o formato de arquivo txt seja usado.";
+
+SIGNED_FILE_NOT_FOUND_TITLE = "Arquivo assinado não encontrado";
+SIGNED_FILE_NOT_FOUND_MESSAGE = "Não foi possível encontrar nenhum arquivo que correspondesse a esta assinatura. Certifique-se de que o arquivo e a assinatura estejam na mesma pasta e tenham o mesmo nome.";
+
 
 SIGNATURE_ERROR_TITLE = "Erro de assinatura";
 SIGNATURE_ERROR_ALERT_TITLE = "Erro de assinatura desconhecido";
 SIGNATURE_ERROR_DESCRIPTION = "Código: %i";
+
+
+/* For Import-Results */
+IMPORT_RESULT_NEW_KEY = "A seguinte chave foi importada corretamente:\n\n%@";
+IMPORT_RESULT_NEW_KEYS = "As seguintes chaves foram importadas corretamente:\n\n%@";
+
+IMPORT_RESULT_NEW_USER_ID = "Um ID de Usuário foi adicionado às seguintes chaves \n\n%@";
+IMPORT_RESULT_NEW_SIGNATURE = "Uma assinatura foi adicionada às seguintes chaves \n\n%@";
+IMPORT_RESULT_NEW_SUBKEY = "Uma subchave foi adicionada às seguintes chaves \n\n%@";
+
+IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATE = "1 certificado de revogação foi importado.";
+IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATES = "%i certificados de revogação foram importados.";
+
+IMPORT_RESULT_ONE_PROCESSED_AND_X_IMPORTED = "1 chave foi processada e %i foram importadas.";
+IMPORT_RESULT_X_PROCESSED_AND_ONE_IMPORTED = "%i chaves foram processadas e 1 foi importada.";
+IMPORT_RESULT_X_PROCESSED_AND_X_IMPORTED = "%1$i chaves foram processadas e %2$i foram importadas.";
+
+IMPORT_RESULT_NOTHING_IMPORTED = "Nenhuma chave importada.";
+IMPORT_RESULT_NOTHING_IMPORTED_MSG = "";
+
+KeySearch_ImportResults_Title = "Importação bem-sucedida";
 
