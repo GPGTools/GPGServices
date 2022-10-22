@@ -548,6 +548,10 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 			}
 		}
 	}
+	// Now that the information which keys should be pre-selected is available
+	// the table is told to reload its data, so the selected keys are positioned
+	// on top.
+	[self displayItemsMatchingString:[searchField stringValue]];
 	[self didChangeValueForKey:@"selectedKeys"];
 
 	self.sign = [defaults boolForKey:self.signDefaultsKey];
