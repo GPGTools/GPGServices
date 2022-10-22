@@ -219,8 +219,8 @@ NO_MDC_DECRYPT_TEXT_WARNING_NO = "Cancelar";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Não foi possível descriptografar o arquivo “%@”";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "A chave secreta necessária para descriptografar o arquivo não está disponível.\nO arquivo está criptografado com as chaves das seguintes impressões digitais:\n\n%@\n\nCaso não reconheça nenhuma dessas impressões digitais, é possível que o remetente não tenha usado a sua chave pública para criptografar este arquivo.";
 
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Não foi possível descriptografar o conteúdo selecionado";
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "A chave secreta necessária para descriptografar o conteúdo não está disponível.\nO conteúdo está criptografado com as chaves das seguintes impressões digitais:\n\n%@\n\nCaso não reconheça nenhuma dessas impressões digitais, é possível que o remetente não tenha usado a sua chave pública para criptografar este arquivo.";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Unable to decrypt content";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "You are not in possession of the key required to decrypt the selected content. The content is only encrypted to keys with the following fingerprints:\n\n%@\n\nPlease ask the creator of the encrypted content to re-send it encrypted to one of your keys.";
 
 
 "and" = "e";

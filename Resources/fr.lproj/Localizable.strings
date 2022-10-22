@@ -219,8 +219,8 @@ NO_MDC_DECRYPT_TEXT_WARNING_NO = "Annuler";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Déchiffrement du fichier \"%@\" impossible";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "La clé secrète pour déchiffrer ce fichier n'est pas disponible.\nIl est chiffré avec les clés dont les empreintes sont :\n\n%@\n\nSi vous ne connaissez aucune de ces empreintes, il est possible que l'émetteur n'ait pas utilisé votre clé publique pour chiffrer ce fichier.";
 
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Échec du chiffrement du contenu sélectionné";
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "La clé secrète pour déchiffrer ce contenu n'est pas disponible.\nIl est chiffré avec les clés dont les empreintes sont :\n\n%@\n\nSi vous ne connaissez aucune de ces empreintes, il est possible que l'émetteur n'ait pas utilisé votre clé publique pour chiffrer ce fichier.";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Unable to decrypt content";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "You are not in possession of the key required to decrypt the selected content. The content is only encrypted to keys with the following fingerprints:\n\n%@\n\nPlease ask the creator of the encrypted content to re-send it encrypted to one of your keys.";
 
 
 "and" = "et";
@@ -260,9 +260,34 @@ NO_PUBKEY_SIGNATURE_ALERT_TITLE = "La clé nécessaire à la vérification de ce
 NO_PUBKEY_SIGNATURE_MESSAGE = "Le message n'a pas pu être vérifié, la clef nécessaire à cette vérification n'est pas dans GPG Keychain.\n\nRecherchez la clé avec l'empreinte %@ sur les serveurs de clé ou demandez sa clé publique à votre contact. Vous pourrez vérifier la signature après avoir ajouté cette clé publique dans GPG Keychain.";
 
 BAD_SIGNATURE_TITLE = "Attention : signature invalide";
-BAD_SIGNATURE_MESSAGE = "La signature ne correspond pas à ce message, vous ne devriez pas faire confiance à ce message car il a été modifié depuis son envoi.\n\nLes messages peuvent être modifié involontairement après avoir été signés. Les serveurs Exchange et les serveurs de listes de diffusion sont connus pour cela. Les textes formatés comme rtf, docx ou odt sont également connus pour poser problème. Assurez-vous d'utiliser un format txt.";
+BAD_SIGNATURE_MESSAGE = "The signature does not match this message. You should not trust this message, because it was manipulated.\nMessages can unintentionally be altered after they were signed. Exchange servers or mailing lists are known to have rendered valid signatures invalid in the past. Formatted text like rtf, docx or odt is also known to cause problems. Make sure to only use txt file format.";
+
+SIGNED_FILE_NOT_FOUND_TITLE = "Signed file not found";
+SIGNED_FILE_NOT_FOUND_MESSAGE = "No file that matched this signature could be found. Please make sure file and signature file are located in the same folder and have the same name.";
+
 
 SIGNATURE_ERROR_TITLE = "Erreur de signature";
 SIGNATURE_ERROR_ALERT_TITLE = "Erreur imprévue de signature";
 SIGNATURE_ERROR_DESCRIPTION = "Code : %i";
+
+
+/* For Import-Results */
+IMPORT_RESULT_NEW_KEY = "The following key was successfully imported:\n\n%@";
+IMPORT_RESULT_NEW_KEYS = "The following keys were successfully imported:\n\n%@";
+
+IMPORT_RESULT_NEW_USER_ID = "A user ID was added to the following keys \n\n%@";
+IMPORT_RESULT_NEW_SIGNATURE = "A signature was added to the following keys \n\n%@";
+IMPORT_RESULT_NEW_SUBKEY = "A subkey was added to the following keys \n\n%@";
+
+IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATE = "1 revocation certificate was imported.";
+IMPORT_RESULT_COUNT_REVOCATION_CERTIFICATES = "%i revocation certificates were imported.";
+
+IMPORT_RESULT_ONE_PROCESSED_AND_X_IMPORTED = "1 key was processed and %i imported.";
+IMPORT_RESULT_X_PROCESSED_AND_ONE_IMPORTED = "%i keys were processed and 1 imported.";
+IMPORT_RESULT_X_PROCESSED_AND_X_IMPORTED = "%1$i keys were processed and %2$i imported.";
+
+IMPORT_RESULT_NOTHING_IMPORTED = "No keys imported.";
+IMPORT_RESULT_NOTHING_IMPORTED_MSG = "";
+
+KeySearch_ImportResults_Title = "Import successful";
 

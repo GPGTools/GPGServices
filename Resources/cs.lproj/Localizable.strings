@@ -219,8 +219,8 @@ NO_MDC_DECRYPT_TEXT_WARNING_NO = "Zrušit";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Nelze dešifrovat soubor „%@“";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Tajný klíč potřebný pro dešifrování tohoto souboru není k dispozici.\nSoubor je zašifrován klíči s následujícími otisky: \n\n%@\n\nPokud nepoznáte žádný z těchto otisků, je možné, že odesílatel nepoužívá veřejný klíč k šifrování tohoto souboru.";
 
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Nelze dešifrovat vybraný obsah";
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Tajný klíč, potřebný pro dešifrování obsahu, není k dispozici.\nObsah je zašifrován klíči s následujícími otisky:\n\n%@\n\nPokud nepoznáte žádný z těchto otisků, je možné, že odesílatel nepoužívá veřejný klíč k šifrování tohoto souboru.";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Unable to decrypt content";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "You are not in possession of the key required to decrypt the selected content. The content is only encrypted to keys with the following fingerprints:\n\n%@\n\nPlease ask the creator of the encrypted content to re-send it encrypted to one of your keys.";
 
 
 "and" = "a";

@@ -219,8 +219,8 @@ NO_MDC_DECRYPT_TEXT_WARNING_NO = "Avbryt";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Kunde inte dekryptera filen \"%@\"";
 NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "Den privata nyckeln som behövs för att dekryptera denna fil är inte tillgänglig.\nFilen är krypterad mot nycklarna med följande fingeravtryck:\n\n%@\n\nOm du inte känner igen några av dessa fingeravtryck, är det möjligt att avsändaren inte använde din publika nyckel för att kryptera denna fil.";
 
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Kunde inte dekryptera det markerade innehållet";
-NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "Den privata nyckeln som behövs för att dekryptera innehållet är inte tillgänglig.\nInnehållet är krypterat mot nycklarna med följande fingeravtryck:\n\n%@\n\nOm du inte känner igen några av dessa fingeravtryck, är det möjligt att avsändaren inte använde din publika nyckel för att kryptera denna fil.";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Unable to decrypt content";
+NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "You are not in possession of the key required to decrypt the selected content. The content is only encrypted to keys with the following fingerprints:\n\n%@\n\nPlease ask the creator of the encrypted content to re-send it encrypted to one of your keys.";
 
 
 "and" = "och";
