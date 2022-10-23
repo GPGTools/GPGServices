@@ -217,7 +217,7 @@ NO_MDC_DECRYPT_TEXT_WARNING_YES = "Continue";
 NO_MDC_DECRYPT_TEXT_WARNING_NO = "Cancel";
 
 NO_SEC_KEY_DECRYPT_FILE_ERROR_TITLE = "Unable to decrypt the file \"%@\"";
-NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "The secret key required to decrypt this file is not available.\nThe file is encrypted to the keys with the following fingerprints:\n\n%@\n\nIf you don't recognize any one of these fingerprints, it is possible that the sender didn't use your public key to encrypt this file.";
+NO_SEC_KEY_DECRYPT_FILE_ERROR_MSG = "You are not in possession of the key required to decrypt the selected file. The file is only encrypted to keys with the following fingerprints:\n\n%@\n\nPlease ask the creator of the encrypted file to re-send it encrypted to one of your keys.";
 
 NO_SEC_KEY_DECRYPT_TEXT_ERROR_TITLE = "Unable to decrypt the selected contents";
 NO_SEC_KEY_DECRYPT_TEXT_ERROR_MSG = "The secret key required to decrypt the content is not available.\nThe content is encrypted to the keys with the following fingerprints:\n\n%@\n\nIf you don't recognize any one of these fingerprints, it is possible that the sender didn't use your public key to encrypt this file.";
